@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!-- http://issues.apache.org/bugzilla/show_bug.cgi?id=17201 -->
+
+<log4j:configuration debug="true">
+
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{dd/MM/yyyy HH:mm:ss.SSS} %-5p [%t] %m [%C{1}.%M](%13F:%L)%n" />
+		</layout>
+		<!-- <filter class="org.apache.log4j.varia.LevelRangeFilter"> <param name="LevelMax" 
+			value="debug" /> </filter> -->
+	</appender>
+
+	<appender name="stderr" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.err" />
+		<param name="threshold" value="error" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{dd/MM/yyyy HH:mm:ss.SSS} %-5p [%t] %m [%C{1}.%M](%13F:%L)%n" />
+		</layout>
+	</appender>
+
+	<!-- Mantem a geração de arquivo conforme o tamanho do arquivo -->
+
+	<appender name="file" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="${catalina.home}/logs/sgpolog.log" />
+		<param name="MaxFileSize" value="30000KB" />
+		<param name="MaxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{dd/MM/yyyy HH:mm:ss.SSS} %-5p [%t] %m [%C{1}.%M](%13F:%L)%n" />
+		</layout>
+	</appender>
+
+	<!-- Mantém a geração de log diariamente -->
+	<!-- <appender name="file1" class="org.apache.log4j.DailyRollingFileAppender"> 
+		<param name="file" value="applog/batch/system-jira-bi.log" /> <param name="datePattern" 
+		value="'_'dd-MM-yyyy'.log'"/> <layout class="org.apache.log4j.PatternLayout"> 
+		<param name="ConversionPattern" value="%d{dd/MM/yyyy HH:mm:ss.SSS} %-5p [%t] 
+		%m [%C{1}.%M](%13F:%L)%n"/> </layout> </appender> -->
+
+	<logger name="java.io">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="java.util">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="java.sql">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="org.apache">
+		<level value="DEBUG" />
+	</logger>
+
+	<root>
+		<level value="debug" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="stderr" />
+		<appender-ref ref="file" />
+	</root>
+
+</log4j:configuration>
