@@ -27,6 +27,7 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		LOG.info("Acessando metodo ao solicitar a requisito pela URL logon");
 		LOG.info("Acesso a URL: " + req.getContextPath() + "/logon.jsp - method GET");
 
 		req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA);
