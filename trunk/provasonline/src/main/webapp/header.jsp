@@ -1,4 +1,4 @@
-<header class="bg-green text-center">
+<header class="bg-green text-center" style="padding: 1px;">
 	<div class="grid">
 		<div class="row">
 			<div class="span10 offset3">

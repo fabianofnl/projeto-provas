@@ -11,27 +11,16 @@
 </head>
 <body class="metro">
 	<jsp:include page="/header.jsp"></jsp:include>
-	<section>
+	<jsp:include page="/secure/menu.jsp"></jsp:include>
+	<section style="padding: 1px;">
 		<div class="container">
 			<div class="grid">
-				<div class="row">
-				</div>
-				<div class="row">
-				</div>
-				<div class="row">
-				</div>
 				<div class="row ">
 					<div class="span5 offset10">
 						Página HOME
 					</div>
 				</div>	
 				
-				<div class="row">
-				</div>
-				<div class="row">
-				</div>
-				<div class="row">
-				</div>
 			</div>
 		</div>
 	</section>
