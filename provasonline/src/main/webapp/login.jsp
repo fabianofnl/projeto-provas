@@ -14,8 +14,6 @@
 	<section>
 		<div class="container">
 			<div class="grid">
-				<div class="row"></div>
-				<div class="row"></div>
 				<div class="row ">
 					<div class="span5 offset10">
 						<form action="logon.jsp" method="post">
@@ -44,11 +42,6 @@
 						</form>
 					</div>
 				</div>
-
-				<div class="row"></div>
-				<div class="row"></div>
-				<div class="row"></div>
-				<div class="row"></div>
 			</div>
 		</div>
 	</section>
