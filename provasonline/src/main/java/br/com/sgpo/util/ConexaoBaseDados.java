@@ -12,7 +12,7 @@ import java.sql.SQLException;
  */
 public class ConexaoBaseDados {
 
-	private static final String DATA_BASE_URL = "localhost:5432";
+	private static final String DATA_BASE_URL = "localhost:5432/sgpodb";
 	private static final String DATA_BASE_USER = "postgres";
 	private static final String DATA_BASE_PASSWORD = "Fabiano2014*";
 

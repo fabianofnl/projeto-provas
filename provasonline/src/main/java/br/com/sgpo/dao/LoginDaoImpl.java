@@ -7,9 +7,8 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.model.Funcionario;
-import br.com.sgpo.model.Perfil;
 import br.com.sgpo.model.Usuario;
+import br.com.sgpo.model.Perfil;
 import br.com.sgpo.util.ConexaoBaseDados;
 
 /**
@@ -28,17 +27,16 @@ public class LoginDaoImpl implements LoginDao {
 
 	/**
 	 * Método realiza conexão com a base de dados e retorna objeto
-	 * <b>funcionario</b> para realizar a autenticação.
+	 * <b>usuario</b> para realizar a autenticação.
 	 */
 	@Override
-	public Funcionario logar(String nomeUsuario, String senha) {
+	public Usuario logar(String nomeUsuario, String senha) {
 
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		Funcionario funcionario = null;
-		Perfil perfil = null;
 		Usuario usuario = null;
+		Perfil perfil = null;
 
 		try {
 			conn = ConexaoBaseDados.getConexaoInstance();
@@ -51,25 +49,19 @@ public class LoginDaoImpl implements LoginDao {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				funcionario = new Funcionario();
-				perfil = new Perfil();
 				usuario = new Usuario();
+				perfil = new Perfil();
 
 				perfil.setPerfilId(rs.getInt("p.perfilId"));
 				perfil.setDescricao(rs.getString("p.descricao"));
-				perfil.setRole(rs.getString("role"));
+				perfil.setRole(rs.getString("p.roleName"));
 
-				usuario.setUsuarioId(rs.getInt("u.usuarioId"));
+				usuario.setMatricula(rs.getInt("u.matricula"));
+				usuario.setNome(rs.getString("u.nome"));
 				usuario.setNomeUsuario(rs.getString("u.usuarioNome"));
 				usuario.setSenha(rs.getString("senha"));
 
 				usuario.setPerfil(perfil);
-
-				funcionario.setFuncionarioId(rs.getInt("f.funcionarioId"));
-				funcionario.setMatricula(rs.getInt("f.matricula"));
-				funcionario.setNome(rs.getString("f.nome"));
-
-				funcionario.setUsuario(usuario);
 			}
 
 			if (rs != null)
@@ -82,6 +74,6 @@ public class LoginDaoImpl implements LoginDao {
 		} catch (SQLException e) {
 			LOG.error("Erro no processo de comunicação com a base de dados.", e);
 		}
-		return funcionario;
+		return usuario;
 	}
 }
