@@ -36,6 +36,8 @@ public class AutorizacaoFilter implements Filter {
 
 		System.out.println("URI: " + pathURI + ", PATH: " + contextPath);
 
+		System.out.println("Status: " + res.getStatus());
+
 		if (pathURI.endsWith("login.jsp") || pathURI.endsWith("/")) {
 			res.sendRedirect(contextPath + "/logon.jsp");
 		} else {

@@ -41,9 +41,8 @@ public class LoginDaoImpl implements LoginDao {
 		try {
 			conn = ConexaoBaseDados.getConexaoInstance();
 			pstmt = conn
-					.prepareStatement("SELECT * FROM funcionario f, usuario u, perfil p WHERE "
-							+ "p.perfilId = u.perfilId and u.matricula = f.matricula and "
-							+ "u.nomeusuario = ?, u.senha = MD5(?)");
+					.prepareStatement("SELECT * FROM usuario u, perfil p WHERE "
+							+ "p.perfilId = u.perfilId and u.nomeusuario = ? and u.senha = MD5(?)");
 			pstmt.setString(1, nomeUsuario);
 			pstmt.setString(2, senha);
 			rs = pstmt.executeQuery();
@@ -52,13 +51,13 @@ public class LoginDaoImpl implements LoginDao {
 				usuario = new Usuario();
 				perfil = new Perfil();
 
-				perfil.setPerfilId(rs.getInt("p.perfilId"));
-				perfil.setDescricao(rs.getString("p.descricao"));
-				perfil.setRole(rs.getString("p.roleName"));
+				perfil.setPerfilId(rs.getInt("perfilid"));
+				perfil.setDescricao(rs.getString("descricao"));
+				perfil.setRole(rs.getString("rolename"));
 
-				usuario.setMatricula(rs.getInt("u.matricula"));
-				usuario.setNome(rs.getString("u.nome"));
-				usuario.setNomeUsuario(rs.getString("u.usuarioNome"));
+				usuario.setMatricula(rs.getInt("matricula"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setNomeUsuario(rs.getString("nomeusuario"));
 				usuario.setSenha(rs.getString("senha"));
 
 				usuario.setPerfil(perfil);
@@ -72,7 +71,10 @@ public class LoginDaoImpl implements LoginDao {
 				conn.close();
 
 		} catch (SQLException e) {
-			LOG.error("Erro no processo de comunicação com a base de dados.", e);
+			usuario = null;
+			LOG.error("Erro na execução da query.", e);
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver JDBC não encontrado.", e);
 		}
 		return usuario;
 	}
