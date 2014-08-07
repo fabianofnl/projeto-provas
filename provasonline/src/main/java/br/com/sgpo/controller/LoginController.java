@@ -29,7 +29,12 @@ public class LoginController extends HttpServlet {
 	private static final Logger LOG = Logger.getLogger(LoginController.class);
 
 	private static final String VAR_TITULO_PAGINA = "tituloPagina";
-	private static final String TITULO_PAGINA = "Provas Online - Logon";
+	private static final String TITULO_PAGINA_LOGIN = "Provas Online | Logon";
+	private static final String TITULO_PAGINA_HOME = "SGPO | HOME";
+	private static final String VAR_MESSAGE = "msg";
+	private static final String MESSAGE = "Usuário ou senha inválidos.";
+	private static final String VAR_USER = "user";
+	private static final String VAR_PASS = "pass";
 
 	private LoginService loginService;
 
@@ -45,19 +50,7 @@ public class LoginController extends HttpServlet {
 		LOG.info("Acesso a URL: " + req.getContextPath()
 				+ "/logon.jsp - method GET");
 
-		String nomeUsuario = req.getParameter("usuario");
-		String senha = req.getParameter("senha");
-
-		Usuario usuario = loginService.logar(nomeUsuario, senha);
-
-		HttpSession session = null;
-
-		if (usuario != null) {
-			session = req.getSession(true);
-			session.setAttribute("usuario", usuario);
-		}
-
-		req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA);
+		req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_LOGIN);
 		req.getRequestDispatcher("login.jsp").forward(req, resp);
 	}
 
@@ -65,6 +58,31 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		LOG.info("Acesso a URL: " + req.getContextPath() + " - method POST");
-	}
 
+		String nomeUsuario = req.getParameter("user");
+		String senha = req.getParameter("pass");
+
+		LOG.info("Usuario: " + nomeUsuario + " | Senha: " + senha);
+
+		Usuario usuario = loginService.logar(nomeUsuario, senha);
+
+		LOG.info("Objeto usuario: " + usuario);
+
+		HttpSession session = null;
+
+		if (usuario != null) {
+			session = req.getSession(true);
+			session.setAttribute("usuario", usuario);
+		}else {
+			req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_LOGIN);
+			req.setAttribute(VAR_MESSAGE, MESSAGE);
+			req.setAttribute(VAR_USER, nomeUsuario);
+			req.setAttribute(VAR_PASS, senha);
+			req.getRequestDispatcher("login.jsp").forward(req, resp);
+			return;
+		}
+
+		req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_HOME);
+		req.getRequestDispatcher("secure/home.jsp").forward(req, resp);
+	}
 }

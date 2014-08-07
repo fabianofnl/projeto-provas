@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="/include/include_css.jsp"></jsp:include>
 <jsp:include page="/include/include_js.jsp"></jsp:include>
-
 <title>${tituloPagina}</title>
 </head>
 <body class="metro">
@@ -14,24 +13,25 @@
 	<section>
 		<div class="container">
 			<div class="grid">
-				<div class="row">
-				</div>
-				<div class="row">
-				</div>
-				<div class="row">
-				</div>
+				<div class="row"></div>
+				<div class="row"></div>
+				<div class="row"></div>
+				<div class="row"></div>
 				<div class="row ">
 					<div class="span5 offset10">
-						Página HOME
+						<fieldset>
+							<legend>Erro 500</legend>
+							<label>Erro na aplicação durante o processamento.</label>
+						</fieldset>
 					</div>
-				</div>	
-				
-				<div class="row">
 				</div>
-				<div class="row">
-				</div>
-				<div class="row">
-				</div>
+
+				<div class="row"></div>
+				<div class="row"></div>
+				<div class="row"></div>
+				<div class="row"></div>
+				<div class="row"></div>
+				<div class="row"></div>
 			</div>
 		</div>
 	</section>
