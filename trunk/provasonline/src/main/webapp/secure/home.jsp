@@ -14,14 +14,6 @@
 	<jsp:include page="/secure/menu.jsp"></jsp:include>
 	<section style="padding: 1px;">
 		<div class="container">
-			<div class="grid">
-				<div class="row ">
-					<div class="span5 offset10">
-						Página HOME
-					</div>
-				</div>	
-				
-			</div>
 		</div>
 	</section>
 	<jsp:include page="/footer.jsp"></jsp:include>
