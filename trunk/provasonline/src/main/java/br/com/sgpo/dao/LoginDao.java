@@ -1,6 +1,6 @@
 package br.com.sgpo.dao;
 
-import br.com.sgpo.model.Funcionario;
+import br.com.sgpo.model.Usuario;
 
 /**
  * Interface de conexão com a base de dados para autenticação de usuários do
@@ -13,12 +13,12 @@ public interface LoginDao {
 
 	/**
 	 * Método realiza conexão com a base de dados e retorna objeto
-	 * <b>funcionario</b> para realizar a autenticação.
+	 * <b>usuario</b> para realizar a autenticação.
 	 * 
 	 * @param nomeUsuario
 	 * @param senha
-	 * @return funcionario
+	 * @return usuario
 	 */
-	public Funcionario logar(String nomeUsuario, String senha);
+	public Usuario logar(String nomeUsuario, String senha);
 
 }

@@ -12,7 +12,8 @@ public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = -1003024660686069159L;
 
-	private Integer usuarioId;
+	private Integer matricula;
+	private String nome;
 	private String nomeUsuario;
 	private String senha;
 	private Perfil perfil;
@@ -21,21 +22,39 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Método retorna <b>usuarioId</b> do usuario.
+	 * Método retorna <b>matricula</b> do usuario.
 	 * 
-	 * @return usuarioId
+	 * @return matricula
 	 */
-	public Integer getUsuarioId() {
-		return usuarioId;
+	public Integer getMatricula() {
+		return matricula;
 	}
 
 	/**
-	 * Método atribui <b>usuarioId</b> ao usuario.
+	 * Método atribui <b>matricula</b> ao usuario.
 	 * 
-	 * @param usuarioId
+	 * @param matricula
 	 */
-	public void setUsuarioId(Integer usuarioId) {
-		this.usuarioId = usuarioId;
+	public void setMatricula(Integer matricula) {
+		this.matricula = matricula;
+	}
+
+	/**
+	 * Método retorna <b>nome</b> do usuario.
+	 * 
+	 * @return nome
+	 */
+	public String getNome() {
+		return nome;
+	}
+
+	/**
+	 * Método atribui <b>nome</b> ao usuario.
+	 * 
+	 * @param nome
+	 */
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	/**

@@ -2,7 +2,7 @@ package br.com.sgpo.service;
 
 import br.com.sgpo.dao.LoginDao;
 import br.com.sgpo.dao.LoginDaoImpl;
-import br.com.sgpo.model.Funcionario;
+import br.com.sgpo.model.Usuario;
 
 /**
  * Classe de implementação dos métodos de autenticação de usuários do sistema.
@@ -19,14 +19,14 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	/**
-	 * Método retorna objeto <b>funcionario</b> para realizar a autenticação.
+	 * Método retorna objeto <b>Usuario</b> para realizar a autenticação.
 	 */
 	@Override
-	public Funcionario logar(String nomeUsuario, String senha) {
+	public Usuario logar(String nomeUsuario, String senha) {
 
-		Funcionario funcionario = loginDao.logar(nomeUsuario, senha);
+		Usuario usuario = loginDao.logar(nomeUsuario, senha);
 
-		return funcionario;
+		return usuario;
 	}
 
 }
