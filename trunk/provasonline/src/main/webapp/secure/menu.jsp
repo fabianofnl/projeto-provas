@@ -11,7 +11,7 @@
 					<li>
 						<a class="dropdown-toggle" href="#">Funcionario</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
-							<li><a href="colaborador.html">Gerenciar</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/funcionario.jsp">Gerenciar</a></li>
 						</ul>
 					</li>
 				</c:if>
