@@ -6,9 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="/include/include_css.jsp"></jsp:include>
 <jsp:include page="/include/include_js.jsp"></jsp:include>
+<script src="${pageContext.request.contextPath}/include/custom/js/funcionarioSGPO.js"></script>
 <title>${tituloPagina}</title>
 </head>
-<body class="metro">
+<body class="metro" onload="loadDatatable();">
 	<jsp:include page="/header.jsp"></jsp:include>
 	<jsp:include page="/secure/menu.jsp"></jsp:include>
 	<section style="padding: 1px;">
@@ -20,9 +21,13 @@
 			</div>
 			<div class="row">
 				<div class="span10 offset2">
-					<table id="table1" class="hovered"></table>
-					<button id="createFlatWindow" class="button bd-blue">Adicionar</button>
+					<table id="table1"></table>
+					<div class="paddingTop5">
+						<button id="createFlatWindow" class="button bd-blue">Adicionar</button>
+					</div>
 				</div>
+
+
 			</div>
 		</div>
 	</section>
