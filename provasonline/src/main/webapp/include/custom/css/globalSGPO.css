@@ -1,6 +1,6 @@
 @CHARSET "ISO-8859-1";
 section {
-	min-height: 61%;
+	min-height: 69.4%;
 }
 
 html {
@@ -9,4 +9,8 @@ html {
 
 .paddingTop5{
 	padding-top: 5px;
+}
+
+.marginTop20{
+	margin-top: 20px !important;
 }

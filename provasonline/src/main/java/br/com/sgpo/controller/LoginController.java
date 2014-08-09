@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.model.Usuario;
 import br.com.sgpo.service.LoginService;
 import br.com.sgpo.service.LoginServiceImpl;
@@ -73,7 +74,7 @@ public class LoginController extends HttpServlet {
 
 		if (usuario != null) {
 			session = req.getSession(true);
-			session.setAttribute("usuario", usuario);
+			session.setAttribute(SGPOConstants.LOGGED_USER, usuario);
 		}else {
 			req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_LOGIN);
 			req.setAttribute(VAR_MESSAGE, MESSAGE);

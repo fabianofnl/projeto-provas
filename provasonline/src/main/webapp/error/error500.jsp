@@ -22,6 +22,9 @@
 						<fieldset>
 							<legend>Erro 500</legend>
 							<label>Erro na aplicação durante o processamento.</label>
+							<a href="${pageContext.request.contextPath}/secure/home.jsp" class="marginTop20 button bd-gray">
+								Voltar
+							</a>
 						</fieldset>
 					</div>
 				</div>
