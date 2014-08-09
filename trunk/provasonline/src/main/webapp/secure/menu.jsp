@@ -3,19 +3,30 @@
 	<div class="navigation-bar dark">
 		<div class="navigation-bar-content container">
 			<a href="${pageContext.request.contextPath}/secure/home.jsp" class="element">
-				<span class="icon-grid-view"></span> SGPO
+				<span class="icon-home"></span> SGPO
 			</a>
 			<span class="element-divider"></span>
 			<ul class="element-menu">
-				<c:if test="${usuario.perfil.role eq 'ROLE_ADMIN'}">
+				<c:if test="${usuario.perfil.role eq 'ROLE_ADMIN' or usuario.perfil.role eq 'ROLE_COLABORADOR'}">
+					<li>
+						<a class="dropdown-toggle" href="#">Provas</a>
+						<ul class="dropdown-menu dark" data-role="dropdown">
+							<li><a href="${pageContext.request.contextPath}/secure/funcionario.jsp">Apostilas</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/visualizarFuncionario.jsp">Realizar</a></li>
+						</ul>
+					</li>
+				</c:if>
+			
+				<c:if test="${usuario.perfil.role eq 'ROLE_ADMIN' or usuario.perfil.role eq 'ROLE_INSTRUTOR'}">
 					<li>
 						<a class="dropdown-toggle" href="#">Funcionario</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
 							<li><a href="${pageContext.request.contextPath}/secure/funcionario.jsp">Gerenciar</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/visualizarFuncionario.jsp">Consultar</a></li>
 						</ul>
 					</li>
 				</c:if>
-				<c:if test="${usuario.perfil.role eq 'ROLE_ADMIN'}">
+				<c:if test="${usuario.perfil.role eq 'ROLE_ADMIN' or usuario.perfil.role eq 'ROLE_INSTRUTOR'}">
 					<li>
 						<a href="#" class="dropdown-toggle fg-yellow">Provas</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
@@ -33,6 +44,28 @@
 					</li>
 				</c:if>
 			</ul>
+
+			<div class="element place-right">
+				<a class="dropdown-toggle" href="#">
+					<span class="icon-cog"></span>
+				</a>
+				<ul class="dropdown-menu dark place-right" data-role="dropdown">
+					<li><a href="${pageContext.request.contextPath}/logout.jsp">Sair</a></li>
+				</ul>
+			</div>
+			<span class="element-divider place-right"></span>
+			<button class="element place-right">${usuario.nome}</button>
+
+<%--
+			<ul class="element-menu drop-left place-right">
+				<li>
+					<a class="dropdown-toggle place-right" href="#">${usuario.nome}</a>
+					<ul class="dropdown-menu dark" data-role="dropdown">
+						<li><a href="#">Logout</a></li>
+					</ul>
+				</li>
+			</ul>
+ --%>
 		</div>
 	</div>
 </nav>

@@ -20,8 +20,8 @@
 				<div class="row ">
 					<div class="span5 offset10">
 						<fieldset>
-							<legend>Erro 404</legend>
-							<label>Página não encontrada</label>
+							<legend>Erro</legend>
+							<label>Você não tem autorização para acessar essa página</label>
 							<a href="${pageContext.request.contextPath}/secure/home.jsp" class="marginTop20 button bd-gray">
 								Voltar
 							</a>
