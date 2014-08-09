@@ -19,7 +19,7 @@ import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.model.Usuario;
 
 /**
- * Método que verifica usuário logado.
+ * Método que verifica usuário logado ao acessar página HOME.
  * 
  * @author Roseli
  * 

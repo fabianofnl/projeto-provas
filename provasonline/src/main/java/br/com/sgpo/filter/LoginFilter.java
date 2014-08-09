@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
+ * Classe para tratar URLs padrões para autenticação.
+ * 
+ * Se acessar a URL /login.jsp ou /logon.jsp ou apenas / o filtro redireciona
+ * todos para /logon.jsp, passando pelo método GET e ao se autenticar, passará
+ * pelo método POST
+ * 
  * @author Roseli
  * 
  */
@@ -29,12 +35,6 @@ public class LoginFilter implements Filter {
 		this.filterConfig = filterConfig;
 	}
 
-	/**
-	 * Método implementado de @see Filter, realiza filtragem de toda e qualquer
-	 * requisição no sistema.
-	 * 
-	 * Algumas regras de autenticação e autorização forma implementadas aqui.
-	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
@@ -53,18 +53,17 @@ public class LoginFilter implements Filter {
 
 		if (pathURI.endsWith("login.jsp") || pathURI.endsWith("/")) {
 			res.sendRedirect(contextPath + "/logon.jsp");
-		}else{
+		} else {
 			chain.doFilter(request, response);
 		}
 
 		// REGRAS DE AUTENTICAÇÃO DE AUTORIZAÇÃO ESTÃO ABAIXO
 
 		/*
-		if (req.getSession().getAttribute(SGPOConstants.LOGGED_USER) == null) {
-			LOG.info("Atributo usuario está NULO");
-			res.sendRedirect(contextPath + "/logon.jsp");
-		}
-		*/
+		 * if (req.getSession().getAttribute(SGPOConstants.LOGGED_USER) == null)
+		 * { LOG.info("Atributo usuario está NULO");
+		 * res.sendRedirect(contextPath + "/logon.jsp"); }
+		 */
 	}
 
 	@Override
