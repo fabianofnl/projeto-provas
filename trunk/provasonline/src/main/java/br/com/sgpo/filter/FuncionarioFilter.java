@@ -19,6 +19,9 @@ import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.model.Usuario;
 
 /**
+ * Classe que verifica o perfil do usuário ao acessar a página
+ * que gerencia os funcionários.
+ * 
  * @author Roseli
  * 
  */

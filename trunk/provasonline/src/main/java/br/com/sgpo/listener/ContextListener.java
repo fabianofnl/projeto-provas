@@ -10,6 +10,8 @@ import javax.servlet.annotation.WebListener;
 import org.apache.log4j.xml.DOMConfigurator;
 
 /**
+ * Classe de inicialização do LOG4J
+ * 
  * @author Roseli
  * 
  */
