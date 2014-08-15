@@ -69,23 +69,22 @@ public class LoginController extends HttpServlet {
 
 		LOG.info("Objeto usuario: " + usuario);
 
-		HttpSession session = null;
+		HttpSession session = req.getSession(true);
 		String contextPath = req.getContextPath();
 
 		if (usuario != null) {
-			session = req.getSession(true);
 			session.setAttribute(SGPOConstants.LOGGED_USER, usuario);
 		}else {
 			req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_LOGIN);
 			req.setAttribute(VAR_MESSAGE, MESSAGE);
 			req.setAttribute(VAR_USER, nomeUsuario);
 			req.setAttribute(VAR_PASS, senha);
-			resp.sendRedirect(contextPath + "/logon.jsp");
-			//req.getRequestDispatcher("login.jsp").forward(req, resp);
+			//resp.sendRedirect(contextPath + "/logon.jsp");
+			req.getRequestDispatcher("login.jsp").forward(req, resp);
 			return;
 		}
 
-		req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_HOME);
+		session.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_HOME);
 		//req.getRequestDispatcher("secure/home.jsp").forward(req, resp);
 		resp.sendRedirect(contextPath + "/secure/home.jsp");
 	}

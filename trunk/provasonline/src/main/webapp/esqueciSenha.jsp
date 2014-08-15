@@ -15,40 +15,41 @@
 		<div class="container">
 			<div class="grid">
 				<div class="row ">
-					<div class="span5 offset10">
-						<form id="frmLogin" name="frmLogin" action="logon.jsp"
+					<div class="span5 offset2">
+						<form id="frmEsqueciSenha" name="frmEsqueciSenha" action="esqueciSenha"
 							method="post" autocomplete="off">
 							<fieldset>
-								<legend>Login</legend>
+								<legend>Esqueci minha senha</legend>
 								<c:if test="${msg ne null}">
 									<p class="bg-lightRed fg-white">
 										<span class="icon-cancel padding10"></span>${msg}
 									</p>
 								</c:if>
+								<c:if test="${msg1 ne null}">
+									<p class="bg-lightBlue fg-white">
+										<span class="icon-info padding10"></span>${msg1}
+									</p>
+								</c:if>
+
 								<label>Usuário</label>
 								<div class="input-control text" data-role="input-control">
 									<input id="user" name="user" type="text" placeholder="Usuário"
-										autofocus="autofocus" value="${user}" oninput="setCustomValidity('')"
+										autofocus="autofocus" value="${user}"oninput="setCustomValidity('')"
 										oninvalid="setCustomValidity('Por favor, preencha este campo.')" required>
 									<button class="btn-clear" tabindex="-1" type="button"></button>
 								</div>
-
-								<label>Senha</label>
-								<div class="input-control password" data-role="input-control">
-									<input id="pass" name="pass" type="password"
-										placeholder="Senha" value="${pass}" oninput="setCustomValidity('')"
-										oninvalid="setCustomValidity('Por favor, preencha este campo.')" required>
-									<button class="btn-reveal" tabindex="-1" type="button"></button>
-								</div>
-
-								<div class="divEsqueciSenha">
-									<a href="${pageContext.request.contextPath}/esqueciSenha.jsp"
-										class="linkEsqueciSenha">Esqueci minha senha</a>
+								
+								<label>E-mail</label>
+								<div class="input-control text" data-role="input-control">
+									<input id="email" name="email" type="email" placeholder="E-mail"
+										value="${email}"oninput="setCustomValidity('')"
+										oninvalid="setCustomValidity(value == '' ? 'Por favor, preencha este campo.': (validity.typeMismatch ? 'Por favor, preencha com email válido.' : ''))" required>
+									<button class="btn-clear" tabindex="-1" type="button"></button>
 								</div>
 
 								<div>
-									<button type="submit" id="conectar" name="conectar"
-										class="button bd-green">Conectar</button>
+									<button type="submit" id="btnEsqueciSenha"
+										name="btnEsqueciSenha" class="button bd-green">Enviar</button>
 								</div>
 							</fieldset>
 						</form>
