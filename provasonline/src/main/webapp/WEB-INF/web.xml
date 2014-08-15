@@ -3,6 +3,10 @@
 	version="3.0">
 	<display-name>Archetype Created Web Application</display-name>
 
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
 	<context-param>
 		<param-name>log4j-config-location</param-name>
 		<param-value>WEB-INF/classes/log4j.xml</param-value>
@@ -19,7 +23,7 @@
 		<filter-name>funcionarioFilter</filter-name>
 		<url-pattern>/secure/funcionario.jsp</url-pattern>
 	</filter-mapping>
-	
+
 	<filter-mapping>
 		<filter-name>homeFilter</filter-name>
 		<url-pattern>/secure/home.jsp</url-pattern>

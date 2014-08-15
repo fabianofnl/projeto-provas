@@ -1,4 +1,3 @@
 /**
  * Scripts globais do sistema
  */
-
