@@ -60,12 +60,12 @@ public class FuncionarioFilter implements Filter {
 
 		if (usuario != null) {
 
-			if (usuario.getPerfil().getRole()
+			if (usuario.getRole()
 					.equals(SGPOConstants.LOGGED_ROLE_ADMIN)) {
 				flagRole = true;
 			}
 
-			if (usuario.getPerfil().getRole()
+			if (usuario.getRole()
 					.equals(SGPOConstants.LOGGED_ROLE_INSTRUTOR)) {
 				flagRole = true;
 			}

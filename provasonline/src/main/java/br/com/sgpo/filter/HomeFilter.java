@@ -58,7 +58,7 @@ public class HomeFilter implements Filter {
 
 		if (usuario == null) {
 			LOG.info("Atributo usuario está NULO");
-			res.sendRedirect(contextPath + "/logon.jsp");
+			res.sendRedirect(contextPath + "/logon");
 		}
 		chain.doFilter(request, response);
 	}

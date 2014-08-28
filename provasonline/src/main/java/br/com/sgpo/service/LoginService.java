@@ -1,6 +1,6 @@
 package br.com.sgpo.service;
 
-import br.com.sgpo.model.Usuario;
+import br.com.sgpo.model.Funcionario;
 
 /**
  * Interface de autenticação de usuários do sistema.
@@ -11,12 +11,12 @@ import br.com.sgpo.model.Usuario;
 public interface LoginService {
 
 	/**
-	 * Método retorna objeto <b>usuario</b> para realizar a autenticação.
+	 * Método retorna objeto <b>funcionario</b> para realizar a autenticação.
 	 * 
 	 * @param nomeUsuario
 	 * @param senha
 	 * @return usuario
 	 */
-	public Usuario logar(String nomeUsuario, String senha);
+	public Funcionario logar(String nomeUsuario, String senha);
 
 }

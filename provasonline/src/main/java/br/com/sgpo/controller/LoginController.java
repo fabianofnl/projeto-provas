@@ -23,7 +23,7 @@ import br.com.sgpo.service.LoginServiceImpl;
  * @author Roseli
  * 
  */
-@WebServlet(value = "/logon.jsp")
+@WebServlet(value = "/logon")
 public class LoginController extends HttpServlet {
 
 	private static final long serialVersionUID = 5855906025905425623L;
@@ -49,7 +49,7 @@ public class LoginController extends HttpServlet {
 			throws ServletException, IOException {
 
 		LOG.info("Acesso a URL: " + req.getContextPath()
-				+ "/logon.jsp - method GET");
+				+ "/logon - method GET");
 
 		req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_LOGIN);
 		req.getRequestDispatcher("login.jsp").forward(req, resp);

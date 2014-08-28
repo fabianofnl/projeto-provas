@@ -7,8 +7,7 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.model.Usuario;
-import br.com.sgpo.model.Perfil;
+import br.com.sgpo.model.Funcionario;
 import br.com.sgpo.util.ConexaoBaseDados;
 
 /**
@@ -30,37 +29,34 @@ public class LoginDaoImpl implements LoginDao {
 	 * <b>usuario</b> para realizar a autenticação.
 	 */
 	@Override
-	public Usuario logar(String nomeUsuario, String senha) {
+	public Funcionario logar(String nomeUsuario, String senha) {
 
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		Usuario usuario = null;
-		Perfil perfil = null;
+		Funcionario funcionario = null;
 
 		try {
 			conn = ConexaoBaseDados.getConexaoInstance();
 			pstmt = conn
-					.prepareStatement("SELECT * FROM usuario u, perfil p WHERE "
-							+ "p.perfilId = u.perfilId and u.nomeusuario = ? and u.senha = MD5(?)");
+					.prepareStatement("SELECT * FROM usuario u, perfil p, funcionario f WHERE "
+							+ "p.perfilId = u.perfilId and u.nomeusuario = f.u.nomeusuario and "
+							+ "u.nomeusuario = ? and u.senha = MD5(?)");
 			pstmt.setString(1, nomeUsuario);
 			pstmt.setString(2, senha);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				usuario = new Usuario();
-				perfil = new Perfil();
+				funcionario = new Funcionario();
 
-				perfil.setPerfilId(rs.getInt("perfilid"));
-				perfil.setDescricao(rs.getString("descricao"));
-				perfil.setRole(rs.getString("rolename"));
-
-				usuario.setMatricula(rs.getInt("matricula"));
-				usuario.setNome(rs.getString("nome"));
-				usuario.setNomeUsuario(rs.getString("nomeusuario"));
-				usuario.setSenha(rs.getString("senha"));
-
-				usuario.setPerfil(perfil);
+				funcionario.setPerfilId(rs.getInt("usuarioid"));
+				funcionario.setDescricao(rs.getString("descricao"));
+				funcionario.setRole(rs.getString("rolename"));
+				funcionario.setMatricula(rs.getInt("matricula"));
+				funcionario.setNome(rs.getString("nome"));
+				funcionario.setNomeUsuario(rs.getString("nomeusuario"));
+				funcionario.setSenha(rs.getString("senha"));
+				funcionario.setEmail(rs.getString("email"));
 			}
 
 			if (rs != null)
@@ -71,11 +67,11 @@ public class LoginDaoImpl implements LoginDao {
 				conn.close();
 
 		} catch (SQLException e) {
-			usuario = null;
+			funcionario = null;
 			LOG.error("Erro na execução da query.", e);
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver JDBC não encontrado.", e);
 		}
-		return usuario;
+		return funcionario;
 	}
 }

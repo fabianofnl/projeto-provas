@@ -9,7 +9,7 @@
 <script src="${pageContext.request.contextPath}/include/custom/js/funcionarioSGPO.js"></script>
 <title>${tituloPagina}</title>
 </head>
-<body class="metro" onload="loadDatatable();">
+<body class="metro">
 	<jsp:include page="/header.jsp"></jsp:include>
 	<jsp:include page="/secure/menu.jsp"></jsp:include>
 	<section style="padding: 1px;">
