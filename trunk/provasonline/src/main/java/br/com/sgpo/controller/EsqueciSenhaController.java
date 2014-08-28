@@ -47,8 +47,7 @@ public class EsqueciSenhaController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		LOG.info("Acessando Esqueci minha senha | Method GET");
-		String contextPath = req.getContextPath();
-		resp.sendRedirect(contextPath + "/esqueciSenha.jsp");
+		req.getRequestDispatcher("esqueciSenha.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -76,6 +75,5 @@ public class EsqueciSenhaController extends HttpServlet {
 
 		req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_ESQUECI_SENHA);
 		req.getRequestDispatcher("esqueciSenha.jsp").forward(req, resp);
-		//resp.sendRedirect(contextPath + "/esqueciSenha.jsp");
 	}
 }

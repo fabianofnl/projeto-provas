@@ -20,7 +20,7 @@ import br.com.sgpo.constants.SGPOConstants;
  * @author Roseli
  * 
  */
-@WebServlet(value = "/logout.jsp")
+@WebServlet(value = "/logout")
 public class LogoutController extends HttpServlet {
 
 	private static final long serialVersionUID = 5007262719284357114L;

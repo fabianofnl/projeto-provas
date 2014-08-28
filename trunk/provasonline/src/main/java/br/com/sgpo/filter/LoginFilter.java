@@ -51,8 +51,9 @@ public class LoginFilter implements Filter {
 		LOG.info("URI: " + pathURI + ", PATH: " + contextPath);
 		LOG.info("Status: " + res.getStatus());
 
-		if (pathURI.endsWith("login.jsp") || pathURI.endsWith("/")) {
-			res.sendRedirect(contextPath + "/logon.jsp");
+		if (pathURI.endsWith("login.jsp") || pathURI.endsWith("provasonline/")
+				|| pathURI.endsWith("provasonline")) {
+			res.sendRedirect(contextPath + "/logon");
 		} else {
 			chain.doFilter(request, response);
 		}

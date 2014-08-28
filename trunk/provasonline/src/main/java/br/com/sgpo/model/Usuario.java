@@ -8,53 +8,14 @@ import java.io.Serializable;
  * @author Roseli
  * 
  */
-public class Usuario implements Serializable {
+public class Usuario extends Perfil implements Serializable {
 
 	private static final long serialVersionUID = -1003024660686069159L;
 
-	private Integer matricula;
-	private String nome;
 	private String nomeUsuario;
 	private String senha;
-	private Perfil perfil;
 
 	public Usuario() {
-	}
-
-	/**
-	 * Método retorna <b>matricula</b> do usuario.
-	 * 
-	 * @return matricula
-	 */
-	public Integer getMatricula() {
-		return matricula;
-	}
-
-	/**
-	 * Método atribui <b>matricula</b> ao usuario.
-	 * 
-	 * @param matricula
-	 */
-	public void setMatricula(Integer matricula) {
-		this.matricula = matricula;
-	}
-
-	/**
-	 * Método retorna <b>nome</b> do usuario.
-	 * 
-	 * @return nome
-	 */
-	public String getNome() {
-		return nome;
-	}
-
-	/**
-	 * Método atribui <b>nome</b> ao usuario.
-	 * 
-	 * @param nome
-	 */
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	/**
@@ -91,24 +52,6 @@ public class Usuario implements Serializable {
 	 */
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	/**
-	 * Método retorna objeto <b>perfil</b> do usuario.
-	 * 
-	 * @return perfil
-	 */
-	public Perfil getPerfil() {
-		return perfil;
-	}
-
-	/**
-	 * Método atribui objeto <perfil> ao usuario.
-	 * 
-	 * @param perfil
-	 */
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
 	}
 
 }
