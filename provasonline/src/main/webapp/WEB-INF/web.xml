@@ -21,12 +21,12 @@
 
 	<filter-mapping>
 		<filter-name>funcionarioFilter</filter-name>
-		<url-pattern>/secure/funcionario.jsp</url-pattern>
+		<url-pattern>/secure/funcionario</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
-		<filter-name>homeFilter</filter-name>
-		<url-pattern>/secure/home.jsp</url-pattern>
+		<filter-name>authFilter</filter-name>
+		<url-pattern>/secure/*</url-pattern>
 	</filter-mapping>
 
 	<error-page>

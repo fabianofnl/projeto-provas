@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import br.com.sgpo.constants.SGPOConstants;
-import br.com.sgpo.model.Usuario;
+import br.com.sgpo.model.Funcionario;
 
 /**
  * Método que verifica usuário logado ao acessar página HOME.
@@ -24,11 +24,11 @@ import br.com.sgpo.model.Usuario;
  * @author Roseli
  * 
  */
-@WebFilter(filterName = "homeFilter")
-public class HomeFilter implements Filter {
+@WebFilter(filterName = "authFilter")
+public class AuthFilter implements Filter {
 
 	private FilterConfig filterConfig;
-	private static final Logger LOG = Logger.getLogger(HomeFilter.class);
+	private static final Logger LOG = Logger.getLogger(AuthFilter.class);
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -39,7 +39,7 @@ public class HomeFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 
-		LOG.info("Chamou HomeFilter class. Context: "
+		LOG.info("Chamou AuthFilter class. Context: "
 				+ filterConfig.getServletContext().getContextPath());
 
 		HttpServletRequest req = (HttpServletRequest) request;
@@ -53,10 +53,10 @@ public class HomeFilter implements Filter {
 
 		HttpSession session = req.getSession();
 
-		Usuario usuario = (Usuario) session
-				.getAttribute(SGPOConstants.LOGGED_USER);
+		Funcionario funcionario = (Funcionario) session
+				.getAttribute(SGPOConstants.LOGGED_FUNCIONARIO);
 
-		if (usuario == null) {
+		if (funcionario == null) {
 			LOG.info("Atributo usuario está NULO");
 			res.sendRedirect(contextPath + "/logon");
 		}

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import br.com.sgpo.constants.SGPOConstants;
-import br.com.sgpo.model.Usuario;
+import br.com.sgpo.model.Funcionario;
 import br.com.sgpo.service.LoginService;
 import br.com.sgpo.service.LoginServiceImpl;
 
@@ -35,7 +35,6 @@ public class LoginController extends HttpServlet {
 	private static final String VAR_MESSAGE = "msg";
 	private static final String MESSAGE = "Usuário ou senha inválidos.";
 	private static final String VAR_USER = "user";
-	private static final String VAR_PASS = "pass";
 
 	private LoginService loginService;
 
@@ -60,25 +59,24 @@ public class LoginController extends HttpServlet {
 			throws ServletException, IOException {
 		LOG.info("Acesso a URL: " + req.getContextPath() + " - method POST");
 
-		String nomeUsuario = req.getParameter("user");
+		String usuario = req.getParameter("user");
 		String senha = req.getParameter("pass");
 
-		LOG.info("Usuario: " + nomeUsuario + " | Senha: " + senha);
+		LOG.info("Usuario: " + usuario + " | Senha: " + senha);
 
-		Usuario usuario = loginService.logar(nomeUsuario, senha);
+		Funcionario funcionario = loginService.logar(usuario, senha);
 
-		LOG.info("Objeto usuario: " + usuario);
+		LOG.info("Objeto funcionario: " + funcionario);
 
 		HttpSession session = req.getSession(true);
 		String contextPath = req.getContextPath();
 
 		if (usuario != null) {
-			session.setAttribute(SGPOConstants.LOGGED_USER, usuario);
+			session.setAttribute(SGPOConstants.LOGGED_FUNCIONARIO, funcionario);
 		}else {
 			req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_LOGIN);
 			req.setAttribute(VAR_MESSAGE, MESSAGE);
-			req.setAttribute(VAR_USER, nomeUsuario);
-			req.setAttribute(VAR_PASS, senha);
+			req.setAttribute(VAR_USER, usuario);
 			//resp.sendRedirect(contextPath + "/logon.jsp");
 			req.getRequestDispatcher("login.jsp").forward(req, resp);
 			return;

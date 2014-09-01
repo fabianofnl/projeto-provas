@@ -7,26 +7,26 @@
 			</a>
 			<span class="element-divider"></span>
 			<ul class="element-menu">
-				<c:if test="${usuario.perfil.role eq 'ROLE_ADMIN' or usuario.perfil.role eq 'ROLE_COLABORADOR'}">
+				<c:if test="${funcionario.role eq 'ROLE_ADMIN' or funcionario.role eq 'ROLE_COLABORADOR'}">
 					<li>
-						<a class="dropdown-toggle" href="#">Provas</a>
+						<a class="dropdown-toggle" href="#">Exames</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
-							<li><a href="${pageContext.request.contextPath}/secure/funcionario.jsp">Apostilas</a></li>
-							<li><a href="${pageContext.request.contextPath}/secure/visualizarFuncionario.jsp">Realizar</a></li>
+							<li><a href="#">Apostilas</a></li>
+							<li><a href="#">Realizar</a></li>
 						</ul>
 					</li>
 				</c:if>
 			
-				<c:if test="${usuario.perfil.role eq 'ROLE_ADMIN' or usuario.perfil.role eq 'ROLE_INSTRUTOR'}">
+				<c:if test="${funcionario.role eq 'ROLE_ADMIN' or funcionario.role eq 'ROLE_INSTRUTOR'}">
 					<li>
 						<a class="dropdown-toggle" href="#">Funcionario</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
-							<li><a href="${pageContext.request.contextPath}/secure/funcionario.jsp">Gerenciar</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/funcionario">Gerenciar</a></li>
 							<li><a href="${pageContext.request.contextPath}/secure/visualizarFuncionario.jsp">Consultar</a></li>
 						</ul>
 					</li>
 				</c:if>
-				<c:if test="${usuario.perfil.role eq 'ROLE_ADMIN' or usuario.perfil.role eq 'ROLE_INSTRUTOR'}">
+				<c:if test="${funcionario.role eq 'ROLE_ADMIN' or funcionario.role eq 'ROLE_INSTRUTOR'}">
 					<li>
 						<a href="#" class="dropdown-toggle fg-yellow">Provas</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
@@ -50,7 +50,7 @@
 					<span class="icon-cog"></span>
 				</a>
 				<ul class="dropdown-menu dark place-right" data-role="dropdown">
-					<li><a href="${pageContext.request.contextPath}/logout.jsp">Sair</a></li>
+					<li><a href="${pageContext.request.contextPath}/logout">Sair</a></li>
 				</ul>
 			</div>
 			<span class="element-divider place-right"></span>

@@ -12,7 +12,7 @@ public class Usuario extends Perfil implements Serializable {
 
 	private static final long serialVersionUID = -1003024660686069159L;
 
-	private String nomeUsuario;
+	private String usuario;
 	private String senha;
 
 	public Usuario() {
@@ -21,19 +21,19 @@ public class Usuario extends Perfil implements Serializable {
 	/**
 	 * Método retorna <b>nomeUsuario</b> do usuario.
 	 * 
-	 * @return nomeUsuario
+	 * @return usuario
 	 */
-	public String getNomeUsuario() {
-		return nomeUsuario;
+	public String getUsuario() {
+		return usuario;
 	}
 
 	/**
-	 * Método atribui <b>nomeUsuario</b> ao usuario.
+	 * Método atribui <b>usuario</b> ao usuario.
 	 * 
 	 * @param nomeUsuario
 	 */
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	/**

@@ -8,7 +8,7 @@ package br.com.sgpo.constants;
  */
 public class SGPOConstants {
 
-	public static final String LOGGED_USER = "usuario";
+	public static final String LOGGED_FUNCIONARIO = "funcionario";
 	public static final String LOGGED_ROLE_ADMIN = "ROLE_ADMIN";
 	public static final String LOGGED_ROLE_INSTRUTOR = "ROLE_INSTRUTOR";
 	public static final String LOGGED_ROLE_GERENTE = "ROLE_GERENTE";
