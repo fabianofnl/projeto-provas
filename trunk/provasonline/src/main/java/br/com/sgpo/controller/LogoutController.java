@@ -34,6 +34,7 @@ public class LogoutController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		LOG.info("Acesso a URL: " + req.getContextPath() + " - method GET");
 		doPost(req, resp);
 	}
 
@@ -46,13 +47,13 @@ public class LogoutController extends HttpServlet {
 		HttpServletRequest request = (HttpServletRequest) req;
 
 		HttpSession session = request.getSession();
-		session.removeAttribute(SGPOConstants.LOGGED_USER);
+		session.removeAttribute(SGPOConstants.LOGGED_FUNCIONARIO);
 		session.invalidate();
 
 		String contextPath = req.getContextPath();
 
 		LOG.info("Saindo da sessão");
 
-		resp.sendRedirect(contextPath + "/logon.jsp");
+		resp.sendRedirect(contextPath + "/logon");
 	}
 }

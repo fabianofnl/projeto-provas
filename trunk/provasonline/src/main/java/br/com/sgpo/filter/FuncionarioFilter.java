@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import br.com.sgpo.constants.SGPOConstants;
-import br.com.sgpo.model.Usuario;
+import br.com.sgpo.model.Funcionario;
 
 /**
  * Classe que verifica o perfil do usuário ao acessar a página que gerencia os
@@ -55,23 +55,23 @@ public class FuncionarioFilter implements Filter {
 
 		HttpSession session = req.getSession();
 
-		Usuario usuario = (Usuario) session
-				.getAttribute(SGPOConstants.LOGGED_USER);
+		Funcionario funcionario = (Funcionario) session
+				.getAttribute(SGPOConstants.LOGGED_FUNCIONARIO);
 
-		if (usuario != null) {
+		if (funcionario != null) {
 
-			if (usuario.getRole()
+			if (funcionario.getRole()
 					.equals(SGPOConstants.LOGGED_ROLE_ADMIN)) {
 				flagRole = true;
 			}
 
-			if (usuario.getRole()
+			if (funcionario.getRole()
 					.equals(SGPOConstants.LOGGED_ROLE_INSTRUTOR)) {
 				flagRole = true;
 			}
 		} else {
 			LOG.info("Atributo usuario está NULO");
-			res.sendRedirect(contextPath + "/logon.jsp");
+			res.sendRedirect(contextPath + "/logon");
 		}
 
 		if (!flagRole) {

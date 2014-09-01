@@ -16,7 +16,7 @@
 			<div class="grid">
 				<div class="row ">
 					<div class="span5 offset10">
-						<form id="frmLogin" name="frmLogin" action="logon.jsp"
+						<form id="frmLogin" name="frmLogin" action="logon"
 							method="post" autocomplete="off">
 							<fieldset>
 								<legend>Login</legend>

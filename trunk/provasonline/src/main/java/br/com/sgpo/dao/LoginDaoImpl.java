@@ -39,9 +39,9 @@ public class LoginDaoImpl implements LoginDao {
 		try {
 			conn = ConexaoBaseDados.getConexaoInstance();
 			pstmt = conn
-					.prepareStatement("SELECT * FROM usuario u, perfil p, funcionario f WHERE "
-							+ "p.perfilId = u.perfilId and u.nomeusuario = f.u.nomeusuario and "
-							+ "u.nomeusuario = ? and u.senha = MD5(?)");
+					.prepareStatement("SELECT * FROM perfil p, usuario u, funcionario f "
+							+ "WHERE p.id = u.perfilId AND u.usuario = f.usuario AND "
+							+ "u.usuario = ? AND u.senha = MD5(?)");
 			pstmt.setString(1, nomeUsuario);
 			pstmt.setString(2, senha);
 			rs = pstmt.executeQuery();
@@ -49,12 +49,12 @@ public class LoginDaoImpl implements LoginDao {
 			if (rs.next()) {
 				funcionario = new Funcionario();
 
-				funcionario.setPerfilId(rs.getInt("usuarioid"));
+				funcionario.setPerfilId(rs.getInt("id"));
 				funcionario.setDescricao(rs.getString("descricao"));
-				funcionario.setRole(rs.getString("rolename"));
+				funcionario.setRole(rs.getString("roleName"));
 				funcionario.setMatricula(rs.getInt("matricula"));
 				funcionario.setNome(rs.getString("nome"));
-				funcionario.setNomeUsuario(rs.getString("nomeusuario"));
+				funcionario.setUsuario(rs.getString("usuario"));
 				funcionario.setSenha(rs.getString("senha"));
 				funcionario.setEmail(rs.getString("email"));
 			}
