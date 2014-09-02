@@ -14,8 +14,8 @@
 	<section style="padding: 1px;">
 		<div class="grid">
 			<div class="row">
-				<div class="span5 offset2">
-					<label><strong>Visualizar Colaboradores</strong></label>
+				<div class="span9 offset4">
+					<label><strong>Vincular Apostilas</strong></label>
 				</div>
 			</div>
 		</div>
