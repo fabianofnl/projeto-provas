@@ -20,13 +20,13 @@ import br.com.sgpo.model.Funcionario;
  * 
  */
 @WebServlet(value = "/secure/funcionario")
-public class FuncionarioController extends HttpServlet {
+public class FuncionarioCadastrarController extends HttpServlet {
 
 	private static final long serialVersionUID = 1803345723538484813L;
 	private static final Logger LOG = Logger
-			.getLogger(FuncionarioController.class);
+			.getLogger(FuncionarioCadastrarController.class);
 
-	//private FuncionarioService funcionarioService;
+	// private FuncionarioService funcionarioService;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -54,9 +54,9 @@ public class FuncionarioController extends HttpServlet {
 		session.setAttribute("listaFuncionario", listaFuncionario);
 
 		req.getRequestDispatcher("/secure/funcionario.jsp").forward(req, resp);
-		
-		//String contextPath = req.getContextPath();
-		//resp.sendRedirect(contextPath + "/secure/funcionario.jsp");
+
+		// String contextPath = req.getContextPath();
+		// resp.sendRedirect(contextPath + "/secure/funcionario.jsp");
 
 	}
 

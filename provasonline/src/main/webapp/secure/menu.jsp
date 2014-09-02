@@ -11,8 +11,8 @@
 					<li>
 						<a class="dropdown-toggle" href="#">Exames</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
-							<li><a href="#">Apostilas</a></li>
-							<li><a href="#">Realizar</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/apostilas">Apostilas</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/realizarExame">Realizar</a></li>
 						</ul>
 					</li>
 				</c:if>
@@ -22,7 +22,7 @@
 						<a class="dropdown-toggle" href="#">Funcionario</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
 							<li><a href="${pageContext.request.contextPath}/secure/funcionario">Gerenciar</a></li>
-							<li><a href="${pageContext.request.contextPath}/secure/visualizarFuncionario.jsp">Consultar</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/funcionarioRelatorio">Consultar Relatório</a></li>
 						</ul>
 					</li>
 				</c:if>
@@ -30,14 +30,14 @@
 					<li>
 						<a href="#" class="dropdown-toggle fg-yellow">Provas</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
-							<li><a href="#">Resultados</a></li>
-							<li class="divider"></li>
 							<li>
 								<a href="#" class="dropdown-toggle">Gerenciar</a>
 								<ul class="dropdown-menu dark" data-role="dropdown">
-									<li><a href="#">Cadastrar Temas</a></li>
-									<li><a href="#">Cadastrar Questões</a></li>
-									<li><a href="#">Agendar Provas</a></li>
+									<li><a href="${pageContext.request.contextPath}/secure/cadastrarTemas">Cadastrar Temas</a></li>
+									<li><a href="${pageContext.request.contextPath}/secure/cadastrarQuestoes">Cadastrar Questões</a></li>
+									<li><a href="${pageContext.request.contextPath}/secure/montarProvas">Montar Provas</a></li>
+									<li><a href="${pageContext.request.contextPath}/secure/vincularApostilas">Vincular Apostilas</a></li>
+									<li><a href="${pageContext.request.contextPath}/secure/agendarProvas">Agendar Provas</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -54,7 +54,7 @@
 				</ul>
 			</div>
 			<span class="element-divider place-right"></span>
-			<button class="element place-right">${usuario.nome}</button>
+			<button class="element place-right">${funcionario.nome}</button>
 
 <%--
 			<ul class="element-menu drop-left place-right">
