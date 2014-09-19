@@ -36,23 +36,34 @@
 					<div class="tableBody" style="position:relative; top: -1px;">
 						<table border="1" style="width: 100%">
 							<tbody>
-								<c:forEach items="${listaFuncionario}" var="func">
-									<tr>
-										<td style="width:10%; text-align: center;">${func.matricula}</td>
-										<td style="width:25%">${func.nome}</td>
-										<td style="width:25%">${func.email}</td>
-										<td style="width:20%">${func.descricao}</td>
-										<td style="width:20%; text-align: center;">${func.usuario}</td>
-									</tr>
-								</c:forEach>
+								<c:choose>
+									<c:when test="${empty listaFuncionario}">
+										<tr>
+											<td colspan="5">Não há registros.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${listaFuncionario}" var="func">
+											<tr>
+												<td style="width:10%; text-align: center;">${func.matricula}</td>
+												<td style="width:25%">${func.nome}</td>
+												<td style="width:25%">${func.email}</td>
+												<td style="width:20%">${func.descricao}</td>
+												<td style="width:20%; text-align: center;">${func.usuario}</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 							</tbody>
 						</table>
 					</div>
-					<div class="tableFooter" style="position:relative; top: -2px;">
-						<table border="1" style="width: 100%">
+					<div class="tableFooter" style="position:relative; top: -2px; border-top: 1px solid;">
+						<table style="width: 100%">
 							<tfoot>
 								<tr>
-									<td>Navegação</td>
+									<td>
+										<jsp:include page="/pagination.jsp"></jsp:include>
+									</td>
 								</tr>
 							</tfoot>
 						</table>
@@ -64,6 +75,35 @@
 			</div>
 		</div>
 	</section>
+		<div id="divFrmCadastrar" style="display: none;">
+			<form id="frmDialogCadastrar" action="funcionario" method="post">
+				<label>Matrícula:</label>
+				<div class="input-control text">
+					<input type="text" name="matricula"><button class="btn-clear"></button>
+				</div>
+				<label>Nome:</label>
+				<div class="input-control text">
+					<input type="text" name="nome"><button class="btn-clear"></button>
+				</div>
+				<label>Função:</label>
+				<div class="input-control text">
+					<input type="text" name="funcao"><button class="btn-clear"></button>
+				</div>
+				<label>Perfil:</label>
+				<div class="input-control select">
+					<select id="perfil" name="perfil">
+						<option value="">Selecione</option>
+						<c:forEach var="per" items="${listaPerfis}">
+							<option value="${per.perfilId}">${per.descricao}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="form-actions">
+				<button class="button primary">Enviar</button>
+				<button class="button" type="button" onclick="$.Dialog.close()">Cancel</button>
+				</div>
+			</form>
+		</div>
 	<jsp:include page="/footer.jsp"></jsp:include>
 </body>
 </html>

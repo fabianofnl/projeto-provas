@@ -105,8 +105,7 @@ $(function(){
 			overlay: true,
 			shadow: true,
 			flat: true,
-			draggable: true,
-			//icon: '<img src="images/excel2013icon.png">',
+			draggable: false,
 			title: 'Cadastrar Colaborador',
 			content: '',
 			width: 400,
@@ -125,7 +124,9 @@ $(function(){
 						'</div>'+
 						'</form>';
 				*/
-				var content = 	"<form>"+
+				var content = $("#divFrmCadastrar").html();
+					/*
+								"<form>"+
 								"<label>Matrícula</label>"+
 								"<div class='input-control text'><input type='text' name='matricula'><button class='btn-clear'></button></div>"+
 								"<label>Nome</label>"+
@@ -139,7 +140,7 @@ $(function(){
 								"<button class='button' type='button' onclick='$.Dialog.close()'>Cancel</button>"+
 								"</div>"+
 								"</form>";
-				$.Dialog.title("Cadastrar Colaborador");
+					*/
 				$.Dialog.content(content);
 			}
 		});
@@ -160,10 +161,6 @@ $(function(){
 				$.Dialog.content(html);
 			}
 		});
-	});
-	$("#conectar").on('click', function(event){
-		event.preventDefault();
-		window.location = "pages/home.html";
 	});
 });
 
