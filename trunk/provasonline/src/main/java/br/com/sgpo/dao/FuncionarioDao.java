@@ -1,4 +1,4 @@
-package br.com.sgpo.service;
+package br.com.sgpo.dao;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -6,12 +6,7 @@ import java.util.List;
 import br.com.sgpo.model.Funcionario;
 import br.com.sgpo.model.Perfil;
 
-
-/**
- * @author Roseli
- *
- */
-public interface FuncionarioService {
+public interface FuncionarioDao {
 
 	public List<Funcionario> listarFuncionarios() throws SQLException, ClassNotFoundException;
 

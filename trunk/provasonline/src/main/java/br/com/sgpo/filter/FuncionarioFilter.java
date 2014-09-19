@@ -72,10 +72,12 @@ public class FuncionarioFilter implements Filter {
 		} else {
 			LOG.info("Atributo usuario está NULO");
 			res.sendRedirect(contextPath + "/logon");
+			return;
 		}
 
 		if (!flagRole) {
 			res.sendRedirect(contextPath + "/error/errorNoAuthorization.jsp");
+			return;
 		}
 		chain.doFilter(request, response);
 	}
