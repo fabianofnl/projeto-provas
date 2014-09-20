@@ -8,8 +8,13 @@ import br.com.sgpo.model.Perfil;
 
 public interface FuncionarioDao {
 
-	public List<Funcionario> listarFuncionarios() throws SQLException, ClassNotFoundException;
+	public List<Funcionario> listarFuncionarios() throws SQLException,
+			ClassNotFoundException;
 
-	public List<Perfil> listarPerfis() throws SQLException, ClassNotFoundException;
+	public List<Perfil> listarPerfis() throws SQLException,
+			ClassNotFoundException;
+
+	public void gravar(Funcionario funcionario) throws SQLException,
+			ClassNotFoundException;
 
 }

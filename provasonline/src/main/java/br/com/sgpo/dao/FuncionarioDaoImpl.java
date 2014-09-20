@@ -19,17 +19,24 @@ import br.com.sgpo.util.ConexaoBaseDados;
  */
 public class FuncionarioDaoImpl implements FuncionarioDao {
 
-	private static final Logger LOG = Logger.getLogger(FuncionarioDaoImpl.class);
-	
+	private static final Logger LOG = Logger
+			.getLogger(FuncionarioDaoImpl.class);
+
 	private static final String SELECT_TODOS_FUNCIONARIO = "SELECT * FROM funcionario f, usuario u, perfil p "
-			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id";
+			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id ORDER BY nome";
 
 	private static final String SELECT_TODOS_PERFIS = "SELECT * FROM perfil";
 
+	private static final String INSERT_USUARIO_FUNCIONARIO = "INSERT INTO usuario (usuario, senha, perfilId) "
+			+ "VALUES (?, MD5(?), ?)";
+
+	private static final String INSERT_FUNCIONARIO = "INSERT INTO funcionario (matricula, nome, funcao, email, usuario) "
+			+ "VALUES (?, ?, ?, ?, ?)";
+
 	@Override
-	public List<Funcionario> listarFuncionarios() throws ClassNotFoundException,
-			SQLException {
-		
+	public List<Funcionario> listarFuncionarios()
+			throws ClassNotFoundException, SQLException {
+
 		LOG.info("Chamando método listarFuncionarios");
 
 		Connection conn = null;
@@ -47,6 +54,7 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 			func.setMatricula(rs.getInt("matricula"));
 			func.setNome(rs.getString("nome"));
 			func.setEmail(rs.getString("email"));
+			func.setFuncao(rs.getString("funcao"));
 
 			func.setUsuario(rs.getString("usuario"));
 
@@ -69,7 +77,7 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 	@Override
 	public List<Perfil> listarPerfis() throws SQLException,
 			ClassNotFoundException {
-		
+
 		LOG.info("Chamando método listarPerfis");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -97,5 +105,42 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 			conn.close();
 
 		return listaPerfis;
+	}
+
+	@Override
+	public void gravar(Funcionario funcionario) throws SQLException,
+			ClassNotFoundException {
+
+		LOG.info("Chamando método gravar Funcionario");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		// TODO Há um bug nessa lógica
+		/*
+		 * Pode acontecer do sistema gravar o usuario e acaber tendo problemas
+		 * em gravar o funcionario, então os dados ficarão corrompidos. Seria
+		 * interessante utilizar o conceito de ROOLBACK
+		 */
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(INSERT_USUARIO_FUNCIONARIO);
+		pstmt.setString(1, funcionario.getUsuario());
+		pstmt.setString(2, funcionario.getSenha());
+		pstmt.setInt(3, funcionario.getPerfilId());
+		pstmt.execute();
+
+		pstmt = conn.prepareStatement(INSERT_FUNCIONARIO);
+		pstmt.setInt(1, funcionario.getMatricula());
+		pstmt.setString(2, funcionario.getNome());
+		pstmt.setString(3, funcionario.getFuncao());
+		pstmt.setString(4, funcionario.getEmail());
+		pstmt.setString(5, funcionario.getUsuario());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
 	}
 }

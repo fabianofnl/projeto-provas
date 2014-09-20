@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -31,7 +30,7 @@ public class FuncionarioCadastrarController extends HttpServlet {
 			.getLogger(FuncionarioCadastrarController.class);
 
 	private FuncionarioService funcionarioService;
-	
+
 	@Override
 	public void init() throws ServletException {
 		funcionarioService = new FuncionarioServiceImpl();
@@ -46,32 +45,25 @@ public class FuncionarioCadastrarController extends HttpServlet {
 			LOG.info("Acesso a URL: " + req.getContextPath()
 					+ "/secure/funcionario - method GET");
 
-			List<Funcionario> listaFuncionario = new ArrayList<Funcionario>();
-			List<Perfil> listaPerfis = new ArrayList<Perfil>();
-
-			listaFuncionario = funcionarioService.listarFuncionarios();
-			listaPerfis = funcionarioService.listarPerfis();
-
-			//HttpSession session = req.getSession(true);
+			List<Funcionario> listaFuncionario = listarFuncionarios();
+			List<Perfil> listaPerfis = listarPerfis();
 
 			req.setAttribute("listaFuncionario", listaFuncionario);
 			req.setAttribute("listaPerfis", listaPerfis);
-			
+
 			Integer page = 1;
-			
-			if(req.getParameter("page") != null){
+
+			if (req.getParameter("page") != null) {
 				page = Integer.parseInt(req.getParameter("page"));
 			}
-			
-			//TODO teste
-			req.setAttribute("page", 9);
+
+			// TODO teste
+			req.setAttribute("page", page);
 			req.setAttribute("totalPages", 20);
 
 			req.getRequestDispatcher("/secure/funcionario.jsp").forward(req,
 					resp);
 
-			// String contextPath = req.getContextPath();
-			// resp.sendRedirect(contextPath + "/secure/funcionario.jsp");
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
@@ -84,17 +76,66 @@ public class FuncionarioCadastrarController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		LOG.info("Acesso a URL: " + req.getContextPath()
-				+ "/secure/funcionario - method POST");
-		
-		Funcionario funcionario = new Funcionario();
-		
-		funcionario.setMatricula(Integer.parseInt(req.getParameter("matricula")));
-		funcionario.setNome(req.getParameter("nome"));
 
-		LOG.info("Nome: " + funcionario.getNome());
+		try {
+			LOG.info("Acesso a URL: " + req.getContextPath()
+					+ "/secure/funcionario - method POST");
 
-		req.getRequestDispatcher("/secure/funcionario.jsp").forward(req, resp);
+			Funcionario funcionario = new Funcionario();
+
+			funcionario.setMatricula(Integer.parseInt(req
+					.getParameter("matricula")));
+			funcionario.setNome(req.getParameter("nome"));
+			funcionario.setFuncao(req.getParameter("funcao"));
+			funcionario
+					.setPerfilId(Integer.parseInt(req.getParameter("perfil")));
+			funcionario.setEmail(req.getParameter("email"));
+			funcionario.setUsuario(req.getParameter("user"));
+			funcionario.setSenha(req.getParameter("pass"));
+
+			funcionarioService.gravar(funcionario);
+
+			//TODO Verificar um jeito de ajustar a renderização da página
+			/*
+			 * Após inserir um funcionario, se pressionar CTRL + R
+			 * ele executa o form novamente, no caso é como se
+			 * estive preenchendo o formulario com os mesmos dados anterior
+			 */
+			
+			//List<Funcionario> listaFuncionario = listarFuncionarios();
+			//List<Perfil> listaPerfis = listarPerfis();
+
+			//req.setAttribute("listaFuncionario", listaFuncionario);
+			//req.setAttribute("listaPerfis", listaPerfis);
+			req.setAttribute("msg", "Funcionario gravado com sucesso!");
+
+			//req.getRequestDispatcher("/secure/funcionario.jsp").forward(req,
+			//		resp);
+			
+			doGet(req, resp);
+
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver do banco de dados não encontrado.", e);
+			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
+		} catch (SQLException e) {
+			LOG.error("Erro em alguma instrução SQL.", e);
+			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
+		}
 	}
 
+	private List<Funcionario> listarFuncionarios()
+			throws ClassNotFoundException, SQLException {
+		List<Funcionario> listaFuncionario = new ArrayList<Funcionario>();
+		listaFuncionario = funcionarioService.listarFuncionarios();
+
+		return listaFuncionario;
+	}
+
+	private List<Perfil> listarPerfis() throws ClassNotFoundException,
+			SQLException {
+		List<Perfil> listaPerfis = new ArrayList<Perfil>();
+		listaPerfis = funcionarioService.listarPerfis();
+
+		return listaPerfis;
+	}
 }
