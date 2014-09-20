@@ -28,4 +28,10 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return funcionarioDao.listarPerfis();
 	}
 
+	@Override
+	public void gravar(Funcionario funcionario) throws SQLException,
+			ClassNotFoundException {
+		funcionarioDao.gravar(funcionario);
+	}
+
 }

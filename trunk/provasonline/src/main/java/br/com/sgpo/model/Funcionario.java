@@ -9,6 +9,7 @@ public class Funcionario extends Usuario implements Serializable {
 	private Integer matricula;
 	private String nome;
 	private String email;
+	private String funcao;
 
 	public Funcionario() {
 	}
@@ -65,6 +66,24 @@ public class Funcionario extends Usuario implements Serializable {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	/**
+	 * Método retorna objeto <b>email</b> do usuario.
+	 * 
+	 * @return funcao
+	 */
+	public String getFuncao() {
+		return funcao;
+	}
+
+	/**
+	 * Método atribui objeto <b>funcao</b> ao usuario
+	 * 
+	 * @param funcao
+	 */
+	public void setFuncao(String funcao) {
+		this.funcao = funcao;
 	}
 
 }

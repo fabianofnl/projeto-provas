@@ -17,6 +17,7 @@ CREATE TABLE usuario (
 CREATE TABLE funcionario (
 	matricula INTEGER NOT NULL PRIMARY KEY,
 	nome VARCHAR(100) NOT NULL,
+	funcao VARCHAR (100) NOT NULL,
 	email VARCHAR(100) NOT NULL,
 	usuario VARCHAR(100) NOT NULL REFERENCES usuario(usuario)
 );
@@ -31,10 +32,10 @@ INSERT INTO usuario (usuario, senha, perfilId) VALUES ('mjoana', MD5('123'), 2);
 INSERT INTO usuario (usuario, senha, perfilId) VALUES ('coliveira', MD5('123'), 3);
 INSERT INTO usuario (usuario, senha, perfilId) VALUES ('apaula', MD5('123'), 4);
 
-INSERT INTO funcionario (matricula, nome, email, usuario) values (1111,'João Silva','jsilva@teste.com','jsilva');
-INSERT INTO funcionario (matricula, nome, email, usuario) values (2222,'Maria Joana','mjoana@teste.com','mjoana');
-INSERT INTO funcionario (matricula, nome, email, usuario) values (3333,'Carlos Oliveira','coliveira@teste.com','coliveira');
-INSERT INTO funcionario (matricula, nome, email, usuario) values (4444,'Ana Paula','apaula@teste.com','apaula');
+INSERT INTO funcionario (matricula, nome, funcao, email, usuario) values (1111,'João Silva','Executivo de Área','jsilva@teste.com','jsilva');
+INSERT INTO funcionario (matricula, nome, funcao, email, usuario) values (2222,'Maria Joana','Analista de sistema','mjoana@teste.com','mjoana');
+INSERT INTO funcionario (matricula, nome, funcao, email, usuario) values (3333,'Carlos Oliveira','Gerente de Projetos','coliveira@teste.com','coliveira');
+INSERT INTO funcionario (matricula, nome, funcao, email, usuario) values (4444,'Ana Paula','Programador','apaula@teste.com','apaula');
 
 --SELECT * FROM perfil;
 --SELECT * FROM usuario;
