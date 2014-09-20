@@ -32,10 +32,10 @@ INSERT INTO usuario (usuario, senha, perfilId) VALUES ('mjoana', MD5('123'), 2);
 INSERT INTO usuario (usuario, senha, perfilId) VALUES ('coliveira', MD5('123'), 3);
 INSERT INTO usuario (usuario, senha, perfilId) VALUES ('apaula', MD5('123'), 4);
 
-INSERT INTO funcionario (matricula, nome, funcao, email, usuario) values (1111,'João Silva','Executivo de Área','jsilva@teste.com','jsilva');
-INSERT INTO funcionario (matricula, nome, funcao, email, usuario) values (2222,'Maria Joana','Analista de sistema','mjoana@teste.com','mjoana');
-INSERT INTO funcionario (matricula, nome, funcao, email, usuario) values (3333,'Carlos Oliveira','Gerente de Projetos','coliveira@teste.com','coliveira');
-INSERT INTO funcionario (matricula, nome, funcao, email, usuario) values (4444,'Ana Paula','Programador','apaula@teste.com','apaula');
+INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (1111,'João Silva','Executivo de Área','jsilva@teste.com','jsilva');
+INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (2222,'Maria Joana','Analista de sistema','mjoana@teste.com','mjoana');
+INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (3333,'Carlos Oliveira','Gerente de Projetos','coliveira@teste.com','coliveira');
+INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'Ana Paula','Programador','apaula@teste.com','apaula');
 
 --SELECT * FROM perfil;
 --SELECT * FROM usuario;
