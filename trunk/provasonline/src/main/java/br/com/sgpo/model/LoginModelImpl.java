@@ -17,11 +17,11 @@ import br.com.sgpo.util.ConexaoBaseDados;
  * @author Roseli
  * 
  */
-public class LoginDaoImpl implements LoginDao {
+public class LoginModelImpl implements LoginModel {
 
-	private static final Logger LOG = Logger.getLogger(LoginDaoImpl.class);
+	private static final Logger LOG = Logger.getLogger(LoginModelImpl.class);
 
-	public LoginDaoImpl() {
+	public LoginModelImpl() {
 	}
 
 	/**

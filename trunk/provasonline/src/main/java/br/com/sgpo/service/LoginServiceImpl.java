@@ -1,8 +1,8 @@
 package br.com.sgpo.service;
 
 import br.com.sgpo.dto.FuncionarioDTO;
-import br.com.sgpo.model.LoginDao;
-import br.com.sgpo.model.LoginDaoImpl;
+import br.com.sgpo.model.LoginModel;
+import br.com.sgpo.model.LoginModelImpl;
 
 /**
  * Classe de implementação dos métodos de autenticação de usuários do sistema.
@@ -12,10 +12,10 @@ import br.com.sgpo.model.LoginDaoImpl;
  */
 public class LoginServiceImpl implements LoginService {
 
-	private LoginDao loginDao;
+	private LoginModel loginDao;
 
 	public LoginServiceImpl() {
-		loginDao = new LoginDaoImpl();
+		loginDao = new LoginModelImpl();
 	}
 
 	/**

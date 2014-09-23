@@ -5,8 +5,8 @@ import java.util.List;
 
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.PerfilDTO;
-import br.com.sgpo.model.FuncionarioDao;
-import br.com.sgpo.model.FuncionarioDaoImpl;
+import br.com.sgpo.model.FuncionarioModel;
+import br.com.sgpo.model.FuncionarioModelImpl;
 
 /**
  * @author Roseli
@@ -14,7 +14,7 @@ import br.com.sgpo.model.FuncionarioDaoImpl;
  */
 public class FuncionarioServiceImpl implements FuncionarioService {
 
-	private FuncionarioDao funcionarioDao = new FuncionarioDaoImpl();
+	private FuncionarioModel funcionarioDao = new FuncionarioModelImpl();
 
 	@Override
 	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
