@@ -1,8 +1,8 @@
 package br.com.sgpo.service;
 
-import br.com.sgpo.dao.LoginDao;
-import br.com.sgpo.dao.LoginDaoImpl;
 import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.model.LoginDao;
+import br.com.sgpo.model.LoginDaoImpl;
 
 /**
  * Classe de implementação dos métodos de autenticação de usuários do sistema.

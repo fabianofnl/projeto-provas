@@ -1,4 +1,4 @@
-package br.com.sgpo.dao;
+package br.com.sgpo.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
