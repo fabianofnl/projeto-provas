@@ -1,6 +1,6 @@
 package br.com.sgpo.dao;
 
-import br.com.sgpo.model.FuncionarioDTO;
+import br.com.sgpo.dto.FuncionarioDTO;
 
 /**
  * Interface de conexão com a base de dados para autenticação de usuários do

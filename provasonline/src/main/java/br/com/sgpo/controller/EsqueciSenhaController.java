@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.model.UsuarioDTO;
+import br.com.sgpo.dto.UsuarioDTO;
 import br.com.sgpo.service.EsqueciSenhaService;
 import br.com.sgpo.service.EsqueciSenhaServiceImpl;
 
