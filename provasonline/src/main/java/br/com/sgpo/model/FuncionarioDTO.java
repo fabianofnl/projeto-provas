@@ -2,7 +2,7 @@ package br.com.sgpo.model;
 
 import java.io.Serializable;
 
-public class Funcionario extends Usuario implements Serializable {
+public class FuncionarioDTO extends UsuarioDTO implements Serializable {
 
 	private static final long serialVersionUID = 3576824392171045517L;
 
@@ -11,7 +11,7 @@ public class Funcionario extends Usuario implements Serializable {
 	private String email;
 	private String funcao;
 
-	public Funcionario() {
+	public FuncionarioDTO() {
 	}
 
 	/**

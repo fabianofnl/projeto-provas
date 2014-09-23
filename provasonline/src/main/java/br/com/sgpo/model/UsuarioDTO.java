@@ -8,14 +8,14 @@ import java.io.Serializable;
  * @author Roseli
  * 
  */
-public class Usuario extends Perfil implements Serializable {
+public class UsuarioDTO extends PerfilDTO implements Serializable {
 
 	private static final long serialVersionUID = -1003024660686069159L;
 
 	private String usuario;
 	private String senha;
 
-	public Usuario() {
+	public UsuarioDTO() {
 	}
 
 	/**

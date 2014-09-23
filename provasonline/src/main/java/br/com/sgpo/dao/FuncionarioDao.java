@@ -3,18 +3,18 @@ package br.com.sgpo.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.sgpo.model.Funcionario;
-import br.com.sgpo.model.Perfil;
+import br.com.sgpo.model.FuncionarioDTO;
+import br.com.sgpo.model.PerfilDTO;
 
 public interface FuncionarioDao {
 
-	public List<Funcionario> listarFuncionarios() throws SQLException,
+	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
 			ClassNotFoundException;
 
-	public List<Perfil> listarPerfis() throws SQLException,
+	public List<PerfilDTO> listarPerfis() throws SQLException,
 			ClassNotFoundException;
 
-	public void gravar(Funcionario funcionario) throws SQLException,
+	public void gravar(FuncionarioDTO funcionario) throws SQLException,
 			ClassNotFoundException;
 
 }

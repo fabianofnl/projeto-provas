@@ -1,6 +1,6 @@
 package br.com.sgpo.service;
 
-import br.com.sgpo.model.Usuario;
+import br.com.sgpo.model.UsuarioDTO;
 
 
 /**
@@ -9,8 +9,8 @@ import br.com.sgpo.model.Usuario;
  */
 public interface EsqueciSenhaService {
 
-	public Usuario buscarUsuario(String nomeUsuario, String email);
+	public UsuarioDTO buscarUsuario(String nomeUsuario, String email);
 
-	public void alterarSenha(Usuario usuario);
+	public void alterarSenha(UsuarioDTO usuario);
 
 }

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import br.com.sgpo.constants.SGPOConstants;
-import br.com.sgpo.model.Funcionario;
+import br.com.sgpo.model.FuncionarioDTO;
 import br.com.sgpo.service.LoginService;
 import br.com.sgpo.service.LoginServiceImpl;
 
@@ -64,7 +64,7 @@ public class LoginController extends HttpServlet {
 
 		LOG.info("Usuario: " + usuario + " | Senha: " + senha);
 
-		Funcionario funcionario = loginService.logar(usuario, senha);
+		FuncionarioDTO funcionario = loginService.logar(usuario, senha);
 
 		LOG.info("Objeto funcionario: " + funcionario);
 

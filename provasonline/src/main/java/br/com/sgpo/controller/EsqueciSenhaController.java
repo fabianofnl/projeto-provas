@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.model.Usuario;
+import br.com.sgpo.model.UsuarioDTO;
 import br.com.sgpo.service.EsqueciSenhaService;
 import br.com.sgpo.service.EsqueciSenhaServiceImpl;
 
@@ -60,7 +60,7 @@ public class EsqueciSenhaController extends HttpServlet {
 
 		LOG.info("Usuario: " + nomeUsuario + " | E-mail: " + email);
 
-		Usuario usuario = esqueciSenhaService.buscarUsuario(nomeUsuario, email);
+		UsuarioDTO usuario = esqueciSenhaService.buscarUsuario(nomeUsuario, email);
 
 		LOG.info("Objeto usuario: " + usuario);
 

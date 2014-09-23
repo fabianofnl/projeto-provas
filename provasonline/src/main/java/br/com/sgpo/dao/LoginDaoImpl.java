@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.model.Funcionario;
+import br.com.sgpo.model.FuncionarioDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
 /**
@@ -29,12 +29,12 @@ public class LoginDaoImpl implements LoginDao {
 	 * <b>usuario</b> para realizar a autenticação.
 	 */
 	@Override
-	public Funcionario logar(String nomeUsuario, String senha) {
+	public FuncionarioDTO logar(String nomeUsuario, String senha) {
 
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		Funcionario funcionario = null;
+		FuncionarioDTO funcionario = null;
 
 		try {
 			conn = ConexaoBaseDados.getConexaoInstance();
@@ -47,7 +47,7 @@ public class LoginDaoImpl implements LoginDao {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				funcionario = new Funcionario();
+				funcionario = new FuncionarioDTO();
 
 				funcionario.setPerfilId(rs.getInt("id"));
 				funcionario.setDescricao(rs.getString("descricao"));

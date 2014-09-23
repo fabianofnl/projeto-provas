@@ -1,6 +1,6 @@
 package br.com.sgpo.service;
 
-import br.com.sgpo.model.Funcionario;
+import br.com.sgpo.model.FuncionarioDTO;
 
 /**
  * Interface de autenticação de usuários do sistema.
@@ -17,6 +17,6 @@ public interface LoginService {
 	 * @param senha
 	 * @return usuario
 	 */
-	public Funcionario logar(String nomeUsuario, String senha);
+	public FuncionarioDTO logar(String nomeUsuario, String senha);
 
 }

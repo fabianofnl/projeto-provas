@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Roseli
  * 
  */
-public class Perfil implements Serializable {
+public class PerfilDTO implements Serializable {
 
 	private static final long serialVersionUID = -456106320628876359L;
 
@@ -17,7 +17,7 @@ public class Perfil implements Serializable {
 	private String descricao;
 	private String role;
 
-	public Perfil() {
+	public PerfilDTO() {
 	}
 
 	/**
