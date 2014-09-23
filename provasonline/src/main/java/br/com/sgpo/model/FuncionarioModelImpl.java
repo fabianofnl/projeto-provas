@@ -17,10 +17,10 @@ import br.com.sgpo.util.ConexaoBaseDados;
  * @author Roseli
  * 
  */
-public class FuncionarioDaoImpl implements FuncionarioDao {
+public class FuncionarioModelImpl implements FuncionarioModel {
 
 	private static final Logger LOG = Logger
-			.getLogger(FuncionarioDaoImpl.class);
+			.getLogger(FuncionarioModelImpl.class);
 
 	private static final String SELECT_TODOS_FUNCIONARIO = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id ORDER BY nome";

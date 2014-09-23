@@ -9,7 +9,7 @@ import br.com.sgpo.dto.FuncionarioDTO;
  * @author Roseli
  * 
  */
-public interface LoginDao {
+public interface LoginModel {
 
 	/**
 	 * Método realiza conexão com a base de dados e retorna objeto

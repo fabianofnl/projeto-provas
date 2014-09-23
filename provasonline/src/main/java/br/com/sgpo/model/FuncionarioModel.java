@@ -6,7 +6,7 @@ import java.util.List;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.PerfilDTO;
 
-public interface FuncionarioDao {
+public interface FuncionarioModel {
 
 	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
 			ClassNotFoundException;
