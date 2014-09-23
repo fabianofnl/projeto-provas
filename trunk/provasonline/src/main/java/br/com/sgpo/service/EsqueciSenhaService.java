@@ -1,6 +1,6 @@
 package br.com.sgpo.service;
 
-import br.com.sgpo.model.UsuarioDTO;
+import br.com.sgpo.dto.UsuarioDTO;
 
 
 /**

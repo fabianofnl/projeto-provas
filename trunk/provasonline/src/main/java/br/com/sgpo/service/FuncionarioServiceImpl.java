@@ -5,8 +5,8 @@ import java.util.List;
 
 import br.com.sgpo.dao.FuncionarioDao;
 import br.com.sgpo.dao.FuncionarioDaoImpl;
-import br.com.sgpo.model.FuncionarioDTO;
-import br.com.sgpo.model.PerfilDTO;
+import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.dto.PerfilDTO;
 
 /**
  * @author Roseli

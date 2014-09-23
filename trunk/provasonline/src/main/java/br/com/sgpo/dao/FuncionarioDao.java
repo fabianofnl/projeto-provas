@@ -3,8 +3,8 @@ package br.com.sgpo.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.sgpo.model.FuncionarioDTO;
-import br.com.sgpo.model.PerfilDTO;
+import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.dto.PerfilDTO;
 
 public interface FuncionarioDao {
 

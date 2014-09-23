@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.model.FuncionarioDTO;
-import br.com.sgpo.model.PerfilDTO;
+import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.dto.PerfilDTO;
 import br.com.sgpo.service.FuncionarioService;
 import br.com.sgpo.service.FuncionarioServiceImpl;
 

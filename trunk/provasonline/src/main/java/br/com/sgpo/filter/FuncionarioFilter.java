@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import br.com.sgpo.constants.SGPOConstants;
-import br.com.sgpo.model.FuncionarioDTO;
+import br.com.sgpo.dto.FuncionarioDTO;
 
 /**
  * Classe que verifica o perfil do usuário ao acessar a página que gerencia os

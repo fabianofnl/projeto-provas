@@ -1,6 +1,6 @@
 package br.com.sgpo.service;
 
-import br.com.sgpo.model.FuncionarioDTO;
+import br.com.sgpo.dto.FuncionarioDTO;
 
 /**
  * Interface de autenticação de usuários do sistema.
