@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.model.Funcionario;
-import br.com.sgpo.model.Perfil;
+import br.com.sgpo.model.FuncionarioDTO;
+import br.com.sgpo.model.PerfilDTO;
 import br.com.sgpo.service.FuncionarioService;
 import br.com.sgpo.service.FuncionarioServiceImpl;
 
@@ -45,8 +45,8 @@ public class FuncionarioCadastrarController extends HttpServlet {
 			LOG.info("Acesso a URL: " + req.getContextPath()
 					+ "/secure/funcionario - method GET");
 
-			List<Funcionario> listaFuncionario = listarFuncionarios();
-			List<Perfil> listaPerfis = listarPerfis();
+			List<FuncionarioDTO> listaFuncionario = listarFuncionarios();
+			List<PerfilDTO> listaPerfis = listarPerfis();
 
 			req.setAttribute("listaFuncionario", listaFuncionario);
 			req.setAttribute("listaPerfis", listaPerfis);
@@ -81,7 +81,7 @@ public class FuncionarioCadastrarController extends HttpServlet {
 			LOG.info("Acesso a URL: " + req.getContextPath()
 					+ "/secure/funcionario - method POST");
 
-			Funcionario funcionario = new Funcionario();
+			FuncionarioDTO funcionario = new FuncionarioDTO();
 
 			funcionario.setMatricula(Integer.parseInt(req
 					.getParameter("matricula")));
@@ -123,17 +123,17 @@ public class FuncionarioCadastrarController extends HttpServlet {
 		}
 	}
 
-	private List<Funcionario> listarFuncionarios()
+	private List<FuncionarioDTO> listarFuncionarios()
 			throws ClassNotFoundException, SQLException {
-		List<Funcionario> listaFuncionario = new ArrayList<Funcionario>();
+		List<FuncionarioDTO> listaFuncionario = new ArrayList<FuncionarioDTO>();
 		listaFuncionario = funcionarioService.listarFuncionarios();
 
 		return listaFuncionario;
 	}
 
-	private List<Perfil> listarPerfis() throws ClassNotFoundException,
+	private List<PerfilDTO> listarPerfis() throws ClassNotFoundException,
 			SQLException {
-		List<Perfil> listaPerfis = new ArrayList<Perfil>();
+		List<PerfilDTO> listaPerfis = new ArrayList<PerfilDTO>();
 		listaPerfis = funcionarioService.listarPerfis();
 
 		return listaPerfis;

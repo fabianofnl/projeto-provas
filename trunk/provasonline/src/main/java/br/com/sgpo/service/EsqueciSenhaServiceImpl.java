@@ -1,6 +1,6 @@
 package br.com.sgpo.service;
 
-import br.com.sgpo.model.Usuario;
+import br.com.sgpo.model.UsuarioDTO;
 
 
 /**
@@ -10,13 +10,13 @@ import br.com.sgpo.model.Usuario;
 public class EsqueciSenhaServiceImpl implements EsqueciSenhaService {
 
 	@Override
-	public Usuario buscarUsuario(String nomeUsuario, String email) {
+	public UsuarioDTO buscarUsuario(String nomeUsuario, String email) {
 		
 		return null;
 	}
 
 	@Override
-	public void alterarSenha(Usuario usuario) {
+	public void alterarSenha(UsuarioDTO usuario) {
 		
 	}
 

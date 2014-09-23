@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import br.com.sgpo.constants.SGPOConstants;
-import br.com.sgpo.model.Funcionario;
+import br.com.sgpo.model.FuncionarioDTO;
 
 /**
  * Classe que verifica o perfil do usuário ao acessar a página que gerencia os
@@ -55,7 +55,7 @@ public class FuncionarioFilter implements Filter {
 
 		HttpSession session = req.getSession();
 
-		Funcionario funcionario = (Funcionario) session
+		FuncionarioDTO funcionario = (FuncionarioDTO) session
 				.getAttribute(SGPOConstants.LOGGED_FUNCIONARIO);
 
 		if (funcionario != null) {

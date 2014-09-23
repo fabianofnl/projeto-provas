@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.model.Funcionario;
-import br.com.sgpo.model.Perfil;
+import br.com.sgpo.model.FuncionarioDTO;
+import br.com.sgpo.model.PerfilDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
 /**
@@ -34,7 +34,7 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 			+ "VALUES (?, ?, ?, ?, ?)";
 
 	@Override
-	public List<Funcionario> listarFuncionarios()
+	public List<FuncionarioDTO> listarFuncionarios()
 			throws ClassNotFoundException, SQLException {
 
 		LOG.info("Chamando método listarFuncionarios");
@@ -43,14 +43,14 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		List<Funcionario> listaFuncionarios = new ArrayList<Funcionario>();
+		List<FuncionarioDTO> listaFuncionarios = new ArrayList<FuncionarioDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(SELECT_TODOS_FUNCIONARIO);
 		rs = pstmt.executeQuery();
-		Funcionario func = null;
+		FuncionarioDTO func = null;
 
 		while (rs.next()) {
-			func = new Funcionario();
+			func = new FuncionarioDTO();
 			func.setMatricula(rs.getInt("matricula"));
 			func.setNome(rs.getString("nome"));
 			func.setEmail(rs.getString("email"));
@@ -75,7 +75,7 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 	}
 
 	@Override
-	public List<Perfil> listarPerfis() throws SQLException,
+	public List<PerfilDTO> listarPerfis() throws SQLException,
 			ClassNotFoundException {
 
 		LOG.info("Chamando método listarPerfis");
@@ -83,14 +83,14 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		List<Perfil> listaPerfis = new ArrayList<Perfil>();
+		List<PerfilDTO> listaPerfis = new ArrayList<PerfilDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(SELECT_TODOS_PERFIS);
 		rs = pstmt.executeQuery();
-		Perfil perfil = null;
+		PerfilDTO perfil = null;
 
 		while (rs.next()) {
-			perfil = new Perfil();
+			perfil = new PerfilDTO();
 			perfil.setPerfilId(rs.getInt("id"));
 			perfil.setDescricao(rs.getString("descricao"));
 			perfil.setRole(rs.getString("rolename"));
@@ -108,7 +108,7 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 	}
 
 	@Override
-	public void gravar(Funcionario funcionario) throws SQLException,
+	public void gravar(FuncionarioDTO funcionario) throws SQLException,
 			ClassNotFoundException {
 
 		LOG.info("Chamando método gravar Funcionario");

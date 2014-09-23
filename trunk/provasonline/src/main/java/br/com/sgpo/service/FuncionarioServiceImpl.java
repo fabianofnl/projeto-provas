@@ -5,8 +5,8 @@ import java.util.List;
 
 import br.com.sgpo.dao.FuncionarioDao;
 import br.com.sgpo.dao.FuncionarioDaoImpl;
-import br.com.sgpo.model.Funcionario;
-import br.com.sgpo.model.Perfil;
+import br.com.sgpo.model.FuncionarioDTO;
+import br.com.sgpo.model.PerfilDTO;
 
 /**
  * @author Roseli
@@ -17,19 +17,19 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	private FuncionarioDao funcionarioDao = new FuncionarioDaoImpl();
 
 	@Override
-	public List<Funcionario> listarFuncionarios() throws SQLException,
+	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
 			ClassNotFoundException {
 		return funcionarioDao.listarFuncionarios();
 	}
 
 	@Override
-	public List<Perfil> listarPerfis() throws SQLException,
+	public List<PerfilDTO> listarPerfis() throws SQLException,
 			ClassNotFoundException {
 		return funcionarioDao.listarPerfis();
 	}
 
 	@Override
-	public void gravar(Funcionario funcionario) throws SQLException,
+	public void gravar(FuncionarioDTO funcionario) throws SQLException,
 			ClassNotFoundException {
 		funcionarioDao.gravar(funcionario);
 	}
