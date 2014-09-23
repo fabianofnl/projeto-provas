@@ -1,4 +1,4 @@
-package br.com.sgpo.dao;
+package br.com.sgpo.model;
 
 import java.sql.SQLException;
 import java.util.List;

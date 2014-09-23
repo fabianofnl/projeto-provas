@@ -3,10 +3,10 @@ package br.com.sgpo.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.sgpo.dao.FuncionarioDao;
-import br.com.sgpo.dao.FuncionarioDaoImpl;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.PerfilDTO;
+import br.com.sgpo.model.FuncionarioDao;
+import br.com.sgpo.model.FuncionarioDaoImpl;
 
 /**
  * @author Roseli
