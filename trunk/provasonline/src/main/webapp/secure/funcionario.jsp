@@ -16,11 +16,24 @@
 			<div class="row">
 				<div class="span12 offset3">
 					<label><strong>Cadastrar Colaboradores</strong></label>
-					<c:if test="${msg ne null}">
-						<p class="bg-lightBlue fg-white">
-							<span class="icon-info padding10"></span>${msg}
-						</p>
-					</c:if>
+					<c:choose>
+						<c:when test="${msgType eq 'info'}">
+							<p id="idMsg" class="bg-lightBlue fg-white">
+								<span class="icon-info padding10"></span>${msg}
+							</p>
+							<script type="text/javascript">
+								$("#idMsg").fadeOut(10000);
+							</script>
+						</c:when>
+						<c:otherwise>
+							<p id="idMsg" class="bg-lightRed fg-white">
+								<span class="icon-cancel padding10"></span>${msg}
+							</p>
+							<script type="text/javascript">
+								$("#idMsg").fadeOut(10000);
+							</script>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 
