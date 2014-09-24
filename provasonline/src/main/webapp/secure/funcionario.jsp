@@ -16,31 +16,23 @@
 			<div class="row">
 				<div class="span12 offset3">
 					<label><strong>Cadastrar Colaboradores</strong></label>
-					<c:choose>
-						<c:when test="${msgType eq 'info'}">
-							<p id="idMsg" class="bg-lightBlue fg-white">
-								<span class="icon-info padding10"></span>${msg}
-							</p>
-							<script type="text/javascript">
-								$("#idMsg").fadeOut(10000);
-							</script>
-						</c:when>
-						<c:otherwise>
-							<p id="idMsg" class="bg-lightRed fg-white">
-								<span class="icon-cancel padding10"></span>${msg}
-							</p>
-							<script type="text/javascript">
-								$("#idMsg").fadeOut(10000);
-							</script>
-						</c:otherwise>
-					</c:choose>
+					<c:if test="${msgType eq 'info'}">
+						<p id="idMsg" class="bg-lightBlue fg-white">
+							<span class="icon-info padding10"></span>${msg}
+						</p>
+						<script type="text/javascript">
+							setTimeout(function(){
+								$("#idMsg").fadeOut(1000);
+							}, 6000);
+						</script>
+					</c:if>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="span12 offset3">
-					<div class="tableHeader">
-						<table border="1" style="width: 100%">
+					<div class="divHeader">
+						<table class="tableClass tableHeader">
 							<thead>
 								<tr>
 									<th style="width:10%">Matricula</th>
@@ -53,8 +45,8 @@
 							</thead>
 						</table>
 					</div>
-					<div class="tableBody" style="position:relative; top: -1px;">
-						<table border="1" style="width: 100%">
+					<div class="divBody">
+						<table class="tableClass tableBody">
 							<tbody>
 								<c:choose>
 									<c:when test="${empty listaFuncionario}">
@@ -78,8 +70,8 @@
 							</tbody>
 						</table>
 					</div>
-					<div class="tableFooter" style="position:relative; top: -2px; border-top: 1px solid;">
-						<table style="width: 100%">
+					<div class="divFooter">
+						<table class="tableClass tableFooter">
 							<tfoot>
 								<tr>
 									<td>
