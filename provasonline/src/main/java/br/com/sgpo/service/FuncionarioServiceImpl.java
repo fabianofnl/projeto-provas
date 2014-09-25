@@ -17,9 +17,9 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	private FuncionarioModel funcionarioDao = new FuncionarioModelImpl();
 
 	@Override
-	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
-			ClassNotFoundException {
-		return funcionarioDao.listarFuncionarios();
+	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
+			Integer recordPerPage) throws SQLException, ClassNotFoundException {
+		return funcionarioDao.listarFuncionarios(offSet, recordPerPage);
 	}
 
 	@Override
@@ -32,6 +32,12 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	public void gravar(FuncionarioDTO funcionario) throws SQLException,
 			ClassNotFoundException {
 		funcionarioDao.gravar(funcionario);
+	}
+
+	@Override
+	public Integer getTotalRegistros() throws SQLException,
+			ClassNotFoundException {
+		return funcionarioDao.getTotalRegistros();
 	}
 
 }
