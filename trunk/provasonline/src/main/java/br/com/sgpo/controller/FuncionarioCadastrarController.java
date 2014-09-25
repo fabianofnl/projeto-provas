@@ -41,25 +41,35 @@ public class FuncionarioCadastrarController extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			Integer pagina = 1;
+			Integer registroPorPagina = 15;
+			Integer numeroRegistros = 0;
+			Integer numeroDePaginas = 0;
 
 			LOG.info("Acesso a URL: " + req.getContextPath()
 					+ "/secure/funcionario - method GET");
 
-			List<FuncionarioDTO> listaFuncionario = listarFuncionarios();
+			if (req.getParameter("pagina") != null) {
+				pagina = Integer.parseInt(req.getParameter("pagina"));
+			}
+			List<FuncionarioDTO> listaFuncionario = listarFuncionarios(
+					(pagina - 1) * registroPorPagina, registroPorPagina);
 			List<PerfilDTO> listaPerfis = listarPerfis();
+
+			numeroRegistros = getTotalRegistros();
+
+			if (numeroRegistros == 0) {
+				numeroRegistros = 1;
+			}
+
+			numeroDePaginas = (int) Math.ceil(numeroRegistros * 1.0
+					/ registroPorPagina);
 
 			req.setAttribute("listaFuncionario", listaFuncionario);
 			req.setAttribute("listaPerfis", listaPerfis);
 
-			Integer page = 1;
-
-			if (req.getParameter("page") != null) {
-				page = Integer.parseInt(req.getParameter("page"));
-			}
-
-			// TODO teste
-			req.setAttribute("page", page);
-			req.setAttribute("totalPages", 20);
+			req.setAttribute("pagina", pagina);
+			req.setAttribute("numeroDePaginas", numeroDePaginas);
 
 			req.getRequestDispatcher("/secure/funcionario.jsp").forward(req,
 					resp);
@@ -95,24 +105,24 @@ public class FuncionarioCadastrarController extends HttpServlet {
 
 			funcionarioService.gravar(funcionario);
 
-			//TODO Verificar um jeito de ajustar a renderização da página
+			// TODO Verificar um jeito de ajustar a renderização da página
 			/*
-			 * Após inserir um funcionario, se pressionar CTRL + R
-			 * ele executa o form novamente, no caso é como se
-			 * estive preenchendo o formulario com os mesmos dados anterior
+			 * Após inserir um funcionario, se pressionar CTRL + R ele executa o
+			 * form novamente, no caso é como se estive preenchendo o formulario
+			 * com os mesmos dados anterior
 			 */
-			
-			//List<Funcionario> listaFuncionario = listarFuncionarios();
-			//List<Perfil> listaPerfis = listarPerfis();
 
-			//req.setAttribute("listaFuncionario", listaFuncionario);
-			//req.setAttribute("listaPerfis", listaPerfis);
+			// List<Funcionario> listaFuncionario = listarFuncionarios();
+			// List<Perfil> listaPerfis = listarPerfis();
+
+			// req.setAttribute("listaFuncionario", listaFuncionario);
+			// req.setAttribute("listaPerfis", listaPerfis);
 			req.setAttribute("msgType", "info");
 			req.setAttribute("msg", "Funcionario gravado com sucesso!");
 
-			//req.getRequestDispatcher("/secure/funcionario.jsp").forward(req,
-			//		resp);
-			
+			// req.getRequestDispatcher("/secure/funcionario.jsp").forward(req,
+			// resp);
+
 			doGet(req, resp);
 
 		} catch (ClassNotFoundException e) {
@@ -128,10 +138,11 @@ public class FuncionarioCadastrarController extends HttpServlet {
 		}
 	}
 
-	private List<FuncionarioDTO> listarFuncionarios()
-			throws ClassNotFoundException, SQLException {
+	private List<FuncionarioDTO> listarFuncionarios(Integer offSet,
+			Integer recordPerPage) throws ClassNotFoundException, SQLException {
 		List<FuncionarioDTO> listaFuncionario = new ArrayList<FuncionarioDTO>();
-		listaFuncionario = funcionarioService.listarFuncionarios();
+		listaFuncionario = funcionarioService.listarFuncionarios(offSet,
+				recordPerPage);
 
 		return listaFuncionario;
 	}
@@ -142,5 +153,11 @@ public class FuncionarioCadastrarController extends HttpServlet {
 		listaPerfis = funcionarioService.listarPerfis();
 
 		return listaPerfis;
+	}
+
+	private Integer getTotalRegistros() throws ClassNotFoundException,
+			SQLException {
+
+		return funcionarioService.getTotalRegistros();
 	}
 }

@@ -47,6 +47,15 @@ html .linkEsqueciSenha {
 	border-top: 1px solid;
 }
 
+.custom-separator {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
 .paginatorList { margin: 2px 6px; list-style: none outside none; }
 .paginatorList li { float: left; padding: 2px 4px; font-size: 1em; }
 li.paginatorCurr { font-weight: bold; font-size: 1.5em; margin-top: -2px; }

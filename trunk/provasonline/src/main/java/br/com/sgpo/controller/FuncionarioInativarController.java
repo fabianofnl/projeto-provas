@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
  * @author Roseli
  * 
  */
-@WebServlet(value = "/secure/inativar")
+@WebServlet(value = "/secure/funcionarioInativar")
 public class FuncionarioInativarController extends HttpServlet {
 
 	private static final long serialVersionUID = -3533861150730467156L;

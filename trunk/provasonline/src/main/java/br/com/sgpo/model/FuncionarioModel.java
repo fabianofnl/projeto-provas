@@ -8,13 +8,16 @@ import br.com.sgpo.dto.PerfilDTO;
 
 public interface FuncionarioModel {
 
-	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
-			ClassNotFoundException;
+	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
+			Integer recordPerPage) throws SQLException, ClassNotFoundException;
 
 	public List<PerfilDTO> listarPerfis() throws SQLException,
 			ClassNotFoundException;
 
 	public void gravar(FuncionarioDTO funcionario) throws SQLException,
+			ClassNotFoundException;
+
+	public Integer getTotalRegistros() throws SQLException,
 			ClassNotFoundException;
 
 }

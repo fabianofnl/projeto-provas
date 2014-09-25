@@ -23,7 +23,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			.getLogger(FuncionarioModelImpl.class);
 
 	private static final String SELECT_TODOS_FUNCIONARIO = "SELECT * FROM funcionario f, usuario u, perfil p "
-			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id ORDER BY nome";
+			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id ORDER BY nome LIMIT ? OFFSET ?";
 
 	private static final String SELECT_TODOS_PERFIS = "SELECT * FROM perfil";
 
@@ -33,9 +33,11 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	private static final String INSERT_FUNCIONARIO = "INSERT INTO funcionario (matricula, nome, funcao, email, usuario) "
 			+ "VALUES (?, ?, ?, ?, ?)";
 
+	private static final String SELECT_TOTAL_REGISTROS = "SELECT COUNT(matricula) AS total FROM funcionario";
+
 	@Override
-	public List<FuncionarioDTO> listarFuncionarios()
-			throws ClassNotFoundException, SQLException {
+	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
+			Integer recordPerPage) throws ClassNotFoundException, SQLException {
 
 		LOG.info("Chamando método listarFuncionarios");
 
@@ -46,6 +48,8 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 		List<FuncionarioDTO> listaFuncionarios = new ArrayList<FuncionarioDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(SELECT_TODOS_FUNCIONARIO);
+		pstmt.setInt(1, recordPerPage);
+		pstmt.setInt(2, offSet);
 		rs = pstmt.executeQuery();
 		FuncionarioDTO func = null;
 
@@ -117,9 +121,9 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 
 		// TODO Há um bug nessa lógica
 		/*
-		 * Pode acontecer do sistema gravar o usuario e acaber tendo problemas
-		 * em gravar o funcionario, então os dados ficarão corrompidos. Seria
-		 * interessante utilizar o conceito de ROOLBACK
+		 * Pode acontecer do sistema gravar o usuario e ter problemas
+		 * em gravar o funcionario, então os dados não terão mais integridade. Seria
+		 * interessante utilizar o conceito de TRANSACTION COMMIT/ROLLBACK
 		 */
 
 		conn = ConexaoBaseDados.getConexaoInstance();
@@ -141,6 +145,33 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
+	}
 
+	@Override
+	public Integer getTotalRegistros() throws SQLException,
+			ClassNotFoundException {
+
+		LOG.info("Chamando método gravar Funcionario");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Integer totalRegistros = 0;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_TOTAL_REGISTROS);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			totalRegistros = rs.getInt("total");
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return totalRegistros;
 	}
 }
