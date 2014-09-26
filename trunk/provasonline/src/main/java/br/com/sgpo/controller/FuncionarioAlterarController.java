@@ -61,7 +61,7 @@ public class FuncionarioAlterarController extends HttpServlet {
 			req.setAttribute("listaPerfis", listaPerfis);
 			req.setAttribute("func", funcionario);
 
-			req.getRequestDispatcher("/secure/alterarFuncionario.jsp").forward(
+			req.getRequestDispatcher("/secure/funcionarioAlterar.jsp").forward(
 					req, resp);
 
 		} catch (ClassNotFoundException e) {

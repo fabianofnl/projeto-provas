@@ -12,7 +12,7 @@
 	<jsp:include page="/header.jsp"></jsp:include>
 	<jsp:include page="/secure/menu.jsp"></jsp:include>
 	<section style="padding: 1px;">
-		<div id="divFrmInativar" style="display: none;">
+		<div id="divFrmInativar">
 			<form id="frmDialogInativar" action="funcionarioInativar" method="post">
 				<div class="grid">
 					<div class="row">
@@ -21,13 +21,14 @@
 							<div class="input-control text">
 								<input type="text" id="matricula" name="matricula" oninput="setCustomValidity('')"
 									oninvalid="setCustomValidity('Por favor, preencha este campo.')" required
-									autofocus="autofocus">
+									autofocus="autofocus" value="${func.matricula}" readonly="readonly">
 								<button class="btn-clear"></button>
 							</div>
 							<label>Nome:</label>
 							<div class="input-control text">
 								<input type="text" id="nome" name="nome" oninput="setCustomValidity('')"
-									oninvalid="setCustomValidity('Por favor, preencha este campo.')" required>
+									oninvalid="setCustomValidity('Por favor, preencha este campo.')" required
+									value="${func.nome}" readonly="readonly">
 								<button class="btn-clear"></button>
 							</div>
 						</div>
@@ -37,7 +38,6 @@
 						<div class="span3">
 							<div class="form-actions">
 								<button class="button primary">Enviar</button>
-								<button class="button" type="button" onclick="$.Dialog.close()">Cancel</button>
 							</div>
 						</div>
 					</div>
@@ -45,5 +45,6 @@
 			</form>
 		</div>
 	</section>
+	<jsp:include page="/footer.jsp"></jsp:include>
 </body>
 </html>
