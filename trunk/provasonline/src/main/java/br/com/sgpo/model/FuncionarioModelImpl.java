@@ -35,6 +35,9 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 
 	private static final String SELECT_TOTAL_REGISTROS = "SELECT COUNT(matricula) AS total FROM funcionario";
 
+	private static final String SELECT_FUNCIONAR_POR_MATRICULA = "SELECT * FROM funcionario f, usuario u, perfil p "
+			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND f.matricula = ?";
+
 	@Override
 	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
 			Integer recordPerPage) throws ClassNotFoundException, SQLException {
@@ -121,8 +124,8 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 
 		// TODO Há um bug nessa lógica
 		/*
-		 * Pode acontecer do sistema gravar o usuario e ter problemas
-		 * em gravar o funcionario, então os dados não terão mais integridade. Seria
+		 * Pode acontecer do sistema gravar o usuario e ter problemas em gravar
+		 * o funcionario, então os dados não terão mais integridade. Seria
 		 * interessante utilizar o conceito de TRANSACTION COMMIT/ROLLBACK
 		 */
 
@@ -173,5 +176,43 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			conn.close();
 
 		return totalRegistros;
+	}
+
+	@Override
+	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
+			throws SQLException, ClassNotFoundException {
+		LOG.info("Chamando método buscar Funcionario por matricula");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		FuncionarioDTO func = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_FUNCIONAR_POR_MATRICULA);
+		pstmt.setInt(1, matricula);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			func = new FuncionarioDTO();
+			func.setMatricula(rs.getInt("matricula"));
+			func.setNome(rs.getString("nome"));
+			func.setEmail(rs.getString("email"));
+			func.setFuncao(rs.getString("funcao"));
+
+			func.setUsuario(rs.getString("usuario"));
+
+			func.setPerfilId(rs.getInt("id"));
+			func.setDescricao(rs.getString("descricao"));
+			func.setRole(rs.getString("rolename"));
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return func;
 	}
 }

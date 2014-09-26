@@ -20,4 +20,7 @@ public interface FuncionarioModel {
 	public Integer getTotalRegistros() throws SQLException,
 			ClassNotFoundException;
 
+	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
+			throws SQLException, ClassNotFoundException;
+
 }

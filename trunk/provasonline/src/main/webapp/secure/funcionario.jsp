@@ -65,23 +65,13 @@
 												<td style="width:10%">${func.descricao}</td>
 												<td style="width:10%; text-align: center;">${func.usuario}</td>
 												<td style="width:9%; text-align: center;">
-													<span class="icon-wrench pointer" title="Alterar" onclick="dialogAlterar(this);">
-														<input type="hidden" value="${func.matricula}">
-														<input type="hidden" value="${func.nome}">
-														<input type="hidden" value="${func.email}">
-														<input type="hidden" value="${func.funcao}">
-														<input type="hidden" value="${func.descricao}">
-														<input type="hidden" value="${func.usuario}">
-													</span>
+													<a href="${pageContext.request.contextPath}/secure/alterarFuncionario?matricula=${func.matricula}">
+														<span class="icon-wrench" title="Alterar"></span>
+													</a>
 													<span class="custom-separator">|</span>
-													<span class="icon-remove pointer" title="Inativar" onclick="dialogInativar(this);">
-														<input type="hidden" value="${func.matricula}">
-														<input type="hidden" value="${func.nome}">
-														<input type="hidden" value="${func.email}">
-														<input type="hidden" value="${func.funcao}">
-														<input type="hidden" value="${func.descricao}">
-														<input type="hidden" value="${func.usuario}">
-													</span>
+													<a href="${pageContext.request.contextPath}/secure/inativarFuncionario?matricula=${func.matricula}">
+														<span class="icon-remove" title="Inativar"></span>
+													</a>
 												</td>
 											</tr>
 										</c:forEach>
@@ -109,8 +99,6 @@
 		</div>
 	</section>
 	<jsp:include page="/secure/dialogCadastrarFuncionario.jsp"></jsp:include>
-	<jsp:include page="/secure/dialogAlterarFuncionario.jsp"></jsp:include>
-	<jsp:include page="/secure/dialogInativarFuncionario.jsp"></jsp:include>
 	<jsp:include page="/footer.jsp"></jsp:include>
 </body>
 </html>
