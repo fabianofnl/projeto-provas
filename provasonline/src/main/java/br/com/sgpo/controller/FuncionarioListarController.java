@@ -23,11 +23,11 @@ import br.com.sgpo.service.FuncionarioServiceImpl;
  * 
  */
 @WebServlet(value = "/secure/funcionario")
-public class FuncionarioCadastrarController extends HttpServlet {
+public class FuncionarioListarController extends HttpServlet {
 
 	private static final long serialVersionUID = 1803345723538484813L;
 	private static final Logger LOG = Logger
-			.getLogger(FuncionarioCadastrarController.class);
+			.getLogger(FuncionarioListarController.class);
 
 	private FuncionarioService funcionarioService;
 
