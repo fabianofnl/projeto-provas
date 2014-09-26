@@ -40,4 +40,10 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return funcionarioDao.getTotalRegistros();
 	}
 
+	@Override
+	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
+			throws SQLException, ClassNotFoundException {
+		return funcionarioDao.buscarFuncionarioPorMatricula(matricula);
+	}
+
 }
