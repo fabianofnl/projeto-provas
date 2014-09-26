@@ -3,7 +3,7 @@
 	<div class="navigation-bar dark">
 		<div class="navigation-bar-content container">
 			<a href="${pageContext.request.contextPath}/secure/home.jsp" class="element">
-				<span class="icon-home"></span> SGPO
+				<span class="icon-home"></span> Provas Online
 			</a>
 			<span class="element-divider"></span>
 			<ul class="element-menu">
@@ -21,8 +21,9 @@
 					<li>
 						<a class="dropdown-toggle" href="#">Funcionario</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
-							<li><a href="${pageContext.request.contextPath}/secure/funcionario">Gerenciar</a></li>
-							<li><a href="${pageContext.request.contextPath}/secure/funcionarioRelatorio">Consultar Relatório</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/cadastrarFuncionario">Cadastrar</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/funcionario">Consultar</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/relatorioFuncionario">Consultar Relatório</a></li>
 						</ul>
 					</li>
 				</c:if>

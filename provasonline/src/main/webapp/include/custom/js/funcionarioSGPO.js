@@ -1,6 +1,7 @@
 /**
  * Scripts específicos do sistema (Página Funcionario)
  */
+/*
 $(function(){
 	$("#createFlatWindow").on('click', function(){
 		$.Dialog({
@@ -53,4 +54,4 @@ function dialogInativar(element){
 		alert(sub[i].value);
 	}
 }
-
+*/

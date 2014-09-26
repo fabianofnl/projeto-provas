@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +20,12 @@
 					<div class="span5 offset10">
 						<fieldset>
 							<legend>Erro 500</legend>
-							<label>Erro na aplicação durante o processamento.</label>
+							<c:if test="${msgType eq 'error'}">
+								<p id="idMsg" class="bg-lightRed fg-white">
+									<span class="icon-remove padding10"></span>
+									<label>Erro na aplicação durante o processamento.</label>
+								</p>
+							</c:if>							
 							<a href="${pageContext.request.contextPath}/secure/home.jsp" class="marginTop20 button bd-gray">
 								Voltar
 							</a>
