@@ -15,17 +15,17 @@ import org.apache.log4j.Logger;
  * @author Roseli
  *
  */
-@WebServlet(value="/secure/agendarProvas")
-public class AgendarProvasController extends HttpServlet {
+@WebServlet(value="/secure/montarProvas")
+public class ProvasMontarController extends HttpServlet {
 
 	private static final long serialVersionUID = -4294843051118528464L;
-	private static final Logger LOG = Logger.getLogger(AgendarProvasController.class);
+	private static final Logger LOG = Logger.getLogger(ProvasMontarController.class);
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		LOG.info("Acessando classe agendar provas - método GET");
-		req.getRequestDispatcher("/secure/agendarProvas.jsp").forward(req, resp);
+		LOG.info("Acessando classe montar provas - método GET");
+		req.getRequestDispatcher("/secure/montarProvas.jsp").forward(req, resp);
 	}
 	
 }

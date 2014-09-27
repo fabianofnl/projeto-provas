@@ -59,6 +59,7 @@ public class FuncionarioListarController extends HttpServlet {
 			numeroRegistros = getTotalRegistros();
 
 			if (numeroRegistros == 0) {
+				req.setAttribute("listSize", 0);
 				numeroRegistros = 1;
 			}
 
