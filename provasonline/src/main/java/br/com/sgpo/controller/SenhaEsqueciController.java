@@ -22,10 +22,10 @@ import br.com.sgpo.service.EsqueciSenhaServiceImpl;
  * 
  */
 @WebServlet(value = "/esqueciSenha")
-public class EsqueciSenhaController extends HttpServlet {
+public class SenhaEsqueciController extends HttpServlet {
 
 	private static final long serialVersionUID = -2114908945534512046L;
-	private static final Logger LOG = Logger.getLogger(EsqueciSenhaController.class);
+	private static final Logger LOG = Logger.getLogger(SenhaEsqueciController.class);
 
 	private static final String VAR_TITULO_PAGINA = "tituloPagina";
 	private static final String TITULO_PAGINA_ESQUECI_SENHA = "Provas Online | Esqueci Senha";

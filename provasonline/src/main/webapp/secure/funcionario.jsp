@@ -31,12 +31,13 @@
 							<table class="tableClass tableHeader">
 								<thead>
 									<tr>
-										<th style="width:10%">Matricula</th>
-										<th style="width:25%">Nome</th>
+										<th style="width:9%">Matricula</th>
+										<th style="width:18%">Nome</th>
 										<th style="width:20%">E-mail</th>
 										<th style="width:16%">Função</th>
-										<th style="width:10%">Perfil</th>
+										<th style="width:11%">Perfil</th>
 										<th style="width:10%">Usuário</th>
+										<th style="width:7%">Status</th>
 										<th style="width:9%">Ações</th>
 									</tr>
 								</thead>
@@ -54,12 +55,13 @@
 										<c:otherwise>
 											<c:forEach items="${listaFuncionario}" var="func">
 												<tr>
-													<td style="width:10%; text-align: center;">${func.matricula}</td>
-													<td style="width:25%">${func.nome}</td>
+													<td style="width:9%; text-align: center;">${func.matricula}</td>
+													<td style="width:18%">${func.nome}</td>
 													<td style="width:20%">${func.email}</td>
 													<td style="width:16%">${func.funcao}</td>
-													<td style="width:10%">${func.descricao}</td>
+													<td style="width:11%">${func.descricao}</td>
 													<td style="width:10%; text-align: center;">${func.usuario}</td>
+													<td style="width:7%; text-align: center;">${func.status}</td>
 													<td style="width:9%; text-align: center;">
 														<a href="${pageContext.request.contextPath}/secure/alterarFuncionario?matricula=${func.matricula}">
 															<span class="icon-wrench" title="Alterar"></span>
@@ -86,9 +88,6 @@
 									</tr>
 								</tfoot>
 							</table>
-						</div>
-						<div class="form-actions">
-							<button class="button primary" onclick="location.href='${pageContext.request.contextPath}/secure/cadastrarFuncionario'">Enviar</button>
 						</div>
 					</fieldset>
 				</div>

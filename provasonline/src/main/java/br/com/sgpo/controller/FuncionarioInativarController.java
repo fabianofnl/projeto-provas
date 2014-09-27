@@ -2,6 +2,8 @@ package br.com.sgpo.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.dto.PerfilDTO;
 import br.com.sgpo.service.FuncionarioService;
 import br.com.sgpo.service.FuncionarioServiceImpl;
 
@@ -27,7 +30,7 @@ public class FuncionarioInativarController extends HttpServlet {
 
 	private static final Logger LOG = Logger
 			.getLogger(FuncionarioInativarController.class);
-	
+
 	private FuncionarioService funcionarioService;
 
 	@Override
@@ -38,10 +41,10 @@ public class FuncionarioInativarController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+
 		try {
 			LOG.info("Acessando classe inativar - metodo GET");
-			
+
 			String matricula = req.getParameter("matricula");
 
 			if (!StringUtils.isNumeric(matricula)) {
@@ -53,12 +56,15 @@ public class FuncionarioInativarController extends HttpServlet {
 			}
 			FuncionarioDTO funcionario = funcionarioService
 					.buscarFuncionarioPorMatricula(Integer.parseInt(matricula));
-			
+
+			List<PerfilDTO> listaPerfis = listarPerfis();
+
+			req.setAttribute("listaPerfis", listaPerfis);
 			req.setAttribute("func", funcionario);
-			
-			req.getRequestDispatcher("/secure/funcionarioInativar.jsp").forward(
-					req, resp);
-			
+
+			req.getRequestDispatcher("/secure/funcionarioInativar.jsp")
+					.forward(req, resp);
+
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);
 			req.setAttribute("msgType", "error");
@@ -70,16 +76,16 @@ public class FuncionarioInativarController extends HttpServlet {
 			req.setAttribute("msg", "Erro durante o processamento!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		}
-		
+
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+
 		try {
 			LOG.info("Acessando classe inativar - metodo POST");
-			
+
 			String matricula = req.getParameter("matricula");
 
 			if (!StringUtils.isNumeric(matricula)) {
@@ -89,9 +95,9 @@ public class FuncionarioInativarController extends HttpServlet {
 						req, resp);
 				return;
 			}
-			
+
 			funcionarioService.inativarFuncionario(Integer.parseInt(matricula));
-			
+
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);
 			req.setAttribute("msgType", "error");
@@ -103,5 +109,13 @@ public class FuncionarioInativarController extends HttpServlet {
 			req.setAttribute("msg", "Erro durante o processamento!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		}
+	}
+
+	private List<PerfilDTO> listarPerfis() throws ClassNotFoundException,
+			SQLException {
+		List<PerfilDTO> listaPerfis = new ArrayList<PerfilDTO>();
+		listaPerfis = funcionarioService.listarPerfis();
+
+		return listaPerfis;
 	}
 }
