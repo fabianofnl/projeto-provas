@@ -21,7 +21,7 @@
 						<fieldset>
 							<legend>Erro 404</legend>
 							<c:if test="${msgType eq 'error'}">
-								<p id="idMsg" class="bg-lightYellow fg-white">
+								<p id="idMsg" class="bg-amber fg-white">
 									<span class="icon-warning padding10"></span>
 									<label>Página não encontrada</label>
 								</p>

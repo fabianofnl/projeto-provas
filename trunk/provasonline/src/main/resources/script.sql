@@ -19,6 +19,7 @@ CREATE TABLE funcionario (
 	nome VARCHAR(100) NOT NULL,
 	funcao VARCHAR (100) NOT NULL,
 	email VARCHAR(100) NOT NULL,
+	status VARCHAR(10) DEFAULT 'Ativo',
 	usuario VARCHAR(100) NOT NULL REFERENCES usuario(usuario)
 );
 

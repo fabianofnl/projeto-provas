@@ -10,6 +10,7 @@ public class FuncionarioDTO extends UsuarioDTO implements Serializable {
 	private String nome;
 	private String email;
 	private String funcao;
+	private String status;
 
 	public FuncionarioDTO() {
 	}
@@ -84,6 +85,24 @@ public class FuncionarioDTO extends UsuarioDTO implements Serializable {
 	 */
 	public void setFuncao(String funcao) {
 		this.funcao = funcao;
+	}
+
+	/**
+	 * Método retorna objeto <b>status</b> do usuario.
+	 * 
+	 * @return status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * Método atribui objeto <b>status</b> ao usuario
+	 * 
+	 * @param status
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

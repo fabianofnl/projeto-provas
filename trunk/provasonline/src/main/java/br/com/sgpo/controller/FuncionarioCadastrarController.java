@@ -54,9 +54,13 @@ public class FuncionarioCadastrarController extends HttpServlet {
 
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);
+			req.setAttribute("msgType", "error");
+			req.setAttribute("msg", "Erro durante o processamento!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		} catch (SQLException e) {
 			LOG.error("Erro em alguma instrução SQL.", e);
+			req.setAttribute("msgType", "error");
+			req.setAttribute("msg", "Erro durante o processamento!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		}
 	}

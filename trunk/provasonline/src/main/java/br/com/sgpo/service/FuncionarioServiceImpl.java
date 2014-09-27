@@ -46,4 +46,10 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return funcionarioDao.buscarFuncionarioPorMatricula(matricula);
 	}
 
+	@Override
+	public void inativarFuncionario(Integer matricula) throws SQLException,
+			ClassNotFoundException {
+		funcionarioDao.inativarFuncionario(matricula);
+	}
+
 }

@@ -12,8 +12,25 @@
 	<jsp:include page="/header.jsp"></jsp:include>
 	<jsp:include page="/secure/menu.jsp"></jsp:include>
 	<section style="padding: 1px;">
-		<div id="divFrmInativar">
-			<form id="frmDialogInativar" action="funcionarioInativar" method="post">
+		<fieldset>
+			<legend>Inativar Funcionario</legend>
+			<c:if test="${msgType eq 'info'}">
+				<p id="idMsg" class="bg-lightBlue fg-white">
+					<span class="icon-info padding10"></span>${msg}
+				</p>
+				<script type="text/javascript">
+					setTimeout(function(){
+						$("#idMsg").fadeOut(1000);
+					}, 6000);
+				</script>
+			</c:if>
+			<c:if test="${msgType ne 'info'}">
+				<p id="idMsg" class="bg-amber fg-white">
+					<span class="icon-warning padding10"></span>
+					Ao confirmar as informações você inativará o funcionario do sistema.
+				</p>
+			</c:if>
+			<form id="frmDialogInativar" action="inativarFuncionario" method="post">
 				<div class="grid">
 					<div class="row">
 						<div class="span3">
@@ -43,7 +60,7 @@
 					</div>
 				</div>
 			</form>
-		</div>
+		</fieldset>
 	</section>
 	<jsp:include page="/footer.jsp"></jsp:include>
 </body>

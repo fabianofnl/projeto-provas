@@ -23,4 +23,7 @@ public interface FuncionarioModel {
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
 			throws SQLException, ClassNotFoundException;
 
+	public void inativarFuncionario(Integer matricula) throws SQLException,
+			ClassNotFoundException;
+
 }
