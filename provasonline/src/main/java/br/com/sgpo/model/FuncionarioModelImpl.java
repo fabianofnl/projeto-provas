@@ -35,8 +35,10 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 
 	private static final String SELECT_TOTAL_REGISTROS = "SELECT COUNT(matricula) AS total FROM funcionario";
 
-	private static final String SELECT_FUNCIONAR_POR_MATRICULA = "SELECT * FROM funcionario f, usuario u, perfil p "
+	private static final String SELECT_FUNCIONARIO_POR_MATRICULA = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND f.matricula = ?";
+
+	private static final String INATIVAR_FUNCIONARIO_POR_MATRICULA = "UPDATE funcionario SET status = 'Inativo' WHERE matricula = ?";
 
 	@Override
 	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
@@ -188,7 +190,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 		FuncionarioDTO func = null;
 
 		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_FUNCIONAR_POR_MATRICULA);
+		pstmt = conn.prepareStatement(SELECT_FUNCIONARIO_POR_MATRICULA);
 		pstmt.setInt(1, matricula);
 		rs = pstmt.executeQuery();
 
@@ -214,5 +216,24 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			conn.close();
 
 		return func;
+	}
+
+	@Override
+	public void inativarFuncionario(Integer matricula) throws SQLException,
+			ClassNotFoundException {
+
+		LOG.info("Chamando método inativar Funcionario por matricula");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(INATIVAR_FUNCIONARIO_POR_MATRICULA);
+		pstmt.setInt(1, matricula);
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
 	}
 }

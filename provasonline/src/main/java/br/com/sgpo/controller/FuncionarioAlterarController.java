@@ -47,12 +47,13 @@ public class FuncionarioAlterarController extends HttpServlet {
 			String matricula = req.getParameter("matricula");
 
 			if (!StringUtils.isNumeric(matricula)) {
-				req.setAttribute("msg", "Matrícula deve conter apenas dígitos.");
+				req.setAttribute("msg", "Erro na aplicação.");
 				req.setAttribute("msgType", "error");
-				req.getRequestDispatcher("/secure/funcionario.jsp").forward(
+				req.getRequestDispatcher("/error/genericError.jsp").forward(
 						req, resp);
 				return;
 			}
+
 			FuncionarioDTO funcionario = funcionarioService
 					.buscarFuncionarioPorMatricula(Integer.parseInt(matricula));
 
