@@ -40,6 +40,11 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 
 	private static final String INATIVAR_FUNCIONARIO_POR_MATRICULA = "UPDATE funcionario SET status = 'Inativo' WHERE matricula = ?";
 
+	private static final String UPDATE_USUARIO_FUNCIONARIO = "UPDATE usuario SET perfilid = ? WHERE usuario = ?";
+
+	private static final String UPDATE_FUNCIONARIO = "UPDATE funcionario SET matricula = ?, nome = ?, funcao = ?, email = ?, "
+			+ "status = ? WHERE matricula = ?";
+
 	@Override
 	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
 			Integer recordPerPage) throws ClassNotFoundException, SQLException {
@@ -220,7 +225,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	}
 
 	@Override
-	public void inativarFuncionario(Integer matricula) throws SQLException,
+	public void inativar(Integer matricula) throws SQLException,
 			ClassNotFoundException {
 
 		LOG.info("Chamando método inativar Funcionario por matricula");
@@ -230,6 +235,42 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(INATIVAR_FUNCIONARIO_POR_MATRICULA);
 		pstmt.setInt(1, matricula);
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public void alterar(FuncionarioDTO funcionario, Integer matriculaAntiga)
+			throws SQLException, ClassNotFoundException {
+
+		LOG.info("Chamando método alterar Funcionario");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		// TODO Há um bug nessa lógica
+		/*
+		 * Pode acontecer do sistema gravar o usuario e ter problemas em gravar
+		 * o funcionario, então os dados não terão mais integridade. Seria
+		 * interessante utilizar o conceito de TRANSACTION COMMIT/ROLLBACK
+		 */
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(UPDATE_USUARIO_FUNCIONARIO);
+		pstmt.setInt(1, funcionario.getPerfilId());
+		pstmt.setString(2, funcionario.getUsuario());
+		pstmt.execute();
+
+		pstmt = conn.prepareStatement(UPDATE_FUNCIONARIO);
+		pstmt.setInt(1, funcionario.getMatricula());
+		pstmt.setString(2, funcionario.getNome());
+		pstmt.setString(3, funcionario.getFuncao());
+		pstmt.setString(4, funcionario.getEmail());
+		pstmt.setString(5, funcionario.getStatus());
+		pstmt.setInt(6, matriculaAntiga);
 		pstmt.execute();
 
 		if (pstmt != null)

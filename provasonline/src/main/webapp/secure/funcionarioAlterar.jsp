@@ -27,7 +27,7 @@
 								}, 6000);
 							</script>
 						</c:if>
-						<form id="frmDialogAlterar" action="funcionarioAlterar" method="post">
+						<form id="frmDialogAlterar" action="alterarFuncionario" method="post">
 							<div class="grid">
 								<div class="row">
 									<div class="span3">
@@ -71,6 +71,15 @@
 												</c:forEach>
 											</select>
 										</div>
+										<label>Status:</label>
+										<div class="input-control select">
+											<select id="status" name="status" oninput="setCustomValidity('')"
+												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required>
+												<option value="">Selecione</option>
+												<option selected="${func.status eq 'Ativo' ? 'selected' : ''}" value="Ativo">Ativo</option>
+												<option selected="${func.status eq 'Inativo' ? 'selected' : ''}" value="Inativo">Inativo</option>
+											</select>
+										</div>
 									</div>
 								</div>
 								
@@ -82,6 +91,8 @@
 									</div>
 								</div>
 							</div>
+							<input id="matriculaAntiga" name="matriculaAntiga" type="hidden" value="${func.matricula}">
+							<input id="usuario" name="usuario" type="hidden" value="${func.usuario}">
 						</form>
 					</fieldset>
 				</div>

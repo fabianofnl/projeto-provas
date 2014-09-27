@@ -27,7 +27,7 @@
 								}, 6000);
 							</script>
 						</c:if>
-						<form id="frmDialogCadastrar" action="funcionario" method="post">
+						<form id="frmDialogCadastrar" action="cadastrarFuncionario" method="post">
 							<div class="grid">
 								<div class="row">
 									<div class="span3">

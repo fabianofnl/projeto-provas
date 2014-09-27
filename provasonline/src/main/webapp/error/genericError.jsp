@@ -22,8 +22,8 @@
 							<legend>Erro</legend>
 							<c:if test="${msgType eq 'error'}">
 								<p id="idMsg" class="bg-lightRed fg-white">
-									<span class="icon-remove padding10"></span>
-									<label>${msg}</label>
+									<span class="icon-cancel padding10"></span>
+									${msg}
 								</p>
 							</c:if>							
 							<a href="${pageContext.request.contextPath}/secure/home.jsp" class="marginTop20 button bd-gray">
