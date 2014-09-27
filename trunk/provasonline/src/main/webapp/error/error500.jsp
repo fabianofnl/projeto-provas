@@ -23,7 +23,7 @@
 							<c:if test="${msgType eq 'error'}">
 								<p id="idMsg" class="bg-lightRed fg-white">
 									<span class="icon-remove padding10"></span>
-									<label>Erro na aplicação durante o processamento.</label>
+									Erro na aplicação durante o processamento.
 								</p>
 							</c:if>							
 							<a href="${pageContext.request.contextPath}/secure/home.jsp" class="marginTop20 button bd-gray">

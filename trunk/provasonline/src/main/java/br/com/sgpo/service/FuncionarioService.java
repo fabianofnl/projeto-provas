@@ -27,7 +27,10 @@ public interface FuncionarioService {
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
 			throws SQLException, ClassNotFoundException;
 
-	public void inativarFuncionario(Integer matricula) throws SQLException,
+	public void inativar(Integer matricula) throws SQLException,
 			ClassNotFoundException;
+
+	public void alterar(FuncionarioDTO funcionario, Integer matriculaAntiga)
+			throws SQLException, ClassNotFoundException;
 
 }

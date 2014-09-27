@@ -96,7 +96,13 @@ public class FuncionarioInativarController extends HttpServlet {
 				return;
 			}
 
-			funcionarioService.inativarFuncionario(Integer.parseInt(matricula));
+			funcionarioService.inativar(Integer.parseInt(matricula));
+
+			req.setAttribute("msgType", "info");
+			req.setAttribute("msg", "Funcionario inativado com sucesso!");
+
+			req.getRequestDispatcher("/secure/funcionarioInativar.jsp")
+					.forward(req, resp);
 
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);

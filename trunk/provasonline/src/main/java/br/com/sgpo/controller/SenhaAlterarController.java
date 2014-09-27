@@ -21,7 +21,7 @@ import br.com.sgpo.service.EsqueciSenhaServiceImpl;
  * @author Roseli
  * 
  */
-@WebServlet(value = "/esqueciSenha")
+@WebServlet(value = "/alterarSenha")
 public class SenhaAlterarController extends HttpServlet {
 
 	private static final long serialVersionUID = -2114908945534512046L;

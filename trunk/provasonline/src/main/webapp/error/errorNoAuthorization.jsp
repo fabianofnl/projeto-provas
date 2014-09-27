@@ -23,7 +23,7 @@
 							<c:if test="${msgType eq 'error'}">
 								<p id="idMsg" class="bg-amber fg-white">
 									<span class="icon-warning padding10"></span>
-									<label>Você não tem autorização para acessar essa página</label>
+									Você não tem autorização para acessar essa página.
 								</p>
 							</c:if>							
 							<a href="${pageContext.request.contextPath}/secure/home.jsp" class="marginTop20 button bd-gray">
