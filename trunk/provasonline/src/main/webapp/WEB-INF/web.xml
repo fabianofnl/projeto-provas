@@ -11,7 +11,7 @@
 		<param-name>log4j-config-location</param-name>
 		<param-value>WEB-INF/classes/log4j.xml</param-value>
 	</context-param>
-
+<!-- 
 	<filter-mapping>
 		<filter-name>loginFilter</filter-name>
 		<url-pattern>/logon.jsp</url-pattern>
@@ -28,6 +28,7 @@
 		<filter-name>authFilter</filter-name>
 		<url-pattern>/secure/*</url-pattern>
 	</filter-mapping>
+ -->
 
 	<error-page>
 		<error-code>404</error-code>

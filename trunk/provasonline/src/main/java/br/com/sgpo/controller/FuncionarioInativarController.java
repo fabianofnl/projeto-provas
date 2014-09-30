@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -52,6 +53,10 @@ public class FuncionarioInativarController extends HttpServlet {
 				req.setAttribute("msgType", "error");
 				req.getRequestDispatcher("/error/genericError.jsp").forward(
 						req, resp);
+
+				LOG.error("Valor do campo matricula nao eh numerico - valor[ "
+						+ matricula + " ]");
+
 				return;
 			}
 			FuncionarioDTO funcionario = funcionarioService
@@ -93,16 +98,27 @@ public class FuncionarioInativarController extends HttpServlet {
 				req.setAttribute("msgType", "error");
 				req.getRequestDispatcher("/error/genericError.jsp").forward(
 						req, resp);
+
+				LOG.error("Valor do campo matricula nao eh numerico - valor[ "
+						+ matricula + " ]");
+
 				return;
 			}
 
 			funcionarioService.inativar(Integer.parseInt(matricula));
 
-			req.setAttribute("msgType", "info");
-			req.setAttribute("msg", "Funcionario inativado com sucesso!");
+			HttpSession session = req.getSession(true);
 
-			req.getRequestDispatcher("/secure/funcionarioInativar.jsp")
-					.forward(req, resp);
+			session.setAttribute("msgType", "info");
+			session.setAttribute("msg", "Funcionario inativado com sucesso!");
+
+			resp.sendRedirect(req.getContextPath() + "/secure/funcionario");
+
+			// req.setAttribute("msgType", "info");
+			// req.setAttribute("msg", "Funcionario inativado com sucesso!");
+
+			// req.getRequestDispatcher("/secure/funcionarioInativar.jsp")
+			// .forward(req, resp);
 
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);

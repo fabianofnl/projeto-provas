@@ -67,7 +67,7 @@
 												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required>
 												<option value="">Selecione</option>
 												<c:forEach var="per" items="${listaPerfis}">
-													<option selected="${per.perfilId eq func.perfilId ? 'selected' : ''}" value="${per.perfilId}">${per.descricao}</option>
+													<option ${per.perfilId eq func.perfilId ? 'selected' : ''} value="${per.perfilId}">${per.descricao}</option>
 												</c:forEach>
 											</select>
 										</div>
@@ -76,8 +76,8 @@
 											<select id="status" name="status" oninput="setCustomValidity('')"
 												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required>
 												<option value="">Selecione</option>
-												<option selected="${func.status eq 'Ativo' ? 'selected' : ''}" value="Ativo">Ativo</option>
-												<option selected="${func.status eq 'Inativo' ? 'selected' : ''}" value="Inativo">Inativo</option>
+												<option ${func.status eq 'Ativo' ? 'selected' : ''} value="Ativo">Ativo</option>
+												<option ${func.status eq 'Inativo' ? 'selected' : ''} value="Inativo">Inativo</option>
 											</select>
 										</div>
 									</div>

@@ -75,6 +75,11 @@ public class FuncionarioListarController extends HttpServlet {
 			req.getRequestDispatcher("/secure/funcionario.jsp").forward(req,
 					resp);
 
+			// Devido ao redirecionamento de outra página para esta,
+			// após apresentar a mensagem de confirmação o mesmo é removido.
+			req.getSession(true).removeAttribute("msgType");
+			req.getSession(true).removeAttribute("msg");
+
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
