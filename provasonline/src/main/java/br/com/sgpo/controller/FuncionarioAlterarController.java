@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -100,30 +101,18 @@ public class FuncionarioAlterarController extends HttpServlet {
 			funcionario.setStatus(req.getParameter("status"));
 			funcionario.setUsuario(req.getParameter("usuario"));
 
-			funcionarioService.alterar(funcionario, Integer.parseInt(matriculaAntiga));
+			funcionarioService.alterar(funcionario,
+					Integer.parseInt(matriculaAntiga));
 
-			// TODO Verificar um jeito de ajustar a renderização da página
-			/*
-			 * Após inserir um funcionario, se pressionar CTRL + R ele executa o
-			 * form novamente, no caso é como se estive preenchendo o formulario
-			 * com os mesmos dados anterior
-			 */
+			HttpSession session = req.getSession(true);
 
-			List<PerfilDTO> listaPerfis = listarPerfis();
+			session.setAttribute("msgType", "info");
+			session.setAttribute("msg", "Funcionario alterado com sucesso!");
 
-			req.setAttribute("listaPerfis", listaPerfis);
-			req.setAttribute("msgType", "info");
-			req.setAttribute("msg", "Funcionario alterado com sucesso!");
-			req.removeAttribute("func");
-			
-			// TODO verificar uma lógica para mostrar mensagem e manter a URL correta
-			
-			String context = req.getContextPath();
-			
-			resp.sendRedirect(context + "/secure/funcionario");
+			resp.sendRedirect(req.getContextPath() + "/secure/funcionario");
 
-			//req.getRequestDispatcher("/secure/funcionario.jsp").forward(
-			//		req, resp);
+			// req.getRequestDispatcher("/secure/funcionario.jsp").forward(
+			// req, resp);
 
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);

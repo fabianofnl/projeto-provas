@@ -206,6 +206,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			func.setNome(rs.getString("nome"));
 			func.setEmail(rs.getString("email"));
 			func.setFuncao(rs.getString("funcao"));
+			func.setStatus(rs.getString("status"));
 
 			func.setUsuario(rs.getString("usuario"));
 

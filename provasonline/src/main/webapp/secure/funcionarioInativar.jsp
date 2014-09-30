@@ -17,64 +17,31 @@
 				<div class="span7 offset5">
 					<fieldset>
 						<legend>Inativar Funcionario</legend>
-						<c:if test="${msgType eq 'info'}">
-							<p id="idMsg" class="bg-lightBlue fg-white">
-								<span class="icon-info padding10"></span>${msg}
-							</p>
-							<script type="text/javascript">
-								setTimeout(function(){
-									$("#idMsg").fadeOut(1000);
-								}, 6000);
-							</script>
-						</c:if>
-						<c:if test="${msgType ne 'info'}">
-							<p id="idMsg" class="bg-amber fg-white">
-								<span class="icon-warning padding10"></span>
-								Ao confirmar as informações você inativará o funcionario do sistema.
-							</p>
-						</c:if>
+						<p id="idMsg" class="bg-amber fg-white">
+							<span class="icon-warning padding10"></span>
+							Ao confirmar as informações você inativará o funcionario do sistema.
+						</p>
 						<form id="frmDialogInativar" action="inativarFuncionario" method="post">
 							<div class="grid">
 								<div class="row">
 									<div class="span3">
 										<label>Matrícula:</label>
-										<div class="input-control text">
-											<input type="text" id="matricula" name="matricula" oninput="setCustomValidity('')"
-												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required
-												autofocus="autofocus" value="${func.matricula}" readonly="readonly">
-										</div>
+										<label>${func.matricula}</label>
+										<input id="matricula" name="matricula" type="hidden" value="${func.matricula}">
+
 										<label>Nome:</label>
-										<div class="input-control text">
-											<input type="text" id="nome" name="nome" oninput="setCustomValidity('')"
-												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required
-												value="${func.nome}" readonly="readonly">
-										</div>
+										<label>${func.nome}</label>
+										
 										<label>Função:</label>
-										<div class="input-control text">
-											<input type="text" id="funcao" name="funcao" oninput="setCustomValidity('')"
-												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required
-												value="${func.funcao}" readonly="readonly">
-										</div>
+										<label>${func.funcao}</label>
 									</div>
 									
 									<div class="span3">
 										<label>E-mail:</label>
-										<div class="input-control text">
-											<input type="text" id="email" name="email" oninput="setCustomValidity('')"
-												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required
-												value="${func.email}" readonly="readonly">
-										</div>
+										<label>${func.email}</label>
+										
 										<label>Perfil:</label>
-										<div class="input-control select">
-											<select id="perfil" name="perfil" oninput="setCustomValidity('')"
-												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required
-												disabled="disabled">
-												<option value="">Selecione</option>
-												<c:forEach var="per" items="${listaPerfis}">
-													<option selected="${per.perfilId eq func.perfilId ? 'selected' : ''}" value="${per.perfilId}">${per.descricao}</option>
-												</c:forEach>
-											</select>
-										</div>
+										<label>${func.descricao}</label>
 									</div>
 								</div>
 								

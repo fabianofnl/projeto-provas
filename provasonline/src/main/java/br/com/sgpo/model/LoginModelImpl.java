@@ -21,6 +21,10 @@ public class LoginModelImpl implements LoginModel {
 
 	private static final Logger LOG = Logger.getLogger(LoginModelImpl.class);
 
+	private static final String SELECT_FUNCIONARIO_LOGIN = "SELECT * FROM perfil p, usuario u, funcionario f "
+			+ "WHERE f.status != 'Inativo' AND p.id = u.perfilId AND u.usuario = f.usuario AND "
+			+ "u.usuario = ? AND u.senha = MD5(?)";
+
 	public LoginModelImpl() {
 	}
 
@@ -38,10 +42,7 @@ public class LoginModelImpl implements LoginModel {
 
 		try {
 			conn = ConexaoBaseDados.getConexaoInstance();
-			pstmt = conn
-					.prepareStatement("SELECT * FROM perfil p, usuario u, funcionario f "
-							+ "WHERE p.id = u.perfilId AND u.usuario = f.usuario AND "
-							+ "u.usuario = ? AND u.senha = MD5(?)");
+			pstmt = conn.prepareStatement(SELECT_FUNCIONARIO_LOGIN);
 			pstmt.setString(1, nomeUsuario);
 			pstmt.setString(2, senha);
 			rs = pstmt.executeQuery();
