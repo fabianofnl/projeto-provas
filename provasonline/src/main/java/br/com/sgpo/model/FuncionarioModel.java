@@ -29,4 +29,10 @@ public interface FuncionarioModel {
 	public void alterar(FuncionarioDTO funcionario, Integer matriculaAntiga)
 			throws SQLException, ClassNotFoundException;
 
+	public List<FuncionarioDTO> listarGerentes()
+			throws SQLException, ClassNotFoundException;
+
+	public List<FuncionarioDTO> listarColaboradores()
+			throws SQLException, ClassNotFoundException;
+
 }

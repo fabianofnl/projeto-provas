@@ -27,7 +27,7 @@
 								}, 6000);
 							</script>
 						</c:if>
-						<form id="frmDialogAlterar" action="alterarFuncionario" method="post">
+						<form id="frmAlterar" action="alterarFuncionario" method="post">
 							<div class="grid">
 								<div class="row">
 									<div class="span3">

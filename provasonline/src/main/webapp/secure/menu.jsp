@@ -23,6 +23,9 @@
 						<ul class="dropdown-menu dark" data-role="dropdown">
 							<li><a href="${pageContext.request.contextPath}/secure/cadastrarFuncionario">Cadastrar</a></li>
 							<li><a href="${pageContext.request.contextPath}/secure/funcionario">Consultar</a></li>
+							<li class="divider"></li>
+							<li><a href="${pageContext.request.contextPath}/secure/associarFuncionario">Associar Equipes</a></li>
+							<li class="divider"></li>
 							<li><a href="${pageContext.request.contextPath}/secure/relatorioFuncionario">Consultar Relatório</a></li>
 						</ul>
 					</li>
