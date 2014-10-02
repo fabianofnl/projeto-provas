@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS equipes;
 DROP TABLE IF EXISTS funcionario;
 DROP TABLE IF EXISTS usuario;
 DROP TABLE IF EXISTS perfil;
@@ -21,6 +22,11 @@ CREATE TABLE funcionario (
 	email VARCHAR(100) NOT NULL,
 	status VARCHAR(10) DEFAULT 'Ativo',
 	usuario VARCHAR(100) NOT NULL REFERENCES usuario(usuario)
+);
+
+CREATE TABLE equipes (
+	matgerente INTEGER NOT NULL REFERENCES funcionario(matricula),
+	matcolaborador INTEGER NOT NULL REFERENCES funcionario(matricula)
 );
 
 INSERT INTO perfil (descricao, roleName) VALUES ('Administrador', 'ROLE_ADMIN'); -- 1

@@ -56,7 +56,18 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	public void alterar(FuncionarioDTO funcionario, Integer matriculaAntiga)
 			throws SQLException, ClassNotFoundException {
 		funcionarioDao.alterar(funcionario, matriculaAntiga);
-		
+	}
+
+	@Override
+	public List<FuncionarioDTO> listarGerentes() throws SQLException,
+			ClassNotFoundException {
+		return funcionarioDao.listarGerentes();
+	}
+
+	@Override
+	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
+			ClassNotFoundException {
+		return funcionarioDao.listarColaboradores();
 	}
 
 }

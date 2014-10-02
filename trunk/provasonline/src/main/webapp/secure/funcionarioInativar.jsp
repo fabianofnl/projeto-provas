@@ -21,7 +21,7 @@
 							<span class="icon-warning padding10"></span>
 							Ao confirmar as informações você inativará o funcionario do sistema.
 						</p>
-						<form id="frmDialogInativar" action="inativarFuncionario" method="post">
+						<form id="frmInativar" action="inativarFuncionario" method="post">
 							<div class="grid">
 								<div class="row">
 									<div class="span3">
