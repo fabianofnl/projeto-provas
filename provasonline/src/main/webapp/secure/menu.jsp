@@ -25,6 +25,7 @@
 							<li><a href="${pageContext.request.contextPath}/secure/funcionario">Consultar</a></li>
 							<li class="divider"></li>
 							<li><a href="${pageContext.request.contextPath}/secure/associarFuncionario">Associar Equipes</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/listarEquipes">Consultar Equipes</a></li>
 							<li class="divider"></li>
 							<li><a href="${pageContext.request.contextPath}/secure/relatorioFuncionario">Consultar Relatório</a></li>
 						</ul>

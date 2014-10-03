@@ -21,11 +21,10 @@ import br.com.sgpo.service.FuncionarioServiceImpl;
  * 
  */
 @WebServlet(value = "/secure/associarFuncionario")
-public class FuncionarioAssociar extends HttpServlet {
+public class EquipesAssociar extends HttpServlet {
 
 	private static final long serialVersionUID = 4791543663963103553L;
-	private static final Logger LOG = Logger
-			.getLogger(FuncionarioAssociar.class);
+	private static final Logger LOG = Logger.getLogger(EquipesAssociar.class);
 
 	private FuncionarioService funcionarioService;
 
@@ -70,6 +69,35 @@ public class FuncionarioAssociar extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-	}
+		try {
 
+			String matGerente = req.getParameter("gerente");
+			String[] matColString = req.getParameterValues("colaborador");
+
+			Integer[] matColInteger = new Integer[matColString.length];
+
+			for (int i = 0; i < matColString.length; i++) {
+				matColInteger[i] = Integer.parseInt(matColString[i]);
+			}
+
+			funcionarioService.associarEquipes(Integer.parseInt(matGerente),
+					matColInteger);
+
+			req.setAttribute("msgType", "info");
+			req.setAttribute("msg", "Associação efetuada com sucesso!");
+
+			doGet(req, resp);
+
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver do banco de dados não encontrado.", e);
+			req.setAttribute("msgType", "error");
+			req.setAttribute("msg", "Erro durante o processamento!");
+			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
+		} catch (SQLException e) {
+			LOG.error("Erro em alguma instrução SQL.", e);
+			req.setAttribute("msgType", "error");
+			req.setAttribute("msg", "Erro durante o processamento!");
+			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
+		}
+	}
 }

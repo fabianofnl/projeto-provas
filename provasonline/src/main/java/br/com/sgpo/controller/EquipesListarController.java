@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.dto.FuncionarioDTO;
-import br.com.sgpo.dto.PerfilDTO;
+import br.com.sgpo.dto.EquipeDTO;
 import br.com.sgpo.service.FuncionarioService;
 import br.com.sgpo.service.FuncionarioServiceImpl;
 
@@ -22,12 +21,12 @@ import br.com.sgpo.service.FuncionarioServiceImpl;
  * @author Roseli
  * 
  */
-@WebServlet(value = "/secure/funcionario")
-public class FuncionarioListarController extends HttpServlet {
+@WebServlet(value = "/secure/listarEquipes")
+public class EquipesListarController extends HttpServlet {
 
 	private static final long serialVersionUID = 1803345723538484813L;
 	private static final Logger LOG = Logger
-			.getLogger(FuncionarioListarController.class);
+			.getLogger(EquipesListarController.class);
 
 	private FuncionarioService funcionarioService;
 
@@ -47,16 +46,15 @@ public class FuncionarioListarController extends HttpServlet {
 			Integer numeroDePaginas = 0;
 
 			LOG.info("Acesso a URL: " + req.getContextPath()
-					+ "/secure/funcionario - method GET");
+					+ "/secure/listarEquipes - method GET");
 
 			if (req.getParameter("pagina") != null) {
 				pagina = Integer.parseInt(req.getParameter("pagina"));
 			}
-			List<FuncionarioDTO> listaFuncionario = listarFuncionarios(
+			List<EquipeDTO> listaEquipes = listarEquipes(
 					(pagina - 1) * registroPorPagina, registroPorPagina);
-			List<PerfilDTO> listaPerfis = listarPerfis();
 
-			numeroRegistros = getTotalRegistrosFuncionarios();
+			numeroRegistros = getTotalRegistros();
 
 			if (numeroRegistros == 0) {
 				req.setAttribute("listSize", 0);
@@ -66,13 +64,12 @@ public class FuncionarioListarController extends HttpServlet {
 			numeroDePaginas = (int) Math.ceil(numeroRegistros * 1.0
 					/ registroPorPagina);
 
-			req.setAttribute("listaFuncionario", listaFuncionario);
-			req.setAttribute("listaPerfis", listaPerfis);
+			req.setAttribute("listaEquipes", listaEquipes);
 
 			req.setAttribute("pagina", pagina);
 			req.setAttribute("numeroDePaginas", numeroDePaginas);
 
-			req.getRequestDispatcher("/secure/funcionario.jsp").forward(req,
+			req.getRequestDispatcher("/secure/equipesListar.jsp").forward(req,
 					resp);
 
 			// Devido ao redirecionamento de outra página para esta,
@@ -89,26 +86,18 @@ public class FuncionarioListarController extends HttpServlet {
 		}
 	}
 
-	private List<FuncionarioDTO> listarFuncionarios(Integer offSet,
+	private List<EquipeDTO> listarEquipes(Integer offSet,
 			Integer recordPerPage) throws ClassNotFoundException, SQLException {
-		List<FuncionarioDTO> listaFuncionario = new ArrayList<FuncionarioDTO>();
-		listaFuncionario = funcionarioService.listarFuncionarios(offSet,
+		List<EquipeDTO> listaEquipes = new ArrayList<EquipeDTO>();
+		listaEquipes = funcionarioService.listarEquipes(offSet,
 				recordPerPage);
 
-		return listaFuncionario;
+		return listaEquipes;
 	}
 
-	private List<PerfilDTO> listarPerfis() throws ClassNotFoundException,
-			SQLException {
-		List<PerfilDTO> listaPerfis = new ArrayList<PerfilDTO>();
-		listaPerfis = funcionarioService.listarPerfis();
-
-		return listaPerfis;
-	}
-
-	private Integer getTotalRegistrosFuncionarios() throws ClassNotFoundException,
+	private Integer getTotalRegistros() throws ClassNotFoundException,
 			SQLException {
 
-		return funcionarioService.getTotalRegistrosFuncionarios();
+		return funcionarioService.getTotalRegistrosEquipes();
 	}
 }

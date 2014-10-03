@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import br.com.sgpo.dto.EquipeDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.PerfilDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
@@ -33,7 +34,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	private static final String INSERT_FUNCIONARIO = "INSERT INTO funcionario (matricula, nome, funcao, email, usuario) "
 			+ "VALUES (?, ?, ?, ?, ?)";
 
-	private static final String SELECT_TOTAL_REGISTROS = "SELECT COUNT(matricula) AS total FROM funcionario";
+	private static final String SELECT_TOTAL_REGISTROS_FUNCIONARIOS = "SELECT COUNT(matricula) AS total FROM funcionario";
 
 	private static final String SELECT_FUNCIONARIO_POR_MATRICULA = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND f.matricula = ?";
@@ -51,6 +52,20 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	private static final String SELECT_COLABORADORES = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Colaborador' "
 			+ "AND f.matricula NOT IN (SELECT matcolaborador FROM equipes)";
+
+	private static final String INSERT_EQUIPES = "INSERT INTO equipes (matgerente, matcolaborador) VALUES (?, ?)";
+
+	private static final String SELECT_TODAS_EQUIPES = "SELECT DISTINCT ON (f.nome) f.nome, * "
+			+ "FROM funcionario f, usuario u, perfil p, equipes e "
+			+ "WHERE f.usuario = u.usuario AND u.perfilID = p.id AND f.matricula = e.matgerente "
+			+ "ORDER BY f.nome LIMIT ? OFFSET ?";
+
+	private static final String SELECT_TOTAL_REGISTROS_EQUIPES = "SELECT COUNT(DISTINCT(matgerente)) AS total FROM equipes";
+
+	private static final String SELECT_COLABORADORES_POR_GERENTE = "SELECT * FROM funcionario f, usuario u, perfil p, equipes e "
+			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND f.matricula = e.matcolaborador AND e.matgerente = ?";
+
+	private static final String REMOVER_COLABORADOR_POR_MATRICULA = "DELETE FROM equipes WHERE matcolaborador = ?";
 
 	@Override
 	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
@@ -166,17 +181,17 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	}
 
 	@Override
-	public Integer getTotalRegistros() throws SQLException,
+	public Integer getTotalRegistrosFuncionarios() throws SQLException,
 			ClassNotFoundException {
 
-		LOG.info("Chamando método gravar Funcionario");
+		LOG.info("Chamando método get Total Funcionarios");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Integer totalRegistros = 0;
 
 		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_TOTAL_REGISTROS);
+		pstmt = conn.prepareStatement(SELECT_TOTAL_REGISTROS_FUNCIONARIOS);
 		rs = pstmt.executeQuery();
 
 		if (rs.next()) {
@@ -367,5 +382,166 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			conn.close();
 
 		return listaFuncionarios;
+	}
+
+	@Override
+	public void associarEquipes(Integer matGerente, Integer[] matColaborador)
+			throws SQLException, ClassNotFoundException {
+
+		LOG.info("Chamando método associarEquipes");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(INSERT_EQUIPES);
+
+		for (int i = 0; i < matColaborador.length; i++) {
+			pstmt.setInt(1, matGerente);
+			pstmt.setInt(2, matColaborador[i]);
+			pstmt.addBatch();
+		}
+
+		pstmt.executeBatch();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+	}
+
+	@Override
+	public List<EquipeDTO> listarEquipes(Integer offSet, Integer recordPerPage)
+			throws SQLException, ClassNotFoundException {
+
+		LOG.info("Chamando método listarEquipes");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<EquipeDTO> listaEquipes = new ArrayList<EquipeDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_TODAS_EQUIPES);
+		pstmt.setInt(1, recordPerPage);
+		pstmt.setInt(2, offSet);
+		rs = pstmt.executeQuery();
+
+		FuncionarioDTO func = null;
+		EquipeDTO equipe = null;
+
+		while (rs.next()) {
+			func = new FuncionarioDTO();
+			equipe = new EquipeDTO();
+			func.setMatricula(rs.getInt("matricula"));
+			func.setNome(rs.getString("nome"));
+			func.setEmail(rs.getString("email"));
+			func.setFuncao(rs.getString("funcao"));
+			func.setStatus(rs.getString("status"));
+
+			func.setUsuario(rs.getString("usuario"));
+
+			func.setPerfilId(rs.getInt("id"));
+			func.setDescricao(rs.getString("descricao"));
+			func.setRole(rs.getString("rolename"));
+
+			equipe.setGerente(func);
+			listaEquipes.add(equipe);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaEquipes;
+	}
+
+	@Override
+	public Integer getTotalRegistrosEquipes() throws SQLException,
+			ClassNotFoundException {
+
+		LOG.info("Chamando método get Total Equipes");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Integer totalRegistros = 0;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_TOTAL_REGISTROS_EQUIPES);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			totalRegistros = rs.getInt("total");
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return totalRegistros;
+	}
+
+	@Override
+	public List<FuncionarioDTO> listarColaboradorPorGerente(Integer matricula)
+			throws SQLException, ClassNotFoundException {
+
+		LOG.info("Chamando método listar Colaboradores por Gerente");
+
+		List<FuncionarioDTO> listaColaboradores = new ArrayList<FuncionarioDTO>();
+		FuncionarioDTO func = null;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_COLABORADORES_POR_GERENTE);
+		pstmt.setInt(1, matricula);
+		rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+
+			func = new FuncionarioDTO();
+			func.setMatricula(rs.getInt("matricula"));
+			func.setNome(rs.getString("nome"));
+			func.setEmail(rs.getString("email"));
+			func.setFuncao(rs.getString("funcao"));
+			func.setStatus(rs.getString("status"));
+
+			func.setUsuario(rs.getString("usuario"));
+
+			func.setPerfilId(rs.getInt("id"));
+			func.setDescricao(rs.getString("descricao"));
+			func.setRole(rs.getString("rolename"));
+			listaColaboradores.add(func);
+		}
+
+		return listaColaboradores;
+	}
+
+	@Override
+	public void removerColaborador(Integer matricula) throws SQLException,
+			ClassNotFoundException {
+
+		LOG.info("Chamando método remover Colaborador por matricula");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(REMOVER_COLABORADOR_POR_MATRICULA);
+		pstmt.setInt(1, matricula);
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
 	}
 }
