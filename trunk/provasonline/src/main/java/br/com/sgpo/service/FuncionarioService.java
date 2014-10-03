@@ -3,6 +3,7 @@ package br.com.sgpo.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import br.com.sgpo.dto.EquipeDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.PerfilDTO;
 
@@ -21,7 +22,7 @@ public interface FuncionarioService {
 	public void gravar(FuncionarioDTO funcionario) throws SQLException,
 			ClassNotFoundException;
 
-	public Integer getTotalRegistros() throws SQLException,
+	public Integer getTotalRegistrosFuncionarios() throws SQLException,
 			ClassNotFoundException;
 
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
@@ -37,6 +38,18 @@ public interface FuncionarioService {
 			ClassNotFoundException;
 
 	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
+			ClassNotFoundException;
+
+	public void associarEquipes(Integer matGerente, Integer[] matColaborador)
+			throws SQLException, ClassNotFoundException;
+
+	public List<EquipeDTO> listarEquipes(Integer offSet, Integer recordPerPage)
+			throws SQLException, ClassNotFoundException;
+
+	public Integer getTotalRegistrosEquipes() throws SQLException,
+			ClassNotFoundException;
+
+	public void removerColaborador(Integer matricula) throws SQLException,
 			ClassNotFoundException;
 
 }

@@ -15,9 +15,9 @@
 	<section style="padding: 1px;">
 		<div class="grid">
 			<div class="row">
-				<div class="span12 offset3">
+				<div class="span10 offset4">
 					<fieldset>
-						<legend>Lista de Funcionários</legend>
+						<legend>Lista de Equipes</legend>
 						<c:if test="${msgType eq 'info'}">
 							<p id="idMsg" class="bg-lightBlue fg-white">
 								<span class="icon-info padding10"></span>${msg}
@@ -32,14 +32,8 @@
 							<table class="tableClass tableHeader">
 								<thead>
 									<tr>
-										<th style="width:9%">Matricula</th>
-										<th style="width:18%">Nome</th>
-										<th style="width:20%">E-mail</th>
-										<th style="width:16%">Função</th>
-										<th style="width:11%">Perfil</th>
-										<th style="width:10%">Usuário</th>
-										<th style="width:7%">Status</th>
-										<th style="width:9%">Ações</th>
+										<th style="width:40%">Gerente</th>
+										<th style="width:60%">Colaborador</th>
 									</tr>
 								</thead>
 							</table>
@@ -48,29 +42,32 @@
 							<table class="tableClass tableBody">
 								<tbody>
 									<c:choose>
-										<c:when test="${empty listaFuncionario}">
+										<c:when test="${empty listaEquipes}">
 											<tr>
-												<td colspan="5">Não há registros.</td>
+												<td colspan="3">Não há registros.</td>
 											</tr>
 										</c:when>
 										<c:otherwise>
-											<c:forEach items="${listaFuncionario}" var="func">
+											<c:forEach items="${listaEquipes}" var="equipes">
+											
 												<tr>
-													<td style="width:9%; text-align: center;">${func.matricula}</td>
-													<td style="width:18%">${func.nome}</td>
-													<td style="width:20%">${func.email}</td>
-													<td style="width:16%">${func.funcao}</td>
-													<td style="width:11%">${func.descricao}</td>
-													<td style="width:10%; text-align: center;">${func.usuario}</td>
-													<td style="width:7%; text-align: center;">${func.status}</td>
-													<td style="width:9%; text-align: center;">
-														<a href="${pageContext.request.contextPath}/secure/alterarFuncionario?matricula=${func.matricula}">
-															<span class="icon-wrench" title="Alterar"></span>
-														</a>
-														<span class="custom-separator">|</span>
-														<a href="${pageContext.request.contextPath}/secure/inativarFuncionario?matricula=${func.matricula}">
-															<span class="icon-remove" title="Inativar"></span>
-														</a>
+													<td  style="width:40%" valign="top">
+														<ul style="list-style: none;">
+															<li>${equipes.gerente.nome} (${equipes.gerente.funcao})</li>
+														</ul>
+													</td>
+													<td  style="width:60%">
+														<ul style="list-style: none;">
+															<c:forEach items="${equipes.listaColaboradores}" var="col">
+																<li>
+																	${col.nome} (${col.funcao}) 
+																	<span class="custom-separator">|</span>
+																	<a href="${pageContext.request.contextPath}/secure/removerColaborador?matricula=${col.matricula}">
+																		<span class="icon-remove" title="Remover Colaborador"></span>
+																	</a>
+																</li>
+															</c:forEach>
+														</ul>
 													</td>
 												</tr>
 											</c:forEach>

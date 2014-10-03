@@ -3,6 +3,7 @@ package br.com.sgpo.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import br.com.sgpo.dto.EquipeDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.PerfilDTO;
 import br.com.sgpo.model.FuncionarioModel;
@@ -35,9 +36,9 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	}
 
 	@Override
-	public Integer getTotalRegistros() throws SQLException,
+	public Integer getTotalRegistrosFuncionarios() throws SQLException,
 			ClassNotFoundException {
-		return funcionarioDao.getTotalRegistros();
+		return funcionarioDao.getTotalRegistrosFuncionarios();
 	}
 
 	@Override
@@ -70,4 +71,40 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return funcionarioDao.listarColaboradores();
 	}
 
+	@Override
+	public void associarEquipes(Integer matGerente, Integer[] matColaborador)
+			throws SQLException, ClassNotFoundException {
+		funcionarioDao.associarEquipes(matGerente, matColaborador);
+	}
+
+	@Override
+	public List<EquipeDTO> listarEquipes(Integer offSet, Integer recordPerPage)
+			throws SQLException, ClassNotFoundException {
+		List<EquipeDTO> listaEquipes = funcionarioDao.listarEquipes(offSet,
+				recordPerPage);
+
+		// TODO verificar se não é necessario criar outra lista e add as equipes
+
+		for (EquipeDTO equipeDTO : listaEquipes) {
+
+			equipeDTO.setListaColaboradores(funcionarioDao
+					.listarColaboradorPorGerente(equipeDTO.getGerente()
+							.getMatricula()));
+
+		}
+
+		return listaEquipes;
+	}
+
+	@Override
+	public Integer getTotalRegistrosEquipes() throws SQLException,
+			ClassNotFoundException {
+		return funcionarioDao.getTotalRegistrosEquipes();
+	}
+
+	@Override
+	public void removerColaborador(Integer matricula) throws SQLException,
+			ClassNotFoundException {
+		funcionarioDao.removerColaborador(matricula);
+	}
 }
