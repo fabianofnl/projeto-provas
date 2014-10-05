@@ -35,8 +35,8 @@
 					<li>
 						<a href="#" class="dropdown-toggle fg-yellow">Provas</a>
 						<ul class="dropdown-menu dark" data-role="dropdown">
-							<li><a href="${pageContext.request.contextPath}/secure/temas">Cadastrar Temas</a></li>
-							<li><a href="${pageContext.request.contextPath}/secure/cadastrarQuestoes">Cadastrar Questões</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/temas">Gerenciar Temas</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/cadastrarQuestoes">Gerenciar Questões</a></li>
 							<li class="divider"></li>
 							<li><a href="${pageContext.request.contextPath}/secure/montarProvas">Montar Provas</a></li>
 							<li><a href="${pageContext.request.contextPath}/secure/vincularApostilas">Vincular Apostilas</a></li>
