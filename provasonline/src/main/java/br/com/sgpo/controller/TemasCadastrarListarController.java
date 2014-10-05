@@ -71,7 +71,7 @@ public class TemasCadastrarListarController extends HttpServlet {
 			req.setAttribute("pagina", pagina);
 			req.setAttribute("numeroDePaginas", numeroDePaginas);
 
-			req.getRequestDispatcher("/secure/cadastrarListarTemas.jsp")
+			req.getRequestDispatcher("/secure/temasCadastrarListar.jsp")
 					.forward(req, resp);
 
 			// Devido ao redirecionamento de outra página para esta,
