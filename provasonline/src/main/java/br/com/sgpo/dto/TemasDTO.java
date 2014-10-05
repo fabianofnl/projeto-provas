@@ -13,6 +13,7 @@ public class TemasDTO implements Serializable {
 	private Integer temaId;
 	private String titulo;
 	private String descricao;
+	private Integer quantidadeQuestoes;
 
 	public TemasDTO() {
 	}
@@ -70,4 +71,24 @@ public class TemasDTO implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	/**
+	 * Método retorna o <b>quantidadeQuestoes</b> do Tema.
+	 * 
+	 * @return quantidadeQuestoes
+	 */
+	public Integer getQuantidadeQuestoes() {
+		return quantidadeQuestoes;
+	}
+
+	/**
+	 * Método atribui <b>quantidadeQuestoes</b> ao Tema.
+	 * 
+	 * @param quantidadeQuestoes
+	 */
+	public void setQuantidadeQuestoes(Integer quantidadeQuestoes) {
+		this.quantidadeQuestoes = quantidadeQuestoes;
+	}
+	
+	
 }

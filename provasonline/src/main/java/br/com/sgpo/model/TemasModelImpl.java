@@ -19,7 +19,8 @@ import br.com.sgpo.util.ConexaoBaseDados;
 public class TemasModelImpl implements TemasModel {
 
 	private static final Logger LOG = Logger.getLogger(TemasModelImpl.class);
-	private static final String SELECT_TODOS_TEMAS = "SELECT * FROM temas ORDER BY titulo LIMIT ? OFFSET ?";
+	private static final String SELECT_TODOS_TEMAS = "SELECT *, (SELECT COUNT(q.questaoId) FROM questoes q "
+			+ "WHERE t.temasId = q.questoesId) as quantidade FROM temas t ORDER BY t.titulo LIMIT ? OFFSET ?";
 	private static final String SELECT_TOTAL_REGISTROS_TEMAS = "SELECT COUNT(titulo) AS total FROM temas";
 	private static final String INSERT_TEMA = "INSERT INTO temas (titulo, descricao) VALUES (?, ?)";
 
@@ -46,6 +47,7 @@ public class TemasModelImpl implements TemasModel {
 			temas.setTemaId(rs.getInt("temaId"));
 			temas.setTitulo(rs.getString("titulo"));
 			temas.setDescricao(rs.getString("descricao"));
+			temas.setQuantidadeQuestoes(rs.getInt("quantidade"));
 			listaTemas.add(temas);
 		}
 
