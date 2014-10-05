@@ -53,18 +53,21 @@
 												<tr>
 													<td  style="width:40%" valign="top">
 														<ul style="list-style: none;">
-															<li>${equipes.gerente.nome} (${equipes.gerente.funcao})</li>
+															<li>${equipes.gerente.nome} 
+															<br><span style="font-size: 9pt !important;"><strong>Função:</strong> ${equipes.gerente.funcao}</span></li>
 														</ul>
 													</td>
 													<td  style="width:60%">
 														<ul style="list-style: none;">
 															<c:forEach items="${equipes.listaColaboradores}" var="col">
-																<li>
-																	${col.nome} (${col.funcao}) 
+																<li style="padding:2px;">
+																	${col.nome} 
 																	<span class="custom-separator">|</span>
 																	<a href="${pageContext.request.contextPath}/secure/removerColaborador?matricula=${col.matricula}">
 																		<span class="icon-remove" title="Remover Colaborador"></span>
 																	</a>
+																	<br>
+																	<span style="font-size: 9pt !important;"><strong>Função:</strong> ${col.funcao}</span>
 																</li>
 															</c:forEach>
 														</ul>
