@@ -20,4 +20,13 @@ public interface TemasModel {
 	public Integer getTotalRegistrosTemas() throws ClassNotFoundException,
 			SQLException;
 
+	public TemasDTO buscarTemaporId(Integer temaId)
+			throws ClassNotFoundException, SQLException;
+
+	public void alterar(TemasDTO temasDTO) throws ClassNotFoundException,
+			SQLException;
+
+	public void remover(TemasDTO temasDTO) throws ClassNotFoundException,
+			SQLException;
+
 }

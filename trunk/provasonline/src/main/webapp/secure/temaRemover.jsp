@@ -5,7 +5,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="/include/include_css.jsp"></jsp:include>
 <jsp:include page="/include/include_js.jsp"></jsp:include>
-<script src="${pageContext.request.contextPath}/include/custom/js/funcionarioSGPO.js"></script>
 <title>${tituloPagina}</title>
 </head>
 <body class="metro">
@@ -14,45 +13,33 @@
 	<section style="padding: 1px;">
 		<div class="grid">
 			<div class="row">
-				<div class="span7 offset5">
+				<div class="span10 offset4">
 					<fieldset>
-						<legend>Inativar Funcionario</legend>
+						<legend>Remover Tema</legend>
 						<p id="idMsg" class="bg-amber fg-white">
 							<span class="icon-warning padding10"></span>
-							Ao confirmar as informações você inativará o funcionario do sistema.
+							Ao confirmar as informações você removerá o tema do sistema.
 						</p>
-						<form id="frmInativar" action="inativarFuncionario" method="post">
+						<form id="frmRemover" action="removerTema" method="post">
 							<div class="grid">
 								<div class="row">
-									<div class="span3">
-										<label>Matrícula:</label>
-										<label>${func.matricula}</label>
-
-										<label>Nome:</label>
-										<label>${func.nome}</label>
+									<div class="span10">
+										<label>Título:</label>
+										<label>${tema.titulo}</label>
 										
-										<label>Função:</label>
-										<label>${func.funcao}</label>
-									</div>
-									
-									<div class="span3">
-										<label>E-mail:</label>
-										<label>${func.email}</label>
-										
-										<label>Perfil:</label>
-										<label>${func.descricao}</label>
+										<label>Descrição:</label>
+										<label>${tema.descricao}</label>
 									</div>
 								</div>
-								
 								<div class="row">
-									<div class="span3">
+									<div class="span10">
 										<div class="form-actions">
 											<button class="button primary">Enviar</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<input id="matricula" name="matricula" type="hidden" value="${func.matricula}">
+							<input type="hidden" id="temaId" name="temaId" value="${tema.temaId}">
 						</form>
 					</fieldset>
 				</div>

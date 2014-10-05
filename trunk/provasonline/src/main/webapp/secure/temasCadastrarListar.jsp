@@ -56,12 +56,12 @@
 													<td style="width:10%; text-align: center;">
 													
 													
-														<a href="${pageContext.request.contextPath}/secure/alterarTemas?temaId=${tema.temaId}">
+														<a href="${pageContext.request.contextPath}/secure/alterarTema?temaId=${tema.temaId}">
 															<span class="icon-wrench" title="Alterar"></span>
 														</a>
 														<c:if test="${tema.quantidadeQuestoes eq 0}">
 															<span class="custom-separator">|</span>															
-															<a href="${pageContext.request.contextPath}/secure/inativarFuncionario?matricula=${tema.temaId}">
+															<a href="${pageContext.request.contextPath}/secure/removerTema?temaId=${tema.temaId}">
 																<span class="icon-remove" title="Remover"></span>
 															</a>
 														</c:if>

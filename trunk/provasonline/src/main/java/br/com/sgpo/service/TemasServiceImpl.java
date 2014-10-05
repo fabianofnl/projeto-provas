@@ -33,4 +33,22 @@ public class TemasServiceImpl implements TemasService {
 		return temasModel.getTotalRegistrosTemas();
 	}
 
+	@Override
+	public TemasDTO buscarTemaPorId(Integer temaId)
+			throws ClassNotFoundException, SQLException {
+		return temasModel.buscarTemaporId(temaId);
+	}
+
+	@Override
+	public void alterar(TemasDTO temasDTO) throws ClassNotFoundException,
+			SQLException {
+		temasModel.alterar(temasDTO);
+	}
+
+	@Override
+	public void remover(TemasDTO temasDTO) throws ClassNotFoundException,
+			SQLException {
+		temasModel.remover(temasDTO);
+	}
+
 }
