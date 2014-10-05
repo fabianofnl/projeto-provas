@@ -81,7 +81,6 @@ public class FuncionarioInativarController extends HttpServlet {
 			req.setAttribute("msg", "Erro durante o processamento!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		}
-
 	}
 
 	@Override
