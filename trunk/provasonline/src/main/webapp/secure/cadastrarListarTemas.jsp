@@ -33,7 +33,8 @@
 								<thead>
 									<tr>
 										<th style="width:30%">Título</th>
-										<th style="width:70%">Descrição</th>
+										<th style="width:60%">Descrição</th>
+										<th style="width:10%">Ações</th>
 									</tr>
 								</thead>
 							</table>
@@ -51,7 +52,20 @@
 											<c:forEach items="${listaTemas}" var="tema">
 												<tr>
 													<td style="width:30%; text-align: center;">${tema.titulo}</td>
-													<td style="width:70%">${tema.descricao}</td>
+													<td style="width:60%;">${tema.descricao}</td>
+													<td style="width:10%; text-align: center;">
+													
+													
+														<a href="${pageContext.request.contextPath}/secure/alterarTemas?temaId=${tema.temaId}">
+															<span class="icon-wrench" title="Alterar"></span>
+														</a>
+														<c:if test="${tema.quantidadeQuestoes eq 0}">
+															<span class="custom-separator">|</span>															
+															<a href="${pageContext.request.contextPath}/secure/inativarFuncionario?matricula=${tema.temaId}">
+																<span class="icon-remove" title="Remover"></span>
+															</a>
+														</c:if>
+													</td>
 												</tr>
 											</c:forEach>
 										</c:otherwise>
