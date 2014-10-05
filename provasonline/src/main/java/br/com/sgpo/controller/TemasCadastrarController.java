@@ -16,10 +16,10 @@ import org.apache.log4j.Logger;
  *
  */
 @WebServlet(value="/secure/cadastrarTemas")
-public class CadastrarTemasController extends HttpServlet {
+public class TemasCadastrarController extends HttpServlet {
 
 	private static final long serialVersionUID = -4294843051118528464L;
-	private static final Logger LOG = Logger.getLogger(CadastrarTemasController.class);
+	private static final Logger LOG = Logger.getLogger(TemasCadastrarController.class);
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
