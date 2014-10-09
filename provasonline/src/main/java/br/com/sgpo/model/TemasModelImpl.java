@@ -20,7 +20,7 @@ public class TemasModelImpl implements TemasModel {
 
 	private static final Logger LOG = Logger.getLogger(TemasModelImpl.class);
 
-	private static final String SELECT_TODOS_TEMAS = "SELECT *, (SELECT COUNT(q.questaoId) FROM questoes q "
+	private static final String SELECT_TEMAS_PAGINADO = "SELECT *, (SELECT COUNT(q.questaoId) FROM questoes q "
 			+ "WHERE t.temaId = q.questaoId) as quantidade FROM temas t ORDER BY t.titulo LIMIT ? OFFSET ?";
 
 	private static final String SELECT_TOTAL_REGISTROS_TEMAS = "SELECT COUNT(titulo) AS total FROM temas";
@@ -33,11 +33,13 @@ public class TemasModelImpl implements TemasModel {
 
 	private static final String DELETE_TEMA = "DELETE FROM temas WHERE temaId = ?";
 
+	private static final String SELECT_TODOS_TEMAS = "SELECT * FROM temas";
+
 	@Override
 	public List<TemasDTO> listarTemas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
 
-		LOG.info("Chamando método listarTemas");
+		LOG.info("Chamando método listarTemas paginados");
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -45,7 +47,7 @@ public class TemasModelImpl implements TemasModel {
 
 		List<TemasDTO> listaTemas = new ArrayList<TemasDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_TODOS_TEMAS);
+		pstmt = conn.prepareStatement(SELECT_TEMAS_PAGINADO);
 		pstmt.setInt(1, recordPerPage);
 		pstmt.setInt(2, offSet);
 		rs = pstmt.executeQuery();
@@ -189,5 +191,38 @@ public class TemasModelImpl implements TemasModel {
 		if (conn != null)
 			conn.close();
 
+	}
+
+	@Override
+	public List<TemasDTO> listarTemas() throws ClassNotFoundException,
+			SQLException {
+		LOG.info("Chamando método listarTemas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<TemasDTO> listaTemas = new ArrayList<TemasDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_TODOS_TEMAS);
+		rs = pstmt.executeQuery();
+		TemasDTO temas = null;
+
+		while (rs.next()) {
+			temas = new TemasDTO();
+			temas.setTemaId(rs.getInt("temaId"));
+			temas.setTitulo(rs.getString("titulo"));
+			temas.setDescricao(rs.getString("descricao"));
+			listaTemas.add(temas);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaTemas;
 	}
 }

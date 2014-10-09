@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS opcoes;
 DROP TABLE IF EXISTS questoes;
 DROP TABLE IF EXISTS temas;
 DROP TABLE IF EXISTS equipes;
@@ -33,14 +34,21 @@ CREATE TABLE equipes (
 
 CREATE TABLE temas (
 	temaId SERIAL NOT NULL PRIMARY KEY,
-	titulo VARCHAR(255),
+	titulo VARCHAR(255) NOT NULL,
 	descricao TEXT
 );
 
 CREATE TABLE questoes (
 	questaoId SERIAL NOT NULL PRIMARY KEY,
-	titulo TEXT,
+	titulo VARCHAR(255) NOT NULL,
+	descricao TEXT NOT NULL,
 	temaId INTEGER REFERENCES temas(temaId)
+);
+
+CREATE TABLE opcoes (
+	opcaoId SERIAL NOT NULL PRIMARY KEY,
+	titulo VARCHAR(255),
+	questaoId INTEGER REFERENCES questoes(questaoId)
 );
 
 INSERT INTO perfil (descricao, roleName) VALUES ('Administrador', 'ROLE_ADMIN'); -- 1
