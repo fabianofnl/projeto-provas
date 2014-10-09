@@ -29,4 +29,7 @@ public interface TemasService {
 	public void remover(TemasDTO temasDTO) throws ClassNotFoundException,
 			SQLException;
 
+	public List<TemasDTO> listarTemas() throws ClassNotFoundException,
+			SQLException;
+
 }

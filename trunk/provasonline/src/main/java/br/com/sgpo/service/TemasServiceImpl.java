@@ -51,4 +51,10 @@ public class TemasServiceImpl implements TemasService {
 		temasModel.remover(temasDTO);
 	}
 
+	@Override
+	public List<TemasDTO> listarTemas() throws ClassNotFoundException,
+			SQLException {
+		return temasModel.listarTemas();
+	}
+
 }
