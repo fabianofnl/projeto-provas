@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
@@ -20,16 +21,27 @@ public class QuestoesModelImpl implements QuestoesModel {
 
 	private static final Logger LOG = Logger.getLogger(QuestoesModelImpl.class);
 
-	private static final String SELECT_QUESTOES_PAGINADO = "SELECT *, (SELECT COUNT(o.opcaoId) FROM opcoes o "
-			+ "WHERE q.questaoId = o.questaoId) as quantidade FROM questoes q ORDER BY q.titulo LIMIT ? OFFSET ?";
+	private static final String SELECT_QUESTOES_PAGINADO = "SELECT q.*, "
+			+ "t.temaId, t.titulo as tituloTema, t.descricao as descricaoTema, (SELECT COUNT(o.opcaoId) FROM opcoes o "
+			+ "WHERE q.questaoId = o.questaoId) as quantidade FROM questoes q, temas t WHERE q.temaId = t.temaId "
+			+ "ORDER BY t.titulo, q.titulo LIMIT ? OFFSET ?";
 
 	private static final String SELECT_TOTAL_REGISTROS_QUESTOES = "SELECT COUNT(titulo) AS total FROM questoes";
 
 	private static final String INSERT_QUESTAO = "INSERT INTO questoes (titulo, descricao, temaId) VALUES (?, ?, ?)";
 
+	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT * FROM opcoes WHERE questaoId = ?";
+
+	private static final String SELECT_QUESTAO_POR_ID = "SELECT q.*, "
+			+ "t.temaId, t.titulo as tituloTema, t.descricao as descricaoTema FROM questoes q, temas t "
+			+ "WHERE q.temaId = t.temaId and q.questaoId = ?";
+
+	private static final String DELETE_QUESTAO = "DELETE FROM questoes WHERE questaoId = ?";
+
 	@Override
 	public List<QuestaoDTO> listarQuestoes(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
+
 		LOG.info("Chamando método listarQuestoes paginados");
 
 		Connection conn = null;
@@ -50,6 +62,10 @@ public class QuestoesModelImpl implements QuestoesModel {
 			questao.setTituloQuestao(rs.getString("titulo"));
 			questao.setDescricaoQuestao(rs.getString("descricao"));
 			questao.setQuantidadeOpcoes(rs.getInt("quantidade"));
+
+			questao.setTemaId(rs.getInt("temaId"));
+			questao.setTitulo(rs.getString("tituloTema"));
+			questao.setDescricao(rs.getString("descricaoTema"));
 			listaQuestoes.add(questao);
 		}
 
@@ -110,5 +126,97 @@ public class QuestoesModelImpl implements QuestoesModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
+	}
+
+	@Override
+	public List<OpcaoDTO> listarOpcoes(Integer questaoId)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método listarOpções");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<OpcaoDTO> listaOpcoes = new ArrayList<OpcaoDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_OPCOES_POR_QUESTAO);
+		pstmt.setInt(1, questaoId);
+		rs = pstmt.executeQuery();
+		OpcaoDTO opcao = null;
+
+		while (rs.next()) {
+			opcao = new OpcaoDTO();
+			opcao.setOpcaoId(rs.getInt("opcaoId"));
+			opcao.setTitulo(rs.getString("titulo"));
+			opcao.setFlag(rs.getBoolean("flag"));
+			listaOpcoes.add(opcao);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaOpcoes;
+	}
+
+	@Override
+	public QuestaoDTO buscarQuestaoPorId(Integer questaoId)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método buscarQuestaoPorId");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_QUESTAO_POR_ID);
+		pstmt.setInt(1, questaoId);
+		rs = pstmt.executeQuery();
+		QuestaoDTO questao = null;
+
+		if (rs.next()) {
+			questao = new QuestaoDTO();
+			questao.setQuestaoId(rs.getInt("questaoId"));
+			questao.setTituloQuestao(rs.getString("titulo"));
+			questao.setDescricaoQuestao(rs.getString("descricao"));
+
+			questao.setTemaId(rs.getInt("temaId"));
+			questao.setTitulo(rs.getString("tituloTema"));
+			questao.setDescricao(rs.getString("descricaoTema"));
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return questao;
+	}
+
+	@Override
+	public void remover(QuestaoDTO questaoDTO) throws ClassNotFoundException,
+			SQLException {
+
+		LOG.info("Chamando método remover");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(DELETE_QUESTAO);
+		pstmt.setInt(1, questaoDTO.getQuestaoId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
 	}
 }

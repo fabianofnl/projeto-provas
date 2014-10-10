@@ -24,11 +24,11 @@ import br.com.sgpo.service.TemasServiceImpl;
  * 
  */
 @WebServlet(value = "/secure/questoes")
-public class QuestoesCadastrarController extends HttpServlet {
+public class QuestoesCadastrarListarController extends HttpServlet {
 
 	private static final long serialVersionUID = -4294843051118528464L;
 	private static final Logger LOG = Logger
-			.getLogger(QuestoesCadastrarController.class);
+			.getLogger(QuestoesCadastrarListarController.class);
 
 	private QuestoesService questoesService;
 	private TemasService temasService;

@@ -48,6 +48,7 @@ CREATE TABLE questoes (
 CREATE TABLE opcoes (
 	opcaoId SERIAL NOT NULL PRIMARY KEY,
 	titulo VARCHAR(255),
+	flag BOOLEAN DEFAULT FALSE,
 	questaoId INTEGER REFERENCES questoes(questaoId)
 );
 

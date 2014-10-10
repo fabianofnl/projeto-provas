@@ -18,7 +18,14 @@ public class QuestoesServiceImpl implements QuestoesService {
 	@Override
 	public List<QuestaoDTO> listarQuestoes(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
-		return questoesModel.listarQuestoes(offSet, recordPerPage);
+		
+		List<QuestaoDTO> listaQuestoes = questoesModel.listarQuestoes(offSet, recordPerPage);
+		
+		for (QuestaoDTO questaoDTO : listaQuestoes) {
+			questaoDTO.setListaOpcoes(questoesModel.listarOpcoes(questaoDTO.getQuestaoId()));
+		}
+		
+		return listaQuestoes; 
 	}
 
 	@Override
@@ -31,5 +38,17 @@ public class QuestoesServiceImpl implements QuestoesService {
 	public void gravar(QuestaoDTO questaoDTO) throws ClassNotFoundException,
 			SQLException {
 		questoesModel.gravar(questaoDTO);
+	}
+
+	@Override
+	public QuestaoDTO buscarQuestaoPorId(Integer questaoId)
+			throws ClassNotFoundException, SQLException {
+		return questoesModel.buscarQuestaoPorId(questaoId);
+	}
+
+	@Override
+	public void remover(QuestaoDTO questaoDTO) throws ClassNotFoundException,
+			SQLException {
+		questoesModel.remover(questaoDTO);
 	}
 }
