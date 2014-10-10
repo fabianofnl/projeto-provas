@@ -20,4 +20,10 @@ public interface QuestoesService {
 	public void gravar(QuestaoDTO questaoDTO) throws ClassNotFoundException,
 			SQLException;
 
+	public QuestaoDTO buscarQuestaoPorId(Integer questaoId)
+			throws ClassNotFoundException, SQLException;
+
+	public void remover(QuestaoDTO questaoDTO) throws ClassNotFoundException,
+			SQLException;
+
 }

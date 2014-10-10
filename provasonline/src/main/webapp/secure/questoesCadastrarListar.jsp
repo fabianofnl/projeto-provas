@@ -49,20 +49,45 @@
 											</tr>
 										</c:when>
 										<c:otherwise>
-											<c:forEach items="${listaQuestoes}" var="questoes">
+											<c:forEach items="${listaQuestoes}" var="questao">
 												<tr>
-													<td style="width:30%; text-align: center;">${questoes.tituloQuestao}</td>
-													<td style="width:60%;">${questoes.descricaoQuestao}</td>
+													<td style="width:30%" valign="top">
+														<ul style="list-style: none;">
+															<li>${questao.tituloQuestao}
+																<br>
+																<span style="font-size: 9pt !important; cursor: pointer;"
+																	data-hint="Descrição | ${questao.descricao}" data-hint-position="top">
+																	<strong>Tema:</strong> ${questao.titulo}
+																</span>
+															</li>
+														</ul>
+													</td>
+													<td style="width:60%;">
+														<ul style="list-style: none;">
+															<c:forEach items="${questao.listaOpcoes}" var="opcao">
+																<li style="padding:2px;">
+																	${opcao.titulo} 
+																	<span class="custom-separator">|</span>
+																	<a href="${pageContext.request.contextPath}/secure/removerOpcao?opcaoId=${opcao.opcaoId}">
+																		<span class="icon-remove" data-hint="Remover Opção" data-hint-position="top"></span>
+																	</a>
+																</li>
+															</c:forEach>
+														</ul>
+													</td>
 													<td style="width:10%; text-align: center;">
 													
-													
-														<a href="${pageContext.request.contextPath}/secure/alterarQuestao?questaoId=${tema.temaId}">
-															<span class="icon-wrench" title="Alterar"></span>
+														<a href="${pageContext.request.contextPath}/secure/adicionarOpcao?questaoId=${questao.questaoId}">
+															<span class="icon-box-add" data-hint="Adicionar Opção" data-hint-position="top"></span>
 														</a>
-														<c:if test="${questoes.quantidadeQuestoes eq 0}">
+														<span class="custom-separator">|</span>
+														<a href="${pageContext.request.contextPath}/secure/alterarQuestao?questaoId=${questao.questaoId}">
+															<span class="icon-wrench" data-hint="Alterar Questão" data-hint-position="top"></span>
+														</a>
+														<c:if test="${questao.quantidadeOpcoes eq 0}">
 															<span class="custom-separator">|</span>															
-															<a href="${pageContext.request.contextPath}/secure/alterarQuestao?questaoId=${tema.temaId}">
-																<span class="icon-remove" title="Remover"></span>
+															<a href="${pageContext.request.contextPath}/secure/removerQuestao?questaoId=${questao.questaoId}">
+																<span class="icon-remove" data-hint="Remover Questão" data-hint-position="top"></span>
 															</a>
 														</c:if>
 													</td>
