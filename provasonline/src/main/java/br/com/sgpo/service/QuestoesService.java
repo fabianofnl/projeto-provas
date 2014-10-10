@@ -26,4 +26,7 @@ public interface QuestoesService {
 	public void remover(QuestaoDTO questaoDTO) throws ClassNotFoundException,
 			SQLException;
 
+	public void alterar(QuestaoDTO questaoDTO, Integer questaoIdAntiga)
+			throws ClassNotFoundException, SQLException;
+
 }

@@ -53,10 +53,9 @@
 												<tr>
 													<td style="width:30%" valign="top">
 														<ul style="list-style: none;">
-															<li>${questao.tituloQuestao}
+															<li data-hint="Descrição | ${questao.descricaoQuestao}" data-hint-position="top">${questao.tituloQuestao}
 																<br>
-																<span style="font-size: 9pt !important; cursor: pointer;"
-																	data-hint="Descrição | ${questao.descricao}" data-hint-position="top">
+																<span style="font-size: 9pt !important; cursor: pointer;">
 																	<strong>Tema:</strong> ${questao.titulo}
 																</span>
 															</li>
