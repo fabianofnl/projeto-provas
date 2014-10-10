@@ -38,6 +38,9 @@ public class QuestoesModelImpl implements QuestoesModel {
 
 	private static final String DELETE_QUESTAO = "DELETE FROM questoes WHERE questaoId = ?";
 
+	private static final String UPDATE_QUESTAO = "UPDATE questoes SET titulo = ?, descricao = ?, temaId = ? "
+			+ "WHERE questaoId = ?";
+
 	@Override
 	public List<QuestaoDTO> listarQuestoes(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -218,5 +221,27 @@ public class QuestoesModelImpl implements QuestoesModel {
 		if (conn != null)
 			conn.close();
 
+	}
+
+	@Override
+	public void alterar(QuestaoDTO questaoDTO, Integer questaoIdAntiga)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método alterar");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(UPDATE_QUESTAO);
+		pstmt.setString(1, questaoDTO.getTituloQuestao());
+		pstmt.setString(2, questaoDTO.getDescricaoQuestao());
+		pstmt.setInt(3, questaoDTO.getTemaId());
+		pstmt.setInt(4, questaoIdAntiga);
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
 	}
 }
