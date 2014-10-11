@@ -21,7 +21,7 @@ public class TemasModelImpl implements TemasModel {
 	private static final Logger LOG = Logger.getLogger(TemasModelImpl.class);
 
 	private static final String SELECT_TEMAS_PAGINADO = "SELECT *, (SELECT COUNT(q.questaoId) FROM questoes q "
-			+ "WHERE t.temaId = q.questaoId) as quantidade FROM temas t ORDER BY t.titulo LIMIT ? OFFSET ?";
+			+ "WHERE t.temaId = q.temaId) as quantidade FROM temas t ORDER BY t.titulo LIMIT ? OFFSET ?";
 
 	private static final String SELECT_TOTAL_REGISTROS_TEMAS = "SELECT COUNT(titulo) AS total FROM temas";
 

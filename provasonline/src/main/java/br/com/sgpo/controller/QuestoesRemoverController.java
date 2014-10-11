@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -87,8 +88,10 @@ public class QuestoesRemoverController extends HttpServlet {
 
 			questoesService.remover(questaoDTO);
 
-			req.setAttribute("msg", "Questão removido com sucesso!");
-			req.setAttribute("msgType", "info");
+			HttpSession session = req.getSession(true);
+
+			session.setAttribute("msg", "Questão removido com sucesso!");
+			session.setAttribute("msgType", "info");
 
 			resp.sendRedirect(req.getContextPath() + "/secure/questoes");
 

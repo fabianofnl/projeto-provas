@@ -65,7 +65,7 @@
 														<ul style="list-style: none;">
 															<c:forEach items="${questao.listaOpcoes}" var="opcao">
 																<li style="padding:2px;">
-																	${opcao.titulo} 
+																	${opcao.tituloOpcao} 
 																	<span class="custom-separator">|</span>
 																	<a href="${pageContext.request.contextPath}/secure/removerOpcao?opcaoId=${opcao.opcaoId}">
 																		<span class="icon-remove" data-hint="Remover Opção" data-hint-position="top"></span>
@@ -123,7 +123,7 @@
 										<label>Tema:</label>
 										<div class="input-control select">
 											<select id="temaId" name="temaId" oninput="setCustomValidity('')"
-												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required autofocus="autofocus">
+												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required>
 												<option value="">Selecione</option>
 												<c:forEach var="tema" items="${listaTemas}">
 													<option value="${tema.temaId}">${tema.titulo}</option>

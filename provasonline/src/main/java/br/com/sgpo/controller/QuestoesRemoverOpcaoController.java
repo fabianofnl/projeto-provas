@@ -2,7 +2,6 @@ package br.com.sgpo.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,32 +13,27 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.dto.QuestaoDTO;
-import br.com.sgpo.dto.TemasDTO;
+import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.service.QuestoesService;
 import br.com.sgpo.service.QuestoesServiceImpl;
-import br.com.sgpo.service.TemasService;
-import br.com.sgpo.service.TemasServiceImpl;
 
 /**
  * @author Roseli
  * 
  */
-@WebServlet(value = "/secure/alterarQuestao")
-public class QuestoesAlterarController extends HttpServlet {
+@WebServlet(value = "/secure/removerOpcao")
+public class QuestoesRemoverOpcaoController extends HttpServlet {
 
 	private static final long serialVersionUID = 4474824008931216299L;
 
 	private static final Logger LOG = Logger
-			.getLogger(QuestoesAlterarController.class);
+			.getLogger(QuestoesRemoverOpcaoController.class);
 
 	private QuestoesService questoesService;
-	private TemasService temasService;
 
 	@Override
 	public void init() throws ServletException {
 		questoesService = new QuestoesServiceImpl();
-		temasService = new TemasServiceImpl();
 	}
 
 	@Override
@@ -47,11 +41,11 @@ public class QuestoesAlterarController extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			LOG.info("Acessando classe alterar Questao - GET");
+			LOG.info("Acessando classe remover Opcao - GET");
 
-			String questaoId = req.getParameter("questaoId");
+			String opcaoId = req.getParameter("opcaoId");
 
-			if (!StringUtils.isNumeric(questaoId)) {
+			if (!StringUtils.isNumeric(opcaoId)) {
 				req.setAttribute("msg", "Erro na aplicação.");
 				req.setAttribute("msgType", "error");
 				req.getRequestDispatcher("/error/genericError.jsp").forward(
@@ -59,14 +53,12 @@ public class QuestoesAlterarController extends HttpServlet {
 				return;
 			}
 
-			List<TemasDTO> listaTemas = temasService.listarTemas();
-			QuestaoDTO questaoDTO = questoesService.buscarQuestaoPorId(Integer
-					.parseInt(questaoId));
+			OpcaoDTO opcaoDTO = questoesService.buscarOpcaoPorId(Integer
+					.parseInt(opcaoId));
 
-			req.setAttribute("listaTemas", listaTemas);
-			req.setAttribute("questao", questaoDTO);
+			req.setAttribute("opcao", opcaoDTO);
 
-			req.getRequestDispatcher("/secure/questaoAlterar.jsp").forward(req,
+			req.getRequestDispatcher("/secure/questaoRemoverOpcao.jsp").forward(req,
 					resp);
 
 		} catch (ClassNotFoundException e) {
@@ -88,21 +80,17 @@ public class QuestoesAlterarController extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			LOG.info("Acessando classe Questao - método POST");
+			LOG.info("Acessando classe questoes remover - método POST");
 
-			QuestaoDTO questaoDTO = new QuestaoDTO();
+			OpcaoDTO opcaoDTO = new OpcaoDTO();
 
-			Integer questaoIdAntiga = Integer.parseInt(req
-					.getParameter("questaoId"));
-			questaoDTO.setTituloQuestao(req.getParameter("titulo"));
-			questaoDTO.setDescricaoQuestao(req.getParameter("descricao"));
-			questaoDTO.setTemaId(Integer.parseInt(req.getParameter("temaId")));
+			opcaoDTO.setOpcaoId(Integer.parseInt(req.getParameter("opcaoId")));
 
-			questoesService.alterar(questaoDTO, questaoIdAntiga);
+			questoesService.removerOpcao(opcaoDTO);
 
 			HttpSession session = req.getSession(true);
 
-			session.setAttribute("msg", "Questão alterado com sucesso!");
+			session.setAttribute("msg", "Opção removida com sucesso!");
 			session.setAttribute("msgType", "info");
 
 			resp.sendRedirect(req.getContextPath() + "/secure/questoes");
@@ -118,5 +106,6 @@ public class QuestoesAlterarController extends HttpServlet {
 			req.setAttribute("msg", "Erro durante o processamento!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		}
+
 	}
 }

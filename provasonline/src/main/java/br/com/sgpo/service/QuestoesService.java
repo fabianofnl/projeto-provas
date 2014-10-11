@@ -3,6 +3,7 @@ package br.com.sgpo.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 
 /**
@@ -28,5 +29,14 @@ public interface QuestoesService {
 
 	public void alterar(QuestaoDTO questaoDTO, Integer questaoIdAntiga)
 			throws ClassNotFoundException, SQLException;
+
+	public void gravarOpcao(OpcaoDTO opcao) throws ClassNotFoundException,
+			SQLException;
+
+	public OpcaoDTO buscarOpcaoPorId(Integer opcaoId)
+			throws ClassNotFoundException, SQLException;
+
+	public void removerOpcao(OpcaoDTO opcaoDTO) throws ClassNotFoundException,
+			SQLException;
 
 }

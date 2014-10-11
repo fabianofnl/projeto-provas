@@ -70,7 +70,7 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 --SELECT * FROM perfil;
 --SELECT * FROM usuario;
 --SELECT * FROM funcionario;
+--SELECT * FROM questoes
 
 SELECT * FROM perfil p, usuario u, funcionario f WHERE p.id = u.perfilId AND u.usuario = f.usuario AND 
 u.usuario = 'jsilva' AND u.senha = MD5('123')
-
