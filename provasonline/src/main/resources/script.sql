@@ -70,7 +70,14 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 --SELECT * FROM perfil;
 --SELECT * FROM usuario;
 --SELECT * FROM funcionario;
+--SELECT * FROM temas;
 --SELECT * FROM questoes
+--SELECT * FROM opcoes
 
 SELECT * FROM perfil p, usuario u, funcionario f WHERE p.id = u.perfilId AND u.usuario = f.usuario AND 
 u.usuario = 'jsilva' AND u.senha = MD5('123')
+
+SELECT *, (SELECT COUNT(q.questaoId) FROM questoes q WHERE t.temaId = q.temaId) as quantidade FROM temas t ORDER BY t.titulo
+
+
+
