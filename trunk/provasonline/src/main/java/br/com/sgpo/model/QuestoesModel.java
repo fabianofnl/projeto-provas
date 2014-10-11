@@ -33,4 +33,13 @@ public interface QuestoesModel {
 	public void alterar(QuestaoDTO questaoDTO, Integer questaoIdAntiga)
 			throws ClassNotFoundException, SQLException;
 
+	public void gravarOpcao(OpcaoDTO opcao) throws ClassNotFoundException,
+			SQLException;
+
+	public OpcaoDTO buscarOpcaoPorId(Integer opcaoId)
+			throws ClassNotFoundException, SQLException;
+
+	public void removerOpcao(OpcaoDTO opcaoDTO) throws ClassNotFoundException,
+			SQLException;
+
 }

@@ -2,16 +2,15 @@ package br.com.sgpo.dto;
 
 import java.io.Serializable;
 
-
 /**
  * @author Roseli
- *
+ * 
  */
-public class OpcaoDTO implements Serializable {
+public class OpcaoDTO extends QuestaoDTO implements Serializable {
 
 	private static final long serialVersionUID = 4420791152482835526L;
 	private Integer opcaoId;
-	private String titulo;
+	private String tituloOpcao;
 	private Boolean flag;
 
 	public OpcaoDTO() {
@@ -25,12 +24,12 @@ public class OpcaoDTO implements Serializable {
 		this.opcaoId = opcaoId;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public String getTituloOpcao() {
+		return tituloOpcao;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setTituloOpcao(String tituloOpcao) {
+		this.tituloOpcao = tituloOpcao;
 	}
 
 	public Boolean getFlag() {

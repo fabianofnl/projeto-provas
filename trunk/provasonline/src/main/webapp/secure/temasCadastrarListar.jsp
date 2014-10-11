@@ -88,7 +88,7 @@
 							</table>
 						</div>
 					</fieldset>
-
+					
 					<fieldset>
 						<legend>Cadastrar Temas</legend>
 						<form id="frmCadastrarTemas" action="temas" method="post">
@@ -98,8 +98,7 @@
 										<label>Título:</label>
 										<div class="input-control text">
 											<input type="text" id="titulo" name="titulo" oninput="setCustomValidity('')"
-												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required
-												autofocus="autofocus">
+												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required>
 											<button class="btn-clear"></button>
 										</div>
 										<label>Descrição:</label>

@@ -3,6 +3,7 @@ package br.com.sgpo.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.model.QuestoesModel;
 import br.com.sgpo.model.QuestoesModelImpl;
@@ -58,5 +59,24 @@ public class QuestoesServiceImpl implements QuestoesService {
 	public void alterar(QuestaoDTO questaoDTO, Integer questaoIdAntiga)
 			throws ClassNotFoundException, SQLException {
 		questoesModel.alterar(questaoDTO, questaoIdAntiga);
+	}
+
+	@Override
+	public void gravarOpcao(OpcaoDTO opcao) throws ClassNotFoundException,
+			SQLException {
+		questoesModel.gravarOpcao(opcao);
+	}
+
+	@Override
+	public OpcaoDTO buscarOpcaoPorId(Integer opcaoId)
+			throws ClassNotFoundException, SQLException {
+
+		return questoesModel.buscarOpcaoPorId(opcaoId);
+	}
+
+	@Override
+	public void removerOpcao(OpcaoDTO opcaoDTO) throws ClassNotFoundException,
+			SQLException {
+		questoesModel.removerOpcao(opcaoDTO);
 	}
 }
