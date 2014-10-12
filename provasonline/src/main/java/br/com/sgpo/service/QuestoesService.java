@@ -39,4 +39,10 @@ public interface QuestoesService {
 	public void removerOpcao(OpcaoDTO opcaoDTO) throws ClassNotFoundException,
 			SQLException;
 
+	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
+			throws ClassNotFoundException, SQLException;
+
+	public void definirOpcao(List<OpcaoDTO> listaOpcoes)
+			throws ClassNotFoundException, SQLException;
+
 }
