@@ -24,7 +24,7 @@ public class QuestoesServiceImpl implements QuestoesService {
 				recordPerPage);
 
 		for (QuestaoDTO questaoDTO : listaQuestoes) {
-			questaoDTO.setListaOpcoes(questoesModel.listarOpcoes(questaoDTO
+			questaoDTO.setListaOpcoes(questoesModel.listarOpcoesPorQuestaoId(questaoDTO
 					.getQuestaoId()));
 		}
 
@@ -78,5 +78,17 @@ public class QuestoesServiceImpl implements QuestoesService {
 	public void removerOpcao(OpcaoDTO opcaoDTO) throws ClassNotFoundException,
 			SQLException {
 		questoesModel.removerOpcao(opcaoDTO);
+	}
+
+	@Override
+	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
+			throws ClassNotFoundException, SQLException {
+		return questoesModel.listarOpcoesPorQuestaoId(questaoId);
+	}
+
+	@Override
+	public void definirOpcao(List<OpcaoDTO> listaOpcoes)
+			throws ClassNotFoundException, SQLException {
+		questoesModel.definirOpcao(listaOpcoes);
 	}
 }

@@ -30,7 +30,7 @@ public class QuestoesModelImpl implements QuestoesModel {
 
 	private static final String INSERT_QUESTAO = "INSERT INTO questoes (titulo, descricao, temaId) VALUES (?, ?, ?)";
 
-	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT * FROM opcoes WHERE questaoId = ?";
+	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT *, CAST('0' AS INT) as quantidadeProvas FROM opcoes WHERE questaoId = ?";
 
 	private static final String SELECT_QUESTAO_POR_ID = "SELECT q.*, "
 			+ "t.temaId, t.titulo as tituloTema, t.descricao as descricaoTema FROM questoes q, temas t "
@@ -49,6 +49,8 @@ public class QuestoesModelImpl implements QuestoesModel {
 			+ "WHERE q.temaId = t.temaId and o.questaoId = q.questaoId and o.opcaoId = ?";
 
 	private static final String DELETE_OPCAO = "DELETE FROM opcoes WHERE opcaoId = ?";
+
+	private static final String DEFINIR_OPCAO = "UPDATE opcoes SET flag = ? WHERE opcaoId = ?";
 
 	@Override
 	public List<QuestaoDTO> listarQuestoes(Integer offSet, Integer recordPerPage)
@@ -141,7 +143,7 @@ public class QuestoesModelImpl implements QuestoesModel {
 	}
 
 	@Override
-	public List<OpcaoDTO> listarOpcoes(Integer questaoId)
+	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
 			throws ClassNotFoundException, SQLException {
 
 		LOG.info("Chamando método listarOpções");
@@ -161,6 +163,7 @@ public class QuestoesModelImpl implements QuestoesModel {
 			opcao = new OpcaoDTO();
 			opcao.setOpcaoId(rs.getInt("opcaoId"));
 			opcao.setTituloOpcao(rs.getString("titulo"));
+			opcao.setQuantidadeProvas(rs.getInt("quantidadeProvas"));
 			opcao.setFlag(rs.getBoolean("flag"));
 			listaOpcoes.add(opcao);
 		}
@@ -318,7 +321,7 @@ public class QuestoesModelImpl implements QuestoesModel {
 	public void removerOpcao(OpcaoDTO opcaoDTO) throws ClassNotFoundException,
 			SQLException {
 
-		LOG.info("Chamando método remover Opçaõ");
+		LOG.info("Chamando método remover Opção");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -326,6 +329,30 @@ public class QuestoesModelImpl implements QuestoesModel {
 		pstmt = conn.prepareStatement(DELETE_OPCAO);
 		pstmt.setInt(1, opcaoDTO.getOpcaoId());
 		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public void definirOpcao(List<OpcaoDTO> listaOpcoes)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método definir Opção");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(DEFINIR_OPCAO);
+
+		for (OpcaoDTO opcaoDTO : listaOpcoes) {
+			pstmt.setBoolean(1, opcaoDTO.getFlag());
+			pstmt.setInt(2, opcaoDTO.getOpcaoId());
+			pstmt.addBatch();
+		}
+		pstmt.executeBatch();
 
 		if (pstmt != null)
 			pstmt.close();

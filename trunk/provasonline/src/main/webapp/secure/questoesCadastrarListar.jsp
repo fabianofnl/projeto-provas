@@ -71,11 +71,17 @@
 																	<c:if test="${opcao.flag}">
 																		<i class="icon-checkmark fg-green"></i>
 																	</c:if>
-																	${opcao.tituloOpcao} 
+																	${opcao.tituloOpcao}
 																	<span class="custom-separator">|</span>
-																	<a href="${pageContext.request.contextPath}/secure/removerOpcao?opcaoId=${opcao.opcaoId}">
-																		<span class="icon-remove" data-hint="Remover Opção" data-hint-position="top"></span>
+																	<a href="${pageContext.request.contextPath}/secure/alterarOpcao?opcaoId=${opcao.opcaoId}">
+																		<span class="icon-wrench" data-hint="Alterar Opção" data-hint-position="top"></span>
 																	</a>
+																	<c:if test="${opcao.quantidadeProvas eq 0}">
+																		<span class="custom-separator">|</span>
+																		<a href="${pageContext.request.contextPath}/secure/removerOpcao?opcaoId=${opcao.opcaoId}">
+																			<span class="icon-remove" data-hint="Remover Opção" data-hint-position="top"></span>
+																		</a>
+																	</c:if>
 																</li>
 															</c:forEach>
 														</ul>

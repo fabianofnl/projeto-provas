@@ -21,7 +21,7 @@ public interface QuestoesModel {
 	public void gravar(QuestaoDTO questaoDTO) throws ClassNotFoundException,
 			SQLException;
 
-	public List<OpcaoDTO> listarOpcoes(Integer questaoId)
+	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
 			throws ClassNotFoundException, SQLException;
 
 	public QuestaoDTO buscarQuestaoPorId(Integer questaoId)
@@ -41,5 +41,8 @@ public interface QuestoesModel {
 
 	public void removerOpcao(OpcaoDTO opcaoDTO) throws ClassNotFoundException,
 			SQLException;
+
+	public void definirOpcao(List<OpcaoDTO> listaOpcoes)
+			throws ClassNotFoundException, SQLException;
 
 }
