@@ -65,6 +65,12 @@
 														<ul style="list-style: none;">
 															<c:forEach items="${questao.listaOpcoes}" var="opcao">
 																<li style="padding:2px;">
+																	<c:if test="${!opcao.flag}">
+																		<i class="icon-cancel-2 fg-red"></i>
+																	</c:if>
+																	<c:if test="${opcao.flag}">
+																		<i class="icon-checkmark fg-green"></i>
+																	</c:if>
 																	${opcao.tituloOpcao} 
 																	<span class="custom-separator">|</span>
 																	<a href="${pageContext.request.contextPath}/secure/removerOpcao?opcaoId=${opcao.opcaoId}">
@@ -75,7 +81,12 @@
 														</ul>
 													</td>
 													<td style="width:10%; text-align: center;">
-													
+														<c:if test="${questao.quantidadeOpcoes ne 0}">
+															<a href="${pageContext.request.contextPath}/secure/definirOpcao?questaoId=${questao.questaoId}">
+																<span class="icon-flag-2" data-hint="Definir Padrão" data-hint-position="top"></span>
+															</a>
+															<span class="custom-separator">|</span>
+														</c:if>
 														<a href="${pageContext.request.contextPath}/secure/adicionarOpcao?questaoId=${questao.questaoId}">
 															<span class="icon-box-add" data-hint="Adicionar Opção" data-hint-position="top"></span>
 														</a>
