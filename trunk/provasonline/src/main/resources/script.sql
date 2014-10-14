@@ -86,6 +86,8 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 --SELECT * FROM questoes
 --SELECT * FROM opcoes
 
+-- Demais querys
+
 SELECT * FROM perfil p, usuario u, funcionario f WHERE p.id = u.perfilId AND u.usuario = f.usuario AND 
 u.usuario = 'jsilva' AND u.senha = MD5('123')
 
@@ -94,4 +96,16 @@ SELECT *, (SELECT COUNT(q.questaoId) FROM questoes q WHERE t.temaId = q.temaId) 
 SELECT o.*, (SELECT COUNT(m.provaId) FROM montarProvas m, questoes q WHERE m.questaoId = q.questaoId AND q.questaoId = o.questaoId) AS quantidadeProvas FROM opcoes o WHERE o.questaoId = 8
 
 SELECT * FROM montarProvas m, questoes q WHERE m.questaoId = q.questaoId AND q.questaoId = 8 
+
+INSERT INTO provas (titulo) VALUES ('Prova 1')
+INSERT INTO montarProvas (provaId, questaoId) VALUES (1, 7)
+
+SELECT * FROM montarProvas mp, provas p WHERE mp.provaId = p.provaId
+SELECT * FROM questoes q, montarProvas mp WHERE q.questaoId = mp.questaoId AND mp.provaId = 1
+
+SELECT DISTINCT ON(t.temaId) t.*  FROM provas p, montarProvas mp, questoes q, temas t 
+WHERE t.temaId = q.temaId AND q.questaoId = mp.questaoId AND mp.provaId = p.provaId AND p.provaId = 1
+
+SELECT q.* FROM temas t, questoes q, montarProvas mp
+WHERE t.temaId = q.temaId AND q.questaoId = mp.questaoId AND mp.provaId = 1 AND t.temaId = 6
 
