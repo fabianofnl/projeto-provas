@@ -18,20 +18,21 @@
 						<legend>Remover Questão</legend>
 						<p id="idMsg" class="bg-amber fg-white">
 							<span class="icon-warning padding10"></span>
-							Ao confirmar as informações você removerá a questão do sistema.
+							Ao confirmar as informações você removerá a questão da prova.
 						</p>
-						<form id="frmRemover" action="removerQuestao" method="post">
+						<form id="frmRemover" action="removerQuestaoProva" method="post">
 							<div class="grid">
 								<div class="row">
 									<div class="span10">
+										<label>Prova:</label>
+										<label>${prova.tituloProva}</label>
+										
 										<label>Título:</label>
 										<label>${questao.tituloQuestao}</label>
 										
 										<label>Descrição:</label>
 										<label>${questao.descricaoQuestao}</label>
 										
-										<label>Tema:</label>
-										<label>${questao.titulo}</label>
 									</div>
 								</div>
 								<div class="row">
@@ -43,6 +44,7 @@
 								</div>
 							</div>
 							<input type="hidden" id="questaoId" name="questaoId" value="${questao.questaoId}">
+							<input type="hidden" id="provaId" name="provaId" value="${prova.provaId}">
 						</form>
 					</fieldset>
 				</div>

@@ -15,12 +15,18 @@ public interface ProvasModel {
 	public List<TemaDTO> listarTemasPorProva(Integer provaId)
 			throws ClassNotFoundException, SQLException;
 
-	public List<QuestaoDTO> listarQuestoesPorTemas(Integer temaId, Integer provaId)
-			throws ClassNotFoundException, SQLException;
+	public List<QuestaoDTO> listarQuestoesPorTemas(Integer temaId,
+			Integer provaId) throws ClassNotFoundException, SQLException;
 
 	public void gravar(ProvaDTO provaDTO) throws ClassNotFoundException,
 			SQLException;
 
 	public Integer getTotalRegistrosProvas() throws ClassNotFoundException,
 			SQLException;
+
+	public ProvaDTO buscarProvaPorId(Integer provaId)
+			throws ClassNotFoundException, SQLException;
+
+	public void removerQuestao(QuestaoDTO questaoDTO, ProvaDTO provaDTO)
+			throws ClassNotFoundException, SQLException;
 }
