@@ -23,4 +23,10 @@ public interface ProvasService {
 	public void removerQuestao(QuestaoDTO questaoDTO, ProvaDTO provaDTO)
 			throws ClassNotFoundException, SQLException;
 
+	public void associarProvaQuestoes(Integer provaId, Integer[] questoesId)
+			throws ClassNotFoundException, SQLException;
+
+	public void remover(ProvaDTO provaDTO) throws ClassNotFoundException,
+			SQLException;
+
 }

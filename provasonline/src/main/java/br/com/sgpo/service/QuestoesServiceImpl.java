@@ -97,4 +97,10 @@ public class QuestoesServiceImpl implements QuestoesService {
 			SQLException {
 		questoesModel.alterarOpcao(opcaoDTO);
 	}
+
+	@Override
+	public List<QuestaoDTO> listarQuestoesSemProvas()
+			throws ClassNotFoundException, SQLException {
+		return questoesModel.listarQuestoesSemProvas();
+	}
 }

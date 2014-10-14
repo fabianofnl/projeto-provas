@@ -35,6 +35,10 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String DELETE_QUESTAO_PROVA = "DELETE FROM montarProvas WHERE questaoId = ? AND provaId = ?";
 
+	private static final String INSERT_PROVAS_QUESTOES = "INSERT INTO montarProvas (provaId, questaoId) VALUES (?, ?)";
+
+	private static final String DELETE_PROVA = "DELETE FROM provas WHERE provaId = ?";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -227,6 +231,51 @@ public class ProvasModelImpl implements ProvasModel {
 		pstmt = conn.prepareStatement(DELETE_QUESTAO_PROVA);
 		pstmt.setInt(1, questaoDTO.getQuestaoId());
 		pstmt.setInt(2, provaDTO.getProvaId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public void associaProvaQuestoes(Integer provaId, Integer[] questoesId)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método provas questões");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(INSERT_PROVAS_QUESTOES);
+
+		for (int i = 0; i < questoesId.length; i++) {
+			pstmt.setInt(1, provaId);
+			pstmt.setInt(2, questoesId[i]);
+			pstmt.addBatch();
+		}
+
+		pstmt.executeBatch();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public void remover(ProvaDTO provaDTO) throws ClassNotFoundException,
+			SQLException {
+
+		LOG.info("Chamando método remover");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(DELETE_PROVA);
+		pstmt.setInt(1, provaDTO.getProvaId());
 		pstmt.execute();
 
 		if (pstmt != null)

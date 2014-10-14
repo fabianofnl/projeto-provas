@@ -56,6 +56,10 @@ public class QuestoesModelImpl implements QuestoesModel {
 
 	private static final String UPDATE_OPCAO = "UPDATE opcoes SET titulo = ? WHERE opcaoId = ?";
 
+	private static final String SELECT_QUESTOES_SEM_PROVAS = "SELECT q.* FROM questoes q "
+			+ "WHERE q.questaoId NOT IN (SELECT mp.questaoId FROM montarProvas mp) "
+			+ "AND q.questaoId IN (SELECT o.questaoId FROM opcoes o)";
+
 	@Override
 	public List<QuestaoDTO> listarQuestoes(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -381,5 +385,39 @@ public class QuestoesModelImpl implements QuestoesModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
+	}
+
+	@Override
+	public List<QuestaoDTO> listarQuestoesSemProvas()
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método listarQuestoes sem Provas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<QuestaoDTO> listaQuestoes = new ArrayList<QuestaoDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_QUESTOES_SEM_PROVAS);
+		rs = pstmt.executeQuery();
+		QuestaoDTO questao = null;
+
+		while (rs.next()) {
+			questao = new QuestaoDTO();
+			questao.setQuestaoId(rs.getInt("questaoId"));
+			questao.setTituloQuestao(rs.getString("titulo"));
+			questao.setDescricaoQuestao(rs.getString("descricao"));
+			listaQuestoes.add(questao);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaQuestoes;
 	}
 }
