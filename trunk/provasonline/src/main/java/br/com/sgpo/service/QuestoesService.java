@@ -45,4 +45,7 @@ public interface QuestoesService {
 	public void definirOpcao(List<OpcaoDTO> listaOpcoes)
 			throws ClassNotFoundException, SQLException;
 
+	public void alterarOpcao(OpcaoDTO opcaoDTO) throws ClassNotFoundException,
+			SQLException;
+
 }

@@ -22,14 +22,14 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String SELECT_TOTAL_REGISTROS_PROVAS = "SELECT COUNT(provaId) AS total FROM provas";
 
-	private static final String SELECT_TEMAS_POR_PROVA = "SELECT DISTINCT ON(t.temaId) t.*  "
+	private static final String SELECT_TEMAS_POR_PROVA = "SELECT DISTINCT ON(t.temaId) t.* "
 			+ "FROM provas p, montarProvas mp, questoes q, temas t "
 			+ "WHERE t.temaId = q.temaId AND q.questaoId = mp.questaoId AND mp.provaId = p.provaId AND p.provaId = ?";
 
 	private static final String SELECT_QUESTOES_POR_TEMA = "SELECT q.* FROM temas t, questoes q, montarProvas mp "
 			+ "WHERE t.temaId = q.temaId AND q.questaoId = mp.questaoId AND mp.provaId = ? AND t.temaId = ?";
 
-	private static final String INSERT_PROVA = "INSERT INTO (titulo) VALUES (?)";
+	private static final String INSERT_PROVA = "INSERT INTO provas (titulo) VALUES (?)";
 
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)

@@ -26,7 +26,7 @@
 									Você não tem autorização para acessar essa página.
 								</p>
 							</c:if>							
-							<a href="${pageContext.request.contextPath}/secure/home.jsp" class="marginTop20 button bd-gray">
+							<a href="#" class="marginTop20 button bd-gray" onclick="window.history.back();return false;">
 								Voltar
 							</a>
 						</fieldset>
