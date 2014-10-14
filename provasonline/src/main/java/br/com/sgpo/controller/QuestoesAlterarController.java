@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import br.com.sgpo.dto.QuestaoDTO;
-import br.com.sgpo.dto.TemasDTO;
+import br.com.sgpo.dto.TemaDTO;
 import br.com.sgpo.service.QuestoesService;
 import br.com.sgpo.service.QuestoesServiceImpl;
 import br.com.sgpo.service.TemasService;
@@ -59,7 +59,7 @@ public class QuestoesAlterarController extends HttpServlet {
 				return;
 			}
 
-			List<TemasDTO> listaTemas = temasService.listarTemas();
+			List<TemaDTO> listaTemas = temasService.listarTemas();
 			QuestaoDTO questaoDTO = questoesService.buscarQuestaoPorId(Integer
 					.parseInt(questaoId));
 

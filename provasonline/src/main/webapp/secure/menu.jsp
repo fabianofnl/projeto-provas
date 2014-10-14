@@ -38,7 +38,7 @@
 							<li><a href="${pageContext.request.contextPath}/secure/temas">Gerenciar Temas</a></li>
 							<li><a href="${pageContext.request.contextPath}/secure/questoes">Gerenciar Questões</a></li>
 							<li class="divider"></li>
-							<li><a href="${pageContext.request.contextPath}/secure/montarProvas">Montar Provas</a></li>
+							<li><a href="${pageContext.request.contextPath}/secure/provas">Montar Provas</a></li>
 							<li><a href="${pageContext.request.contextPath}/secure/vincularApostilas">Vincular Apostilas</a></li>
 							<li><a href="${pageContext.request.contextPath}/secure/agendarProvas">Agendar Provas</a></li>	
 						</ul>

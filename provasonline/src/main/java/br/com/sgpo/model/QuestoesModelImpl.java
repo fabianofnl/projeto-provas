@@ -30,7 +30,9 @@ public class QuestoesModelImpl implements QuestoesModel {
 
 	private static final String INSERT_QUESTAO = "INSERT INTO questoes (titulo, descricao, temaId) VALUES (?, ?, ?)";
 
-	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT *, CAST('0' AS INT) as quantidadeProvas FROM opcoes WHERE questaoId = ?";
+	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT o.*, (SELECT COUNT(m.provaId) "
+			+ "FROM montarProvas m, questoes q WHERE m.questaoId = q.questaoId AND q.questaoId = o.questaoId) AS quantidadeProvas "
+			+ "FROM opcoes o WHERE o.questaoId = ?";
 
 	private static final String SELECT_QUESTAO_POR_ID = "SELECT q.*, "
 			+ "t.temaId, t.titulo as tituloTema, t.descricao as descricaoTema FROM questoes q, temas t "

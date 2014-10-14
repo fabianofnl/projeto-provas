@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS montarProvas;
+DROP TABLE IF EXISTS provas;
 DROP TABLE IF EXISTS opcoes;
 DROP TABLE IF EXISTS questoes;
 DROP TABLE IF EXISTS temas;
@@ -52,6 +54,16 @@ CREATE TABLE opcoes (
 	questaoId INTEGER REFERENCES questoes(questaoId)
 );
 
+CREATE TABLE provas (
+	provaId SERIAL NOT NULL PRIMARY KEY,
+	titulo VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE montarProvas (
+	provaId INTEGER NOT NULL REFERENCES provas(provaId),
+	questaoId INTEGER NOT NULL REFERENCES questoes(questaoId)
+);
+
 INSERT INTO perfil (descricao, roleName) VALUES ('Administrador', 'ROLE_ADMIN'); -- 1
 INSERT INTO perfil (descricao, roleName) VALUES ('Instrutor', 'ROLE_INSTRUTOR'); -- 2
 INSERT INTO perfil (descricao, roleName) VALUES ('Gerente', 'ROLE_GERENTE'); -- 3
@@ -77,7 +89,9 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 SELECT * FROM perfil p, usuario u, funcionario f WHERE p.id = u.perfilId AND u.usuario = f.usuario AND 
 u.usuario = 'jsilva' AND u.senha = MD5('123')
 
-SELECT *, (SELECT COUNT(q.questaoId) FROM questoes q WHERE t.temaId = q.temaId) as quantidade FROM temas t ORDER BY t.titulo
+SELECT *, (SELECT COUNT(q.questaoId) FROM questoes q WHERE t.temaId = q.temaId) AS quantidade FROM temas t ORDER BY t.titulo
 
+SELECT o.*, (SELECT COUNT(m.provaId) FROM montarProvas m, questoes q WHERE m.questaoId = q.questaoId AND q.questaoId = o.questaoId) AS quantidadeProvas FROM opcoes o WHERE o.questaoId = 8
 
+SELECT * FROM montarProvas m, questoes q WHERE m.questaoId = q.questaoId AND q.questaoId = 8 
 
