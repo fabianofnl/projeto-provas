@@ -54,10 +54,12 @@
 													<td style="width:30%" valign="top">
 														<ul style="list-style: none;">
 															<li data-hint="Descrição | ${prova.titulo}" data-hint-position="top">${prova.titulo}
-																<br>
-																<span style="font-size: 9pt !important;">
-																	<strong>Questões: </strong>${prova.quantidadeQuestoes}
-																</span>
+																<c:if test="${prova.quantidadeQuestoes gt 0}">
+																	<br>
+																	<span style="font-size: 9pt !important;">
+																		${prova.quantidadeQuestoes} questões
+																	</span>
+																</c:if>
 															</li>
 														</ul>
 													</td>

@@ -54,6 +54,8 @@ public class QuestoesModelImpl implements QuestoesModel {
 
 	private static final String DEFINIR_OPCAO = "UPDATE opcoes SET flag = ? WHERE opcaoId = ?";
 
+	private static final String UPDATE_OPCAO = "UPDATE opcoes SET titulo = ? WHERE opcaoId = ?";
+
 	@Override
 	public List<QuestaoDTO> listarQuestoes(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -355,6 +357,26 @@ public class QuestoesModelImpl implements QuestoesModel {
 			pstmt.addBatch();
 		}
 		pstmt.executeBatch();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public void alterarOpcao(OpcaoDTO opcaoDTO) throws ClassNotFoundException,
+			SQLException {
+
+		LOG.info("Chamando método alterar Opção");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(UPDATE_OPCAO);
+		pstmt.setString(1, opcaoDTO.getTituloOpcao());
+		pstmt.setInt(2, opcaoDTO.getOpcaoId());
+		pstmt.execute();
 
 		if (pstmt != null)
 			pstmt.close();

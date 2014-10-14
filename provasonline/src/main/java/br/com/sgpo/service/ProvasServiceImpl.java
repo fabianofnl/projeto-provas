@@ -19,18 +19,19 @@ public class ProvasServiceImpl implements ProvasService {
 		List<ProvaDTO> listaProvas = provasModel.listarProvas(offSet,
 				recordPerPage);
 
-		Integer totalQuestoes = 0;
-
 		for (ProvaDTO provaDTO : listaProvas) {
 			provaDTO.setListaTemas(provasModel.listarTemasPorProva(provaDTO
 					.getProvaId()));
 			provaDTO.setQuantidadeTemas(provaDTO.getListaTemas().size());
+
+			Integer totalQuestoes = 0;
 			for (TemaDTO temaDTO : provaDTO.getListaTemas()) {
 				temaDTO.setListaQuestoes(provasModel.listarQuestoesPorTemas(
 						temaDTO.getTemaId(), provaDTO.getProvaId()));
 				totalQuestoes += temaDTO.getListaQuestoes().size();
 			}
 			provaDTO.setQuantidadeQuestoes(totalQuestoes);
+
 		}
 		return listaProvas;
 	}

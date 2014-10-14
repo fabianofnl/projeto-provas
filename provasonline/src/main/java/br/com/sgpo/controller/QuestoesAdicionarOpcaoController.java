@@ -24,11 +24,11 @@ import br.com.sgpo.service.QuestoesServiceImpl;
  *
  */
 @WebServlet(value = "/secure/adicionarOpcao")
-public class QuestaoAdicionarOpcaoController extends HttpServlet {
+public class QuestoesAdicionarOpcaoController extends HttpServlet {
 
 	private static final long serialVersionUID = -1433251825434458033L;
 	private static final Logger LOG = Logger
-			.getLogger(QuestaoAdicionarOpcaoController.class);
+			.getLogger(QuestoesAdicionarOpcaoController.class);
 
 	private QuestoesService questoesService;
 
