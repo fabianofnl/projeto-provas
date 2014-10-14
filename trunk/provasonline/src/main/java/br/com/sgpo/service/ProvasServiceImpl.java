@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.sgpo.dto.ProvaDTO;
+import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
 import br.com.sgpo.model.ProvasModel;
 import br.com.sgpo.model.ProvasModelImpl;
@@ -46,5 +47,17 @@ public class ProvasServiceImpl implements ProvasService {
 	public Integer getTotalRegistrosProvas() throws ClassNotFoundException,
 			SQLException {
 		return provasModel.getTotalRegistrosProvas();
+	}
+
+	@Override
+	public ProvaDTO buscarProvaPorId(Integer provaId)
+			throws ClassNotFoundException, SQLException {
+		return provasModel.buscarProvaPorId(provaId);
+	}
+
+	@Override
+	public void removerQuestao(QuestaoDTO questaoDTO, ProvaDTO provaDTO)
+			throws ClassNotFoundException, SQLException {
+		provasModel.removerQuestao(questaoDTO, provaDTO);
 	}
 }

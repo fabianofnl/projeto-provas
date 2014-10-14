@@ -31,6 +31,10 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String INSERT_PROVA = "INSERT INTO provas (titulo) VALUES (?)";
 
+	private static final String SELECT_PROVA_POR_ID = "SELECT * FROM provas WHERE provaId = ?";
+
+	private static final String DELETE_QUESTAO_PROVA = "DELETE FROM montarProvas WHERE questaoId = ? AND provaId = ?";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -178,5 +182,56 @@ public class ProvasModelImpl implements ProvasModel {
 			conn.close();
 
 		return totalRegistros;
+	}
+
+	@Override
+	public ProvaDTO buscarProvaPorId(Integer provaId)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método buscar Prova por id");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ProvaDTO provaDTO = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_PROVA_POR_ID);
+		pstmt.setInt(1, provaId);
+		rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			provaDTO = new ProvaDTO();
+			provaDTO.setProvaId(rs.getInt("provaId"));
+			provaDTO.setTitulo(rs.getString("titulo"));
+		}
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		// TODO verificar o retorno no controller, pode acontecer NULLPOINTER
+
+		return provaDTO;
+	}
+
+	@Override
+	public void removerQuestao(QuestaoDTO questaoDTO, ProvaDTO provaDTO)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método remover questão provas");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(DELETE_QUESTAO_PROVA);
+		pstmt.setInt(1, questaoDTO.getQuestaoId());
+		pstmt.setInt(2, provaDTO.getProvaId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
 	}
 }

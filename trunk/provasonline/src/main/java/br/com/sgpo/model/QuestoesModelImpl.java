@@ -236,7 +236,6 @@ public class QuestoesModelImpl implements QuestoesModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
-
 	}
 
 	@Override

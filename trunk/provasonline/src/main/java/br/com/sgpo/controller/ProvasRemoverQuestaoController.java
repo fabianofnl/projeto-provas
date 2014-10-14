@@ -2,35 +2,42 @@ package br.com.sgpo.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import br.com.sgpo.dto.ProvaDTO;
+import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.service.ProvasService;
 import br.com.sgpo.service.ProvasServiceImpl;
+import br.com.sgpo.service.QuestoesService;
+import br.com.sgpo.service.QuestoesServiceImpl;
 
 /**
  * @author Roseli
  * 
  */
-@WebServlet(value = "/secure/provas")
-public class ProvasMontarListarController extends HttpServlet {
+@WebServlet(value = "/secure/removerQuestaoProva")
+public class ProvasRemoverQuestaoController extends HttpServlet {
 
-	private static final long serialVersionUID = -4294843051118528464L;
+	private static final long serialVersionUID = 4474824008931216299L;
+
 	private static final Logger LOG = Logger
-			.getLogger(ProvasMontarListarController.class);
+			.getLogger(ProvasRemoverQuestaoController.class);
 
+	private QuestoesService questoesService;
 	private ProvasService provasService;
 
 	@Override
 	public void init() throws ServletException {
+		questoesService = new QuestoesServiceImpl();
 		provasService = new ProvasServiceImpl();
 	}
 
@@ -39,42 +46,31 @@ public class ProvasMontarListarController extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			LOG.info("Acessando classe montar provas - método GET");
+			LOG.info("Acessando classe remover questão prova - GET");
 
-			Integer pagina = 1;
-			Integer registroPorPagina = 15;
-			Integer numeroRegistros = 0;
-			Integer numeroDePaginas = 0;
+			String questaoId = req.getParameter("questaoId");
+			String provaId = req.getParameter("provaId");
 
-			if (req.getParameter("pagina") != null) {
-				pagina = Integer.parseInt(req.getParameter("pagina"));
+			if (!StringUtils.isNumeric(questaoId)
+					&& !StringUtils.isNumeric(provaId)) {
+				req.setAttribute("msg", "Erro na aplicação.");
+				req.setAttribute("msgType", "error");
+				req.getRequestDispatcher("/error/genericError.jsp").forward(
+						req, resp);
+				return;
 			}
 
-			List<ProvaDTO> listaProvas = provasService.listarProvas(
-					(pagina - 1) * registroPorPagina, registroPorPagina);
+			QuestaoDTO questaoDTO = questoesService.buscarQuestaoPorId(Integer
+					.parseInt(questaoId));
 
-			numeroRegistros = getTotalRegistrosProvas();
+			ProvaDTO provaDTO = provasService.buscarProvaPorId(Integer
+					.parseInt(provaId));
 
-			if (numeroRegistros == 0) {
-				req.setAttribute("listSize", 0);
-				numeroRegistros = 1;
-			}
+			req.setAttribute("questao", questaoDTO);
+			req.setAttribute("prova", provaDTO);
 
-			numeroDePaginas = (int) Math.ceil(numeroRegistros * 1.0
-					/ registroPorPagina);
-
-			req.setAttribute("listaProvas", listaProvas);
-
-			req.setAttribute("pagina", pagina);
-			req.setAttribute("numeroDePaginas", numeroDePaginas);
-
-			req.getRequestDispatcher("/secure/provasMontar.jsp").forward(req,
-					resp);
-
-			// Devido ao redirecionamento de outra página para esta,
-			// após apresentar a mensagem de confirmação o mesmo é removido.
-			req.getSession(true).removeAttribute("msgType");
-			req.getSession(true).removeAttribute("msg");
+			req.getRequestDispatcher("/secure/provasRemoverQuestao.jsp")
+					.forward(req, resp);
 
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);
@@ -87,6 +83,7 @@ public class ProvasMontarListarController extends HttpServlet {
 			req.setAttribute("msg", "Erro durante o processamento!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		}
+
 	}
 
 	@Override
@@ -94,17 +91,23 @@ public class ProvasMontarListarController extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			LOG.info("Acessando classe prova questoes remover - método POST");
 
-			LOG.info("Acessando classe montar provas - método POST");
+			QuestaoDTO questaoDTO = new QuestaoDTO();
 			ProvaDTO provaDTO = new ProvaDTO();
-			provaDTO.setTitulo(req.getParameter("titulo"));
 
-			provasService.gravar(provaDTO);
+			questaoDTO.setQuestaoId(Integer.parseInt(req
+					.getParameter("questaoId")));
+			provaDTO.setProvaId(Integer.parseInt(req.getParameter("provaId")));
 
-			req.setAttribute("msg", "Prova adicionado com sucesso!");
-			req.setAttribute("msgType", "info");
+			provasService.removerQuestao(questaoDTO, provaDTO);
 
-			doGet(req, resp);
+			HttpSession session = req.getSession(true);
+
+			session.setAttribute("msg", "Questão removida com sucesso!");
+			session.setAttribute("msgType", "info");
+
+			resp.sendRedirect(req.getContextPath() + "/secure/provas");
 
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);
@@ -117,10 +120,6 @@ public class ProvasMontarListarController extends HttpServlet {
 			req.setAttribute("msg", "Erro durante o processamento!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		}
-	}
 
-	private Integer getTotalRegistrosProvas() throws ClassNotFoundException,
-			SQLException {
-		return provasService.getTotalRegistrosProvas();
 	}
 }
