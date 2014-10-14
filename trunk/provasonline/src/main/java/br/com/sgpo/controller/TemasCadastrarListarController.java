@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.dto.TemasDTO;
+import br.com.sgpo.dto.TemaDTO;
 import br.com.sgpo.service.TemasService;
 import br.com.sgpo.service.TemasServiceImpl;
 
@@ -53,7 +53,7 @@ public class TemasCadastrarListarController extends HttpServlet {
 				pagina = Integer.parseInt(req.getParameter("pagina"));
 			}
 
-			List<TemasDTO> listaTemas = temasService.listarTemas((pagina - 1)
+			List<TemaDTO> listaTemas = temasService.listarTemas((pagina - 1)
 					* registroPorPagina, registroPorPagina);
 
 			numeroRegistros = getTotalRegistrosFuncionarios();
@@ -100,7 +100,7 @@ public class TemasCadastrarListarController extends HttpServlet {
 		try {
 			LOG.info("Acessando classe temas - método POST");
 
-			TemasDTO temasDTO = new TemasDTO();
+			TemaDTO temasDTO = new TemaDTO();
 
 			temasDTO.setTitulo(req.getParameter("titulo"));
 			temasDTO.setDescricao(req.getParameter("descricao"));

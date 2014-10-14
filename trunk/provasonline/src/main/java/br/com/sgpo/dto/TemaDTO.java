@@ -1,12 +1,14 @@
 package br.com.sgpo.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Roseli
  * 
  */
-public class TemasDTO implements Serializable {
+public class TemaDTO implements Serializable {
 
 	private static final long serialVersionUID = -4052547986860370131L;
 
@@ -14,8 +16,9 @@ public class TemasDTO implements Serializable {
 	private String titulo;
 	private String descricao;
 	private Integer quantidadeQuestoes;
+	private List<QuestaoDTO> listaQuestoes = new ArrayList<QuestaoDTO>();
 
-	public TemasDTO() {
+	public TemaDTO() {
 	}
 
 	/**
@@ -89,6 +92,23 @@ public class TemasDTO implements Serializable {
 	public void setQuantidadeQuestoes(Integer quantidadeQuestoes) {
 		this.quantidadeQuestoes = quantidadeQuestoes;
 	}
-	
-	
+
+	/**
+	 * Método retorna o <b>listaQuestoes</b> do Tema.
+	 * 
+	 * @return listaQuestoes
+	 */
+	public List<QuestaoDTO> getListaQuestoes() {
+		return listaQuestoes;
+	}
+
+	/**
+	 * Método atribui <b>listaQuestoes</b> ao Tema.
+	 * 
+	 * @param listaQuestoes
+	 */
+	public void setListaQuestoes(List<QuestaoDTO> listaQuestoes) {
+		this.listaQuestoes = listaQuestoes;
+	}
+
 }

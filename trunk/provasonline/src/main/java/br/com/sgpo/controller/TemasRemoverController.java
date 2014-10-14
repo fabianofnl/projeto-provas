@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.dto.TemasDTO;
+import br.com.sgpo.dto.TemaDTO;
 import br.com.sgpo.service.TemasService;
 import br.com.sgpo.service.TemasServiceImpl;
 
@@ -53,7 +53,7 @@ public class TemasRemoverController extends HttpServlet {
 				return;
 			}
 
-			TemasDTO temaDTO = temasService.buscarTemaPorId(Integer
+			TemaDTO temaDTO = temasService.buscarTemaPorId(Integer
 					.parseInt(temaId));
 
 			req.setAttribute("tema", temaDTO);
@@ -82,7 +82,7 @@ public class TemasRemoverController extends HttpServlet {
 		try {
 			LOG.info("Acessando classe temas - método POST");
 
-			TemasDTO temasDTO = new TemasDTO();
+			TemaDTO temasDTO = new TemaDTO();
 
 			temasDTO.setTemaId(Integer.parseInt(req.getParameter("temaId")));
 

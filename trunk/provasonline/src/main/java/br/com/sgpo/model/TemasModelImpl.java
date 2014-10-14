@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.dto.TemasDTO;
+import br.com.sgpo.dto.TemaDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
 /**
@@ -36,7 +36,7 @@ public class TemasModelImpl implements TemasModel {
 	private static final String SELECT_TODOS_TEMAS = "SELECT * FROM temas";
 
 	@Override
-	public List<TemasDTO> listarTemas(Integer offSet, Integer recordPerPage)
+	public List<TemaDTO> listarTemas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
 
 		LOG.info("Chamando método listarTemas paginados");
@@ -45,16 +45,16 @@ public class TemasModelImpl implements TemasModel {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		List<TemasDTO> listaTemas = new ArrayList<TemasDTO>();
+		List<TemaDTO> listaTemas = new ArrayList<TemaDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(SELECT_TEMAS_PAGINADO);
 		pstmt.setInt(1, recordPerPage);
 		pstmt.setInt(2, offSet);
 		rs = pstmt.executeQuery();
-		TemasDTO temas = null;
+		TemaDTO temas = null;
 
 		while (rs.next()) {
-			temas = new TemasDTO();
+			temas = new TemaDTO();
 			temas.setTemaId(rs.getInt("temaId"));
 			temas.setTitulo(rs.getString("titulo"));
 			temas.setDescricao(rs.getString("descricao"));
@@ -73,7 +73,7 @@ public class TemasModelImpl implements TemasModel {
 	}
 
 	@Override
-	public void gravar(TemasDTO temasDTO) throws ClassNotFoundException,
+	public void gravar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 
 		LOG.info("Chamando método gravar Tema");
@@ -121,14 +121,14 @@ public class TemasModelImpl implements TemasModel {
 	}
 
 	@Override
-	public TemasDTO buscarTemaporId(Integer temaId)
+	public TemaDTO buscarTemaporId(Integer temaId)
 			throws ClassNotFoundException, SQLException {
 
 		LOG.info("Chamando método buscar Tema por id");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		TemasDTO tema = null;
+		TemaDTO tema = null;
 
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(SELECT_TEMA_POR_ID);
@@ -136,7 +136,7 @@ public class TemasModelImpl implements TemasModel {
 		rs = pstmt.executeQuery();
 
 		if (rs.next()) {
-			tema = new TemasDTO();
+			tema = new TemaDTO();
 			tema.setTemaId(rs.getInt("temaId"));
 			tema.setTitulo(rs.getString("titulo"));
 			tema.setDescricao(rs.getString("descricao"));
@@ -153,7 +153,7 @@ public class TemasModelImpl implements TemasModel {
 	}
 
 	@Override
-	public void alterar(TemasDTO temasDTO) throws ClassNotFoundException,
+	public void alterar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 
 		LOG.info("Chamando método alterar");
@@ -174,7 +174,7 @@ public class TemasModelImpl implements TemasModel {
 	}
 
 	@Override
-	public void remover(TemasDTO temasDTO) throws ClassNotFoundException,
+	public void remover(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 
 		LOG.info("Chamando método remover");
@@ -194,7 +194,7 @@ public class TemasModelImpl implements TemasModel {
 	}
 
 	@Override
-	public List<TemasDTO> listarTemas() throws ClassNotFoundException,
+	public List<TemaDTO> listarTemas() throws ClassNotFoundException,
 			SQLException {
 		LOG.info("Chamando método listarTemas");
 
@@ -202,14 +202,14 @@ public class TemasModelImpl implements TemasModel {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		List<TemasDTO> listaTemas = new ArrayList<TemasDTO>();
+		List<TemaDTO> listaTemas = new ArrayList<TemaDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(SELECT_TODOS_TEMAS);
 		rs = pstmt.executeQuery();
-		TemasDTO temas = null;
+		TemaDTO temas = null;
 
 		while (rs.next()) {
-			temas = new TemasDTO();
+			temas = new TemaDTO();
 			temas.setTemaId(rs.getInt("temaId"));
 			temas.setTitulo(rs.getString("titulo"));
 			temas.setDescricao(rs.getString("descricao"));

@@ -8,7 +8,7 @@ import java.util.List;
  * @author Roseli
  * 
  */
-public class QuestaoDTO extends TemasDTO implements Serializable {
+public class QuestaoDTO extends TemaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1670332519379095776L;
 

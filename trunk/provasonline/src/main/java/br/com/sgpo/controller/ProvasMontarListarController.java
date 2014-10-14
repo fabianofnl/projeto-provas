@@ -12,31 +12,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import br.com.sgpo.dto.QuestaoDTO;
-import br.com.sgpo.dto.TemaDTO;
-import br.com.sgpo.service.QuestoesService;
-import br.com.sgpo.service.QuestoesServiceImpl;
-import br.com.sgpo.service.TemasService;
-import br.com.sgpo.service.TemasServiceImpl;
+import br.com.sgpo.dto.ProvaDTO;
+import br.com.sgpo.service.ProvasService;
+import br.com.sgpo.service.ProvasServiceImpl;
 
 /**
  * @author Roseli
  * 
  */
-@WebServlet(value = "/secure/questoes")
-public class QuestoesCadastrarListarController extends HttpServlet {
+@WebServlet(value = "/secure/provas")
+public class ProvasMontarListarController extends HttpServlet {
 
 	private static final long serialVersionUID = -4294843051118528464L;
 	private static final Logger LOG = Logger
-			.getLogger(QuestoesCadastrarListarController.class);
+			.getLogger(ProvasMontarListarController.class);
 
-	private QuestoesService questoesService;
-	private TemasService temasService;
+	private ProvasService provasService;
 
 	@Override
 	public void init() throws ServletException {
-		questoesService = new QuestoesServiceImpl();
-		temasService = new TemasServiceImpl();
+		provasService = new ProvasServiceImpl();
 	}
 
 	@Override
@@ -44,8 +39,7 @@ public class QuestoesCadastrarListarController extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-
-			LOG.info("Acessando classe cadastrar questões - método GET");
+			LOG.info("Acessando classe montar provas - método GET");
 
 			Integer pagina = 1;
 			Integer registroPorPagina = 15;
@@ -56,11 +50,10 @@ public class QuestoesCadastrarListarController extends HttpServlet {
 				pagina = Integer.parseInt(req.getParameter("pagina"));
 			}
 
-			List<QuestaoDTO> listaQuestoes = questoesService.listarQuestoes(
+			List<ProvaDTO> listaProvas = provasService.listarProvas(
 					(pagina - 1) * registroPorPagina, registroPorPagina);
-			List<TemaDTO> listaTemas = temasService.listarTemas();
 
-			numeroRegistros = getTotalRegistrosQuestoes();
+			numeroRegistros = getTotalRegistrosProvas();
 
 			if (numeroRegistros == 0) {
 				req.setAttribute("listSize", 0);
@@ -70,14 +63,13 @@ public class QuestoesCadastrarListarController extends HttpServlet {
 			numeroDePaginas = (int) Math.ceil(numeroRegistros * 1.0
 					/ registroPorPagina);
 
-			req.setAttribute("listaQuestoes", listaQuestoes);
-			req.setAttribute("listaTemas", listaTemas);
+			req.setAttribute("listaProvas", listaProvas);
 
 			req.setAttribute("pagina", pagina);
 			req.setAttribute("numeroDePaginas", numeroDePaginas);
 
-			req.getRequestDispatcher("/secure/questoesCadastrarListar.jsp")
-					.forward(req, resp);
+			req.getRequestDispatcher("/secure/montarProvas.jsp").forward(req,
+					resp);
 
 			// Devido ao redirecionamento de outra página para esta,
 			// após apresentar a mensagem de confirmação o mesmo é removido.
@@ -102,17 +94,14 @@ public class QuestoesCadastrarListarController extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			LOG.info("Acessando classe cadastrar questões - método GET");
 
-			QuestaoDTO questaoDTO = new QuestaoDTO();
+			LOG.info("Acessando classe montar provas - método POST");
+			ProvaDTO provaDTO = new ProvaDTO();
+			provaDTO.setTitulo(req.getParameter("titulo"));
 
-			questaoDTO.setTemaId(Integer.parseInt(req.getParameter("temaId")));
-			questaoDTO.setTituloQuestao(req.getParameter("titulo"));
-			questaoDTO.setDescricaoQuestao(req.getParameter("descricao"));
+			provasService.gravar(provaDTO);
 
-			questoesService.gravar(questaoDTO);
-
-			req.setAttribute("msg", "Questão cadastrado com sucesso!");
+			req.setAttribute("msg", "Prova adicionado com sucesso!");
 			req.setAttribute("msgType", "info");
 
 			doGet(req, resp);
@@ -128,11 +117,11 @@ public class QuestoesCadastrarListarController extends HttpServlet {
 			req.setAttribute("msg", "Erro durante o processamento!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		}
-
 	}
 
-	private Integer getTotalRegistrosQuestoes() throws ClassNotFoundException,
+	private Integer getTotalRegistrosProvas() throws ClassNotFoundException,
 			SQLException {
-		return questoesService.getTotalRegistrosQuestoes();
+		return provasService.getTotalRegistrosProvas();
 	}
+
 }
