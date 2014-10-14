@@ -60,4 +60,16 @@ public class ProvasServiceImpl implements ProvasService {
 			throws ClassNotFoundException, SQLException {
 		provasModel.removerQuestao(questaoDTO, provaDTO);
 	}
+
+	@Override
+	public void associarProvaQuestoes(Integer provaId, Integer[] questoesId)
+			throws ClassNotFoundException, SQLException {
+		provasModel.associaProvaQuestoes(provaId, questoesId);
+	}
+
+	@Override
+	public void remover(ProvaDTO provaDTO) throws ClassNotFoundException,
+			SQLException {
+		provasModel.remover(provaDTO);
+	}
 }

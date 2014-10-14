@@ -15,26 +15,34 @@
 			<div class="row">
 				<div class="span10 offset4">
 					<fieldset>
-						<legend>Remover Questão</legend>
-						<p id="idMsg" class="bg-amber fg-white">
-							<span class="icon-warning padding10"></span>
-							Ao confirmar as informações você removerá a questão da prova.
-						</p>
-						<form id="frmRemover" action="removerQuestaoProva" method="post">
+						<legend>Adicionar Questoes</legend>
+						<form id="frmAdicionar" action="adicionarQuestoesProva" method="post">
 							<div class="grid">
 								<div class="row">
 									<div class="span10">
 										<label>Prova:</label>
 										<label>${prova.titulo}</label>
-										
-										<label>Título da questão:</label>
-										<label>${questao.tituloQuestao}</label>
-										
-										<label>Descrição:</label>
-										<label>${questao.descricaoQuestao}</label>
-										
 									</div>
 								</div>
+
+								<div class="row">
+									<div class="span10">
+										<label>Questões:</label>
+										<div class="input-control select">
+											<select id="questoesId" name="questoesId" oninput="setCustomValidity('')" size="20" 
+												multiple="multiple" oninvalid="setCustomValidity('Por favor, preencha este campo.')" 
+												required>
+												<c:forEach var="questao" items="${listaQuestoes}">
+													<option value="${questao.questaoId}" 
+														data-hint="Descrição | ${questao.descricaoQuestao}" 
+														data-hint-position="right">${questao.tituloQuestao}
+													</option>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
+								</div>
+
 								<div class="row">
 									<div class="span10">
 										<div class="form-actions">
@@ -43,7 +51,6 @@
 									</div>
 								</div>
 							</div>
-							<input type="hidden" id="questaoId" name="questaoId" value="${questao.questaoId}">
 							<input type="hidden" id="provaId" name="provaId" value="${prova.provaId}">
 						</form>
 					</fieldset>

@@ -57,6 +57,10 @@
 																<c:if test="${prova.quantidadeQuestoes gt 0}">
 																	<br>
 																	<span style="font-size: 9pt !important;">
+																		${prova.quantidadeTemas} temas
+																	</span>
+																	<br>
+																	<span style="font-size: 9pt !important;">
 																		${prova.quantidadeQuestoes} questões
 																	</span>
 																</c:if>
@@ -76,7 +80,7 @@
 																										data-hint-position="top">
 																				${questao.tituloQuestao}
 																				<span class="custom-separator">|</span>
-																				<a href="${pageContext.request.contextPath}/secure/removerQuestaoProva?questaoId=${questao.questaoId}">
+																				<a href="${pageContext.request.contextPath}/secure/removerQuestaoProva?questaoId=${questao.questaoId}&provaId=${prova.provaId}">
 																					<span class="icon-remove" data-hint="Remover Questão" data-hint-position="top"></span>
 																				</a>
 																			</li>
@@ -87,7 +91,7 @@
 														</ul>
 													</td>
 													<td style="width:10%; text-align: center;">
-														<a href="${pageContext.request.contextPath}/secure/adicionarQuestoes?provaId=${prova.provaId}">
+														<a href="${pageContext.request.contextPath}/secure/adicionarQuestoesProva?provaId=${prova.provaId}">
 															<span class="icon-box-add" data-hint="Adicionar Questões" data-hint-position="top"></span>
 														</a>
 														<c:if test="${prova.quantidadeTemas eq 0}">
