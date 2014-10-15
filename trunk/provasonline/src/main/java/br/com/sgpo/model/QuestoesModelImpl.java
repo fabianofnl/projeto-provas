@@ -57,7 +57,7 @@ public class QuestoesModelImpl implements QuestoesModel {
 	private static final String UPDATE_OPCAO = "UPDATE opcoes SET titulo = ? WHERE opcaoId = ?";
 
 	private static final String SELECT_QUESTOES_SEM_PROVAS = "SELECT q.* FROM questoes q "
-			+ "WHERE q.questaoId NOT IN (SELECT mp.questaoId FROM montarProvas mp) "
+			+ "WHERE q.questaoId NOT IN (SELECT mp.questaoId FROM montarProvas mp WHERE mp.provaId = ?) "
 			+ "AND q.questaoId IN (SELECT o.questaoId FROM opcoes o)";
 
 	@Override
@@ -388,7 +388,7 @@ public class QuestoesModelImpl implements QuestoesModel {
 	}
 
 	@Override
-	public List<QuestaoDTO> listarQuestoesSemProvas()
+	public List<QuestaoDTO> listarQuestoesSemProvas(Integer provaId)
 			throws ClassNotFoundException, SQLException {
 
 		LOG.info("Chamando método listarQuestoes sem Provas");
@@ -400,6 +400,7 @@ public class QuestoesModelImpl implements QuestoesModel {
 		List<QuestaoDTO> listaQuestoes = new ArrayList<QuestaoDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(SELECT_QUESTOES_SEM_PROVAS);
+		pstmt.setInt(1, provaId);
 		rs = pstmt.executeQuery();
 		QuestaoDTO questao = null;
 

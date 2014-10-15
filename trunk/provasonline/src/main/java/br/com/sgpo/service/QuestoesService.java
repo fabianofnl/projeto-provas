@@ -48,7 +48,7 @@ public interface QuestoesService {
 	public void alterarOpcao(OpcaoDTO opcaoDTO) throws ClassNotFoundException,
 			SQLException;
 
-	public List<QuestaoDTO> listarQuestoesSemProvas()
+	public List<QuestaoDTO> listarQuestoesSemProvas(Integer provaId)
 			throws ClassNotFoundException, SQLException;
 
 }

@@ -99,8 +99,8 @@ public class QuestoesServiceImpl implements QuestoesService {
 	}
 
 	@Override
-	public List<QuestaoDTO> listarQuestoesSemProvas()
+	public List<QuestaoDTO> listarQuestoesSemProvas(Integer provaId)
 			throws ClassNotFoundException, SQLException {
-		return questoesModel.listarQuestoesSemProvas();
+		return questoesModel.listarQuestoesSemProvas(provaId);
 	}
 }

@@ -60,11 +60,11 @@ public class ProvasAdicionarQuestoesController extends HttpServlet {
 				return;
 			}
 
-			List<QuestaoDTO> listaQuestoes = questoesService
-					.listarQuestoesSemProvas();
-
 			ProvaDTO prova = provasService.buscarProvaPorId(Integer
 					.parseInt(provaId));
+
+			List<QuestaoDTO> listaQuestoes = questoesService
+					.listarQuestoesSemProvas(prova.getProvaId());
 
 			req.setAttribute("listaQuestoes", listaQuestoes);
 			req.setAttribute("prova", prova);
