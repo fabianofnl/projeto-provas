@@ -16,10 +16,10 @@ import org.apache.log4j.Logger;
  *
  */
 @WebServlet(value="/secure/vincularApostilas")
-public class VincularApostilaProvaController extends HttpServlet {
+public class ApostilaVincularProvaController extends HttpServlet {
 
 	private static final long serialVersionUID = -4294843051118528464L;
-	private static final Logger LOG = Logger.getLogger(VincularApostilaProvaController.class);
+	private static final Logger LOG = Logger.getLogger(ApostilaVincularProvaController.class);
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
