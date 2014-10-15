@@ -15,8 +15,12 @@
 			<div class="row">
 				<div class="span10 offset4">
 					<fieldset>
-						<legend>Adicionar Questoes</legend>
-						<form id="frmAdicionar" action="adicionarQuestoesProva" method="post">
+						<legend>Remover Prova</legend>
+						<p id="idMsg" class="bg-amber fg-white">
+							<span class="icon-warning padding10"></span>
+							Ao confirmar as informações você removerá a prova do sistema.
+						</p>
+						<form id="frmRemover" action="removerProva" method="post">
 							<div class="grid">
 								<div class="row">
 									<div class="span10">
@@ -24,25 +28,6 @@
 										<label>${prova.titulo}</label>
 									</div>
 								</div>
-
-								<div class="row">
-									<div class="span10">
-										<label>Questões:</label>
-										<div class="input-control select">
-											<select id="questoesId" name="questoesId" oninput="setCustomValidity('')" size="20" 
-												multiple="multiple" oninvalid="setCustomValidity('Por favor, preencha este campo.')" 
-												required>
-												<c:forEach var="questao" items="${listaQuestoes}">
-													<option value="${questao.questaoId}" 
-														data-hint="Descrição | ${questao.descricaoQuestao}" 
-														data-hint-position="bottom">${questao.tituloQuestao}
-													</option>
-												</c:forEach>
-											</select>
-										</div>
-									</div>
-								</div>
-
 								<div class="row">
 									<div class="span10">
 										<div class="form-actions">

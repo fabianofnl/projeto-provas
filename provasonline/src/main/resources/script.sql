@@ -109,3 +109,5 @@ WHERE t.temaId = q.temaId AND q.questaoId = mp.questaoId AND mp.provaId = p.prov
 SELECT q.* FROM temas t, questoes q, montarProvas mp
 WHERE t.temaId = q.temaId AND q.questaoId = mp.questaoId AND mp.provaId = 1 AND t.temaId = 6
 
+SELECT q.* FROM questoes q 
+WHERE q.questaoId NOT IN (SELECT mp.questaoId FROM montarProvas mp WHERE mp.provaId = 2)  AND q.questaoId IN (SELECT o.questaoId FROM opcoes o)
