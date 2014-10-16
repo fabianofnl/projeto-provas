@@ -3,6 +3,7 @@ package br.com.sgpo.model;
 import java.sql.SQLException;
 import java.util.List;
 
+import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
@@ -34,5 +35,14 @@ public interface ProvasModel {
 			throws ClassNotFoundException, SQLException;
 
 	public void remover(ProvaDTO provaDTO) throws ClassNotFoundException,
+			SQLException;
+
+	public List<ApostilaDTO> listarApostilas(Integer offSet,
+			Integer recordPerPage) throws ClassNotFoundException, SQLException;
+
+	public List<ProvaDTO> listarProvasPorApostilas(Integer apostilaId)
+			throws ClassNotFoundException, SQLException;
+
+	public Integer getTotalRegistrosApostilas() throws ClassNotFoundException,
 			SQLException;
 }
