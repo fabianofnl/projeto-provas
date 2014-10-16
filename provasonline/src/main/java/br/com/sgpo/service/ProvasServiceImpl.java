@@ -3,6 +3,7 @@ package br.com.sgpo.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
@@ -71,5 +72,32 @@ public class ProvasServiceImpl implements ProvasService {
 	public void remover(ProvaDTO provaDTO) throws ClassNotFoundException,
 			SQLException {
 		provasModel.remover(provaDTO);
+	}
+
+	@Override
+	public List<ApostilaDTO> listarApostilas(Integer offSet,
+			Integer recordPerPage) throws ClassNotFoundException, SQLException {
+
+		List<ApostilaDTO> listaApostilas = provasModel.listarApostilas(offSet,
+				recordPerPage);
+
+		for (ApostilaDTO apostilaDTO : listaApostilas) {
+			apostilaDTO.setListaProvas(provasModel
+					.listarProvasPorApostilas(apostilaDTO.getApostilaId()));
+		}
+		return listaApostilas;
+	}
+
+	@Override
+	public Integer getTotalRegistrosApostilas() throws ClassNotFoundException,
+			SQLException {
+		return provasModel.getTotalRegistrosApostilas();
+	}
+
+	@Override
+	public void gravarApostila(ApostilaDTO apostilaDTO)
+			throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 }

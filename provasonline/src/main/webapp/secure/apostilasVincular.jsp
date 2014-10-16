@@ -43,49 +43,52 @@
 							<table class="tableClass tableBody">
 								<tbody>
 									<c:choose>
-										<c:when test="${empty listaProvas}">
+										<c:when test="${empty listaApostilas}">
 											<tr>
 												<td colspan="5">Não há registros.</td>
 											</tr>
 										</c:when>
 										<c:otherwise>
-											<c:forEach items="${listaProvas}" var="prova">
+											<c:forEach items="${listaApostilas}" var="apostila">
 												<tr>
 													<td style="width:30%" valign="top">
 														<ul style="list-style: none;">
-															<li data-hint="Descrição | ${prova.titulo}" data-hint-position="top">${prova.titulo}
-																<c:if test="${prova.quantidadeQuestoes gt 0}">
-																	<br>
-																	<span style="font-size: 9pt !important;">
-																		${prova.quantidadeTemas} temas
-																	</span>
-																	<br>
-																	<span style="font-size: 9pt !important;">
-																		${prova.quantidadeQuestoes} questões
-																	</span>
+															<li>
+																<c:if test="${apostila.extensao eq 'doc' or apostila.extensao eq 'docx'}">
+																	<i class="icon-file-word fg-blue"></i>
 																</c:if>
+																<c:if test="${apostila.extensao eq 'xls' or apostila.extensao eq 'xlsx'}">
+																	<i class="icon-file-excel fg-green"></i>
+																</c:if>
+																<c:if test="${apostila.extensao eq 'pdf'}">
+																	<i class="icon-file-pdf fg-red"></i>
+																</c:if>
+																<c:if test="${apostila.extensao ne 'doc' and apostila.extensao ne 'docx' 
+																			and apostila.extensao ne 'xls' and apostila.extensao ne 'xlsx'
+																			and apostila.extensao ne 'pdf'}">
+																	<i class="icon-file"></i>
+																</c:if>
+																${apostila.nome}
 															</li>
 														</ul>
 													</td>
 													<td style="width:60%;">
 														<ul style="list-style: none;">
-															<c:forEach items="${prova.listaTemas}" var="tema">
+															<c:forEach items="${apostila.listaProvas}" var="prova">
 																<li style="padding:2px;">
-																	<span style="font-size: 9pt !important;">
-																		<Strong>Tema: </Strong>${tema.titulo}
-																	</span>
+																	<span style="font-size: 9pt !important;">${prova.titulo}</span>
 																</li>
 															</c:forEach>
 														</ul>
 													</td>
 													<td style="width:10%; text-align: center;">
-														<a href="${pageContext.request.contextPath}/secure/adicionarQuestoesProva?provaId=${prova.provaId}">
-															<span class="icon-box-add" data-hint="Adicionar Questões" data-hint-position="top"></span>
+														<a href="${pageContext.request.contextPath}/secure/adicionarApostilaProva?apostilaId=${apostila.apostilaId}">
+															<span class="icon-box-add" data-hint="Adicionar Provas" data-hint-position="top"></span>
 														</a>
 														<c:if test="${prova.quantidadeTemas eq 0}">
 															<span class="custom-separator">|</span>															
-															<a href="${pageContext.request.contextPath}/secure/removerProva?provaId=${prova.provaId}">
-																<span class="icon-remove" data-hint="Remover Prova" data-hint-position="top"></span>
+															<a href="${pageContext.request.contextPath}/secure/removerApostila?apostilaId=${apostila.apostilaId}">
+																<span class="icon-remove" data-hint="Remover Apostila" data-hint-position="top"></span>
 															</a>
 														</c:if>
 													</td>
@@ -102,7 +105,7 @@
 									<tr>
 										<td>
 											<c:if test="${listSize ne 0}">
-												<c:url var="searchUri" value="/secure/provas?pagina=##"/>
+												<c:url var="searchUri" value="/secure/vincularApostilas?pagina=##"/>
 												<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
 											</c:if>
 										</td>
@@ -113,16 +116,17 @@
 					</fieldset>
 
 					<fieldset>
-						<legend>Cadastrar Provas</legend>
-						<form id="frmCadastrarProvas" action="provas" method="post">
+						<legend>Anexar Apostilas</legend>
+						<form id="frmApostilas" action="vincularApostilas" method="post" enctype="multipart/form-data">
 							<div class="grid">
 								<div class="row">
 									<div class="span12">
 										<label>Título da prova:</label>
-										<div class="input-control text">
-											<input type="text" id="titulo" name="titulo" oninput="setCustomValidity('')"
-												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required>
-											<button class="btn-clear"></button>
+										<div class="input-control file">
+											<input type="file" id="file"
+												oninput="setCustomValidity('')" required
+												oninvalid="setCustomValidity('Por favor, selecione um arquivo.')"/>
+											<button type="button" class="btn-file"></button>
 										</div>
 									</div>
 								</div>

@@ -1,31 +1,156 @@
 package br.com.sgpo.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
 
+import br.com.sgpo.dto.ApostilaDTO;
+import br.com.sgpo.service.ProvasService;
+import br.com.sgpo.service.ProvasServiceImpl;
 
 /**
  * @author Roseli
- *
+ * 
  */
-@WebServlet(value="/secure/vincularApostilas")
+@WebServlet(value = "/secure/vincularApostilas")
 public class ApostilaVincularProvaController extends HttpServlet {
 
 	private static final long serialVersionUID = -4294843051118528464L;
-	private static final Logger LOG = Logger.getLogger(ApostilaVincularProvaController.class);
-	
+	private static final Logger LOG = Logger
+			.getLogger(ApostilaVincularProvaController.class);
+	private static final String SERVER_PATH = "D:\\provasonline\\anexos";
+
+	private ProvasService provasService;
+
+	@Override
+	public void init() throws ServletException {
+		provasService = new ProvasServiceImpl();
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		LOG.info("Acessando classe vincular apostilas - método GET");
-		req.getRequestDispatcher("/secure/vincularApostilas.jsp").forward(req, resp);
+		try {
+
+			LOG.info("Acessando classe vincular apostilas - método GET");
+
+			Integer pagina = 1;
+			Integer registroPorPagina = 15;
+			Integer numeroRegistros = 0;
+			Integer numeroDePaginas = 0;
+
+			if (req.getParameter("pagina") != null) {
+				pagina = Integer.parseInt(req.getParameter("pagina"));
+			}
+
+			List<ApostilaDTO> listaApostilas = provasService.listarApostilas(
+					(pagina - 1) * registroPorPagina, registroPorPagina);
+
+			numeroRegistros = getTotalRegistrosQuestoes();
+
+			if (numeroRegistros == 0) {
+				req.setAttribute("listSize", 0);
+				numeroRegistros = 1;
+			}
+
+			numeroDePaginas = (int) Math.ceil(numeroRegistros * 1.0
+					/ registroPorPagina);
+
+			req.setAttribute("listaApostilas", listaApostilas);
+
+			req.setAttribute("pagina", pagina);
+			req.setAttribute("numeroDePaginas", numeroDePaginas);
+
+			req.getRequestDispatcher("/secure/apostilasVincular.jsp").forward(
+					req, resp);
+
+			// Devido ao redirecionamento de outra página para esta,
+			// após apresentar a mensagem de confirmação o mesmo é removido.
+			req.getSession(true).removeAttribute("msgType");
+			req.getSession(true).removeAttribute("msg");
+
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver do banco de dados não encontrado.", e);
+			req.setAttribute("msgType", "error");
+			req.setAttribute("msg", "Erro durante o processamento!");
+			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
+		} catch (SQLException e) {
+			LOG.error("Erro em alguma instrução SQL.", e);
+			req.setAttribute("msgType", "error");
+			req.setAttribute("msg", "Erro durante o processamento!");
+			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
+		}
 	}
-	
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		try {
+
+			LOG.info("Acessando classe vincular apostilas - método POST");
+
+			// constructs path of the directory to save uploaded file
+			String savePath = SERVER_PATH + File.separator;
+
+			// creates the save directory if it does not exists
+			File fileSaveDir = new File(savePath);
+			if (!fileSaveDir.exists()) {
+				fileSaveDir.mkdir();
+			}
+
+			for (Part part : req.getParts()) {
+				String fileName = extractFileName(part);
+				part.write(SERVER_PATH + File.separator + fileName);
+			}
+
+			provasService.gravarApostila(new ApostilaDTO());
+
+			// File uploaded successfully
+			req.setAttribute("msg", "Arquivo carregado com sucesso!");
+			req.setAttribute("msgType", "info");
+
+			doGet(req, resp);
+
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver do banco de dados não encontrado.", e);
+			req.setAttribute("msgType", "error");
+			req.setAttribute("msg", "Erro durante o processamento!");
+			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
+		} catch (SQLException e) {
+			LOG.error("Erro em alguma instrução SQL.", e);
+			req.setAttribute("msgType", "error");
+			req.setAttribute("msg", "Erro durante o processamento!");
+			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
+		}
+	}
+
+	private Integer getTotalRegistrosQuestoes() throws ClassNotFoundException,
+			SQLException {
+		return provasService.getTotalRegistrosApostilas();
+	}
+
+	/**
+	 * Extrai nome do arquivo do cabeçalho do HTTP - content-disposition
+	 */
+	private String extractFileName(Part part) {
+		String contentDisp = part.getHeader("content-disposition");
+		String[] items = contentDisp.split(";");
+		for (String s : items) {
+			if (s.trim().startsWith("filename")) {
+				return s.substring(s.indexOf("=") + 2, s.length() - 1);
+			}
+		}
+		return "";
+	}
 }

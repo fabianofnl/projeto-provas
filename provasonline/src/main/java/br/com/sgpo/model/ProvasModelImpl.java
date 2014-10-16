@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
@@ -39,9 +40,17 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String DELETE_PROVA = "DELETE FROM provas WHERE provaId = ?";
 
+	private static final String SELECT_APOSTILAS_PAGINADO = "SELECT * FROM apostilas ORDER BY nome LIMIT ? OFFSET ?";
+
+	private static final String SELECT_PROVAS_POR_APOSTILAS = "SELECT * FROM provas p, vincularApostilas a "
+			+ "WHERE p.provaId = a.provaId AND a.apostilaId = ?";
+
+	private static final String SELECT_TOTAL_REGISTROS_APOSTILAS = "SELECT COUNT(apostilaId) AS total FROM apostilas";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
+
 		LOG.info("Chamando método listarProvas paginados");
 
 		Connection conn = null;
@@ -282,5 +291,106 @@ public class ProvasModelImpl implements ProvasModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
+	}
+
+	@Override
+	public List<ApostilaDTO> listarApostilas(Integer offSet,
+			Integer recordPerPage) throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método listarApostilas paginados");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<ApostilaDTO> listaApostilas = new ArrayList<ApostilaDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_APOSTILAS_PAGINADO);
+		pstmt.setInt(1, recordPerPage);
+		pstmt.setInt(2, offSet);
+		rs = pstmt.executeQuery();
+		ApostilaDTO apostila = null;
+
+		while (rs.next()) {
+			apostila = new ApostilaDTO();
+			apostila.setApostilaId(rs.getInt("apostilaId"));
+			apostila.setNome(rs.getString("nome"));
+			apostila.setExtensao(rs.getString("extensao"));
+			apostila.setHashName(rs.getString("hashName"));
+			apostila.setServerPath(rs.getString("serverPath"));
+			listaApostilas.add(apostila);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaApostilas;
+	}
+
+	@Override
+	public List<ProvaDTO> listarProvasPorApostilas(Integer apostilaId)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método listarProvasPorApostilas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<ProvaDTO> listaProvas = new ArrayList<ProvaDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_PROVAS_POR_APOSTILAS);
+		pstmt.setInt(1, apostilaId);
+		rs = pstmt.executeQuery();
+		ProvaDTO prova = null;
+
+		while (rs.next()) {
+			prova = new ProvaDTO();
+			prova.setProvaId(rs.getInt("provaId"));
+			prova.setTitulo(rs.getString("titulo"));
+			listaProvas.add(prova);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaProvas;
+	}
+
+	@Override
+	public Integer getTotalRegistrosApostilas() throws ClassNotFoundException,
+			SQLException {
+
+		LOG.info("Chamando método get Total Apostilas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Integer totalRegistros = 0;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_TOTAL_REGISTROS_APOSTILAS);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			totalRegistros = rs.getInt("total");
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return totalRegistros;
 	}
 }

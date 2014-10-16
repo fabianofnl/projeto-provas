@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS vincularApostilas;
+DROP TABLE IF EXISTS apostilas;
 DROP TABLE IF EXISTS montarProvas;
 DROP TABLE IF EXISTS provas;
 DROP TABLE IF EXISTS opcoes;
@@ -62,6 +64,22 @@ CREATE TABLE provas (
 CREATE TABLE montarProvas (
 	provaId INTEGER NOT NULL REFERENCES provas(provaId),
 	questaoId INTEGER NOT NULL REFERENCES questoes(questaoId)
+);
+
+CREATE TABLE apostilas (
+	apostilaId SERIAL NOT NULL PRIMARY KEY,
+	nome VARCHAR(150) NOT NULL,
+	extensao VARCHAR(10),
+	hashName VARCHAR(50) NOT NULL,
+	serverPath VARCHAR(255) NOT NULL
+);
+
+-- Ambos os atributos não serão referenciado pelo banco, 
+-- mas o sistema irá controlar a referencia, para que
+-- não fique amarrado prova com apostila.
+CREATE TABLE vincularApostilas (
+	apostilaId INTEGER NOT NULL,
+	provaId INTEGER NOT NULL
 );
 
 INSERT INTO perfil (descricao, roleName) VALUES ('Administrador', 'ROLE_ADMIN'); -- 1
