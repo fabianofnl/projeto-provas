@@ -103,6 +103,8 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 --SELECT * FROM temas;
 --SELECT * FROM questoes
 --SELECT * FROM opcoes
+--SELECT * FROM apostilas
+--SELECT * FROM vincularApostilas
 
 -- Demais querys
 
