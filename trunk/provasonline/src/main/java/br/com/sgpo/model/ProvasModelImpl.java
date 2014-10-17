@@ -47,6 +47,9 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String SELECT_TOTAL_REGISTROS_APOSTILAS = "SELECT COUNT(apostilaId) AS total FROM apostilas";
 
+	private static final String INSERT_APOSTILA = "INSERT INTO apostilas (nome, extensao, hashName, serverPath) "
+			+ "VALUES (?, ?, ?, ?)";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -392,5 +395,27 @@ public class ProvasModelImpl implements ProvasModel {
 			conn.close();
 
 		return totalRegistros;
+	}
+
+	@Override
+	public void gravaApostila(ApostilaDTO apostilaDTO)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método gravar Apostila");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(INSERT_APOSTILA);
+		pstmt.setString(1, apostilaDTO.getNome());
+		pstmt.setString(2, apostilaDTO.getExtensao());
+		pstmt.setString(3, apostilaDTO.getHashName());
+		pstmt.setString(4, apostilaDTO.getServerPath());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
 	}
 }

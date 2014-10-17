@@ -27,6 +27,16 @@
 								}, 6000);
 							</script>
 						</c:if>
+						<c:if test="${msgType eq 'error'}">
+							<p id="idMsg" class="bg-amber fg-white">
+								<span class="icon-warning padding10"></span>${msg}
+							</p>
+							<script type="text/javascript">
+								setTimeout(function(){
+									$("#idMsg").fadeOut(1000);
+								}, 6000);
+							</script>
+						</c:if>
 
 						<div class="divHeader">
 							<table class="tableClass tableHeader">
@@ -75,8 +85,10 @@
 													<td style="width:60%;">
 														<ul style="list-style: none;">
 															<c:forEach items="${apostila.listaProvas}" var="prova">
-																<li style="padding:2px;">
-																	<span style="font-size: 9pt !important;">${prova.titulo}</span>
+																<li style="padding:2px;">${prova.titulo}
+																	<a href="${pageContext.request.contextPath}/secure/removerProvaApostila?provaId=${prova.provaId}">
+																		<span class="icon-box-add" data-hint="Adicionar Prova" data-hint-position="top"></span>
+																	</a>
 																</li>
 															</c:forEach>
 														</ul>
@@ -85,7 +97,7 @@
 														<a href="${pageContext.request.contextPath}/secure/adicionarApostilaProva?apostilaId=${apostila.apostilaId}">
 															<span class="icon-box-add" data-hint="Adicionar Provas" data-hint-position="top"></span>
 														</a>
-														<c:if test="${prova.quantidadeTemas eq 0}">
+														<c:if test="${true}">
 															<span class="custom-separator">|</span>															
 															<a href="${pageContext.request.contextPath}/secure/removerApostila?apostilaId=${apostila.apostilaId}">
 																<span class="icon-remove" data-hint="Remover Apostila" data-hint-position="top"></span>
@@ -123,7 +135,7 @@
 									<div class="span12">
 										<label>Título da prova:</label>
 										<div class="input-control file">
-											<input type="file" id="file"
+											<input type="file" id="file" name="file"
 												oninput="setCustomValidity('')" required
 												oninvalid="setCustomValidity('Por favor, selecione um arquivo.')"/>
 											<button type="button" class="btn-file"></button>

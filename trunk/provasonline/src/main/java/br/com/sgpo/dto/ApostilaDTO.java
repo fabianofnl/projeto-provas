@@ -69,4 +69,13 @@ public class ApostilaDTO implements Serializable {
 	public void setListaProvas(List<ProvaDTO> listaProvas) {
 		this.listaProvas = listaProvas;
 	}
+
+	@Override
+	public String toString() {
+		return "ApostilaDTO [apostilaId=" + apostilaId + ", nome=" + nome
+				+ ", hashName=" + hashName + ", extensao=" + extensao
+				+ ", serverPath=" + serverPath + ", listaProvas=" + listaProvas
+				+ "]";
+	}
+
 }
