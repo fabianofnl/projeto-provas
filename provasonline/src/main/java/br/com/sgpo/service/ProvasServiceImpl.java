@@ -1,5 +1,7 @@
 package br.com.sgpo.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -98,5 +100,24 @@ public class ProvasServiceImpl implements ProvasService {
 	public void gravarApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException {
 		provasModel.gravaApostila(apostilaDTO);
+	}
+
+	@Override
+	public ApostilaDTO buscarApostilaPorId(Integer apostilaId)
+			throws ClassNotFoundException, SQLException {
+		return provasModel.buscarApostilaPorId(apostilaId);
+	}
+
+	@Override
+	public void removerApostila(ApostilaDTO apostilaDTO)
+			throws ClassNotFoundException, SQLException, IOException {
+
+		String fileNameFull = apostilaDTO.getServerPath() + apostilaDTO.getHashName() + "_" + apostilaDTO.getNome();
+		File file = new File(fileNameFull);
+		if(file.delete()){
+			provasModel.removerApostila(apostilaDTO);
+		}else{
+			throw new IOException("Arquivo nao foi apagado, verificar a existencia do mesmo");
+		}
 	}
 }

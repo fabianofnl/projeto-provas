@@ -1,5 +1,6 @@
 package br.com.sgpo.service;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -38,5 +39,11 @@ public interface ProvasService {
 
 	public void gravarApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException;
+
+	public ApostilaDTO buscarApostilaPorId(Integer apostilaId)
+			throws ClassNotFoundException, SQLException;
+
+	public void removerApostila(ApostilaDTO apostilaDTO)
+			throws ClassNotFoundException, SQLException, IOException;
 
 }

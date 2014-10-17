@@ -13,5 +13,6 @@ public class SGPOConstants {
 	public static final String LOGGED_ROLE_INSTRUTOR = "ROLE_INSTRUTOR";
 	public static final String LOGGED_ROLE_GERENTE = "ROLE_GERENTE";
 	public static final String LOGGED_ROLE_COLABORADOR = "ROLE_COLABORADOR";
+	public static final String SERVER_PATH = "D:\\provasonline\\anexos";
 
 }
