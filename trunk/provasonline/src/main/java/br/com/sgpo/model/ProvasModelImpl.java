@@ -50,6 +50,10 @@ public class ProvasModelImpl implements ProvasModel {
 	private static final String INSERT_APOSTILA = "INSERT INTO apostilas (nome, extensao, hashName, serverPath) "
 			+ "VALUES (?, ?, ?, ?)";
 
+	private static final String SELECT_APOSTILA_POR_ID = "SELECT * FROM apostilas WHERE apostilaId = ?";
+
+	private static final String DELETE_APOSTILA = "DELETE FROM apostilas WHERE apostilaId = ?";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -411,6 +415,57 @@ public class ProvasModelImpl implements ProvasModel {
 		pstmt.setString(2, apostilaDTO.getExtensao());
 		pstmt.setString(3, apostilaDTO.getHashName());
 		pstmt.setString(4, apostilaDTO.getServerPath());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public ApostilaDTO buscarApostilaPorId(Integer apostilaId)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método buscar Prova por id");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ApostilaDTO apostilaDTO = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_APOSTILA_POR_ID);
+		pstmt.setInt(1, apostilaId);
+		rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			apostilaDTO = new ApostilaDTO();
+			apostilaDTO.setApostilaId(rs.getInt("apostilaId"));
+			apostilaDTO.setNome(rs.getString("nome"));
+			apostilaDTO.setExtensao(rs.getString("extensao"));
+			apostilaDTO.setHashName(rs.getString("hashName"));
+			apostilaDTO.setServerPath(rs.getString("serverPath"));
+		}
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return apostilaDTO;
+	}
+
+	@Override
+	public void removerApostila(ApostilaDTO apostilaDTO)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método remover apostila");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(DELETE_APOSTILA);
+		pstmt.setInt(1, apostilaDTO.getApostilaId());
 		pstmt.execute();
 
 		if (pstmt != null)

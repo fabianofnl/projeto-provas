@@ -48,4 +48,10 @@ public interface ProvasModel {
 
 	public void gravaApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException;
+
+	public ApostilaDTO buscarApostilaPorId(Integer apostilaId)
+			throws ClassNotFoundException, SQLException;
+
+	public void removerApostila(ApostilaDTO apostilaDTO)
+			throws ClassNotFoundException, SQLException;
 }

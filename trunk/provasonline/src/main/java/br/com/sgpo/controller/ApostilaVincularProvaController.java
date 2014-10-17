@@ -18,6 +18,7 @@ import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
 
+import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.service.ProvasService;
 import br.com.sgpo.service.ProvasServiceImpl;
@@ -36,7 +37,6 @@ public class ApostilaVincularProvaController extends HttpServlet {
 	private static final long serialVersionUID = -4294843051118528464L;
 	private static final Logger LOG = Logger
 			.getLogger(ApostilaVincularProvaController.class);
-	private static final String SERVER_PATH = "D:\\provasonline\\anexos";
 
 	private ProvasService provasService;
 
@@ -109,7 +109,7 @@ public class ApostilaVincularProvaController extends HttpServlet {
 			LOG.info("Acessando classe vincular apostilas - método POST");
 
 			Boolean flag = false;
-			String fullPath = SERVER_PATH + File.separator;
+			String fullPath = SGPOConstants.SERVER_PATH + File.separator;
 
 			LOG.info("Caminho diretório: " + fullPath);
 
@@ -123,7 +123,7 @@ public class ApostilaVincularProvaController extends HttpServlet {
 			for (Part part : req.getParts()) {
 				String fileName = extractFileName(part);
 				String hash = "a" + gerarHash();
-				part.write(SERVER_PATH + File.separator + hash + "_" + fileName);
+				part.write(SGPOConstants.SERVER_PATH + File.separator + hash + "_" + fileName);
 
 				String[] fileNameSplit = fileName.split("\\.");
 				String extensao = null;
