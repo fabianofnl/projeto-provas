@@ -2,10 +2,14 @@ package br.com.sgpo.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +27,10 @@ import br.com.sgpo.service.ProvasServiceImpl;
  * 
  */
 @WebServlet(value = "/secure/vincularApostilas")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+maxFileSize = 1024 * 1024 * 30, // 10MB
+maxRequestSize = 1024 * 1024 * 50)
+// 50MB
 public class ApostilaVincularProvaController extends HttpServlet {
 
 	private static final long serialVersionUID = -4294843051118528464L;
@@ -100,28 +108,50 @@ public class ApostilaVincularProvaController extends HttpServlet {
 
 			LOG.info("Acessando classe vincular apostilas - método POST");
 
-			// constructs path of the directory to save uploaded file
-			String savePath = SERVER_PATH + File.separator;
+			Boolean flag = false;
+			String fullPath = SERVER_PATH + File.separator;
 
-			// creates the save directory if it does not exists
-			File fileSaveDir = new File(savePath);
+			LOG.info("Caminho diretório: " + fullPath);
+
+			File fileSaveDir = new File(fullPath);
 			if (!fileSaveDir.exists()) {
 				fileSaveDir.mkdir();
 			}
 
+			// Essa lógica permite multiplos arquivos, porém, será permitido
+			// apenas um
 			for (Part part : req.getParts()) {
 				String fileName = extractFileName(part);
-				part.write(SERVER_PATH + File.separator + fileName);
+				String hash = "a" + gerarHash();
+				part.write(SERVER_PATH + File.separator + hash + "_" + fileName);
+
+				String[] fileNameSplit = fileName.split("\\.");
+				String extensao = null;
+				if (fileNameSplit.length > 1) {
+					extensao = fileNameSplit[fileNameSplit.length - 1];
+				}
+
+				ApostilaDTO apostila = new ApostilaDTO();
+				apostila.setHashName(hash);
+				apostila.setNome(fileName);
+				apostila.setServerPath(fullPath);
+				apostila.setExtensao(extensao);
+
+				LOG.info("Dados do arquivo: " + apostila.toString());
+				provasService.gravarApostila(apostila);
+
+				flag = true;
 			}
 
-			provasService.gravarApostila(new ApostilaDTO());
+			if (flag) {
+				req.setAttribute("msg", "Arquivo carregado com sucesso!");
+				req.setAttribute("msgType", "info");
 
-			// File uploaded successfully
-			req.setAttribute("msg", "Arquivo carregado com sucesso!");
-			req.setAttribute("msgType", "info");
-
+			} else {
+				req.setAttribute("msg", "Falha ao carregar o(s) arquivo(s)!");
+				req.setAttribute("msgType", "error");
+			}
 			doGet(req, resp);
-
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);
 			req.setAttribute("msgType", "error");
@@ -129,6 +159,11 @@ public class ApostilaVincularProvaController extends HttpServlet {
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		} catch (SQLException e) {
 			LOG.error("Erro em alguma instrução SQL.", e);
+			req.setAttribute("msgType", "error");
+			req.setAttribute("msg", "Erro durante o processamento!");
+			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
+		} catch (NoSuchAlgorithmException e) {
+			LOG.error("Erro na geração do HASH.", e);
 			req.setAttribute("msgType", "error");
 			req.setAttribute("msg", "Erro durante o processamento!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
@@ -152,5 +187,12 @@ public class ApostilaVincularProvaController extends HttpServlet {
 			}
 		}
 		return "";
+	}
+
+	private String gerarHash() throws NoSuchAlgorithmException,
+			UnsupportedEncodingException {
+
+		String uuid = UUID.randomUUID().toString();
+		return uuid.substring(0, 13);
 	}
 }

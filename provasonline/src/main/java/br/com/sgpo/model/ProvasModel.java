@@ -45,4 +45,7 @@ public interface ProvasModel {
 
 	public Integer getTotalRegistrosApostilas() throws ClassNotFoundException,
 			SQLException;
+
+	public void gravaApostila(ApostilaDTO apostilaDTO)
+			throws ClassNotFoundException, SQLException;
 }

@@ -97,7 +97,6 @@ public class ProvasServiceImpl implements ProvasService {
 	@Override
 	public void gravarApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		
+		provasModel.gravaApostila(apostilaDTO);
 	}
 }
