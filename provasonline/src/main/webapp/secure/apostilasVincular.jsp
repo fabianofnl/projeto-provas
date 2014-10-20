@@ -87,14 +87,14 @@
 															<c:forEach items="${apostila.listaProvas}" var="prova">
 																<li style="padding:2px;">${prova.titulo}
 																	<a href="${pageContext.request.contextPath}/secure/removerProvaApostila?provaId=${prova.provaId}">
-																		<span class="icon-box-add" data-hint="Adicionar Prova" data-hint-position="top"></span>
+																		<span class="icon-remove" data-hint="Remover Apostila" data-hint-position="top"></span>
 																	</a>
 																</li>
 															</c:forEach>
 														</ul>
 													</td>
 													<td style="width:10%; text-align: center;">
-														<a href="${pageContext.request.contextPath}/secure/adicionarApostilaProva?apostilaId=${apostila.apostilaId}">
+														<a href="${pageContext.request.contextPath}/secure/adicionarProvasApostila?apostilaId=${apostila.apostilaId}">
 															<span class="icon-box-add" data-hint="Adicionar Provas" data-hint-position="top"></span>
 														</a>
 														<c:if test="${true}">
