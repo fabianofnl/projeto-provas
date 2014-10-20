@@ -59,6 +59,8 @@ public class ProvasModelImpl implements ProvasModel {
 	private static final String SELECT_PROVAS = "SELECT p.* FROM provas p "
 			+ "WHERE p.provaId NOT IN (SELECT v.provaId FROM vincularApostilas v WHERE v.apostilaId = ?)";
 
+	private static final String DELETE_APOSTILA_PROVA = "DELETE FROM vincularApostilas WHERE apostilaId = ? AND provaId = ?";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -480,9 +482,9 @@ public class ProvasModelImpl implements ProvasModel {
 	}
 
 	@Override
-	public List<ProvaDTO> listarProvas(Integer apostilaId) throws ClassNotFoundException,
-			SQLException {
-		
+	public List<ProvaDTO> listarProvas(Integer apostilaId)
+			throws ClassNotFoundException, SQLException {
+
 		LOG.info("Chamando método listarProvas");
 
 		Connection conn = null;
@@ -533,6 +535,26 @@ public class ProvasModelImpl implements ProvasModel {
 		}
 
 		pstmt.executeBatch();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public void removerApostilaProva(ApostilaDTO apostilaDTO, ProvaDTO provaDTO)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método remover apostila prova");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(DELETE_APOSTILA_PROVA);
+		pstmt.setInt(1, apostilaDTO.getApostilaId());
+		pstmt.setInt(2, provaDTO.getProvaId());
+		pstmt.execute();
 
 		if (pstmt != null)
 			pstmt.close();

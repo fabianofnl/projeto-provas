@@ -55,10 +55,13 @@ public interface ProvasModel {
 	public void removerApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException;
 
-	public List<ProvaDTO> listarProvas(Integer apostilaId) throws ClassNotFoundException,
-			SQLException;
+	public List<ProvaDTO> listarProvas(Integer apostilaId)
+			throws ClassNotFoundException, SQLException;
 
 	public void associarApostilaProvas(Integer apostilaId,
 			Integer[] provasIdInteger) throws ClassNotFoundException,
 			SQLException;
+
+	public void removerApostilaProva(ApostilaDTO apostilaDTO, ProvaDTO provaDTO)
+			throws ClassNotFoundException, SQLException;
 }

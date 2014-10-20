@@ -124,8 +124,8 @@ public class ProvasServiceImpl implements ProvasService {
 	}
 
 	@Override
-	public List<ProvaDTO> listarProvas(Integer apostilaId) throws ClassNotFoundException,
-			SQLException {
+	public List<ProvaDTO> listarProvas(Integer apostilaId)
+			throws ClassNotFoundException, SQLException {
 		return provasModel.listarProvas(apostilaId);
 	}
 
@@ -135,5 +135,11 @@ public class ProvasServiceImpl implements ProvasService {
 			SQLException {
 		provasModel.associarApostilaProvas(apostilaId, provasIdInteger);
 
+	}
+
+	@Override
+	public void removerApostilaProva(ApostilaDTO apostilaDTO, ProvaDTO provaDTO)
+			throws ClassNotFoundException, SQLException {
+		provasModel.removerApostilaProva(apostilaDTO, provaDTO);
 	}
 }

@@ -86,7 +86,7 @@
 														<ul style="list-style: none;">
 															<c:forEach items="${apostila.listaProvas}" var="prova">
 																<li style="padding:2px;">${prova.titulo}
-																	<a href="${pageContext.request.contextPath}/secure/removerProvaApostila?provaId=${prova.provaId}">
+																	<a href="${pageContext.request.contextPath}/secure/removerProvaApostila?apostilaId=${apostila.apostilaId}&provaId=${prova.provaId}">
 																		<span class="icon-remove" data-hint="Remover Apostila" data-hint-position="top"></span>
 																	</a>
 																</li>
