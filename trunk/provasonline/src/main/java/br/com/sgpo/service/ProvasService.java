@@ -46,4 +46,11 @@ public interface ProvasService {
 	public void removerApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException, IOException;
 
+	public List<ProvaDTO> listarProvas(Integer apostilaId) throws ClassNotFoundException,
+			SQLException;
+
+	public void associarApostilaProvas(Integer apostilaId,
+			Integer[] provasIdInteger) throws ClassNotFoundException,
+			SQLException;
+
 }

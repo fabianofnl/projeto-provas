@@ -54,6 +54,11 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String DELETE_APOSTILA = "DELETE FROM apostilas WHERE apostilaId = ?";
 
+	private static final String INSERT_APOSTILAS_PROVAS = "INSERT INTO vincularApostilas (apostilaId, provaId) VALUES (?, ?)";
+
+	private static final String SELECT_PROVAS = "SELECT p.* FROM provas p "
+			+ "WHERE p.provaId NOT IN (SELECT v.provaId FROM vincularApostilas v WHERE v.apostilaId = ?)";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -259,7 +264,7 @@ public class ProvasModelImpl implements ProvasModel {
 	public void associaProvaQuestoes(Integer provaId, Integer[] questoesId)
 			throws ClassNotFoundException, SQLException {
 
-		LOG.info("Chamando método provas questões");
+		LOG.info("Chamando método associar provas questões");
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -467,6 +472,67 @@ public class ProvasModelImpl implements ProvasModel {
 		pstmt = conn.prepareStatement(DELETE_APOSTILA);
 		pstmt.setInt(1, apostilaDTO.getApostilaId());
 		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public List<ProvaDTO> listarProvas(Integer apostilaId) throws ClassNotFoundException,
+			SQLException {
+		
+		LOG.info("Chamando método listarProvas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<ProvaDTO> listaProvas = new ArrayList<ProvaDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_PROVAS);
+		pstmt.setInt(1, apostilaId);
+		rs = pstmt.executeQuery();
+		ProvaDTO prova = null;
+
+		while (rs.next()) {
+			prova = new ProvaDTO();
+			prova.setProvaId(rs.getInt("provaId"));
+			prova.setTitulo(rs.getString("titulo"));
+			listaProvas.add(prova);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaProvas;
+	}
+
+	@Override
+	public void associarApostilaProvas(Integer apostilaId,
+			Integer[] provasIdInteger) throws ClassNotFoundException,
+			SQLException {
+
+		LOG.info("Chamando método associar Apostila Provas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(INSERT_APOSTILAS_PROVAS);
+
+		for (int i = 0; i < provasIdInteger.length; i++) {
+			pstmt.setInt(1, apostilaId);
+			pstmt.setInt(2, provasIdInteger[i]);
+			pstmt.addBatch();
+		}
+
+		pstmt.executeBatch();
 
 		if (pstmt != null)
 			pstmt.close();

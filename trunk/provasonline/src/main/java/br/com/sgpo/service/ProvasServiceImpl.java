@@ -112,12 +112,28 @@ public class ProvasServiceImpl implements ProvasService {
 	public void removerApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException, IOException {
 
-		String fileNameFull = apostilaDTO.getServerPath() + apostilaDTO.getHashName() + "_" + apostilaDTO.getNome();
+		String fileNameFull = apostilaDTO.getServerPath()
+				+ apostilaDTO.getHashName() + "_" + apostilaDTO.getNome();
 		File file = new File(fileNameFull);
-		if(file.delete()){
+		if (file.delete()) {
 			provasModel.removerApostila(apostilaDTO);
-		}else{
-			throw new IOException("Arquivo nao foi apagado, verificar a existencia do mesmo");
+		} else {
+			throw new IOException(
+					"Arquivo nao foi apagado, verificar a existencia do mesmo");
 		}
+	}
+
+	@Override
+	public List<ProvaDTO> listarProvas(Integer apostilaId) throws ClassNotFoundException,
+			SQLException {
+		return provasModel.listarProvas(apostilaId);
+	}
+
+	@Override
+	public void associarApostilaProvas(Integer apostilaId,
+			Integer[] provasIdInteger) throws ClassNotFoundException,
+			SQLException {
+		provasModel.associarApostilaProvas(apostilaId, provasIdInteger);
+
 	}
 }
