@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+import br.com.sgpo.constants.SGPOConstants.Agenda;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.ProvaDTO;
 
@@ -24,18 +25,19 @@ public class MailServiceImpl extends Thread {
 	private ProvaDTO prova;
 	private Date provaAgendada;
 	private String contextPath;
+	private Agenda agenda;
 
 	public MailServiceImpl() {
 
 	}
 
 	public MailServiceImpl(FuncionarioDTO funcionario, ProvaDTO prova,
-			Date provaAgendada, String contextPath) {
-		super();
+			Date provaAgendada, String contextPath, Agenda agenda) {
 		this.funcionario = funcionario;
 		this.prova = prova;
 		this.provaAgendada = provaAgendada;
 		this.contextPath = contextPath;
+		this.agenda = agenda;
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class MailServiceImpl extends Thread {
 
 			JavaMailSenderImpl senderMail = new JavaMailSenderImpl();
 
-			String mailFrom = "seu email";
+			String mailFrom = "seuemail@dominio.com";
 
 			senderMail.setHost("smtp.gmail.com");
 			senderMail.setPort(587);
@@ -84,7 +86,19 @@ public class MailServiceImpl extends Thread {
 			sb.append("Olá").append(" ").append(funcionario.getNome());
 			sb.append(",").append(" ");
 			sb.append("<br>");
-			sb.append("você possui uma prova agendada para o dia");
+
+			switch (agenda) {
+			case AGENDAR:
+				sb.append("você possui uma prova agendada para o dia");
+				break;
+			case ATUALIZAR:
+				sb.append("o agendamento da sua prova foi alterada para o dia");
+				break;
+			default:
+				sb.append("sua prova foi cancelada, dia");
+				break;
+			}
+
 			sb.append(" ");
 			sb.append(new SimpleDateFormat("dd/MM/yyyy").format(provaAgendada));
 			sb.append(".");
@@ -102,7 +116,7 @@ public class MailServiceImpl extends Thread {
 			sb.append("</html>");
 
 			helper.setText(sb.toString(), true);
-			//sender.send(message);
+			// sender.send(message);
 
 			LOG.info("Finalizado processo de envio de email");
 			LOG.debug("Enviado para: " + funcionario.getEmail());
@@ -113,7 +127,5 @@ public class MailServiceImpl extends Thread {
 		} catch (MessagingException e) {
 			LOG.error("ERRO [MessagingException] - " + toString(), e);
 		}
-
 	}
-
 }

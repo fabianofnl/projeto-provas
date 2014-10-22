@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
@@ -160,7 +161,7 @@ public class ProvasServiceImpl implements ProvasService {
 		provasModel.agendarProva(funcionario, prova, dataAgendada);
 
 		MailServiceImpl mailService = new MailServiceImpl(funcionario, prova,
-				dataAgendada, contextPath);
+				dataAgendada, contextPath, SGPOConstants.Agenda.AGENDAR);
 		mailService.start();
 	}
 
@@ -174,5 +175,36 @@ public class ProvasServiceImpl implements ProvasService {
 	public Integer getTotalRegistrosAgenda() throws ClassNotFoundException,
 			SQLException {
 		return provasModel.getTotalRegistrosAgenda();
+	}
+
+	@Override
+	public AgendaDTO buscarAgendaPorId(Integer agendaId)
+			throws ClassNotFoundException, SQLException {
+		return provasModel.buscarAgendaPorId(agendaId);
+	}
+
+	@Override
+	public void removerAgenda(AgendaDTO agendaDTO, String contextPath)
+			throws ClassNotFoundException, SQLException {
+		provasModel.removerAgenda(agendaDTO);
+
+		MailServiceImpl mailService = new MailServiceImpl(
+				agendaDTO.getFuncionario(), agendaDTO.getProva(),
+				agendaDTO.getProvaAgendada(), contextPath,
+				SGPOConstants.Agenda.CANCELAR);
+		mailService.start();
+
+	}
+
+	@Override
+	public void atualizarAgenda(AgendaDTO agendaDTO, String contextPath)
+			throws ClassNotFoundException, SQLException {
+		provasModel.atualizarAgenda(agendaDTO);
+
+		MailServiceImpl mailService = new MailServiceImpl(
+				agendaDTO.getFuncionario(), agendaDTO.getProva(),
+				agendaDTO.getProvaAgendada(), contextPath,
+				SGPOConstants.Agenda.ATUALIZAR);
+		mailService.start();
 	}
 }

@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="paginator" uri="/WEB-INF/tlds/paginator"%>
 <!DOCTYPE html>
 <html>
@@ -70,12 +70,12 @@
 														</c:choose>
 													</td>
 													<td style="width:10%; text-align: center;">
-														<a href="">
+														<a href="${pageContext.request.contextPath}/secure/atualizarAgenda?agendaId=${agenda.agendaId}">
 															<span class="icon-wrench" data-hint="Alterar" 
 																	data-hint-position="top"></span>
 														</a>
 														<span class="custom-separator">|</span>
-														<a href="">
+														<a href="${pageContext.request.contextPath}/secure/cancelarAgenda?agendaId=${agenda.agendaId}">
 															<span class="icon-remove" data-hint="Remover" 
 																	data-hint-position="top"></span>
 														</a>
@@ -136,7 +136,9 @@
 											data-position="top"
 											data-week-start="0"
 											data-effect="none">
-											<input type="text" id="data" name="data">
+											<input type="text" id="data" name="data"
+												oninput="setCustomValidity('')"
+												oninvalid="setCustomValidity('Por favor, preencha este campo.')" required>
 											<button class="btn-date" type="button"></button>
 										</div>
 									</div>
