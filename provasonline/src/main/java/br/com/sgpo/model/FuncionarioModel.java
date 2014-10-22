@@ -33,8 +33,8 @@ public interface FuncionarioModel {
 	public List<FuncionarioDTO> listarGerentes() throws SQLException,
 			ClassNotFoundException;
 
-	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
-			ClassNotFoundException;
+	public List<FuncionarioDTO> listarColaboradoresSemEquipes()
+			throws SQLException, ClassNotFoundException;
 
 	public void associarEquipes(Integer matGerente, Integer[] matColaborador)
 			throws SQLException, ClassNotFoundException;
@@ -49,6 +49,9 @@ public interface FuncionarioModel {
 			throws SQLException, ClassNotFoundException;
 
 	public void removerColaborador(Integer matricula) throws SQLException,
+			ClassNotFoundException;
+
+	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
 			ClassNotFoundException;
 
 }

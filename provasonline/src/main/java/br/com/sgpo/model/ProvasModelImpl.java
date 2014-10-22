@@ -5,11 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
+import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
@@ -56,10 +59,20 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String INSERT_APOSTILAS_PROVAS = "INSERT INTO vincularApostilas (apostilaId, provaId) VALUES (?, ?)";
 
-	private static final String SELECT_PROVAS = "SELECT p.* FROM provas p "
+	private static final String SELECT_PROVAS_POR_APOSTILA = "SELECT p.* FROM provas p "
 			+ "WHERE p.provaId NOT IN (SELECT v.provaId FROM vincularApostilas v WHERE v.apostilaId = ?)";
 
 	private static final String DELETE_APOSTILA_PROVA = "DELETE FROM vincularApostilas WHERE apostilaId = ? AND provaId = ?";
+
+	private static final String SELECT_PROVAS = "SELECT * FROM provas";
+
+	private static final String INSERT_AGENDA = "INSERT INTO agenda (matcolaborador, provaId, dataProva) VALUES (?, ?, ?)";
+
+	private static final String SELECT_AGENDAS_PAGINADA = "SELECT f.*, p.*, a.* FROM funcionario f, provas p, agenda a "
+			+ "WHERE a.matcolaborador = f.matricula AND a.provaId = p.provaId ORDER BY a.dataProva LIMIT ? OFFSET ?";
+
+	private static final String SELECT_TOTAL_REGISTROS_AGENDAS = "SELECT COUNT(a.agendaId) AS total FROM agenda a, provas p "
+			+ "WHERE a.provaId = p.provaId";
 
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
@@ -482,7 +495,7 @@ public class ProvasModelImpl implements ProvasModel {
 	}
 
 	@Override
-	public List<ProvaDTO> listarProvas(Integer apostilaId)
+	public List<ProvaDTO> listarProvasPorApostila(Integer apostilaId)
 			throws ClassNotFoundException, SQLException {
 
 		LOG.info("Chamando método listarProvas");
@@ -493,7 +506,7 @@ public class ProvasModelImpl implements ProvasModel {
 
 		List<ProvaDTO> listaProvas = new ArrayList<ProvaDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_PROVAS);
+		pstmt = conn.prepareStatement(SELECT_PROVAS_POR_APOSTILA);
 		pstmt.setInt(1, apostilaId);
 		rs = pstmt.executeQuery();
 		ProvaDTO prova = null;
@@ -560,5 +573,142 @@ public class ProvasModelImpl implements ProvasModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
+	}
+
+	@Override
+	public List<ProvaDTO> listarProvas() throws ClassNotFoundException,
+			SQLException {
+
+		LOG.info("Chamando método listarProvas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<ProvaDTO> listaProvas = new ArrayList<ProvaDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_PROVAS);
+		rs = pstmt.executeQuery();
+		ProvaDTO prova = null;
+
+		while (rs.next()) {
+			prova = new ProvaDTO();
+			prova.setProvaId(rs.getInt("provaId"));
+			prova.setTitulo(rs.getString("titulo"));
+			listaProvas.add(prova);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaProvas;
+	}
+
+	@Override
+	public void agendarProva(FuncionarioDTO funcionario, ProvaDTO prova,
+			Date dataAgendada) throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método agendar Provas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(INSERT_AGENDA);
+		pstmt.setInt(1, funcionario.getMatricula());
+		pstmt.setInt(2, prova.getProvaId());
+		pstmt.setDate(3, new java.sql.Date(dataAgendada.getTime()));
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public List<AgendaDTO> listarAgenda(Integer offSet, Integer recordPerPage)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método listarProvas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<AgendaDTO> listaAgendas = new ArrayList<AgendaDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_AGENDAS_PAGINADA);
+		pstmt.setInt(1, recordPerPage);
+		pstmt.setInt(2, offSet);
+		rs = pstmt.executeQuery();
+		AgendaDTO agenda = null;
+		FuncionarioDTO funcionario = null;
+		ProvaDTO prova = null;
+
+		while (rs.next()) {
+			funcionario = new FuncionarioDTO();
+			prova = new ProvaDTO();
+			agenda = new AgendaDTO();
+
+			funcionario.setMatricula(rs.getInt("matricula"));
+			funcionario.setNome(rs.getString("nome"));
+			funcionario.setFuncao(rs.getString("funcao"));
+			funcionario.setEmail(rs.getString("email"));
+			funcionario.setStatus(rs.getString("status"));
+			funcionario.setUsuario(rs.getString("usuario"));
+
+			prova.setProvaId(rs.getInt("provaId"));
+			prova.setTitulo(rs.getString("titulo"));
+
+			agenda.setFuncionario(funcionario);
+			agenda.setProva(prova);
+			agenda.setProvaAgendada(new Date(rs.getDate("dataProva").getTime()));
+			agenda.setFlag(rs.getBoolean("flag"));
+
+			listaAgendas.add(agenda);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaAgendas;
+	}
+
+	@Override
+	public Integer getTotalRegistrosAgenda() throws ClassNotFoundException,
+			SQLException {
+
+		LOG.info("Chamando método get Total Provas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Integer totalRegistros = 0;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_TOTAL_REGISTROS_AGENDAS);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			totalRegistros = rs.getInt("total");
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return totalRegistros;
 	}
 }

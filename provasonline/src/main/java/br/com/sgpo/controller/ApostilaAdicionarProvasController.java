@@ -59,7 +59,7 @@ public class ApostilaAdicionarProvasController extends HttpServlet {
 			ApostilaDTO apostila = provasService.buscarApostilaPorId(Integer
 					.parseInt(apostilaId));
 
-			List<ProvaDTO> listaProvas = provasService.listarProvas(apostila
+			List<ProvaDTO> listaProvas = provasService.listarProvasPorApostila(apostila
 					.getApostilaId());
 
 			req.setAttribute("apostila", apostila);
