@@ -72,4 +72,13 @@ public interface ProvasService {
 	public Integer getTotalRegistrosAgenda() throws ClassNotFoundException,
 			SQLException;
 
+	public AgendaDTO buscarAgendaPorId(Integer agendaId)
+			throws ClassNotFoundException, SQLException;
+
+	public void removerAgenda(AgendaDTO agendaDTO, String contextPath)
+			throws ClassNotFoundException, SQLException;
+
+	public void atualizarAgenda(AgendaDTO agendaDTO, String context)
+			throws ClassNotFoundException, SQLException;
+
 }

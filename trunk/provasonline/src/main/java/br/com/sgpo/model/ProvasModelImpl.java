@@ -74,6 +74,13 @@ public class ProvasModelImpl implements ProvasModel {
 	private static final String SELECT_TOTAL_REGISTROS_AGENDAS = "SELECT COUNT(a.agendaId) AS total FROM agenda a, provas p "
 			+ "WHERE a.provaId = p.provaId";
 
+	private static final String SELECT_AGENDA_POR_ID = "SELECT f.*, p.*, a.* FROM funcionario f, provas p, agenda a "
+			+ "WHERE a.matcolaborador = f.matricula AND a.provaId = p.provaId AND a.agendaId = ?";
+
+	private static final String DELETE_AGENDA = "DELETE FROM agenda WHERE agendaId = ?";
+
+	private static final String UPDATE_AGENDA = "UPDATE agenda SET provaId = ?, dataProva = ? WHERE agendaId = ?";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -665,6 +672,7 @@ public class ProvasModelImpl implements ProvasModel {
 			prova.setProvaId(rs.getInt("provaId"));
 			prova.setTitulo(rs.getString("titulo"));
 
+			agenda.setAgendaId(rs.getInt("agendaId"));
 			agenda.setFuncionario(funcionario);
 			agenda.setProva(prova);
 			agenda.setProvaAgendada(new Date(rs.getDate("dataProva").getTime()));
@@ -710,5 +718,89 @@ public class ProvasModelImpl implements ProvasModel {
 			conn.close();
 
 		return totalRegistros;
+	}
+
+	@Override
+	public AgendaDTO buscarAgendaPorId(Integer agendaId)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método buscar Agenda por id");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		AgendaDTO agenda = null;
+		FuncionarioDTO funcionario = null;
+		ProvaDTO prova = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_AGENDA_POR_ID);
+		pstmt.setInt(1, agendaId);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			funcionario = new FuncionarioDTO();
+			prova = new ProvaDTO();
+			agenda = new AgendaDTO();
+
+			funcionario.setMatricula(rs.getInt("matricula"));
+			funcionario.setNome(rs.getString("nome"));
+			funcionario.setFuncao(rs.getString("funcao"));
+			funcionario.setEmail(rs.getString("email"));
+			funcionario.setStatus(rs.getString("status"));
+			funcionario.setUsuario(rs.getString("usuario"));
+
+			prova.setProvaId(rs.getInt("provaId"));
+			prova.setTitulo(rs.getString("titulo"));
+
+			agenda.setAgendaId(rs.getInt("agendaId"));
+			agenda.setFuncionario(funcionario);
+			agenda.setProva(prova);
+			agenda.setProvaAgendada(new Date(rs.getDate("dataProva").getTime()));
+			agenda.setFlag(rs.getBoolean("flag"));
+		}
+
+		return agenda;
+	}
+
+	@Override
+	public void removerAgenda(AgendaDTO agendaDTO)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método remover agenda");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(DELETE_AGENDA);
+		pstmt.setInt(1, agendaDTO.getAgendaId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public void atualizarAgenda(AgendaDTO agendaDTO)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método atualizar agenda");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(UPDATE_AGENDA);
+		pstmt.setInt(1, agendaDTO.getProva().getProvaId());
+		pstmt.setDate(2, new java.sql.Date(agendaDTO.getProvaAgendada()
+				.getTime()));
+		pstmt.setInt(3, agendaDTO.getAgendaId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
 	}
 }

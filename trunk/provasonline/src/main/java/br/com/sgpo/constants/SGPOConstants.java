@@ -15,4 +15,7 @@ public class SGPOConstants {
 	public static final String LOGGED_ROLE_COLABORADOR = "ROLE_COLABORADOR";
 	public static final String SERVER_PATH = "D:\\provasonline\\anexos";
 
+	public enum Agenda {
+		AGENDAR, ATUALIZAR, CANCELAR
+	}
 }

@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import br.com.sgpo.dto.AgendaDTO;
@@ -27,12 +27,13 @@ import br.com.sgpo.service.ProvasServiceImpl;
  * @author Roseli
  * 
  */
-@WebServlet(value = "/secure/agendarProvas")
-public class ProvasAgendarController extends HttpServlet {
+@WebServlet(value = "/secure/cancelarAgenda")
+public class ProvasAgendaRemoverController extends HttpServlet {
 
-	private static final long serialVersionUID = -4294843051118528464L;
+	private static final long serialVersionUID = 4474824008931216299L;
+
 	private static final Logger LOG = Logger
-			.getLogger(ProvasAgendarController.class);
+			.getLogger(ProvasAgendaRemoverController.class);
 
 	private ProvasService provasService;
 	private FuncionarioService funcionarioService;
@@ -48,46 +49,25 @@ public class ProvasAgendarController extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			LOG.info("Acessando classe agendar provas - método GET");
+			LOG.info("Acessando classe cancelar Agenda - GET");
 
-			Integer pagina = 1;
-			Integer registroPorPagina = 15;
-			Integer numeroRegistros = 0;
-			Integer numeroDePaginas = 0;
+			String agendaId = req.getParameter("agendaId");
 
-			if (req.getParameter("pagina") != null) {
-				pagina = Integer.parseInt(req.getParameter("pagina"));
+			if (!StringUtils.isNumeric(agendaId)) {
+				req.setAttribute("msg", "Erro na aplicação.");
+				req.setAttribute("msgType", "error");
+				req.getRequestDispatcher("/error/genericError.jsp").forward(
+						req, resp);
+				return;
 			}
 
-			List<FuncionarioDTO> listaFuncionarios = funcionarioService
-					.listarColaboradores();
-			List<ProvaDTO> listaProvas = provasService.listarProvas();
-			List<AgendaDTO> listaAgendas = provasService.listarAgenda(
-					(pagina - 1) * registroPorPagina, registroPorPagina);
+			AgendaDTO agendaDTO = provasService.buscarAgendaPorId(Integer
+					.parseInt(agendaId));
 
-			numeroRegistros = getTotalRegistrosProvas();
+			req.setAttribute("agenda", agendaDTO);
 
-			if (numeroRegistros == 0) {
-				req.setAttribute("listSize", 0);
-				numeroRegistros = 1;
-			}
-
-			numeroDePaginas = (int) Math.ceil(numeroRegistros * 1.0
-					/ registroPorPagina);
-
-			req.setAttribute("pagina", pagina);
-			req.setAttribute("numeroDePaginas", numeroDePaginas);
-			req.setAttribute("listaColaboradores", listaFuncionarios);
-			req.setAttribute("listaProvas", listaProvas);
-			req.setAttribute("listaAgendas", listaAgendas);
-
-			req.getRequestDispatcher("/secure/agendarProvas.jsp").forward(req,
+			req.getRequestDispatcher("/secure/agendaRemover.jsp").forward(req,
 					resp);
-
-			// Devido ao redirecionamento de outra página para esta,
-			// após apresentar a mensagem de confirmação o mesmo é removido.
-			req.getSession(true).removeAttribute("msgType");
-			req.getSession(true).removeAttribute("msg");
 
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);
@@ -107,30 +87,37 @@ public class ProvasAgendarController extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			LOG.info("Acessando classe agendar provas - método GET");
+			LOG.info("Acessando classe provas agenda remover - método POST");
 
-			FuncionarioDTO funcionario = new FuncionarioDTO();
+			AgendaDTO agenda = new AgendaDTO();
 			ProvaDTO prova = new ProvaDTO();
+			FuncionarioDTO funcionario = new FuncionarioDTO();
 
+			String provaId = req.getParameter("provaId");
+			String matricula = req.getParameter("matricula");
+			String data = req.getParameter("data");
+
+			prova = provasService.buscarProvaPorId(Integer.parseInt(provaId));
 			funcionario = funcionarioService
-					.buscarFuncionarioPorMatricula(Integer.parseInt(req
-							.getParameter("matricula")));
-			prova = provasService.buscarProvaPorId(Integer.parseInt(req
-					.getParameter("provaId")));
+					.buscarFuncionarioPorMatricula(Integer.parseInt(matricula));
 
-			Date dataAgendada = new SimpleDateFormat("dd/MM/yyyy").parse(req
-					.getParameter("data"));
+			agenda.setAgendaId(Integer.parseInt(req.getParameter("agendaId")));
+			agenda.setProva(prova);
+			agenda.setFuncionario(funcionario);
+			agenda.setProvaAgendada(new SimpleDateFormat("dd/MM/yyyy")
+					.parse(data));
 
 			String context = req.getScheme() + "://" + req.getServerName()
 					+ ":" + req.getServerPort() + req.getContextPath();
 
-			provasService.agendarProva(funcionario, prova, dataAgendada,
-					context);
+			provasService.removerAgenda(agenda, context);
 
-			req.setAttribute("msg", "Prova agendada com sucesso!");
-			req.setAttribute("msgType", "info");
+			HttpSession session = req.getSession(true);
 
-			doGet(req, resp);
+			session.setAttribute("msg", "Agenda removida com sucesso!");
+			session.setAttribute("msgType", "info");
+
+			resp.sendRedirect(req.getContextPath() + "/secure/agendarProvas");
 
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado.", e);
@@ -148,10 +135,5 @@ public class ProvasAgendarController extends HttpServlet {
 			req.setAttribute("msg", "Formato da data é inválida!");
 			req.getRequestDispatcher("/error/error500.jsp").forward(req, resp);
 		}
-	}
-
-	private Integer getTotalRegistrosProvas() throws ClassNotFoundException,
-			SQLException {
-		return provasService.getTotalRegistrosAgenda();
 	}
 }
