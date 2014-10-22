@@ -49,7 +49,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	private static final String SELECT_GERENTES = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Gerente'";
 
-	private static final String SELECT_COLABORADORES = "SELECT * FROM funcionario f, usuario u, perfil p "
+	private static final String SELECT_COLABORADORES_SEM_EQUIPES = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Colaborador' "
 			+ "AND f.matricula NOT IN (SELECT matcolaborador FROM equipes)";
 
@@ -66,6 +66,9 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND f.matricula = e.matcolaborador AND e.matgerente = ?";
 
 	private static final String REMOVER_COLABORADOR_POR_MATRICULA = "DELETE FROM equipes WHERE matcolaborador = ?";
+
+	private static final String SELECT_COLABORADORES = "SELECT * FROM funcionario f, usuario u, perfil p "
+			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Colaborador' ";
 
 	@Override
 	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
@@ -344,9 +347,9 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	}
 
 	@Override
-	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
-			ClassNotFoundException {
-		LOG.info("Chamando método listarColaboradores");
+	public List<FuncionarioDTO> listarColaboradoresSemEquipes()
+			throws SQLException, ClassNotFoundException {
+		LOG.info("Chamando método listarColaboradoresSemEquipes");
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -354,7 +357,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 
 		List<FuncionarioDTO> listaFuncionarios = new ArrayList<FuncionarioDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_COLABORADORES);
+		pstmt = conn.prepareStatement(SELECT_COLABORADORES_SEM_EQUIPES);
 		rs = pstmt.executeQuery();
 		FuncionarioDTO func = null;
 
@@ -543,5 +546,47 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
+	}
+
+	@Override
+	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
+			ClassNotFoundException {
+
+		LOG.info("Chamando método listarColaboradores");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<FuncionarioDTO> listaFuncionarios = new ArrayList<FuncionarioDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_COLABORADORES);
+		rs = pstmt.executeQuery();
+		FuncionarioDTO func = null;
+
+		while (rs.next()) {
+			func = new FuncionarioDTO();
+			func.setMatricula(rs.getInt("matricula"));
+			func.setNome(rs.getString("nome"));
+			func.setEmail(rs.getString("email"));
+			func.setFuncao(rs.getString("funcao"));
+			func.setStatus(rs.getString("status"));
+
+			func.setUsuario(rs.getString("usuario"));
+
+			func.setPerfilId(rs.getInt("id"));
+			func.setDescricao(rs.getString("descricao"));
+			func.setRole(rs.getString("rolename"));
+			listaFuncionarios.add(func);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaFuncionarios;
 	}
 }

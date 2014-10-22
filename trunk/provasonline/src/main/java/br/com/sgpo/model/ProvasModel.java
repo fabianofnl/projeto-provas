@@ -1,9 +1,12 @@
 package br.com.sgpo.model;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
+import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
+import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
@@ -55,7 +58,7 @@ public interface ProvasModel {
 	public void removerApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException;
 
-	public List<ProvaDTO> listarProvas(Integer apostilaId)
+	public List<ProvaDTO> listarProvasPorApostila(Integer apostilaId)
 			throws ClassNotFoundException, SQLException;
 
 	public void associarApostilaProvas(Integer apostilaId,
@@ -64,4 +67,16 @@ public interface ProvasModel {
 
 	public void removerApostilaProva(ApostilaDTO apostilaDTO, ProvaDTO provaDTO)
 			throws ClassNotFoundException, SQLException;
+
+	public List<ProvaDTO> listarProvas() throws ClassNotFoundException,
+			SQLException;
+
+	public void agendarProva(FuncionarioDTO funcionario, ProvaDTO prova,
+			Date dataAgendada) throws ClassNotFoundException, SQLException;
+
+	public List<AgendaDTO> listarAgenda(Integer offSet, Integer recordPerPage)
+			throws ClassNotFoundException, SQLException;
+
+	public Integer getTotalRegistrosAgenda() throws ClassNotFoundException,
+			SQLException;
 }

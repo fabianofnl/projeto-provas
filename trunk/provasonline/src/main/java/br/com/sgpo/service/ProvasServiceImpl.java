@@ -3,9 +3,12 @@ package br.com.sgpo.service;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
+import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
+import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
@@ -124,9 +127,9 @@ public class ProvasServiceImpl implements ProvasService {
 	}
 
 	@Override
-	public List<ProvaDTO> listarProvas(Integer apostilaId)
+	public List<ProvaDTO> listarProvasPorApostila(Integer apostilaId)
 			throws ClassNotFoundException, SQLException {
-		return provasModel.listarProvas(apostilaId);
+		return provasModel.listarProvasPorApostila(apostilaId);
 	}
 
 	@Override
@@ -141,5 +144,35 @@ public class ProvasServiceImpl implements ProvasService {
 	public void removerApostilaProva(ApostilaDTO apostilaDTO, ProvaDTO provaDTO)
 			throws ClassNotFoundException, SQLException {
 		provasModel.removerApostilaProva(apostilaDTO, provaDTO);
+	}
+
+	@Override
+	public List<ProvaDTO> listarProvas() throws ClassNotFoundException,
+			SQLException {
+		return provasModel.listarProvas();
+	}
+
+	@Override
+	public void agendarProva(FuncionarioDTO funcionario, ProvaDTO prova,
+			Date dataAgendada, String contextPath)
+			throws ClassNotFoundException, SQLException {
+
+		provasModel.agendarProva(funcionario, prova, dataAgendada);
+
+		MailServiceImpl mailService = new MailServiceImpl(funcionario, prova,
+				dataAgendada, contextPath);
+		mailService.start();
+	}
+
+	@Override
+	public List<AgendaDTO> listarAgenda(Integer offSet, Integer recordPerPage)
+			throws ClassNotFoundException, SQLException {
+		return provasModel.listarAgenda(offSet, recordPerPage);
+	}
+
+	@Override
+	public Integer getTotalRegistrosAgenda() throws ClassNotFoundException,
+			SQLException {
+		return provasModel.getTotalRegistrosAgenda();
 	}
 }

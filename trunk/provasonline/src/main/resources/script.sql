@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS agenda;
 DROP TABLE IF EXISTS vincularApostilas;
 DROP TABLE IF EXISTS apostilas;
 DROP TABLE IF EXISTS montarProvas;
@@ -52,7 +53,7 @@ CREATE TABLE questoes (
 CREATE TABLE opcoes (
 	opcaoId SERIAL NOT NULL PRIMARY KEY,
 	titulo VARCHAR(255),
-	flag BOOLEAN DEFAULT FALSE,
+	flag BOOLEAN DEFAULT FALSE, -- Indica se é a opção correta ou não. False = Incorreta, True = Correta
 	questaoId INTEGER REFERENCES questoes(questaoId)
 );
 
@@ -77,9 +78,26 @@ CREATE TABLE apostilas (
 -- Ambos os atributos não serão referenciado pelo banco, 
 -- mas o sistema irá controlar a referencia, para que
 -- não fique amarrado prova com apostila.
+
+-- Será permitido exclusão da Prova (demais informações 
+-- serão armazenados para histórico
 CREATE TABLE vincularApostilas (
-	apostilaId INTEGER NOT NULL,
-	provaId INTEGER NOT NULL
+	apostilaId INTEGER NOT NULL, -- Referencia Apostilas(apostilaId)
+	provaId INTEGER NOT NULL -- Referencia Provas(provaId)
+);
+
+-- Ambos os atributos não serão referenciado pelo banco, 
+-- mas o sistema irá controlar a referencia, para que
+-- não fique amarrado prova com funcionario.
+
+-- Será permitido exclusão da Prova (demais informações 
+-- serão armazenados para histórico
+CREATE TABLE agenda (
+	agendaId SERIAL NOT NULL PRIMARY KEY,
+	matcolaborador INTEGER NOT NULL, -- Referencia Funcionario(matricula)
+	provaId INTEGER NOT NULL, -- Referencia Provas(provaId)
+	dataProva DATE NOT NULL,
+	flag BOOLEAN DEFAULT FALSE -- Indica se o colaborador realizou a prova. True = Realizou, False = Não realizou	
 );
 
 INSERT INTO perfil (descricao, roleName) VALUES ('Administrador', 'ROLE_ADMIN'); -- 1
@@ -97,6 +115,7 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (2222,'
 INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (3333,'Carlos Oliveira','Gerente de Projetos','coliveira@teste.com','coliveira');
 INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'Ana Paula','Programador','apaula@teste.com','apaula');
 
+
 --SELECT * FROM perfil;
 --SELECT * FROM usuario;
 --SELECT * FROM funcionario;
@@ -105,8 +124,12 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 --SELECT * FROM opcoes
 --SELECT * FROM apostilas
 --SELECT * FROM vincularApostilas
+--SELECT * FROM agenda
+
 
 -- Demais querys
+
+UPDATE funcionario SET email = 'fabianofnl2@gmail.com'
 
 SELECT * FROM perfil p, usuario u, funcionario f WHERE p.id = u.perfilId AND u.usuario = f.usuario AND 
 u.usuario = 'jsilva' AND u.senha = MD5('123')
@@ -131,3 +154,6 @@ WHERE t.temaId = q.temaId AND q.questaoId = mp.questaoId AND mp.provaId = 1 AND 
 
 SELECT q.* FROM questoes q 
 WHERE q.questaoId NOT IN (SELECT mp.questaoId FROM montarProvas mp WHERE mp.provaId = 2)  AND q.questaoId IN (SELECT o.questaoId FROM opcoes o)
+
+SELECT f.*, p.*, a.* FROM funcionario f, provas p, agenda a
+WHERE a.matcolaborador = f.matricula AND a.provaId = p.provaId

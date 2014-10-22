@@ -66,9 +66,9 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	}
 
 	@Override
-	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
+	public List<FuncionarioDTO> listarColaboradoresSemEquipes() throws SQLException,
 			ClassNotFoundException {
-		return funcionarioDao.listarColaboradores();
+		return funcionarioDao.listarColaboradoresSemEquipes();
 	}
 
 	@Override
@@ -106,5 +106,11 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	public void removerColaborador(Integer matricula) throws SQLException,
 			ClassNotFoundException {
 		funcionarioDao.removerColaborador(matricula);
+	}
+
+	@Override
+	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
+			ClassNotFoundException {
+		return funcionarioDao.listarColaboradores();
 	}
 }

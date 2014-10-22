@@ -45,7 +45,7 @@ public class EquipesAssociar extends HttpServlet {
 			List<FuncionarioDTO> listaGerentes = funcionarioService
 					.listarGerentes();
 			List<FuncionarioDTO> listaColaboradores = funcionarioService
-					.listarColaboradores();
+					.listarColaboradoresSemEquipes();
 
 			req.setAttribute("listaGerentes", listaGerentes);
 			req.setAttribute("listaColaboradores", listaColaboradores);
