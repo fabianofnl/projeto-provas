@@ -108,7 +108,7 @@ public class MailServiceImpl extends Thread {
 			sb.append("<br>");
 			sb.append("<br>");
 			sb.append("Acesse esse").append(" ");
-			sb.append("<a href='").append(contextPath + "/secure/home.jsp");
+			sb.append("<a href='").append(contextPath + "/secure/dashboard");
 			sb.append("'>link</a>");
 			sb.append("<br>");
 			sb.append("<br>");

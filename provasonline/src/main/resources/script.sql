@@ -155,5 +155,17 @@ WHERE t.temaId = q.temaId AND q.questaoId = mp.questaoId AND mp.provaId = 1 AND 
 SELECT q.* FROM questoes q 
 WHERE q.questaoId NOT IN (SELECT mp.questaoId FROM montarProvas mp WHERE mp.provaId = 2)  AND q.questaoId IN (SELECT o.questaoId FROM opcoes o)
 
-SELECT f.*, p.*, a.* FROM funcionario f, provas p, agenda a
+SELECT f.*, p.*, a.*, 
+(SELECT COUNT(a1.agendaId) as pendente FROM agenda a1 WHERE a1.dataProva >= current_date AND a1.flag = FALSE AND a.agendaId = a1.agendaId),
+(SELECT COUNT(a2.agendaId) as vencido FROM agenda a2 WHERE a2.dataProva < current_date AND a2.flag = FALSE AND a.agendaId = a2.agendaId) 
+FROM funcionario f, provas p, agenda a
 WHERE a.matcolaborador = f.matricula AND a.provaId = p.provaId
+
+SELECT f.*, p.*, a.*, 
+(SELECT COUNT(a1.agendaId) as vencido FROM agenda a1 WHERE a1.dataProva <= CURRENT_DATE AND a.agendaId = a1.agendaId)
+FROM funcionario f, provas p, agenda a
+WHERE a.matcolaborador = f.matricula AND a.provaId = p.provaId
+
+SELECT * FROM agenda a WHERE dataProva > NOW() AND flag = false
+
+SELECT * FROM agenda a WHERE dataProva < NOW() AND flag = false
