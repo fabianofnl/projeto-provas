@@ -3,10 +3,9 @@ package br.com.sgpo.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-
 /**
  * @author Roseli
- *
+ * 
  */
 public class AgendaDTO implements Serializable {
 
@@ -16,6 +15,7 @@ public class AgendaDTO implements Serializable {
 	private ProvaDTO prova;
 	private Date provaAgendada;
 	private Boolean flag;
+	private Integer vencido;
 
 	public AgendaDTO() {
 	}
@@ -58,5 +58,13 @@ public class AgendaDTO implements Serializable {
 
 	public void setFlag(Boolean flag) {
 		this.flag = flag;
+	}
+
+	public Integer getVencido() {
+		return vencido;
+	}
+
+	public void setVencido(Integer vencido) {
+		this.vencido = vencido;
 	}
 }

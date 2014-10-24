@@ -77,13 +77,10 @@ public class LoginController extends HttpServlet {
 			req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_LOGIN);
 			req.setAttribute(VAR_MESSAGE, MESSAGE);
 			req.setAttribute(VAR_USER, usuario);
-			//resp.sendRedirect(contextPath + "/logon.jsp");
 			req.getRequestDispatcher("login.jsp").forward(req, resp);
 			return;
 		}
-
 		session.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_HOME);
-		//req.getRequestDispatcher("secure/home.jsp").forward(req, resp);
-		resp.sendRedirect(contextPath + "/secure/home.jsp");
+		resp.sendRedirect(contextPath + "/secure/dashboard");
 	}
 }

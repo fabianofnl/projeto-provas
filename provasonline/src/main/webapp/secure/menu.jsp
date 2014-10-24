@@ -2,21 +2,11 @@
 <nav>
 	<div class="navigation-bar dark">
 		<div class="navigation-bar-content container">
-			<a href="${pageContext.request.contextPath}/secure/home.jsp" class="element">
-				<span class="icon-home"></span> Provas Online
+			<a href="${pageContext.request.contextPath}/secure/dashboard" class="element">
+				<span class="icon-home"></span> Dashboard
 			</a>
 			<span class="element-divider"></span>
 			<ul class="element-menu">
-				<c:if test="${funcionario.role eq 'ROLE_ADMIN' or funcionario.role eq 'ROLE_COLABORADOR'}">
-					<li>
-						<a class="dropdown-toggle" href="#">Exames</a>
-						<ul class="dropdown-menu dark" data-role="dropdown">
-							<li><a href="${pageContext.request.contextPath}/secure/apostilas">Apostilas</a></li>
-							<li><a href="${pageContext.request.contextPath}/secure/realizarExame">Realizar</a></li>
-						</ul>
-					</li>
-				</c:if>
-			
 				<c:if test="${funcionario.role eq 'ROLE_ADMIN' or funcionario.role eq 'ROLE_INSTRUTOR'}">
 					<li>
 						<a class="dropdown-toggle" href="#">Funcionario</a>
@@ -26,8 +16,6 @@
 							<li class="divider"></li>
 							<li><a href="${pageContext.request.contextPath}/secure/associarFuncionario">Associar Equipes</a></li>
 							<li><a href="${pageContext.request.contextPath}/secure/listarEquipes">Consultar Equipes</a></li>
-							<li class="divider"></li>
-							<li><a href="${pageContext.request.contextPath}/secure/relatorioFuncionario">Consultar Relatório</a></li>
 						</ul>
 					</li>
 				</c:if>

@@ -30,8 +30,7 @@ import br.com.sgpo.service.ProvasServiceImpl;
 @WebServlet(value = "/secure/vincularApostilas")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
 maxFileSize = 1024 * 1024 * 30, // 10MB
-maxRequestSize = 1024 * 1024 * 50)
-// 50MB
+maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class ApostilaVincularProvaController extends HttpServlet {
 
 	private static final long serialVersionUID = -4294843051118528464L;
@@ -123,7 +122,8 @@ public class ApostilaVincularProvaController extends HttpServlet {
 			for (Part part : req.getParts()) {
 				String fileName = extractFileName(part);
 				String hash = "a" + gerarHash();
-				part.write(SGPOConstants.SERVER_PATH + File.separator + hash + "_" + fileName);
+				part.write(SGPOConstants.SERVER_PATH + File.separator + hash
+						+ "_" + fileName);
 
 				String[] fileNameSplit = fileName.split("\\.");
 				String extensao = null;
