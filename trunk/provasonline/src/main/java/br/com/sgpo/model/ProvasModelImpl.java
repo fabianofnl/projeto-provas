@@ -68,8 +68,10 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String INSERT_AGENDA = "INSERT INTO agenda (matcolaborador, provaId, dataProva) VALUES (?, ?, ?)";
 
-	private static final String SELECT_AGENDAS_PAGINADA = "SELECT f.*, p.*, a.* FROM funcionario f, provas p, agenda a "
-			+ "WHERE a.matcolaborador = f.matricula AND a.provaId = p.provaId ORDER BY a.dataProva LIMIT ? OFFSET ?";
+	private static final String SELECT_AGENDAS_PAGINADA = "SELECT f.*, p.*, a.*, "
+			+ "(SELECT COUNT(a1.agendaId) as vencido FROM agenda a1 WHERE a1.dataProva <= CURRENT_DATE AND a.agendaId = a1.agendaId)"
+			+ "FROM funcionario f, provas p, agenda a "
+			+ "WHERE a.matcolaborador = f.matricula AND a.provaId = p.provaId ORDER BY a.dataProva DESC LIMIT ? OFFSET ?";
 
 	private static final String SELECT_TOTAL_REGISTROS_AGENDAS = "SELECT COUNT(a.agendaId) AS total FROM agenda a, provas p "
 			+ "WHERE a.provaId = p.provaId";
@@ -677,6 +679,7 @@ public class ProvasModelImpl implements ProvasModel {
 			agenda.setProva(prova);
 			agenda.setProvaAgendada(new Date(rs.getDate("dataProva").getTime()));
 			agenda.setFlag(rs.getBoolean("flag"));
+			agenda.setVencido(rs.getInt("vencido"));
 
 			listaAgendas.add(agenda);
 		}

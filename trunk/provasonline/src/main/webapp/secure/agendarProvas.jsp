@@ -70,15 +70,17 @@
 														</c:choose>
 													</td>
 													<td style="width:10%; text-align: center;">
-														<a href="${pageContext.request.contextPath}/secure/atualizarAgenda?agendaId=${agenda.agendaId}">
-															<span class="icon-wrench" data-hint="Alterar" 
-																	data-hint-position="top"></span>
-														</a>
-														<span class="custom-separator">|</span>
-														<a href="${pageContext.request.contextPath}/secure/cancelarAgenda?agendaId=${agenda.agendaId}">
-															<span class="icon-remove" data-hint="Remover" 
-																	data-hint-position="top"></span>
-														</a>
+														<c:if test="${agenda.vencido eq 0}">
+															<a href="${pageContext.request.contextPath}/secure/atualizarAgenda?agendaId=${agenda.agendaId}">
+																<span class="icon-wrench" data-hint="Alterar" 
+																		data-hint-position="top"></span>
+															</a>
+															<span class="custom-separator">|</span>
+															<a href="${pageContext.request.contextPath}/secure/cancelarAgenda?agendaId=${agenda.agendaId}">
+																<span class="icon-remove" data-hint="Remover" 
+																		data-hint-position="top"></span>
+															</a>
+														</c:if>
 													</td>
 												</tr>
 											</c:forEach>
