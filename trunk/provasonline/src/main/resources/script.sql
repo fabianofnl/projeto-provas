@@ -169,3 +169,11 @@ WHERE a.matcolaborador = f.matricula AND a.provaId = p.provaId
 SELECT * FROM agenda a WHERE dataProva > NOW() AND flag = false
 
 SELECT * FROM agenda a WHERE dataProva < NOW() AND flag = false
+
+SELECT p.*, a.*, (SELECT COUNT(a1.agendaId) FROM agenda a1 WHERE a1.dataProva = CURRENT_DATE AND a1.agendaId = a.agendaId) as hoje 
+FROM agenda a, funcionario f, provas p WHERE f.matricula = a.matcolaborador AND
+a.provaId = p.provaId AND f.matricula = 4444 AND a.dataProva >= CURRENT_DATE AND a.flag = false
+
+SELECT DISTINCT ON(ap.apostilaId, ap.nome) ap.* FROM apostilas ap, vincularApostilas vp, provas p, agenda a
+WHERE ap.apostilaId = vp.apostilaId AND vp.provaId = p.provaId AND p.provaId = a.provaId
+AND a.matcolaborador = 4444 ORDER BY ap.nome
