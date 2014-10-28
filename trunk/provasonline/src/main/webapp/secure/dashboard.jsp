@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,67 +12,23 @@
 	<jsp:include page="/header.jsp"></jsp:include>
 	<jsp:include page="/secure/menu.jsp"></jsp:include>
 	<section style="padding: 1px;">
-		<div class="grid">
-			<div class="row">
-				<div class="span12 offset2">
-					<div class="grid">
-						<div class="row">
-							<div class="span6">
-								<div id="chart_div" style="width: 500px; height: 280px;"></div>
-							</div>
-							<div class="span6">
-								<div id="chart_div1" style="width: 500px; height: 280px;"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<c:if test="${funcionario.role eq 'ROLE_COLABORADOR'}">
+			<jsp:include page="dashboardColaborador.jsp"></jsp:include>
+		</c:if>
+
+		<c:if test="${funcionario.role eq 'ROLE_GERENTE'}">
+			<jsp:include page="dashboardGerente.jsp"></jsp:include>
+		</c:if>
+
+		<c:if test="${funcionario.role eq 'ROLE_INSTRUTOR'}">
+			<jsp:include page="dashboardInstrutor.jsp"></jsp:include>
+		</c:if>
+
+		<c:if test="${funcionario.role eq 'ROLE_ADMIN'}">
+			<jsp:include page="dashboardAdministrador.jsp"></jsp:include>
+		</c:if>
 	</section>
-	<script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
 
-        var options = {
-          title: 'Company Performance',
-          vAxis: {title: 'Year',  titleTextStyle: {color: 'red'}}
-        };
-
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-
-        chart.draw(data, options);
-      }
-      
-      //////
-      
-      google.setOnLoadCallback(drawChart1);
-      function drawChart1() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
-
-        var options = {
-          title: 'Company Performance',
-          vAxis: {title: 'Year',  titleTextStyle: {color: 'red'}}
-        };
-
-        var chart1 = new google.visualization.BarChart(document.getElementById('chart_div1'));
-
-        chart1.draw(data, options);
-      }
-    </script>
 	<jsp:include page="/footer.jsp"></jsp:include>
 </body>
 </html>
