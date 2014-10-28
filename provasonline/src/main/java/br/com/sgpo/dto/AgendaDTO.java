@@ -16,6 +16,7 @@ public class AgendaDTO implements Serializable {
 	private Date provaAgendada;
 	private Boolean flag;
 	private Integer vencido;
+	private Integer hoje;
 
 	public AgendaDTO() {
 	}
@@ -66,5 +67,13 @@ public class AgendaDTO implements Serializable {
 
 	public void setVencido(Integer vencido) {
 		this.vencido = vencido;
+	}
+
+	public Integer getHoje() {
+		return hoje;
+	}
+
+	public void setHoje(Integer hoje) {
+		this.hoje = hoje;
 	}
 }

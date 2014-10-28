@@ -61,6 +61,13 @@ html .linkEsqueciSenha {
 	cursor: pointer;
 }
 
+.inputLink {
+	border: none !important;
+	background: none !important;
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
 .paginatorList { margin: 2px 6px; list-style: none outside none; }
 .paginatorList li { float: left; padding: 2px 4px; font-size: 1em; }
 li.paginatorCurr { font-weight: bold; font-size: 1.5em; margin-top: -2px; }
