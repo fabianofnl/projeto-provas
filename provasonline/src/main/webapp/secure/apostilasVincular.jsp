@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib prefix="paginator" uri="/WEB-INF/tlds/paginator"%>
+<%@ taglib prefix="paginator" uri="/WEB-INF/tlds/paginator"%>
 <!DOCTYPE html>
 <html>
 <head>
