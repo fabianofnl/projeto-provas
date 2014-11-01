@@ -8,6 +8,7 @@ import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.ProvaDTO;
+import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
 
@@ -87,5 +88,8 @@ public interface ProvasModel {
 			throws ClassNotFoundException, SQLException;
 
 	public void atualizarAgenda(AgendaDTO agendaDTO)
+			throws ClassNotFoundException, SQLException;
+
+	public ProvaRealizadaDTO buscarProvaRealizadaPorAgendaId(Integer agendaId)
 			throws ClassNotFoundException, SQLException;
 }

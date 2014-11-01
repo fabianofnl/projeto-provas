@@ -14,6 +14,7 @@ import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.ProvaDTO;
+import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
@@ -805,5 +806,12 @@ public class ProvasModelImpl implements ProvasModel {
 		if (conn != null)
 			conn.close();
 
+	}
+
+	@Override
+	public ProvaRealizadaDTO buscarProvaRealizadaPorAgendaId(Integer agendaId)
+			throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

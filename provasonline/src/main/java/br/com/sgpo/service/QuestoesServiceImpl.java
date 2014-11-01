@@ -103,4 +103,19 @@ public class QuestoesServiceImpl implements QuestoesService {
 			throws ClassNotFoundException, SQLException {
 		return questoesModel.listarQuestoesSemProvas(provaId);
 	}
+
+	@Override
+	public List<QuestaoDTO> listarQuestoesPorProvaId(Integer provaId)
+			throws ClassNotFoundException, SQLException {
+
+		List<QuestaoDTO> listaQuestoes = questoesModel
+				.listarQuestoesPorProvaId(provaId);
+
+		for (QuestaoDTO questaoDTO : listaQuestoes) {
+			questaoDTO.setListaOpcoes(questoesModel
+					.listarOpcoesPorQuestaoId(questaoDTO.getQuestaoId()));
+		}
+
+		return listaQuestoes;
+	}
 }
