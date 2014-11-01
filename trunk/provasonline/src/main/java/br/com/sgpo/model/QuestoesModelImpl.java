@@ -60,6 +60,8 @@ public class QuestoesModelImpl implements QuestoesModel {
 			+ "WHERE q.questaoId NOT IN (SELECT mp.questaoId FROM montarProvas mp WHERE mp.provaId = ?) "
 			+ "AND q.questaoId IN (SELECT o.questaoId FROM opcoes o)";
 
+	private static final String SELECT_QUESTOES_POR_PROVA_ID = null;
+
 	@Override
 	public List<QuestaoDTO> listarQuestoes(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -409,6 +411,48 @@ public class QuestoesModelImpl implements QuestoesModel {
 			questao.setQuestaoId(rs.getInt("questaoId"));
 			questao.setTituloQuestao(rs.getString("titulo"));
 			questao.setDescricaoQuestao(rs.getString("descricao"));
+			listaQuestoes.add(questao);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaQuestoes;
+	}
+
+	@Override
+	public List<QuestaoDTO> listarQuestoesPorProvaId(Integer provaId)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método listarQuestoes paginados");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<QuestaoDTO> listaQuestoes = new ArrayList<QuestaoDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+
+		// TODO implementar selec abaixo
+
+		pstmt = conn.prepareStatement(SELECT_QUESTOES_POR_PROVA_ID);
+		rs = pstmt.executeQuery();
+		QuestaoDTO questao = null;
+
+		while (rs.next()) {
+			questao = new QuestaoDTO();
+			questao.setQuestaoId(rs.getInt("questaoId"));
+			questao.setTituloQuestao(rs.getString("titulo"));
+			questao.setDescricaoQuestao(rs.getString("descricao"));
+			questao.setQuantidadeOpcoes(rs.getInt("quantidade"));
+
+			questao.setTemaId(rs.getInt("temaId"));
+			questao.setTitulo(rs.getString("tituloTema"));
+			questao.setDescricao(rs.getString("descricaoTema"));
 			listaQuestoes.add(questao);
 		}
 

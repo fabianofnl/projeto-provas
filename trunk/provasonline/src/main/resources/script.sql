@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS provasRealizadas;
 DROP TABLE IF EXISTS agenda;
 DROP TABLE IF EXISTS vincularApostilas;
 DROP TABLE IF EXISTS apostilas;
@@ -100,6 +101,18 @@ CREATE TABLE agenda (
 	flag BOOLEAN DEFAULT FALSE -- Indica se o colaborador realizou a prova. True = Realizou, False = Não realizou	
 );
 
+CREATE TABLE provasRealizadas (
+	provaRealizadaId SERIAL NOT NULL PRIMARY KEY,
+	agendaId INTEGER NOT NULL REFERENCES agenda(agendaId),
+	provaId INTEGER NOT NULL,
+	tituloProva VARCHAR(255) NOT NULL,
+	dataHoraInicio TIMESTAMP,
+	dataHoraFim TIMESTAMP,
+	dataHoraFinalizado TIMESTAMP,
+	quantidadeQuestoes INTEGER,
+	quantidadeAcertos INTEGER
+);
+
 INSERT INTO perfil (descricao, roleName) VALUES ('Administrador', 'ROLE_ADMIN'); -- 1
 INSERT INTO perfil (descricao, roleName) VALUES ('Instrutor', 'ROLE_INSTRUTOR'); -- 2
 INSERT INTO perfil (descricao, roleName) VALUES ('Gerente', 'ROLE_GERENTE'); -- 3
@@ -125,6 +138,7 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 --SELECT * FROM apostilas
 --SELECT * FROM vincularApostilas
 --SELECT * FROM agenda
+--SELECT * FROM provasRealizadas
 
 
 -- Demais querys
@@ -176,4 +190,4 @@ a.provaId = p.provaId AND f.matricula = 4444 AND a.dataProva >= CURRENT_DATE AND
 
 SELECT DISTINCT ON(ap.apostilaId, ap.nome) ap.* FROM apostilas ap, vincularApostilas vp, provas p, agenda a
 WHERE ap.apostilaId = vp.apostilaId AND vp.provaId = p.provaId AND p.provaId = a.provaId
-AND a.matcolaborador = 4444 ORDER BY ap.nome
+AND a.dataProva > CURRENT_DATE AND a.flag = false AND a.matcolaborador = 4444 ORDER BY ap.nome

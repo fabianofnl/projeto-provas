@@ -51,4 +51,7 @@ public interface QuestoesService {
 	public List<QuestaoDTO> listarQuestoesSemProvas(Integer provaId)
 			throws ClassNotFoundException, SQLException;
 
+	public List<QuestaoDTO> listarQuestoesPorProvaId(Integer provaId)
+			throws ClassNotFoundException, SQLException;
+
 }

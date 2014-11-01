@@ -9,6 +9,7 @@ import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.ProvaDTO;
+import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 
 public interface ProvasService {
@@ -79,6 +80,9 @@ public interface ProvasService {
 			throws ClassNotFoundException, SQLException;
 
 	public void atualizarAgenda(AgendaDTO agendaDTO, String context)
+			throws ClassNotFoundException, SQLException;
+
+	public ProvaRealizadaDTO buscarProvaRealizadaPorAgendaId(Integer agendaId)
 			throws ClassNotFoundException, SQLException;
 
 }

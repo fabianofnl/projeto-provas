@@ -27,7 +27,7 @@ public class DashboardModelImpl implements DashboardModel {
 	private static final String SELECT_APOSTILAS_POR_MATRICULA = "SELECT DISTINCT ON(ap.apostilaId, ap.nome) ap.* "
 			+ "FROM apostilas ap, vincularApostilas vp, provas p, agenda a "
 			+ "WHERE ap.apostilaId = vp.apostilaId AND vp.provaId = p.provaId AND p.provaId = a.provaId "
-			+ "AND a.matcolaborador = ? ORDER BY ap.nome";
+			+ "AND a.flag = false AND a.dataProva > CURRENT_DATE AND a.matcolaborador = ? ORDER BY ap.nome";
 
 	@Override
 	public List<AgendaDTO> listarAgendas(Integer matricula)
