@@ -2,6 +2,7 @@ package br.com.sgpo.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
@@ -66,24 +68,31 @@ public class ProvaRealizarNotificacaoController extends HttpServlet {
 			AgendaDTO agenda = provasService.buscarAgendaPorId(Integer
 					.parseInt(agendaId));
 
-			// TODO fazer regra para verificar se a prova está apta a ser
-			// realizada
 			ProvaRealizadaDTO provaRealizada = provasService
 					.buscarProvaRealizadaPorAgendaId(agenda.getAgendaId());
 
-			if (provaRealizada != null) {
+			if (provaRealizada == null) {
 				req.setAttribute("prova", prova);
 				req.setAttribute("agenda", agenda);
-				req.setAttribute("provaRealizada", provaRealizada);
-				req.setAttribute("msgType", "warn");
+				req.setAttribute("msgType", "info");
 				req.setAttribute(
 						"msg",
-						"Você deverá realizar a prova XXX, após o início "
-								+ "da realização não poderá mais cancelar. <br> "
-								+ "Certifique-se de que não haverá problemas durante a realização da prova "
-								+ "caso contrário você poderá zerar.");
+						"Você deverá realizar a prova <strong>"+ prova.getTitulo() +"</strong>, após o início "
+								+ "cancelar. <br> "
+								+ "Certifique-se de que não haverá problemas durante a realização da prova, "
+								+ "caso contrário você poderá zerar.<br><br> "
+								+ "Se houver problemas durante a prova, como sair da página da prova, você "
+								+ "poderá retomar a prova desde que o tempo não tenha excedido, porém, "
+								+ "perderá o preenchimento das questões.");
+
+			} else if (provaRealizada.getDataHoraFim().getTime()
+					- provaRealizada.getDataHoraInicio().getTime() <= SGPOConstants.TEMPO_DE_PROVA) {
+
+				doPost(req, resp);
+				return;
+
 			} else {
-				req.setAttribute("msgType", "info");
+				req.setAttribute("msgType", "warn");
 				req.setAttribute("msg",
 						"Esta prova não existe ou você já realizou");
 			}
@@ -111,11 +120,33 @@ public class ProvaRealizarNotificacaoController extends HttpServlet {
 		try {
 			LOG.info("Acessando classe ProvaRealizar - método POST");
 
-			// TODO criar lógica para montar o formulário na tela
+			ProvaRealizadaDTO provaRealizada = new ProvaRealizadaDTO();
+			AgendaDTO agenda = new AgendaDTO();
+
+			provaRealizada.setProvaId(Integer.parseInt(req
+					.getParameter("provaId")));
+			provaRealizada.setTituloProva(req.getParameter("tituloProva"));
+
+			agenda.setAgendaId(Integer.parseInt(req.getParameter("agendaId")));
+
+			provaRealizada.setAgenda(agenda);
+
+			provaRealizada.setDataHoraInicio(new Date());
+			provaRealizada.setDataHoraFim(new Date(provaRealizada
+					.getDataHoraInicio().getTime()
+					+ SGPOConstants.TEMPO_DE_PROVA));
 
 			List<QuestaoDTO> listaQuestoes = questoesService
-					.listarQuestoesPorProvaId(new Integer(0));
+					.listarQuestoesPorProvaId(provaRealizada.getProvaId());
 
+			provaRealizada.setQuantidadeQuestoes(listaQuestoes.size());
+
+			provaRealizada.setProvaRealizadaId(provasService
+					.realizarProva(provaRealizada));
+
+			req.setAttribute("provaRealizada", provaRealizada);
+			req.setAttribute("msgTempoProva", "Duração da prova: "
+					+ (SGPOConstants.TEMPO_DE_PROVA / 1000 / 60 / 60));
 			req.setAttribute("listaQuestoes", listaQuestoes);
 			req.getRequestDispatcher("/secure/provaRealizar.jsp").forward(req,
 					resp);

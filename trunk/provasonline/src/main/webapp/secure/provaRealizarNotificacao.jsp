@@ -15,16 +15,38 @@
 			<div class="row">
 				<div class="span10 offset4">
 					<fieldset>
-						<legend>Detalhe da Prova</legend>
+						<legend>Detalhes da Prova</legend>
 						
-						
-						
-						
-						
+						<c:if test="${msgType eq 'info'}">
+							<p id="idMsg" class="bg-lightBlue fg-white padding10">
+								<span class="icon-info padding10"></span>${msg}
+							</p>
+							<br>
+							<br>
+							<form id="frmRealizarProva" action="realizarProva" method="post">
+								<input type="hidden" id="provaId" name="provaId" value="${prova.provaId}">
+								<input type="hidden" id="tituloProva" name="tituloProva" value="${prova.titulo}">
+								<input type="hidden" id="agendaId" name="agendaId" value="${agenda.agendaId}">
+	
+								<div class="row">
+									<div class="span10">
+										<div class="form-actions">
+											<button class="button primary">Confirmar a realização da prova</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</c:if>
+						<c:if test="${msgType eq 'warn'}">
+							<p id="idMsg" class="bg-amber fg-white">
+								<span class="icon-warning padding10"></span>${msg}
+							</p>
+						</c:if>
 					</fieldset>
 				</div>
 			</div>
 		</div>
 	</section>
+	<jsp:include page="/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -140,6 +140,10 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 --SELECT * FROM agenda
 --SELECT * FROM provasRealizadas
 
+--delete from provasRealizadas
+
+--update agenda set flag = false where agendaid = 12
+
 
 -- Demais querys
 
