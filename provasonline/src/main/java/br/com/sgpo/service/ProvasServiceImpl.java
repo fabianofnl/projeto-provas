@@ -214,4 +214,10 @@ public class ProvasServiceImpl implements ProvasService {
 			throws ClassNotFoundException, SQLException {
 		return provasModel.buscarProvaRealizadaPorAgendaId(agendaId);
 	}
+
+	@Override
+	public Integer realizarProva(ProvaRealizadaDTO provaRealizada)
+			throws ClassNotFoundException, SQLException {
+		return provasModel.realizarProva(provaRealizada);
+	}
 }

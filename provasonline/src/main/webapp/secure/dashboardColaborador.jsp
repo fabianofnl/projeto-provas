@@ -30,7 +30,7 @@
 										</td>
 										<td style="width:20%">
 											<c:if test="${agenda.hoje eq 1}">
-												<a href="${pageContext.request.contextPath}/secure/realizarProva?provaId=${agenda.prova.provaId}">
+												<a href="${pageContext.request.contextPath}/secure/realizarProva?provaId=${agenda.prova.provaId}&agendaId=${agenda.agendaId}">
 													<span class="icon-book" data-hint="Realizar Prova" data-hint-position="top"></span>
 												</a>
 											</c:if>

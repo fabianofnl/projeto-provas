@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,6 +84,15 @@ public class ProvasModelImpl implements ProvasModel {
 	private static final String DELETE_AGENDA = "DELETE FROM agenda WHERE agendaId = ?";
 
 	private static final String UPDATE_AGENDA = "UPDATE agenda SET provaId = ?, dataProva = ? WHERE agendaId = ?";
+
+	private static final String SELECT_PROVA_REALIZADA_POR_AGENDA_ID = "SELECT pr.* FROM provasRealizadas pr, agenda a "
+			+ "WHERE pr.agendaId = a.agendaId AND a.agendaId = ?";
+
+	private static final String UPDATE_AGENDA_FLAG = "UPDATE agenda SET flag = true WHERE agendaId = ?";
+
+	private static final String INSERT_DETALHES_PROVA_REALIZADA = "INSERT INTO provasRealizadas "
+			+ "(agendaId, provaId, tituloProva, dataHoraInicio, dataHoraFim, quantidadeQuestoes) "
+			+ "VALUES (?, ?, ?, ?, ?, ?) RETURNING provaRealizadaId";
 
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
@@ -763,6 +773,13 @@ public class ProvasModelImpl implements ProvasModel {
 			agenda.setFlag(rs.getBoolean("flag"));
 		}
 
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
 		return agenda;
 	}
 
@@ -811,7 +828,89 @@ public class ProvasModelImpl implements ProvasModel {
 	@Override
 	public ProvaRealizadaDTO buscarProvaRealizadaPorAgendaId(Integer agendaId)
 			throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+
+		LOG.info("Chamando método buscar prova realizada por agenda ID");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ProvaRealizadaDTO provaRealizadaDTO = null;
+		AgendaDTO agenda = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_PROVA_REALIZADA_POR_AGENDA_ID);
+		pstmt.setInt(1, agendaId);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			provaRealizadaDTO = new ProvaRealizadaDTO();
+			agenda = new AgendaDTO();
+			provaRealizadaDTO
+					.setProvaRealizadaId(rs.getInt("provaRealizadaId"));
+			provaRealizadaDTO.setTituloProva(rs.getString("tituloProva"));
+			provaRealizadaDTO.setDataHoraInicio(new Date(rs.getDate(
+					"dataHoraInicio").getTime()));
+			provaRealizadaDTO.setDataHoraFim(new Date(rs.getDate("dataHoraFim")
+					.getTime()));
+			provaRealizadaDTO.setDataHoraFinalizado(new Date(rs.getDate(
+					"dataHoraFinalizado").getTime()));
+			provaRealizadaDTO.setQuantidadeQuestoes(rs
+					.getInt("quantidadeQuestoes"));
+			provaRealizadaDTO.setQuantidadeAcertos(rs
+					.getInt("quantidadeAcertos"));
+			provaRealizadaDTO.setProvaId(rs.getInt("provaId"));
+			agenda.setAgendaId(rs.getInt("agendaId"));
+			provaRealizadaDTO.setAgenda(agenda);
+
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return provaRealizadaDTO;
+	}
+
+	@Override
+	public Integer realizarProva(ProvaRealizadaDTO provaRealizada)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método realizar prova");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Integer provaRealizadaId = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(UPDATE_AGENDA_FLAG);
+		pstmt.setInt(1, provaRealizada.getAgenda().getAgendaId());
+		pstmt.execute();
+
+		pstmt = conn.prepareStatement(INSERT_DETALHES_PROVA_REALIZADA);
+		pstmt.setInt(1, provaRealizada.getAgenda().getAgendaId());
+		pstmt.setInt(2, provaRealizada.getProvaId());
+		pstmt.setString(3, provaRealizada.getTituloProva());
+		pstmt.setTimestamp(4, new Timestamp(provaRealizada.getDataHoraInicio()
+				.getTime()));
+		pstmt.setTimestamp(5, new Timestamp(provaRealizada.getDataHoraFim()
+				.getTime()));
+		pstmt.setInt(6, provaRealizada.getQuantidadeQuestoes());
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			provaRealizadaId = rs.getInt("provaRealizadaId");
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return provaRealizadaId;
 	}
 }

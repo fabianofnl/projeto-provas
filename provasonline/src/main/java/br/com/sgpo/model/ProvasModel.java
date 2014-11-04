@@ -92,4 +92,7 @@ public interface ProvasModel {
 
 	public ProvaRealizadaDTO buscarProvaRealizadaPorAgendaId(Integer agendaId)
 			throws ClassNotFoundException, SQLException;
+
+	public Integer realizarProva(ProvaRealizadaDTO provaRealizada)
+			throws ClassNotFoundException, SQLException;
 }
