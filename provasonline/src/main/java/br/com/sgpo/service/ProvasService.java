@@ -88,4 +88,7 @@ public interface ProvasService {
 	public Integer realizarProva(ProvaRealizadaDTO provaRealizada)
 			throws ClassNotFoundException, SQLException;
 
+	public ProvaRealizadaDTO buscarProvaRealizadaPorColaboradorMat(Integer matricula)
+			throws ClassNotFoundException, SQLException;
+
 }

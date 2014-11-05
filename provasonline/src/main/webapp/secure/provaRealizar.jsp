@@ -20,8 +20,10 @@
 						<label>
 							${msgTempoProva}h
 							<br>
-							Iniciado em: <fmt:formatDate pattern="dd/MM/yyyy hh:mm" value="${provaRealizada.dataHoraInicio}" /> 
-							- Término em: <fmt:formatDate pattern="dd/MM/yyyy hh:mm" value="${provaRealizada.dataHoraFim}" />
+							${quantidadeQuestoes} questões.
+							<br>
+							Iniciado em: <fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${provaRealizada.dataHoraInicio}" /> 
+							- Término em: <fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${provaRealizada.dataHoraFim}" />
 						</label>
 						<br>
 						<br>
