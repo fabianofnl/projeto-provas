@@ -91,8 +91,12 @@ public class ProvasModelImpl implements ProvasModel {
 	private static final String UPDATE_AGENDA_FLAG = "UPDATE agenda SET flag = true WHERE agendaId = ?";
 
 	private static final String INSERT_DETALHES_PROVA_REALIZADA = "INSERT INTO provasRealizadas "
-			+ "(agendaId, provaId, tituloProva, dataHoraInicio, dataHoraFim, quantidadeQuestoes) "
-			+ "VALUES (?, ?, ?, ?, ?, ?) RETURNING provaRealizadaId";
+			+ "(agendaId, provaId, tituloProva, dataHoraInicio, dataHoraFim, quantidadeQuestoes, quantidadeAcertos) "
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING provaRealizadaId";
+
+	private static final String SELECT_PROVA_REALIZADA_POR_COLABORADOR_MAT = "SELECT pr.* "
+			+ "FROM provasRealizadas pr, agenda a, funcionario f "
+			+ "WHERE pr.agendaId = a.agendaId AND a.matcolaborador = f.matricula AND pr.dataHoraFim > NOW() AND f.matricula = ?";
 
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
@@ -847,12 +851,19 @@ public class ProvasModelImpl implements ProvasModel {
 			provaRealizadaDTO
 					.setProvaRealizadaId(rs.getInt("provaRealizadaId"));
 			provaRealizadaDTO.setTituloProva(rs.getString("tituloProva"));
-			provaRealizadaDTO.setDataHoraInicio(new Date(rs.getDate(
-					"dataHoraInicio").getTime()));
-			provaRealizadaDTO.setDataHoraFim(new Date(rs.getDate("dataHoraFim")
-					.getTime()));
-			provaRealizadaDTO.setDataHoraFinalizado(new Date(rs.getDate(
-					"dataHoraFinalizado").getTime()));
+
+			Object obj = rs.getObject("dataHoraInicio");
+			provaRealizadaDTO.setDataHoraInicio(obj == null ? null : new Date(
+					((java.sql.Timestamp) obj).getTime()));
+
+			obj = rs.getObject("dataHoraFim");
+			provaRealizadaDTO.setDataHoraFim(obj == null ? null : new Date(
+					((java.sql.Timestamp) obj).getTime()));
+
+			obj = rs.getObject("dataHoraFinalizado");
+			provaRealizadaDTO.setDataHoraFinalizado(obj == null ? null
+					: new Date(((java.sql.Timestamp) obj).getTime()));
+
 			provaRealizadaDTO.setQuantidadeQuestoes(rs
 					.getInt("quantidadeQuestoes"));
 			provaRealizadaDTO.setQuantidadeAcertos(rs
@@ -898,6 +909,7 @@ public class ProvasModelImpl implements ProvasModel {
 		pstmt.setTimestamp(5, new Timestamp(provaRealizada.getDataHoraFim()
 				.getTime()));
 		pstmt.setInt(6, provaRealizada.getQuantidadeQuestoes());
+		pstmt.setInt(7, provaRealizada.getQuantidadeAcertos());
 		rs = pstmt.executeQuery();
 
 		if (rs.next()) {
@@ -912,5 +924,60 @@ public class ProvasModelImpl implements ProvasModel {
 			conn.close();
 
 		return provaRealizadaId;
+	}
+
+	@Override
+	public ProvaRealizadaDTO buscarProvaRealizadaPorColaboradorMat(
+			Integer matricula) throws ClassNotFoundException, SQLException {
+		LOG.info("Chamando método buscar prova realizada por colaborador matricula");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ProvaRealizadaDTO provaRealizadaDTO = null;
+		AgendaDTO agenda = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn
+				.prepareStatement(SELECT_PROVA_REALIZADA_POR_COLABORADOR_MAT);
+		pstmt.setInt(1, matricula);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			provaRealizadaDTO = new ProvaRealizadaDTO();
+			agenda = new AgendaDTO();
+			provaRealizadaDTO
+					.setProvaRealizadaId(rs.getInt("provaRealizadaId"));
+			provaRealizadaDTO.setTituloProva(rs.getString("tituloProva"));
+
+			Object obj = rs.getObject("dataHoraInicio");
+			provaRealizadaDTO.setDataHoraInicio(obj == null ? null : new Date(
+					((java.sql.Timestamp) obj).getTime()));
+
+			obj = rs.getObject("dataHoraFim");
+			provaRealizadaDTO.setDataHoraFim(obj == null ? null : new Date(
+					((java.sql.Timestamp) obj).getTime()));
+
+			obj = rs.getObject("dataHoraFinalizado");
+			provaRealizadaDTO.setDataHoraFinalizado(obj == null ? null
+					: new Date(((java.sql.Timestamp) obj).getTime()));
+
+			provaRealizadaDTO.setQuantidadeQuestoes(rs
+					.getInt("quantidadeQuestoes"));
+			provaRealizadaDTO.setQuantidadeAcertos(rs
+					.getInt("quantidadeAcertos"));
+			provaRealizadaDTO.setProvaId(rs.getInt("provaId"));
+			agenda.setAgendaId(rs.getInt("agendaId"));
+			provaRealizadaDTO.setAgenda(agenda);
+
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return provaRealizadaDTO;
 	}
 }

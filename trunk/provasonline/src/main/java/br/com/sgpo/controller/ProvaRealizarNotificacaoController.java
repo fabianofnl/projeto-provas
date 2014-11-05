@@ -77,8 +77,10 @@ public class ProvaRealizarNotificacaoController extends HttpServlet {
 				req.setAttribute("msgType", "info");
 				req.setAttribute(
 						"msg",
-						"Você deverá realizar a prova <strong>"+ prova.getTitulo() +"</strong>, após o início "
-								+ "cancelar. <br> "
+						"Você deverá realizar a prova <strong>"
+								+ prova.getTitulo()
+								+ "</strong>, após o início "
+								+ "não poderá ser cancelar. <br> "
 								+ "Certifique-se de que não haverá problemas durante a realização da prova, "
 								+ "caso contrário você poderá zerar.<br><br> "
 								+ "Se houver problemas durante a prova, como sair da página da prova, você "
@@ -87,7 +89,7 @@ public class ProvaRealizarNotificacaoController extends HttpServlet {
 
 			} else if (provaRealizada.getDataHoraFim().getTime()
 					- provaRealizada.getDataHoraInicio().getTime() <= SGPOConstants.TEMPO_DE_PROVA) {
-
+				req.setAttribute("provaRealizada", provaRealizada);
 				doPost(req, resp);
 				return;
 
@@ -120,33 +122,47 @@ public class ProvaRealizarNotificacaoController extends HttpServlet {
 		try {
 			LOG.info("Acessando classe ProvaRealizar - método POST");
 
-			ProvaRealizadaDTO provaRealizada = new ProvaRealizadaDTO();
-			AgendaDTO agenda = new AgendaDTO();
+			ProvaRealizadaDTO provaRealizada = null;
+			List<QuestaoDTO> listaQuestoes = null;
+			AgendaDTO agenda = null;
 
-			provaRealizada.setProvaId(Integer.parseInt(req
-					.getParameter("provaId")));
-			provaRealizada.setTituloProva(req.getParameter("tituloProva"));
+			if (req.getAttribute("provaRealizada") == null) {
+				provaRealizada = new ProvaRealizadaDTO();
+				agenda = new AgendaDTO();
 
-			agenda.setAgendaId(Integer.parseInt(req.getParameter("agendaId")));
+				provaRealizada.setProvaId(Integer.parseInt(req
+						.getParameter("provaId")));
+				provaRealizada.setTituloProva(req.getParameter("tituloProva"));
 
-			provaRealizada.setAgenda(agenda);
+				agenda.setAgendaId(Integer.parseInt(req
+						.getParameter("agendaId")));
 
-			provaRealizada.setDataHoraInicio(new Date());
-			provaRealizada.setDataHoraFim(new Date(provaRealizada
-					.getDataHoraInicio().getTime()
-					+ SGPOConstants.TEMPO_DE_PROVA));
+				provaRealizada.setAgenda(agenda);
 
-			List<QuestaoDTO> listaQuestoes = questoesService
-					.listarQuestoesPorProvaId(provaRealizada.getProvaId());
+				provaRealizada.setDataHoraInicio(new Date());
+				provaRealizada.setDataHoraFim(new Date(provaRealizada
+						.getDataHoraInicio().getTime()
+						+ SGPOConstants.TEMPO_DE_PROVA));
 
-			provaRealizada.setQuantidadeQuestoes(listaQuestoes.size());
+				listaQuestoes = questoesService
+						.listarQuestoesPorProvaId(provaRealizada.getProvaId());
 
-			provaRealizada.setProvaRealizadaId(provasService
-					.realizarProva(provaRealizada));
+				provaRealizada.setQuantidadeQuestoes(listaQuestoes.size());
+				provaRealizada.setQuantidadeAcertos(new Integer(0));
+
+				provaRealizada.setProvaRealizadaId(provasService
+						.realizarProva(provaRealizada));
+			}else{
+				provaRealizada = (ProvaRealizadaDTO) req.getAttribute("provaRealizada");
+				listaQuestoes = questoesService
+						.listarQuestoesPorProvaId(provaRealizada.getProvaId());
+			}
 
 			req.setAttribute("provaRealizada", provaRealizada);
 			req.setAttribute("msgTempoProva", "Duração da prova: "
 					+ (SGPOConstants.TEMPO_DE_PROVA / 1000 / 60 / 60));
+			req.setAttribute("quantidadeQuestoes",
+					provaRealizada.getQuantidadeQuestoes());
 			req.setAttribute("listaQuestoes", listaQuestoes);
 			req.getRequestDispatcher("/secure/provaRealizar.jsp").forward(req,
 					resp);

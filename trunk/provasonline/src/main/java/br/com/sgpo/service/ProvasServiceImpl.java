@@ -220,4 +220,10 @@ public class ProvasServiceImpl implements ProvasService {
 			throws ClassNotFoundException, SQLException {
 		return provasModel.realizarProva(provaRealizada);
 	}
+
+	@Override
+	public ProvaRealizadaDTO buscarProvaRealizadaPorColaboradorMat(
+			Integer matricula) throws ClassNotFoundException, SQLException {
+		return provasModel.buscarProvaRealizadaPorColaboradorMat(matricula);
+	}
 }

@@ -16,8 +16,14 @@ import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.dto.ProvaRealizadaDTO;
+import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.service.DashboardService;
 import br.com.sgpo.service.DashboardServiceImpl;
+import br.com.sgpo.service.ProvasService;
+import br.com.sgpo.service.ProvasServiceImpl;
+import br.com.sgpo.service.QuestoesService;
+import br.com.sgpo.service.QuestoesServiceImpl;
 
 /**
  * @author Roseli
@@ -100,16 +106,44 @@ public class DashboardController extends HttpServlet {
 			HttpServletResponse resp) throws ClassNotFoundException,
 			SQLException, ServletException, IOException {
 
-		List<AgendaDTO> listaAgendas = dashboardService
-				.listarAgendas(funcionario.getMatricula());
+		// verifica se existe prova em andamento.
+		ProvasService provasService = new ProvasServiceImpl();
 
-		List<ApostilaDTO> listaApostilas = dashboardService
-				.listarApostilas(funcionario.getMatricula());
+		FuncionarioDTO funcionario = (FuncionarioDTO) req.getSession(true)
+				.getAttribute(SGPOConstants.LOGGED_FUNCIONARIO);
 
-		req.setAttribute("listaAgendas", listaAgendas);
-		req.setAttribute("listaApostilas", listaApostilas);
+		ProvaRealizadaDTO provaRealizada = provasService
+						.buscarProvaRealizadaPorColaboradorMat(funcionario
+								.getMatricula());
 
-		req.getRequestDispatcher("/secure/dashboard.jsp").forward(req, resp);
+		if (provaRealizada != null) {
+
+			QuestoesService questoesService = new QuestoesServiceImpl();
+
+			req.setAttribute("provaRealizada", provaRealizada);
+			req.setAttribute("msgTempoProva", "Duração da prova: "
+					+ (SGPOConstants.TEMPO_DE_PROVA / 1000 / 60 / 60));
+			req.setAttribute("quantidadeQuestoes",
+					provaRealizada.getQuantidadeQuestoes());
+			List<QuestaoDTO> listaQuestoes = questoesService
+					.listarQuestoesPorProvaId(provaRealizada.getProvaId());
+			req.setAttribute("listaQuestoes", listaQuestoes);
+			req.getRequestDispatcher("/secure/provaRealizar.jsp").forward(req,
+					resp);
+		} else {
+
+			List<AgendaDTO> listaAgendas = dashboardService
+					.listarAgendas(funcionario.getMatricula());
+
+			List<ApostilaDTO> listaApostilas = dashboardService
+					.listarApostilas(funcionario.getMatricula());
+
+			req.setAttribute("listaAgendas", listaAgendas);
+			req.setAttribute("listaApostilas", listaApostilas);
+
+			req.getRequestDispatcher("/secure/dashboard.jsp")
+					.forward(req, resp);
+		}
 	}
 
 	private void processarDadosGerente(HttpServletRequest req,
