@@ -5,7 +5,27 @@
 		<div class="span6 offset5">
 			<fieldset>
 				<legend>Agenda</legend>
-				
+				<c:if test="${msgType eq 'warn'}">
+					<p id="idMsg" class="bg-amber fg-white">
+						<span class="icon-warning padding10"></span>${msg}
+					</p>
+					<script type="text/javascript">
+						setTimeout(function(){
+							$("#idMsg").fadeOut(1000);
+						}, 10000);
+					</script>
+				</c:if>
+				<c:if test="${msgType eq 'info'}">
+					<p id="idMsg" class="bg-lightBlue fg-white">
+						<span class="icon-info padding10"></span>${msg}
+					</p>
+					<script type="text/javascript">
+						setTimeout(function(){
+							$("#idMsg").fadeOut(1000);
+						}, 10000);
+					</script>
+				</c:if>
+
 				<table class="table hovered">
 					<thead>
 						<tr>

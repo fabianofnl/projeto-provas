@@ -226,4 +226,16 @@ public class ProvasServiceImpl implements ProvasService {
 			Integer matricula) throws ClassNotFoundException, SQLException {
 		return provasModel.buscarProvaRealizadaPorColaboradorMat(matricula);
 	}
+
+	@Override
+	public long buscarPorDataHoraFim(Integer provaRealizadaId)
+			throws ClassNotFoundException, SQLException {
+		return provasModel.buscarPorDataHoraFim(provaRealizadaId);
+	}
+
+	@Override
+	public void entregarProva(ProvaRealizadaDTO provaRealizada)
+			throws ClassNotFoundException, SQLException {
+		provasModel.entregarProva(provaRealizada);
+	}
 }
