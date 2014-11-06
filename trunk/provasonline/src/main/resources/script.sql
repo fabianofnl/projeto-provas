@@ -142,7 +142,7 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 
 --delete from provasRealizadas
 
---update agenda set flag = false where agendaid = 12
+--update agenda set flag = false where agendaid in (12,26)
 
 
 -- Demais querys
@@ -195,3 +195,9 @@ a.provaId = p.provaId AND f.matricula = 4444 AND a.dataProva >= CURRENT_DATE AND
 SELECT DISTINCT ON(ap.apostilaId, ap.nome) ap.* FROM apostilas ap, vincularApostilas vp, provas p, agenda a
 WHERE ap.apostilaId = vp.apostilaId AND vp.provaId = p.provaId AND p.provaId = a.provaId
 AND a.dataProva > CURRENT_DATE AND a.flag = false AND a.matcolaborador = 4444 ORDER BY ap.nome
+
+SELECT pr.* FROM provasRealizadas pr, agenda a, funcionario f
+WHERE pr.agendaId = a.agendaId AND a.matcolaborador = f.matricula AND pr.dataHoraFim > NOW() 
+AND pr.dataHoraFinalizado IS NULL AND f.matricula = 4444
+
+SELECT dataHoraFim FROM provasRealizadas WHERE provaRealizadaId = 16

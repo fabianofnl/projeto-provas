@@ -96,7 +96,13 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String SELECT_PROVA_REALIZADA_POR_COLABORADOR_MAT = "SELECT pr.* "
 			+ "FROM provasRealizadas pr, agenda a, funcionario f "
-			+ "WHERE pr.agendaId = a.agendaId AND a.matcolaborador = f.matricula AND pr.dataHoraFim > NOW() AND f.matricula = ?";
+			+ "WHERE pr.agendaId = a.agendaId AND a.matcolaborador = f.matricula AND pr.dataHoraFim > NOW() "
+			+ "AND pr.dataHoraFinalizado IS NULL AND f.matricula = ?";
+
+	private static final String SELECT_DATA_HORA_FIM_POR_ID = "SELECT dataHoraFim FROM provasRealizadas WHERE provaRealizadaId = ?";
+
+	private static final String UPDATE_PROVA_REALIZADA = "UPDATE provasRealizadas SET dataHoraFinalizado = ?, quantidadeAcertos = ? "
+			+ "WHERE provaRealizadaId = ?";
 
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
@@ -979,5 +985,59 @@ public class ProvasModelImpl implements ProvasModel {
 			conn.close();
 
 		return provaRealizadaDTO;
+	}
+
+	@Override
+	public long buscarPorDataHoraFim(Integer provaRealizadaId)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método buscarPorDataHoraFim");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		long dataHoraFim = 0;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_DATA_HORA_FIM_POR_ID);
+		pstmt.setInt(1, provaRealizadaId);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			Object obj = rs.getObject("dataHoraFim");
+			dataHoraFim = obj == null ? 0 : ((java.sql.Timestamp) obj)
+					.getTime();
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return dataHoraFim;
+	}
+
+	@Override
+	public void entregarProva(ProvaRealizadaDTO provaRealizada)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método entregar prova");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(UPDATE_PROVA_REALIZADA);
+		pstmt.setTimestamp(1, new java.sql.Timestamp(provaRealizada
+				.getDataHoraFinalizado().getTime()));
+		pstmt.setInt(2, provaRealizada.getQuantidadeAcertos());
+		pstmt.setInt(3, provaRealizada.getProvaRealizadaId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
 	}
 }

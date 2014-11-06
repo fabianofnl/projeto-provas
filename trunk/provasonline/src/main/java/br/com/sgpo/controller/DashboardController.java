@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -109,12 +110,9 @@ public class DashboardController extends HttpServlet {
 		// verifica se existe prova em andamento.
 		ProvasService provasService = new ProvasServiceImpl();
 
-		FuncionarioDTO funcionario = (FuncionarioDTO) req.getSession(true)
-				.getAttribute(SGPOConstants.LOGGED_FUNCIONARIO);
-
 		ProvaRealizadaDTO provaRealizada = provasService
-						.buscarProvaRealizadaPorColaboradorMat(funcionario
-								.getMatricula());
+				.buscarProvaRealizadaPorColaboradorMat(funcionario
+						.getMatricula());
 
 		if (provaRealizada != null) {
 
@@ -130,6 +128,7 @@ public class DashboardController extends HttpServlet {
 			req.setAttribute("listaQuestoes", listaQuestoes);
 			req.getRequestDispatcher("/secure/provaRealizar.jsp").forward(req,
 					resp);
+
 		} else {
 
 			List<AgendaDTO> listaAgendas = dashboardService
@@ -144,6 +143,10 @@ public class DashboardController extends HttpServlet {
 			req.getRequestDispatcher("/secure/dashboard.jsp")
 					.forward(req, resp);
 		}
+		// Limpando mensagens da sessão
+		HttpSession session = req.getSession(true);
+		session.removeAttribute("msg");
+		session.removeAttribute("msgType");
 	}
 
 	private void processarDadosGerente(HttpServletRequest req,
