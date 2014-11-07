@@ -1,6 +1,7 @@
 package br.com.sgpo.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -137,6 +138,15 @@ public class DashboardController extends HttpServlet {
 			List<ApostilaDTO> listaApostilas = dashboardService
 					.listarApostilas(funcionario.getMatricula());
 
+			List<ProvaRealizadaDTO> listaProvasRealizadas = dashboardService
+					.listarProvasRealizadasPorMatricula(funcionario
+							.getMatricula());
+
+			BigDecimal mediaEquipe = dashboardService
+					.consultarMediaEquipe(funcionario.getMatricula());
+
+			req.setAttribute("listaProvasRealizadas", listaProvasRealizadas);
+			req.setAttribute("mediaEquipe", mediaEquipe);
 			req.setAttribute("listaAgendas", listaAgendas);
 			req.setAttribute("listaApostilas", listaApostilas);
 

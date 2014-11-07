@@ -71,15 +71,17 @@ public class ProvaEntregarController extends HttpServlet {
 						.listarQuestoesPorProvaId(provaRealizada.getProvaId());
 
 				for (QuestaoDTO questaoDTO : listaQuestoes) {
+					if (req.getParameter("radio-" + questaoDTO.getQuestaoId()) != null) {
+						Integer opcaoSelecionada = Integer.parseInt(req
+								.getParameter("radio-"
+										+ questaoDTO.getQuestaoId()));
 
-					Integer opcaoSelecionada = Integer
-							.parseInt(req.getParameter("radio-"
-									+ questaoDTO.getQuestaoId()));
-
-					for (OpcaoDTO opcaoDTO : questaoDTO.getListaOpcoes()) {
-						if (opcaoDTO.getFlag()) {
-							if (opcaoSelecionada.equals(opcaoDTO.getOpcaoId())) {
-								acertos++;
+						for (OpcaoDTO opcaoDTO : questaoDTO.getListaOpcoes()) {
+							if (opcaoDTO.getFlag()) {
+								if (opcaoSelecionada.equals(opcaoDTO
+										.getOpcaoId())) {
+									acertos++;
+								}
 							}
 						}
 					}

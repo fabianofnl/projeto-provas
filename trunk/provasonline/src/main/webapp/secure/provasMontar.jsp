@@ -28,102 +28,87 @@
 							</script>
 						</c:if>
 
-						<div class="divHeader">
-							<table class="tableClass tableHeader">
-								<thead>
-									<tr>
-										<th style="width:30%">Prova</th>
-										<th style="width:60%">Questões</th>
-										<th style="width:10%">Ações</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-						<div class="divBody">
-							<table class="tableClass tableBody">
-								<tbody>
-									<c:choose>
-										<c:when test="${empty listaProvas}">
+						<table class="table hovered">
+							<thead>
+								<tr>
+									<th style="width:30%">Prova</th>
+									<th style="width:60%">Questões</th>
+									<th style="width:10%">Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty listaProvas}">
+										<tr>
+											<td colspan="5">Não há registros.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${listaProvas}" var="prova">
 											<tr>
-												<td colspan="5">Não há registros.</td>
-											</tr>
-										</c:when>
-										<c:otherwise>
-											<c:forEach items="${listaProvas}" var="prova">
-												<tr>
-													<td style="width:30%" valign="top">
-														<ul style="list-style: none;">
-															<li data-hint="Descrição | ${prova.titulo}" data-hint-position="top">${prova.titulo}
-																<c:if test="${prova.quantidadeQuestoes gt 0}">
-																	<br>
-																	<span style="font-size: 9pt !important;">
-																		${prova.quantidadeTemas} temas
-																	</span>
-																	<br>
-																	<span style="font-size: 9pt !important;">
-																		${prova.quantidadeQuestoes} questões
-																	</span>
-																</c:if>
+												<td style="width:30%" valign="top">
+													<ul style="list-style: none;">
+														<li data-hint="Descrição | ${prova.titulo}" data-hint-position="top">${prova.titulo}
+															<c:if test="${prova.quantidadeQuestoes gt 0}">
+																<br>
+																<span style="font-size: 9pt !important;">
+																	${prova.quantidadeTemas} temas
+																</span>
+																<br>
+																<span style="font-size: 9pt !important;">
+																	${prova.quantidadeQuestoes} questões
+																</span>
+															</c:if>
+														</li>
+													</ul>
+												</td>
+												<td style="width:60%;">
+													<ul style="list-style: none;">
+														<c:forEach items="${prova.listaTemas}" var="tema">
+															<li style="padding:2px;">
+																<span style="font-size: 9pt !important;">
+																	<Strong>Tema: </Strong>${tema.titulo}
+																</span>
+																<ul style="list-style: none;">
+																	<c:forEach items="${tema.listaQuestoes}" var="questao">
+																		<li style="padding:2px;" 	data-hint="Descrição | ${questao.descricaoQuestao}" 
+																									data-hint-position="top">
+																			${questao.tituloQuestao}
+																			<span class="custom-separator">|</span>
+																			<a href="${pageContext.request.contextPath}/secure/removerQuestaoProva?questaoId=${questao.questaoId}&provaId=${prova.provaId}">
+																				<span class="icon-remove" data-hint="Remover Questão" data-hint-position="top"></span>
+																			</a>
+																		</li>
+																	</c:forEach>
+																</ul>
 															</li>
-														</ul>
-													</td>
-													<td style="width:60%;">
-														<ul style="list-style: none;">
-															<c:forEach items="${prova.listaTemas}" var="tema">
-																<li style="padding:2px;">
-																	<span style="font-size: 9pt !important;">
-																		<Strong>Tema: </Strong>${tema.titulo}
-																	</span>
-																	<ul style="list-style: none;">
-																		<c:forEach items="${tema.listaQuestoes}" var="questao">
-																			<li style="padding:2px;" 	data-hint="Descrição | ${questao.descricaoQuestao}" 
-																										data-hint-position="top">
-																				${questao.tituloQuestao}
-																				<span class="custom-separator">|</span>
-																				<a href="${pageContext.request.contextPath}/secure/removerQuestaoProva?questaoId=${questao.questaoId}&provaId=${prova.provaId}">
-																					<span class="icon-remove" data-hint="Remover Questão" data-hint-position="top"></span>
-																				</a>
-																			</li>
-																		</c:forEach>
-																	</ul>
-																</li>
-															</c:forEach>
-														</ul>
-													</td>
-													<td style="width:10%; text-align: center;">
-														<a href="${pageContext.request.contextPath}/secure/adicionarQuestoesProva?provaId=${prova.provaId}">
-															<span class="icon-box-add" data-hint="Adicionar Questões" data-hint-position="top"></span>
+														</c:forEach>
+													</ul>
+												</td>
+												<td style="width:10%; text-align: center;">
+													<a href="${pageContext.request.contextPath}/secure/adicionarQuestoesProva?provaId=${prova.provaId}">
+														<span class="icon-box-add" data-hint="Adicionar Questões" data-hint-position="top"></span>
+													</a>
+													<c:if test="${prova.quantidadeTemas eq 0}">
+														<span class="custom-separator">|</span>															
+														<a href="${pageContext.request.contextPath}/secure/removerProva?provaId=${prova.provaId}">
+															<span class="icon-remove" data-hint="Remover Prova" data-hint-position="top"></span>
 														</a>
-														<c:if test="${prova.quantidadeTemas eq 0}">
-															<span class="custom-separator">|</span>															
-															<a href="${pageContext.request.contextPath}/secure/removerProva?provaId=${prova.provaId}">
-																<span class="icon-remove" data-hint="Remover Prova" data-hint-position="top"></span>
-															</a>
-														</c:if>
-													</td>
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</tbody>
-							</table>
-						</div>
-						<div class="divFooter">
-							<table class="tableClass tableFooter">
-								<tfoot>
-									<tr>
-										<td>
-											<c:if test="${listSize ne 0}">
-												<c:url var="searchUri" value="/secure/provas?pagina=##"/>
-												<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
-											</c:if>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
+													</c:if>
+												</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+						<c:if test="${listSize ne 0}">
+							<c:url var="searchUri" value="/secure/provas?pagina=##"/>
+							<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
+						</c:if>
 					</fieldset>
-
+					<br>
+					<br>
 					<fieldset>
 						<legend>Cadastrar Provas</legend>
 						<form id="frmCadastrarProvas" action="provas" method="post">

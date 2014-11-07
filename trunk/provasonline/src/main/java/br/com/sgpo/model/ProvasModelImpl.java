@@ -104,6 +104,10 @@ public class ProvasModelImpl implements ProvasModel {
 	private static final String UPDATE_PROVA_REALIZADA = "UPDATE provasRealizadas SET dataHoraFinalizado = ?, quantidadeAcertos = ? "
 			+ "WHERE provaRealizadaId = ?";
 
+	private static final String SELECT_EXISTE_PROVA_AGENDADA_MESMA_DATA = "SELECT EXISTS "
+			+ "(SELECT a.agendaId FROM agenda a, funcionario f WHERE f.matricula = a.matcolaborador "
+			+ "AND f.matricula = ? AND a.dataProva = ?)";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -1039,5 +1043,36 @@ public class ProvasModelImpl implements ProvasModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
+	}
+
+	@Override
+	public boolean existeProvaAgendadaMesaData(Integer matricula,
+			Date dataAgendada) throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método buscarPorDataHoraFim");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean exists = false;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_EXISTE_PROVA_AGENDADA_MESMA_DATA);
+		pstmt.setInt(1, matricula);
+		pstmt.setDate(2, new java.sql.Date(dataAgendada.getTime()));
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			exists = rs.getBoolean("exists");
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return exists;
 	}
 }

@@ -28,71 +28,55 @@
 								}, 6000);
 							</script>
 						</c:if>
-						<div class="divHeader">
-							<table class="tableClass tableHeader">
-								<thead>
-									<tr>
-										<th style="width:9%">Matricula</th>
-										<th style="width:18%">Nome</th>
-										<th style="width:20%">E-mail</th>
-										<th style="width:16%">Função</th>
-										<th style="width:11%">Perfil</th>
-										<th style="width:10%">Usuário</th>
-										<th style="width:7%">Status</th>
-										<th style="width:9%">Ações</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-						<div class="divBody">
-							<table class="tableClass tableBody">
-								<tbody>
-									<c:choose>
-										<c:when test="${empty listaFuncionario}">
+						<table class="table hovered">
+							<thead>
+								<tr>
+									<th style="width:9%">Matricula</th>
+									<th style="width:18%">Nome</th>
+									<th style="width:20%">E-mail</th>
+									<th style="width:16%">Função</th>
+									<th style="width:11%">Perfil</th>
+									<th style="width:10%">Usuário</th>
+									<th style="width:7%">Status</th>
+									<th style="width:9%">Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty listaFuncionario}">
+										<tr>
+											<td colspan="5">Não há registros.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${listaFuncionario}" var="func">
 											<tr>
-												<td colspan="5">Não há registros.</td>
+												<td style="width:9%; text-align: center;">${func.matricula}</td>
+												<td style="width:18%">${func.nome}</td>
+												<td style="width:20%">${func.email}</td>
+												<td style="width:16%">${func.funcao}</td>
+												<td style="width:11%">${func.descricao}</td>
+												<td style="width:10%; text-align: center;">${func.usuario}</td>
+												<td style="width:7%; text-align: center;">${func.status}</td>
+												<td style="width:9%; text-align: center;">
+													<a href="${pageContext.request.contextPath}/secure/alterarFuncionario?matricula=${func.matricula}">
+														<span class="icon-wrench" title="Alterar"></span>
+													</a>
+													<span class="custom-separator">|</span>
+													<a href="${pageContext.request.contextPath}/secure/inativarFuncionario?matricula=${func.matricula}">
+														<span class="icon-remove" title="Inativar"></span>
+													</a>
+												</td>
 											</tr>
-										</c:when>
-										<c:otherwise>
-											<c:forEach items="${listaFuncionario}" var="func">
-												<tr>
-													<td style="width:9%; text-align: center;">${func.matricula}</td>
-													<td style="width:18%">${func.nome}</td>
-													<td style="width:20%">${func.email}</td>
-													<td style="width:16%">${func.funcao}</td>
-													<td style="width:11%">${func.descricao}</td>
-													<td style="width:10%; text-align: center;">${func.usuario}</td>
-													<td style="width:7%; text-align: center;">${func.status}</td>
-													<td style="width:9%; text-align: center;">
-														<a href="${pageContext.request.contextPath}/secure/alterarFuncionario?matricula=${func.matricula}">
-															<span class="icon-wrench" title="Alterar"></span>
-														</a>
-														<span class="custom-separator">|</span>
-														<a href="${pageContext.request.contextPath}/secure/inativarFuncionario?matricula=${func.matricula}">
-															<span class="icon-remove" title="Inativar"></span>
-														</a>
-													</td>
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</tbody>
-							</table>
-						</div>
-						<div class="divFooter">
-							<table class="tableClass tableFooter">
-								<tfoot>
-									<tr>
-										<td>
-											<c:if test="${listSize ne 0}">
-												<c:url var="searchUri" value="/secure/listarEquipes?pagina=##"/>
-												<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
-											</c:if>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+						<c:if test="${listSize ne 0}">
+							<c:url var="searchUri" value="/secure/listarEquipes?pagina=##"/>
+							<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
+						</c:if>
 					</fieldset>
 				</div>
 			</div>

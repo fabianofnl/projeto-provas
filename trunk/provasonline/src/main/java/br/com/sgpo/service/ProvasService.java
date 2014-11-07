@@ -97,4 +97,7 @@ public interface ProvasService {
 	public void entregarProva(ProvaRealizadaDTO provaRealizada)
 			throws ClassNotFoundException, SQLException;
 
+	public boolean existeProvaAgendadaMesmaData(Integer matricula,
+			Date dataAgendada) throws ClassNotFoundException, SQLException;
+
 }

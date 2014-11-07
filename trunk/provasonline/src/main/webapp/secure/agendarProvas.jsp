@@ -28,83 +28,79 @@
 								}, 6000);
 							</script>
 						</c:if>
+						
+						<c:if test="${msgType eq 'warn'}">
+							<p id="idMsg" class="bg-amber fg-white">
+								<span class="icon-warning padding10"></span>${msg}
+							</p>
+							<script type="text/javascript">
+								setTimeout(function(){
+									$("#idMsg").fadeOut(1000);
+								}, 6000);
+							</script>
+						</c:if>
 
-						<div class="divHeader">
-							<table class="tableClass tableHeader">
-								<thead>
-									<tr>
-										<th style="width:30%">Colaborador</th>
-										<th style="width:35%">Prova</th>
-										<th style="width:10%">Realização</th>
-										<th style="width:15%">Situação</th>
-										<th style="width:10%">Ações</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-						<div class="divBody">
-							<table class="tableClass tableBody">
-								<tbody>
-									<c:choose>
-										<c:when test="${empty listaAgendas}">
+						<table class="table hovered">
+							<thead>
+								<tr>
+									<th style="width:30%">Colaborador</th>
+									<th style="width:35%">Prova</th>
+									<th style="width:10%">Realização</th>
+									<th style="width:15%">Situação</th>
+									<th style="width:10%">Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty listaAgendas}">
+										<tr>
+											<td colspan="5">Não há registros.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${listaAgendas}" var="agenda">
 											<tr>
-												<td colspan="5">Não há registros.</td>
+												<td style="width:30%; text-align: center;">${agenda.funcionario.nome}</td>
+												<td style="width:35%;">${agenda.prova.titulo}</td>
+												<td style="width:10%; text-align: center;">
+													<fmt:formatDate pattern="dd/MM/yyyy" value="${agenda.provaAgendada}" />
+												</td>
+												<td style="width:15%; text-align: center;">
+													<c:choose>
+														<c:when test="${agenda.flag}">
+															<label>Realizado</label>
+														</c:when>
+														<c:otherwise>
+															<label>Não Realizado</label>
+														</c:otherwise>
+													</c:choose>
+												</td>
+												<td style="width:10%; text-align: center;">
+													<c:if test="${agenda.vencido eq 0}">
+														<a href="${pageContext.request.contextPath}/secure/atualizarAgenda?agendaId=${agenda.agendaId}">
+															<span class="icon-wrench" data-hint="Alterar" 
+																	data-hint-position="top"></span>
+														</a>
+														<span class="custom-separator">|</span>
+														<a href="${pageContext.request.contextPath}/secure/cancelarAgenda?agendaId=${agenda.agendaId}">
+															<span class="icon-remove" data-hint="Remover" 
+																	data-hint-position="top"></span>
+														</a>
+													</c:if>
+												</td>
 											</tr>
-										</c:when>
-										<c:otherwise>
-											<c:forEach items="${listaAgendas}" var="agenda">
-												<tr>
-													<td style="width:30%; text-align: center;">${agenda.funcionario.nome}</td>
-													<td style="width:35%;">${agenda.prova.titulo}</td>
-													<td style="width:10%; text-align: center;">
-														<fmt:formatDate pattern="dd/MM/yyyy" value="${agenda.provaAgendada}" />
-													</td>
-													<td style="width:15%; text-align: center;">
-														<c:choose>
-															<c:when test="${agenda.flag}">
-																<label>Realizado</label>
-															</c:when>
-															<c:otherwise>
-																<label>Não Realizado</label>
-															</c:otherwise>
-														</c:choose>
-													</td>
-													<td style="width:10%; text-align: center;">
-														<c:if test="${agenda.vencido eq 0}">
-															<a href="${pageContext.request.contextPath}/secure/atualizarAgenda?agendaId=${agenda.agendaId}">
-																<span class="icon-wrench" data-hint="Alterar" 
-																		data-hint-position="top"></span>
-															</a>
-															<span class="custom-separator">|</span>
-															<a href="${pageContext.request.contextPath}/secure/cancelarAgenda?agendaId=${agenda.agendaId}">
-																<span class="icon-remove" data-hint="Remover" 
-																		data-hint-position="top"></span>
-															</a>
-														</c:if>
-													</td>
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</tbody>
-							</table>
-						</div>
-						<div class="divFooter">
-							<table class="tableClass tableFooter">
-								<tfoot>
-									<tr>
-										<td>
-											<c:if test="${listSize ne 0}">
-												<c:url var="searchUri" value="/secure/agendarProvas?pagina=##"/>
-												<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
-											</c:if>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+						<c:if test="${listSize ne 0}">
+							<c:url var="searchUri" value="/secure/agendarProvas?pagina=##"/>
+							<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
+						</c:if>
 					</fieldset>
-					
+					<br>
+					<br>
 					<fieldset>
 						<legend>Agendar Provas</legend>
 						<form id="frmAgendar" action="agendarProvas" method="post">

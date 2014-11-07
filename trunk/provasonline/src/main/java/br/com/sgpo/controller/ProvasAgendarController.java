@@ -107,7 +107,7 @@ public class ProvasAgendarController extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			LOG.info("Acessando classe agendar provas - método GET");
+			LOG.info("Acessando classe agendar provas - método POST");
 
 			FuncionarioDTO funcionario = new FuncionarioDTO();
 			ProvaDTO prova = new ProvaDTO();
@@ -124,11 +124,20 @@ public class ProvasAgendarController extends HttpServlet {
 			String context = req.getScheme() + "://" + req.getServerName()
 					+ ":" + req.getServerPort() + req.getContextPath();
 
-			provasService.agendarProva(funcionario, prova, dataAgendada,
-					context);
+			boolean exists = provasService.existeProvaAgendadaMesmaData(
+					funcionario.getMatricula(), dataAgendada);
 
-			req.setAttribute("msg", "Prova agendada com sucesso!");
-			req.setAttribute("msgType", "info");
+			if (!exists) {
+				provasService.agendarProva(funcionario, prova, dataAgendada,
+						context);
+
+				req.setAttribute("msg", "Prova agendada com sucesso!");
+				req.setAttribute("msgType", "info");
+			} else {
+				req.setAttribute("msg",
+						"Este colaborador já possui uma prova agendada nesta data!");
+				req.setAttribute("msgType", "warn");
+			}
 
 			doGet(req, resp);
 
