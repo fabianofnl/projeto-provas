@@ -238,4 +238,10 @@ public class ProvasServiceImpl implements ProvasService {
 			throws ClassNotFoundException, SQLException {
 		provasModel.entregarProva(provaRealizada);
 	}
+
+	@Override
+	public boolean existeProvaAgendadaMesmaData(Integer matricula,
+			Date dataAgendada) throws ClassNotFoundException, SQLException {
+		return provasModel.existeProvaAgendadaMesaData(matricula, dataAgendada);
+	}
 }

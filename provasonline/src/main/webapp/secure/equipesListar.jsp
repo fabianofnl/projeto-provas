@@ -28,71 +28,55 @@
 								}, 6000);
 							</script>
 						</c:if>
-						<div class="divHeader">
-							<table class="tableClass tableHeader">
-								<thead>
-									<tr>
-										<th style="width:40%">Gerente</th>
-										<th style="width:60%">Colaborador</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-						<div class="divBody">
-							<table class="tableClass tableBody">
-								<tbody>
-									<c:choose>
-										<c:when test="${empty listaEquipes}">
+						<table class="table hovered">
+							<thead>
+								<tr>
+									<th style="width:40%">Gerente</th>
+									<th style="width:60%">Colaborador</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty listaEquipes}">
+										<tr>
+											<td colspan="3">Não há registros.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${listaEquipes}" var="equipes">
+										
 											<tr>
-												<td colspan="3">Não há registros.</td>
+												<td  style="width:40%" valign="top">
+													<ul style="list-style: none;">
+														<li>${equipes.gerente.nome} 
+														<br><span style="font-size: 9pt !important;"><strong>Função:</strong> ${equipes.gerente.funcao}</span></li>
+													</ul>
+												</td>
+												<td  style="width:60%">
+													<ul style="list-style: none;">
+														<c:forEach items="${equipes.listaColaboradores}" var="col">
+															<li style="padding:2px;">
+																${col.nome} 
+																<span class="custom-separator">|</span>
+																<a href="${pageContext.request.contextPath}/secure/removerColaborador?matricula=${col.matricula}">
+																	<span class="icon-remove" title="Remover Colaborador"></span>
+																</a>
+																<br>
+																<span style="font-size: 9pt !important;"><strong>Função:</strong> ${col.funcao}</span>
+															</li>
+														</c:forEach>
+													</ul>
+												</td>
 											</tr>
-										</c:when>
-										<c:otherwise>
-											<c:forEach items="${listaEquipes}" var="equipes">
-											
-												<tr>
-													<td  style="width:40%" valign="top">
-														<ul style="list-style: none;">
-															<li>${equipes.gerente.nome} 
-															<br><span style="font-size: 9pt !important;"><strong>Função:</strong> ${equipes.gerente.funcao}</span></li>
-														</ul>
-													</td>
-													<td  style="width:60%">
-														<ul style="list-style: none;">
-															<c:forEach items="${equipes.listaColaboradores}" var="col">
-																<li style="padding:2px;">
-																	${col.nome} 
-																	<span class="custom-separator">|</span>
-																	<a href="${pageContext.request.contextPath}/secure/removerColaborador?matricula=${col.matricula}">
-																		<span class="icon-remove" title="Remover Colaborador"></span>
-																	</a>
-																	<br>
-																	<span style="font-size: 9pt !important;"><strong>Função:</strong> ${col.funcao}</span>
-																</li>
-															</c:forEach>
-														</ul>
-													</td>
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</tbody>
-							</table>
-						</div>
-						<div class="divFooter">
-							<table class="tableClass tableFooter">
-								<tfoot>
-									<tr>
-										<td>
-											<c:if test="${listSize ne 0}">
-												<c:url var="searchUri" value="/secure/listarEquipes?pagina=##"/>
-												<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
-											</c:if>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+						<c:if test="${listSize ne 0}">
+							<c:url var="searchUri" value="/secure/listarEquipes?pagina=##"/>
+							<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
+						</c:if>
 					</fieldset>
 				</div>
 			</div>

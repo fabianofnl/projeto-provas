@@ -201,3 +201,26 @@ WHERE pr.agendaId = a.agendaId AND a.matcolaborador = f.matricula AND pr.dataHor
 AND pr.dataHoraFinalizado IS NULL AND f.matricula = 4444
 
 SELECT dataHoraFim FROM provasRealizadas WHERE provaRealizadaId = 16
+
+SELECT * FROM provasRealizadas
+
+SELECT a.agendaId FROM agenda a, funcionario f, provas p WHERE f.matricula = a.matcolaborador
+AND f.matricula = 4444 AND a.provaId = p.provaId AND p.provaId = 2 AND a.dataProva = '2014-11-06'
+
+-- Testes
+SELECT CASE WHEN EXISTS
+		(SELECT a.agendaId FROM agenda a, funcionario f WHERE f.matricula = a.matcolaborador
+		AND f.matricula = 4444 AND a.dataProva = '2014-11-05')
+	THEN TRUE
+	ELSE FALSE
+END
+		 
+SELECT EXISTS (SELECT a.agendaId FROM agenda a, funcionario f WHERE f.matricula = a.matcolaborador
+AND f.matricula = 4444 AND a.dataProva = '2014-11-06')
+
+SELECT pr.* FROM funcionario f, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId
+AND f.matricula = 4444
+
+SELECT ((SUM(pr.quantidadeAcertos)::FLOAT / SUM(pr.quantidadeQuestoes)::FLOAT) * 100.0) as media
+FROM funcionario f, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId
+AND f.matricula != 1001

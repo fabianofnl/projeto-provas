@@ -38,95 +38,80 @@
 							</script>
 						</c:if>
 
-						<div class="divHeader">
-							<table class="tableClass tableHeader">
-								<thead>
-									<tr>
-										<th style="width:30%">Apostila</th>
-										<th style="width:60%">Provas</th>
-										<th style="width:10%">Ações</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-						<div class="divBody">
-							<table class="tableClass tableBody">
-								<tbody>
-									<c:choose>
-										<c:when test="${empty listaApostilas}">
+						<table class="table hovered">
+							<thead>
+								<tr>
+									<th style="width:35%">Apostila</th>
+									<th style="width:55%">Provas</th>
+									<th style="width:10%">Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty listaApostilas}">
+										<tr>
+											<td colspan="5">Não há registros.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${listaApostilas}" var="apostila">
 											<tr>
-												<td colspan="5">Não há registros.</td>
-											</tr>
-										</c:when>
-										<c:otherwise>
-											<c:forEach items="${listaApostilas}" var="apostila">
-												<tr>
-													<td style="width:30%" valign="top">
-														<ul style="list-style: none;">
-															<li>
-																<c:if test="${apostila.extensao eq 'doc' or apostila.extensao eq 'docx'}">
-																	<i class="icon-file-word fg-blue"></i>
-																</c:if>
-																<c:if test="${apostila.extensao eq 'xls' or apostila.extensao eq 'xlsx'}">
-																	<i class="icon-file-excel fg-green"></i>
-																</c:if>
-																<c:if test="${apostila.extensao eq 'pdf'}">
-																	<i class="icon-file-pdf fg-red"></i>
-																</c:if>
-																<c:if test="${apostila.extensao ne 'doc' and apostila.extensao ne 'docx' 
-																			and apostila.extensao ne 'xls' and apostila.extensao ne 'xlsx'
-																			and apostila.extensao ne 'pdf'}">
-																	<i class="icon-file"></i>
-																</c:if>
-																${apostila.nome}
+												<td style="width:35%" valign="top">
+													<ul style="list-style: none;">
+														<li>
+															<c:if test="${apostila.extensao eq 'doc' or apostila.extensao eq 'docx'}">
+																<i class="icon-file-word fg-blue"></i>
+															</c:if>
+															<c:if test="${apostila.extensao eq 'xls' or apostila.extensao eq 'xlsx'}">
+																<i class="icon-file-excel fg-green"></i>
+															</c:if>
+															<c:if test="${apostila.extensao eq 'pdf'}">
+																<i class="icon-file-pdf fg-red"></i>
+															</c:if>
+															<c:if test="${apostila.extensao ne 'doc' and apostila.extensao ne 'docx' 
+																		and apostila.extensao ne 'xls' and apostila.extensao ne 'xlsx'
+																		and apostila.extensao ne 'pdf'}">
+																<i class="icon-file"></i>
+															</c:if>
+															${apostila.nome}
+														</li>
+													</ul>
+												</td>
+												<td style="width:55%;">
+													<ul style="list-style: none;">
+														<c:forEach items="${apostila.listaProvas}" var="prova">
+															<li style="padding:2px;">${prova.titulo}
+																<a href="${pageContext.request.contextPath}/secure/removerProvaApostila?apostilaId=${apostila.apostilaId}&provaId=${prova.provaId}">
+																	<span class="icon-remove" data-hint="Remover Apostila" data-hint-position="top"></span>
+																</a>
 															</li>
-														</ul>
-													</td>
-													<td style="width:60%;">
-														<ul style="list-style: none;">
-															<c:forEach items="${apostila.listaProvas}" var="prova">
-																<li style="padding:2px;">${prova.titulo}
-																	<a href="${pageContext.request.contextPath}/secure/removerProvaApostila?apostilaId=${apostila.apostilaId}&provaId=${prova.provaId}">
-																		<span class="icon-remove" data-hint="Remover Apostila" data-hint-position="top"></span>
-																	</a>
-																</li>
-															</c:forEach>
-														</ul>
-													</td>
-													<td style="width:10%; text-align: center;">
-														<a href="${pageContext.request.contextPath}/secure/adicionarProvasApostila?apostilaId=${apostila.apostilaId}">
-															<span class="icon-box-add" data-hint="Adicionar Provas" data-hint-position="top"></span>
+														</c:forEach>
+													</ul>
+												</td>
+												<td style="width:10%; text-align: center;">
+													<a href="${pageContext.request.contextPath}/secure/adicionarProvasApostila?apostilaId=${apostila.apostilaId}">
+														<span class="icon-box-add" data-hint="Adicionar Provas" data-hint-position="top"></span>
+													</a>
+													<c:if test="${true}">
+														<span class="custom-separator">|</span>															
+														<a href="${pageContext.request.contextPath}/secure/removerApostila?apostilaId=${apostila.apostilaId}">
+															<span class="icon-remove" data-hint="Remover Apostila" data-hint-position="top"></span>
 														</a>
-														<c:if test="${true}">
-															<span class="custom-separator">|</span>															
-															<a href="${pageContext.request.contextPath}/secure/removerApostila?apostilaId=${apostila.apostilaId}">
-																<span class="icon-remove" data-hint="Remover Apostila" data-hint-position="top"></span>
-															</a>
-														</c:if>
-													</td>
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</tbody>
-							</table>
-						</div>
-						<div class="divFooter">
-							<table class="tableClass tableFooter">
-								<tfoot>
-									<tr>
-										<td>
-											<c:if test="${listSize ne 0}">
-												<c:url var="searchUri" value="/secure/vincularApostilas?pagina=##"/>
-												<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
-											</c:if>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
+													</c:if>
+												</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+						<c:if test="${listSize ne 0}">
+							<c:url var="searchUri" value="/secure/vincularApostilas?pagina=##"/>
+							<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
+						</c:if>
 					</fieldset>
-
+					<br>
+					<br>
 					<fieldset>
 						<legend>Anexar Apostilas</legend>
 						<form id="frmApostilas" action="vincularApostilas" method="post" enctype="multipart/form-data">

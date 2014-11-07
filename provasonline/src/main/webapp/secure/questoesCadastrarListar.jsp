@@ -28,108 +28,93 @@
 							</script>
 						</c:if>
 
-						<div class="divHeader">
-							<table class="tableClass tableHeader">
-								<thead>
-									<tr>
-										<th style="width:30%">Questão</th>
-										<th style="width:60%">Resposta/Opções</th>
-										<th style="width:10%">Ações</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-						<div class="divBody">
-							<table class="tableClass tableBody">
-								<tbody>
-									<c:choose>
-										<c:when test="${empty listaQuestoes}">
+						<table class="table hovered">
+							<thead>
+								<tr>
+									<th style="width:30%">Questão</th>
+									<th style="width:60%">Resposta/Opções</th>
+									<th style="width:10%">Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty listaQuestoes}">
+										<tr>
+											<td colspan="5">Não há registros.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${listaQuestoes}" var="questao">
 											<tr>
-												<td colspan="5">Não há registros.</td>
-											</tr>
-										</c:when>
-										<c:otherwise>
-											<c:forEach items="${listaQuestoes}" var="questao">
-												<tr>
-													<td style="width:30%" valign="top">
-														<ul style="list-style: none;">
-															<li data-hint="Descrição | ${questao.descricaoQuestao}" data-hint-position="top">${questao.tituloQuestao}
-																<br>
-																<span style="font-size: 9pt !important; cursor: pointer;">
-																	<strong>Tema:</strong> ${questao.titulo}
-																</span>
-															</li>
-														</ul>
-													</td>
-													<td style="width:60%;">
-														<ul style="list-style: none;">
-															<c:forEach items="${questao.listaOpcoes}" var="opcao">
-																<li style="padding:2px;">
-																	<c:if test="${!opcao.flag}">
-																		<i class="icon-cancel-2 fg-red"></i>
-																	</c:if>
-																	<c:if test="${opcao.flag}">
-																		<i class="icon-checkmark fg-green"></i>
-																	</c:if>
-																	${opcao.tituloOpcao}
+												<td style="width:30%" valign="top">
+													<ul style="list-style: none;">
+														<li data-hint="Descrição | ${questao.descricaoQuestao}" data-hint-position="top">${questao.tituloQuestao}
+															<br>
+															<span style="font-size: 9pt !important; cursor: pointer;">
+																<strong>Tema:</strong> ${questao.titulo}
+															</span>
+														</li>
+													</ul>
+												</td>
+												<td style="width:60%;">
+													<ul style="list-style: none;">
+														<c:forEach items="${questao.listaOpcoes}" var="opcao">
+															<li style="padding:2px;">
+																<c:if test="${!opcao.flag}">
+																	<i class="icon-cancel-2 fg-red"></i>
+																</c:if>
+																<c:if test="${opcao.flag}">
+																	<i class="icon-checkmark fg-green"></i>
+																</c:if>
+																${opcao.tituloOpcao}
+																<span class="custom-separator">|</span>
+																<a href="${pageContext.request.contextPath}/secure/alterarOpcao?opcaoId=${opcao.opcaoId}">
+																	<span class="icon-wrench" data-hint="Alterar Opção" data-hint-position="top"></span>
+																</a>
+																<c:if test="${opcao.quantidadeProvas eq 0}">
 																	<span class="custom-separator">|</span>
-																	<a href="${pageContext.request.contextPath}/secure/alterarOpcao?opcaoId=${opcao.opcaoId}">
-																		<span class="icon-wrench" data-hint="Alterar Opção" data-hint-position="top"></span>
+																	<a href="${pageContext.request.contextPath}/secure/removerOpcao?opcaoId=${opcao.opcaoId}">
+																		<span class="icon-remove" data-hint="Remover Opção" data-hint-position="top"></span>
 																	</a>
-																	<c:if test="${opcao.quantidadeProvas eq 0}">
-																		<span class="custom-separator">|</span>
-																		<a href="${pageContext.request.contextPath}/secure/removerOpcao?opcaoId=${opcao.opcaoId}">
-																			<span class="icon-remove" data-hint="Remover Opção" data-hint-position="top"></span>
-																		</a>
-																	</c:if>
-																</li>
-															</c:forEach>
-														</ul>
-													</td>
-													<td style="width:10%; text-align: center;">
-														<c:if test="${questao.quantidadeOpcoes ne 0}">
-															<a href="${pageContext.request.contextPath}/secure/definirOpcao?questaoId=${questao.questaoId}">
-																<span class="icon-flag-2" data-hint="Definir Padrão" data-hint-position="top"></span>
-															</a>
-															<span class="custom-separator">|</span>
-														</c:if>
-														<a href="${pageContext.request.contextPath}/secure/adicionarOpcao?questaoId=${questao.questaoId}">
-															<span class="icon-box-add" data-hint="Adicionar Opção" data-hint-position="top"></span>
+																</c:if>
+															</li>
+														</c:forEach>
+													</ul>
+												</td>
+												<td style="width:10%; text-align: center;">
+													<c:if test="${questao.quantidadeOpcoes ne 0}">
+														<a href="${pageContext.request.contextPath}/secure/definirOpcao?questaoId=${questao.questaoId}">
+															<span class="icon-flag-2" data-hint="Definir Padrão" data-hint-position="top"></span>
 														</a>
 														<span class="custom-separator">|</span>
-														<a href="${pageContext.request.contextPath}/secure/alterarQuestao?questaoId=${questao.questaoId}">
-															<span class="icon-wrench" data-hint="Alterar Questão" data-hint-position="top"></span>
+													</c:if>
+													<a href="${pageContext.request.contextPath}/secure/adicionarOpcao?questaoId=${questao.questaoId}">
+														<span class="icon-box-add" data-hint="Adicionar Opção" data-hint-position="top"></span>
+													</a>
+													<span class="custom-separator">|</span>
+													<a href="${pageContext.request.contextPath}/secure/alterarQuestao?questaoId=${questao.questaoId}">
+														<span class="icon-wrench" data-hint="Alterar Questão" data-hint-position="top"></span>
+													</a>
+													<c:if test="${questao.quantidadeOpcoes eq 0}">
+														<span class="custom-separator">|</span>															
+														<a href="${pageContext.request.contextPath}/secure/removerQuestao?questaoId=${questao.questaoId}">
+															<span class="icon-remove" data-hint="Remover Questão" data-hint-position="top"></span>
 														</a>
-														<c:if test="${questao.quantidadeOpcoes eq 0}">
-															<span class="custom-separator">|</span>															
-															<a href="${pageContext.request.contextPath}/secure/removerQuestao?questaoId=${questao.questaoId}">
-																<span class="icon-remove" data-hint="Remover Questão" data-hint-position="top"></span>
-															</a>
-														</c:if>
-													</td>
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</tbody>
-							</table>
-						</div>
-						<div class="divFooter">
-							<table class="tableClass tableFooter">
-								<tfoot>
-									<tr>
-										<td>
-											<c:if test="${listSize ne 0}">
-												<c:url var="searchUri" value="/secure/questoes?pagina=##"/>
-												<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
-											</c:if>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
+													</c:if>
+												</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+						<c:if test="${listSize ne 0}">
+							<c:url var="searchUri" value="/secure/questoes?pagina=##"/>
+							<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
+						</c:if>
 					</fieldset>
-
+					<br>
+					<br>
 					<fieldset>
 						<legend>Cadastrar Questões</legend>
 						<form id="frmCadastrarQuestoes" action="questoes" method="post">

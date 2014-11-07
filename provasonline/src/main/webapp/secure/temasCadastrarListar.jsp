@@ -28,67 +28,52 @@
 							</script>
 						</c:if>
 
-						<div class="divHeader">
-							<table class="tableClass tableHeader">
-								<thead>
-									<tr>
-										<th style="width:30%">Título</th>
-										<th style="width:60%">Descrição</th>
-										<th style="width:10%">Ações</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-						<div class="divBody">
-							<table class="tableClass tableBody">
-								<tbody>
-									<c:choose>
-										<c:when test="${empty listaTemas}">
+						<table class="table hovered">
+							<thead>
+								<tr>
+									<th style="width:30%">Título</th>
+									<th style="width:60%">Descrição</th>
+									<th style="width:10%">Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty listaTemas}">
+										<tr>
+											<td colspan="5">Não há registros.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${listaTemas}" var="tema">
 											<tr>
-												<td colspan="5">Não há registros.</td>
-											</tr>
-										</c:when>
-										<c:otherwise>
-											<c:forEach items="${listaTemas}" var="tema">
-												<tr>
-													<td style="width:30%; text-align: center;">${tema.titulo}</td>
-													<td style="width:60%;">${tema.descricao}</td>
-													<td style="width:10%; text-align: center;">
-													
-													
-														<a href="${pageContext.request.contextPath}/secure/alterarTema?temaId=${tema.temaId}">
-															<span class="icon-wrench" title="Alterar"></span>
+												<td style="width:30%; text-align: center;">${tema.titulo}</td>
+												<td style="width:60%;">${tema.descricao}</td>
+												<td style="width:10%; text-align: center;">
+												
+												
+													<a href="${pageContext.request.contextPath}/secure/alterarTema?temaId=${tema.temaId}">
+														<span class="icon-wrench" title="Alterar"></span>
+													</a>
+													<c:if test="${tema.quantidadeQuestoes eq 0}">
+														<span class="custom-separator">|</span>															
+														<a href="${pageContext.request.contextPath}/secure/removerTema?temaId=${tema.temaId}">
+															<span class="icon-remove" title="Remover"></span>
 														</a>
-														<c:if test="${tema.quantidadeQuestoes eq 0}">
-															<span class="custom-separator">|</span>															
-															<a href="${pageContext.request.contextPath}/secure/removerTema?temaId=${tema.temaId}">
-																<span class="icon-remove" title="Remover"></span>
-															</a>
-														</c:if>
-													</td>
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</tbody>
-							</table>
-						</div>
-						<div class="divFooter">
-							<table class="tableClass tableFooter">
-								<tfoot>
-									<tr>
-										<td>
-											<c:if test="${listSize ne 0}">
-												<c:url var="searchUri" value="/secure/temas?pagina=##"/>
-												<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
-											</c:if>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
+													</c:if>
+												</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+						<c:if test="${listSize ne 0}">
+							<c:url var="searchUri" value="/secure/temas?pagina=##"/>
+							<paginator:display maxLinks="10" currPage="${pagina}" totalPages="${numeroDePaginas}" uri="${searchUri}" />
+						</c:if>
 					</fieldset>
-					
+					<br>
+					<br>
 					<fieldset>
 						<legend>Cadastrar Temas</legend>
 						<form id="frmCadastrarTemas" action="temas" method="post">

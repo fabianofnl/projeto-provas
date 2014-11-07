@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="grid">
 	<div class="row">
-		<div class="span6 offset5">
+		<div class="span7 offset5">
 			<fieldset>
 				<legend>Agenda</legend>
 				<c:if test="${msgType eq 'warn'}">
@@ -118,6 +118,35 @@
 						</c:choose>
 					</tbody>
 				</table>
+			</fieldset>
+			<br>
+			<br>
+			<fieldset>
+				<legend>Resultados</legend>
+
+				<%--Existe um problema com a altura do grafico, quanto mais provas, maior deveria ser o grafico - height --%>
+				<div id="barChartResult" style="width: 530px; height: 300px;"></div>
+
+				<script type="text/javascript">
+					google.load("visualization", "1", {packages: ["corechart"]});
+					google.setOnLoadCallback(drawChart);
+					
+					function drawChart() {
+						var data = google.visualization.arrayToDataTable([
+							['Prova', 'Nota', { role : 'annotation' }],
+							<c:forEach items="${listaProvasRealizadas}" var="provaRealizada">
+								['${provaRealizada.tituloProva} (<fmt:formatDate pattern="dd/MM" value="${provaRealizada.dataHoraInicio}"/>)',
+								 <fmt:formatNumber value="${provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes * 100}" maxFractionDigits="0"/>,
+								 '<fmt:formatNumber value="${provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes * 100}" maxFractionDigits="0"/>'],
+							</c:forEach>
+							['Média Equipe',<fmt:formatNumber value="${mediaEquipe}" maxFractionDigits="0"/>,'<fmt:formatNumber value="${mediaEquipe}" maxFractionDigits="0"/>'],
+							['Pontuação Max.', 100,' 100']
+						]);
+						
+						var chart = new google.visualization.BarChart(document.getElementById("barChartResult"));
+						chart.draw(data);
+					}
+				</script>
 			</fieldset>
 		</div>
 	</div>
