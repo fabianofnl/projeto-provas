@@ -1,6 +1,5 @@
 package br.com.sgpo.model;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +35,7 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "AND f.matricula = ?";
 
 	private static final String SELECT_NOTA_MEDIA_EQUIPE = "SELECT "
-			+ "((SUM(pr.quantidadeAcertos)::FLOAT / SUM(pr.quantidadeQuestoes)::FLOAT) * 100.0) AS media "
+			+ "SUM(pr.quantidadeAcertos) AS quantidadeAcertos, SUM(pr.quantidadeQuestoes) AS quantidadeQuestoes "
 			+ "FROM funcionario f, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
 			+ "AND f.matricula != ?";
 
@@ -177,7 +176,7 @@ public class DashboardModelImpl implements DashboardModel {
 	}
 
 	@Override
-	public BigDecimal consultaMediaEquipe(Integer matricula)
+	public ProvaRealizadaDTO consultaMediaEquipe(Integer matricula)
 			throws ClassNotFoundException, SQLException {
 
 		LOG.info("Chamando método consultaMediaEquipe");
@@ -190,13 +189,13 @@ public class DashboardModelImpl implements DashboardModel {
 		pstmt = conn.prepareStatement(SELECT_NOTA_MEDIA_EQUIPE);
 		pstmt.setInt(1, matricula);
 		rs = pstmt.executeQuery();
-		BigDecimal mediaEquipe = null;
+		ProvaRealizadaDTO mediaEquipe = null;
 
-		while (rs.next()) {
-
-			Object obj = rs.getObject("media");
-			mediaEquipe = obj == null ? new BigDecimal(0) : new BigDecimal(
-					obj.toString());
+		if (rs.next()) {
+			mediaEquipe = new ProvaRealizadaDTO();
+			mediaEquipe.setTituloProva("Média Equipe");
+			mediaEquipe.setQuantidadeQuestoes(rs.getInt("quantidadeQuestoes"));
+			mediaEquipe.setQuantidadeAcertos(rs.getInt("quantidadeAcertos"));
 		}
 
 		if (rs != null)

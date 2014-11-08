@@ -1,6 +1,5 @@
 package br.com.sgpo.service;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public interface DashboardService {
 	public List<ProvaRealizadaDTO> listarProvasRealizadasPorMatricula(
 			Integer matricula) throws ClassNotFoundException, SQLException;
 
-	public BigDecimal consultarMediaEquipe(Integer matricula)
+	public ProvaRealizadaDTO consultarMediaEquipe(Integer matricula)
 			throws ClassNotFoundException, SQLException;
 
 }
