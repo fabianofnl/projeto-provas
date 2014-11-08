@@ -105,7 +105,7 @@
 											<form id="frmDownload" action="downloadApostila" method="post">
 												<c:set var="fileNameFull" value="${apostila.hashName}_${apostila.nome}" />
 												<input id="fileName" name="fileName" type="hidden" 
-													value="${fileNameFull}">
+													value="${fileNameFull}"/>
 												<button class="inputLink"
 														data-hint="Baixar Apostila" data-hint-position="top">
 													<i class="icon-download-2 fg-lightBlue"></i>
@@ -123,30 +123,36 @@
 			<br>
 			<fieldset>
 				<legend>Resultados</legend>
-
-				<%--Existe um problema com a altura do grafico, quanto mais provas, maior deveria ser o grafico - height --%>
-				<div id="barChartResult" style="width: 530px; height: 300px;"></div>
-
-				<script type="text/javascript">
-					google.load("visualization", "1", {packages: ["corechart"]});
-					google.setOnLoadCallback(drawChart);
-					
-					function drawChart() {
-						var data = google.visualization.arrayToDataTable([
-							['Prova', 'Nota', { role : 'annotation' }],
-							<c:forEach items="${listaProvasRealizadas}" var="provaRealizada">
-								['${provaRealizada.tituloProva} (<fmt:formatDate pattern="dd/MM" value="${provaRealizada.dataHoraInicio}"/>)',
-								 <fmt:formatNumber value="${provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes * 100}" maxFractionDigits="0"/>,
-								 '<fmt:formatNumber value="${provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes * 100}" maxFractionDigits="0"/>'],
-							</c:forEach>
-							['Média Equipe',<fmt:formatNumber value="${mediaEquipe}" maxFractionDigits="0"/>,'<fmt:formatNumber value="${mediaEquipe}" maxFractionDigits="0"/>'],
-							['Pontuação Max.', 100,' 100']
-						]);
-						
-						var chart = new google.visualization.BarChart(document.getElementById("barChartResult"));
-						chart.draw(data);
-					}
-				</script>
+				
+					<ul style="list-style: none;">
+						<c:forEach items="${listaProvasRealizadas}" var="provaRealizada">
+							<li 
+								data-hint='Detalhes | <fmt:formatDate value="${provaRealizada.dataHoraInicio}" pattern="dd/MM/yyyy"/> ${provaRealizada.tituloProva}' 
+								data-hint-position="top">
+								<div class="grid">
+									<div class="row">
+										<div class="span3">  
+											${provaRealizada.tituloProva}
+										</div>
+										<div class="span3">
+											<table style="width:100%;">
+												<tr height="13px;">
+													<td width='<fmt:formatNumber maxFractionDigits="0" value="${(provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100}"/>%'>
+														<div style="border-top: 13px solid #3c78b5; ${(provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100 lt 1 ? 'width: 1px;' : ''}"></div>
+													</td>
+													<td width='<fmt:formatNumber maxFractionDigits="0" value="${100 - ((provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100)}"/>%'>
+														<span style="font-size: 12px; padding: 3px;" >
+															<fmt:formatNumber maxFractionDigits="0" value="${(provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100}"/>
+														</span>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</li>
+						</c:forEach>
+					</ul>
 			</fieldset>
 		</div>
 	</div>

@@ -17,4 +17,6 @@
 <script src="${pageContext.request.contextPath}/include/metro/js/metro-hint.js"></script>
 
 <%--JS Google API --%>
+<%--
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+ --%>
