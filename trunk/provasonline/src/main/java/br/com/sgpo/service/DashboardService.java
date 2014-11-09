@@ -5,7 +5,9 @@ import java.util.List;
 
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
+import br.com.sgpo.dto.NotaMediaEquipesDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
+import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
 
 public interface DashboardService {
 
@@ -19,6 +21,12 @@ public interface DashboardService {
 			Integer matricula) throws ClassNotFoundException, SQLException;
 
 	public ProvaRealizadaDTO consultarMediaEquipe(Integer matricula)
+			throws ClassNotFoundException, SQLException;
+
+	public RelatorioDadosGeraisDTO consultarRelatorioDadosGerais()
+			throws ClassNotFoundException, SQLException;
+
+	public List<NotaMediaEquipesDTO> listarNotaMediaEquipes()
 			throws ClassNotFoundException, SQLException;
 
 }

@@ -123,7 +123,6 @@
 			<br>
 			<fieldset>
 				<legend>Resultados</legend>
-				
 					<ul style="list-style: none;">
 						<c:forEach items="${listaProvasRealizadas}" var="provaRealizada">
 							<li 
@@ -137,12 +136,15 @@
 										<div class="span3">
 											<table style="width:100%;">
 												<tr height="13px;">
-													<td width='<fmt:formatNumber maxFractionDigits="0" value="${(provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100}"/>%'>
+													<td width='<fmt:formatNumber maxFractionDigits="0" 
+														value="${(provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100}"/>%'>
 														<div style="border-top: 13px solid #3c78b5; ${(provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100 lt 1 ? 'width: 1px;' : ''}"></div>
 													</td>
-													<td width='<fmt:formatNumber maxFractionDigits="0" value="${100 - ((provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100)}"/>%'>
+													<td width='<fmt:formatNumber maxFractionDigits="0" 
+															value="${100 - ((provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100)}"/>%'>
 														<span style="font-size: 12px; padding: 3px;" >
-															<fmt:formatNumber maxFractionDigits="0" value="${(provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100}"/>
+															<fmt:formatNumber maxFractionDigits="0" 
+																	value="${(provaRealizada.quantidadeAcertos / provaRealizada.quantidadeQuestoes) * 100}"/>
 														</span>
 													</td>
 												</tr>

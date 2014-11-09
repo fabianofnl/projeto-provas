@@ -221,6 +221,28 @@ AND f.matricula = 4444 AND a.dataProva = '2014-11-06')
 SELECT pr.* FROM funcionario f, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId
 AND f.matricula = 4444
 
-SELECT ((SUM(pr.quantidadeAcertos)::FLOAT / SUM(pr.quantidadeQuestoes)::FLOAT) * 100.0) as media
+SELECT SUM(pr.quantidadeAcertos) as acertos, SUM(pr.quantidadeQuestoes) as questoes
 FROM funcionario f, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId
 AND f.matricula != 1001
+
+SELECT 
+(SELECT COUNT(temaId) FROM temas) as qtdTemas, 
+(SELECT COUNT(provaId) FROM provas) as qtdProvas, 
+(SELECT COUNT(questaoId) FROM questoes) as qtdQuestoes, 
+(SELECT COUNT(opcaoId) FROM opcoes) as qtdOpcoes, 
+(SELECT COUNT(apostilaId) FROM apostilas) as qtdApostilas
+
+SELECT DISTINCT ON (matgerente) e.matgerente, f.nome FROM equipes e, funcionario f WHERE e.matgerente = f.matricula
+
+SELECT SUM(pr.quantidadeAcertos) as acertos, SUM(pr.quantidadeQuestoes) as questoes
+FROM funcionario f, equipes e, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId
+AND f.matricula = e.matcolaborador AND e.matgerente = 3333
+
+SELECT * FROM provasRealizadas
+SELECT * FROM agenda
+
+SELECT pr.*, f.matricula
+FROM funcionario f, equipes e, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId
+AND f.matricula = e.matcolaborador AND e.matgerente = 7777
+
+SELECT * FROM equipes

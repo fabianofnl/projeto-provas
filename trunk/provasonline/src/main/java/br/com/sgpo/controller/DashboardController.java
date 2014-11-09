@@ -17,8 +17,10 @@ import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.dto.NotaMediaEquipesDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
+import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
 import br.com.sgpo.service.DashboardService;
 import br.com.sgpo.service.DashboardServiceImpl;
 import br.com.sgpo.service.ProvasService;
@@ -107,7 +109,9 @@ public class DashboardController extends HttpServlet {
 			HttpServletResponse resp) throws ClassNotFoundException,
 			SQLException, ServletException, IOException {
 
-		// verifica se existe prova em andamento.
+		/**
+		 * Verifica se existe prova em andamento.
+		 */
 		ProvasService provasService = new ProvasServiceImpl();
 
 		ProvaRealizadaDTO provaRealizada = provasService
@@ -140,7 +144,12 @@ public class DashboardController extends HttpServlet {
 			List<ProvaRealizadaDTO> listaProvasRealizadas = dashboardService
 					.listarProvasRealizadasPorMatricula(funcionario
 							.getMatricula());
-			
+
+			/**
+			 * Foi reutilizado a Classe ProvaRealizadaDTO para expor a média da
+			 * equipe, o ideal seria um objeto próprio para este tipo de
+			 * informação.
+			 */
 			ProvaRealizadaDTO mediaEquipe = dashboardService
 					.consultarMediaEquipe(funcionario.getMatricula());
 			listaProvasRealizadas.add(mediaEquipe);
@@ -168,6 +177,15 @@ public class DashboardController extends HttpServlet {
 	private void processarDadosInstrutor(HttpServletRequest req,
 			HttpServletResponse resp) throws ClassNotFoundException,
 			SQLException, ServletException, IOException {
+
+		RelatorioDadosGeraisDTO relatorio = dashboardService
+				.consultarRelatorioDadosGerais();
+
+		List<NotaMediaEquipesDTO> listaMediaEquipes = dashboardService
+				.listarNotaMediaEquipes();
+
+		req.setAttribute("listaMediaEquipes", listaMediaEquipes);
+		req.setAttribute("relatorio", relatorio);
 
 		req.getRequestDispatcher("/secure/dashboard.jsp").forward(req, resp);
 	}

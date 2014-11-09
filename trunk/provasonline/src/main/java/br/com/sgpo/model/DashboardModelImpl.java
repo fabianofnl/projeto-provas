@@ -12,8 +12,10 @@ import org.apache.log4j.Logger;
 
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
+import br.com.sgpo.dto.NotaMediaEquipesDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
+import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
 public class DashboardModelImpl implements DashboardModel {
@@ -38,6 +40,22 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "SUM(pr.quantidadeAcertos) AS quantidadeAcertos, SUM(pr.quantidadeQuestoes) AS quantidadeQuestoes "
 			+ "FROM funcionario f, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
 			+ "AND f.matricula != ?";
+
+	private static final String SELECT_RELATORIO_DADOS_GERAIS = "SELECT "
+			+ "(SELECT COUNT(temaId) FROM temas) as qtdTemas, "
+			+ "(SELECT COUNT(provaId) FROM provas) as qtdProvas, "
+			+ "(SELECT COUNT(questaoId) FROM questoes) as qtdQuestoes, "
+			+ "(SELECT COUNT(opcaoId) FROM opcoes) as qtdOpcoes, "
+			+ "(SELECT COUNT(apostilaId) FROM apostilas) as qtdApostilas";
+
+	private static final String SELECT_GERENTES = "SELECT DISTINCT ON (matgerente) e.matgerente, f.nome "
+			+ "FROM equipes e, funcionario f WHERE e.matgerente = f.matricula";
+
+	private static final String SELECT_NOTA_MEDIA_POR_GERENTE = "SELECT "
+			+ "SUM(pr.quantidadeAcertos) as acertos, SUM(pr.quantidadeQuestoes) as questoes "
+			+ "FROM funcionario f, equipes e, agenda a, provasRealizadas pr "
+			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
+			+ "AND f.matricula = e.matcolaborador AND e.matgerente = ?";
 
 	@Override
 	public List<AgendaDTO> listarAgendas(Integer matricula)
@@ -206,5 +224,106 @@ public class DashboardModelImpl implements DashboardModel {
 			conn.close();
 
 		return mediaEquipe;
+	}
+
+	@Override
+	public RelatorioDadosGeraisDTO consultarRelatorioDadosGerais()
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método consultaRelatorioDadosGerais");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		RelatorioDadosGeraisDTO relatorio = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_RELATORIO_DADOS_GERAIS);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			relatorio = new RelatorioDadosGeraisDTO();
+			relatorio.setQtdTemas(rs.getInt("qtdTemas"));
+			relatorio.setQtdProvas(rs.getInt("qtdProvas"));
+			relatorio.setQtdQuestoes(rs.getInt("qtdQuestoes"));
+			relatorio.setQtdOpcoes(rs.getInt("qtdOpcoes"));
+			relatorio.setQtdApostilas(rs.getInt("qtdApostilas"));
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return relatorio;
+	}
+
+	@Override
+	public List<NotaMediaEquipesDTO> listarGerentes()
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método consultaRelatorioDadosGerais");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		NotaMediaEquipesDTO notaMedia = null;
+		List<NotaMediaEquipesDTO> listaGerentes = new ArrayList<NotaMediaEquipesDTO>();
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_GERENTES);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			notaMedia = new NotaMediaEquipesDTO();
+			notaMedia.setMatriculaGerente(rs.getInt("matgerente"));
+			notaMedia.setNomeGerente(rs.getString("nome"));
+			listaGerentes.add(notaMedia);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaGerentes;
+	}
+
+	@Override
+	public NotaMediaEquipesDTO consultaMediaEquipePorGerente(
+			NotaMediaEquipesDTO notaMediaEquipesDTO)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método consultaMediaEquipePorGerente");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_NOTA_MEDIA_POR_GERENTE);
+		pstmt.setInt(1, notaMediaEquipesDTO.getMatriculaGerente());
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			notaMediaEquipesDTO.setQtdQuestoes(rs.getInt("questoes"));
+			notaMediaEquipesDTO.setQtdAcertos(rs.getInt("acertos"));
+		} else {
+			notaMediaEquipesDTO.setQtdQuestoes(null);
+			notaMediaEquipesDTO.setQtdAcertos(null);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return notaMediaEquipesDTO;
 	}
 }
