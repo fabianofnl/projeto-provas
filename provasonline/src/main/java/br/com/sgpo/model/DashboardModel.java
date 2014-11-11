@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
+import br.com.sgpo.dto.NotaMediaColaboradorDTO;
 import br.com.sgpo.dto.NotaMediaEquipesDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
@@ -20,7 +21,7 @@ public interface DashboardModel {
 	public List<ProvaRealizadaDTO> listarProvasRealizadasPorMatricula(
 			Integer matricula) throws ClassNotFoundException, SQLException;
 
-	public ProvaRealizadaDTO consultaMediaEquipe(Integer matricula)
+	public ProvaRealizadaDTO consultarMediaEquipe(Integer matricula)
 			throws ClassNotFoundException, SQLException;
 
 	public RelatorioDadosGeraisDTO consultarRelatorioDadosGerais()
@@ -29,8 +30,15 @@ public interface DashboardModel {
 	public List<NotaMediaEquipesDTO> listarGerentes()
 			throws ClassNotFoundException, SQLException;
 
-	public NotaMediaEquipesDTO consultaMediaEquipePorGerente(
+	public NotaMediaEquipesDTO consultarMediaEquipePorGerente(
 			NotaMediaEquipesDTO notaMediaEquipesDTO)
+			throws ClassNotFoundException, SQLException;
+
+	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradorPorGerenteMat(
+			Integer matricula) throws ClassNotFoundException, SQLException;
+
+	public NotaMediaColaboradorDTO consultarNotaMediaColaborador(
+			NotaMediaColaboradorDTO notaMediaColaboradorDTO)
 			throws ClassNotFoundException, SQLException;
 
 }

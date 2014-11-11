@@ -8,7 +8,14 @@ import java.io.Serializable;
  */
 public class RelatorioDadosGeraisDTO implements Serializable {
 
-	private static final long serialVersionUID = 4149780642095282343L;
+	private static final long serialVersionUID = -4255508881439686992L;
+
+	private Integer qtdFuncionariosAtivos;
+	private Integer qtdFuncionariosInativos;
+	private Integer qtdEquipes;
+	private Integer qtdProvasAgendadas;
+	private Integer qtdProvasRealizadas;
+	private Integer qtdProvasNaoRealizadas;
 	private Integer qtdTemas;
 	private Integer qtdProvas;
 	private Integer qtdQuestoes;
@@ -16,6 +23,54 @@ public class RelatorioDadosGeraisDTO implements Serializable {
 	private Integer qtdApostilas;
 
 	public RelatorioDadosGeraisDTO() {
+	}
+
+	public Integer getQtdFuncionariosAtivos() {
+		return qtdFuncionariosAtivos;
+	}
+
+	public void setQtdFuncionariosAtivos(Integer qtdFuncionariosAtivos) {
+		this.qtdFuncionariosAtivos = qtdFuncionariosAtivos;
+	}
+
+	public Integer getQtdFuncionariosInativos() {
+		return qtdFuncionariosInativos;
+	}
+
+	public void setQtdFuncionariosInativos(Integer qtdFuncionariosInativos) {
+		this.qtdFuncionariosInativos = qtdFuncionariosInativos;
+	}
+
+	public Integer getQtdEquipes() {
+		return qtdEquipes;
+	}
+
+	public void setQtdEquipes(Integer qtdEquipes) {
+		this.qtdEquipes = qtdEquipes;
+	}
+
+	public Integer getQtdProvasAgendadas() {
+		return qtdProvasAgendadas;
+	}
+
+	public void setQtdProvasAgendadas(Integer qtdProvasAgendadas) {
+		this.qtdProvasAgendadas = qtdProvasAgendadas;
+	}
+
+	public Integer getQtdProvasRealizadas() {
+		return qtdProvasRealizadas;
+	}
+
+	public void setQtdProvasRealizadas(Integer qtdProvasRealizadas) {
+		this.qtdProvasRealizadas = qtdProvasRealizadas;
+	}
+
+	public Integer getQtdProvasNaoRealizadas() {
+		return qtdProvasNaoRealizadas;
+	}
+
+	public void setQtdProvasNaoRealizadas(Integer qtdProvasNaoRealizadas) {
+		this.qtdProvasNaoRealizadas = qtdProvasNaoRealizadas;
 	}
 
 	public Integer getQtdTemas() {

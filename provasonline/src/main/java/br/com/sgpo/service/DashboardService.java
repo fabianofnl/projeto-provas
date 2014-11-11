@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
+import br.com.sgpo.dto.NotaMediaColaboradorDTO;
 import br.com.sgpo.dto.NotaMediaEquipesDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
@@ -28,5 +29,8 @@ public interface DashboardService {
 
 	public List<NotaMediaEquipesDTO> listarNotaMediaEquipes()
 			throws ClassNotFoundException, SQLException;
+
+	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradorPorGerenteMat(
+			Integer matricula) throws ClassNotFoundException, SQLException;
 
 }
