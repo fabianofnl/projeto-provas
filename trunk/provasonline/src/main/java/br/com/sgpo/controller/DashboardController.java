@@ -17,6 +17,7 @@ import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.dto.NotaMediaColaboradorDTO;
 import br.com.sgpo.dto.NotaMediaEquipesDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
@@ -84,6 +85,9 @@ public class DashboardController extends HttpServlet {
 							.forward(req, resp);
 					break;
 				}
+
+				req.getRequestDispatcher("/secure/dashboard.jsp").forward(req,
+						resp);
 
 			} else {
 				LOG.warn("Acesso sem autenticação, possível bug");
@@ -158,10 +162,10 @@ public class DashboardController extends HttpServlet {
 			req.setAttribute("listaAgendas", listaAgendas);
 			req.setAttribute("listaApostilas", listaApostilas);
 
-			req.getRequestDispatcher("/secure/dashboard.jsp")
-					.forward(req, resp);
 		}
-		// Limpando mensagens da sessão
+		/**
+		 * Limpando mensagens da sessão
+		 */
 		HttpSession session = req.getSession(true);
 		session.removeAttribute("msg");
 		session.removeAttribute("msgType");
@@ -171,7 +175,12 @@ public class DashboardController extends HttpServlet {
 			HttpServletResponse resp) throws ClassNotFoundException,
 			SQLException, ServletException, IOException {
 
-		req.getRequestDispatcher("/secure/dashboard.jsp").forward(req, resp);
+		List<NotaMediaColaboradorDTO> listaNotaMedia = dashboardService
+				.listarNotaMediaColaboradorPorGerenteMat(funcionario
+						.getMatricula());
+
+		req.setAttribute("listaNotaMedia", listaNotaMedia);
+
 	}
 
 	private void processarDadosInstrutor(HttpServletRequest req,
@@ -187,13 +196,27 @@ public class DashboardController extends HttpServlet {
 		req.setAttribute("listaMediaEquipes", listaMediaEquipes);
 		req.setAttribute("relatorio", relatorio);
 
-		req.getRequestDispatcher("/secure/dashboard.jsp").forward(req, resp);
 	}
 
 	private void processarDadosAdministrador(HttpServletRequest req,
 			HttpServletResponse resp) throws ClassNotFoundException,
 			SQLException, ServletException, IOException {
 
-		req.getRequestDispatcher("/secure/dashboard.jsp").forward(req, resp);
+		RelatorioDadosGeraisDTO relatorio = dashboardService
+				.consultarRelatorioDadosGerais();
+		
+		/**
+		 * Capturando uso de memória
+		 */
+		
+		Runtime runtime = Runtime.getRuntime();
+		
+		long memoriaLivre = runtime.freeMemory();
+		long memoriaTotal = runtime.totalMemory();
+
+		req.setAttribute("memoriaMax", memoriaTotal);
+		req.setAttribute("memoriaAlocada", memoriaTotal - memoriaLivre);
+		req.setAttribute("relatorio", relatorio);
+
 	}
 }

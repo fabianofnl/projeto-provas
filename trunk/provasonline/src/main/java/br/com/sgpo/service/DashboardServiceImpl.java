@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
+import br.com.sgpo.dto.NotaMediaColaboradorDTO;
 import br.com.sgpo.dto.NotaMediaEquipesDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
@@ -36,7 +37,7 @@ public class DashboardServiceImpl implements DashboardService {
 	@Override
 	public ProvaRealizadaDTO consultarMediaEquipe(Integer matricula)
 			throws ClassNotFoundException, SQLException {
-		return dashboardModel.consultaMediaEquipe(matricula);
+		return dashboardModel.consultarMediaEquipe(matricula);
 	}
 
 	@Override
@@ -54,10 +55,25 @@ public class DashboardServiceImpl implements DashboardService {
 
 		for (NotaMediaEquipesDTO notaMediaEquipesDTO : listaMediaEquipes) {
 			notaMediaEquipesDTO = dashboardModel
-					.consultaMediaEquipePorGerente(notaMediaEquipesDTO);
+					.consultarMediaEquipePorGerente(notaMediaEquipesDTO);
 		}
 
 		return listaMediaEquipes;
+	}
+
+	@Override
+	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradorPorGerenteMat(
+			Integer matricula) throws ClassNotFoundException, SQLException {
+
+		List<NotaMediaColaboradorDTO> listaNotaMedia = dashboardModel
+				.listarNotaMediaColaboradorPorGerenteMat(matricula);
+
+		for (NotaMediaColaboradorDTO notaMediaColaboradorDTO : listaNotaMedia) {
+			notaMediaColaboradorDTO = dashboardModel
+					.consultarNotaMediaColaborador(notaMediaColaboradorDTO);
+		}
+
+		return listaNotaMedia;
 	}
 
 }

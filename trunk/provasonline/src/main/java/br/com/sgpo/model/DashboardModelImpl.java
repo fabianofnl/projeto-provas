@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
+import br.com.sgpo.dto.NotaMediaColaboradorDTO;
 import br.com.sgpo.dto.NotaMediaEquipesDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
@@ -42,20 +43,35 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "AND f.matricula != ?";
 
 	private static final String SELECT_RELATORIO_DADOS_GERAIS = "SELECT "
-			+ "(SELECT COUNT(temaId) FROM temas) as qtdTemas, "
-			+ "(SELECT COUNT(provaId) FROM provas) as qtdProvas, "
-			+ "(SELECT COUNT(questaoId) FROM questoes) as qtdQuestoes, "
-			+ "(SELECT COUNT(opcaoId) FROM opcoes) as qtdOpcoes, "
-			+ "(SELECT COUNT(apostilaId) FROM apostilas) as qtdApostilas";
+			+ "(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Ativo') AS qtdFuncionariosAtivos, "
+			+ "(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Inativo') AS qtdFuncionariosInativos, "
+			+ "(SELECT COUNT(DISTINCT matgerente) FROM equipes) AS qtdEquipes, "
+			+ "(SELECT COUNT(agendaId) FROM agenda WHERE flag = false AND dataProva > CURRENT_DATE) AS qtdProvasAgendadas, "
+			+ "(SELECT COUNT(agendaId) FROM agenda WHERE flag = true) AS qtdProvasRealizadas, "
+			+ "(SELECT COUNT(agendaId) FROM agenda WHERE flag = false) AS qtdProvasNaoRealizadas, "
+			+ "(SELECT COUNT(temaId) FROM temas) AS qtdTemas, "
+			+ "(SELECT COUNT(provaId) FROM provas) AS qtdProvas, "
+			+ "(SELECT COUNT(questaoId) FROM questoes) AS qtdQuestoes, "
+			+ "(SELECT COUNT(opcaoId) FROM opcoes) AS qtdOpcoes, "
+			+ "(SELECT COUNT(apostilaId) FROM apostilas) AS qtdApostilas";
 
 	private static final String SELECT_GERENTES = "SELECT DISTINCT ON (matgerente) e.matgerente, f.nome "
 			+ "FROM equipes e, funcionario f WHERE e.matgerente = f.matricula";
 
 	private static final String SELECT_NOTA_MEDIA_POR_GERENTE = "SELECT "
-			+ "SUM(pr.quantidadeAcertos) as acertos, SUM(pr.quantidadeQuestoes) as questoes "
+			+ "SUM(pr.quantidadeAcertos) AS acertos, SUM(pr.quantidadeQuestoes) AS questoes "
 			+ "FROM funcionario f, equipes e, agenda a, provasRealizadas pr "
 			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
 			+ "AND f.matricula = e.matcolaborador AND e.matgerente = ?";
+
+	private static final String SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT = "SELECT f.matricula, f.nome "
+			+ "FROM equipes e, funcionario f "
+			+ "WHERE f.matricula = e.matcolaborador AND matgerente = ?";
+
+	private static final String SELECT_NOTA_MEDIA_COLABORADOR = "SELECT "
+			+ "SUM(pr.quantidadeQuestoes) AS questoes, SUM(pr.quantidadeAcertos) AS acertos "
+			+ "FROM provasRealizadas pr, agenda a "
+			+ "WHERE a.agendaId = pr.agendaId AND a.matcolaborador = ?";
 
 	@Override
 	public List<AgendaDTO> listarAgendas(Integer matricula)
@@ -194,7 +210,7 @@ public class DashboardModelImpl implements DashboardModel {
 	}
 
 	@Override
-	public ProvaRealizadaDTO consultaMediaEquipe(Integer matricula)
+	public ProvaRealizadaDTO consultarMediaEquipe(Integer matricula)
 			throws ClassNotFoundException, SQLException {
 
 		LOG.info("Chamando método consultaMediaEquipe");
@@ -243,6 +259,12 @@ public class DashboardModelImpl implements DashboardModel {
 
 		if (rs.next()) {
 			relatorio = new RelatorioDadosGeraisDTO();
+			relatorio.setQtdFuncionariosAtivos(rs.getInt("qtdFuncionariosAtivos"));
+			relatorio.setQtdFuncionariosInativos(rs.getInt("qtdFuncionariosInativos"));
+			relatorio.setQtdEquipes(rs.getInt("qtdEquipes"));
+			relatorio.setQtdProvasAgendadas(rs.getInt("qtdProvasAgendadas"));
+			relatorio.setQtdProvasRealizadas(rs.getInt("qtdProvasRealizadas"));
+			relatorio.setQtdProvasNaoRealizadas(rs.getInt("qtdProvasNaoRealizadas"));
 			relatorio.setQtdTemas(rs.getInt("qtdTemas"));
 			relatorio.setQtdProvas(rs.getInt("qtdProvas"));
 			relatorio.setQtdQuestoes(rs.getInt("qtdQuestoes"));
@@ -294,7 +316,7 @@ public class DashboardModelImpl implements DashboardModel {
 	}
 
 	@Override
-	public NotaMediaEquipesDTO consultaMediaEquipePorGerente(
+	public NotaMediaEquipesDTO consultarMediaEquipePorGerente(
 			NotaMediaEquipesDTO notaMediaEquipesDTO)
 			throws ClassNotFoundException, SQLException {
 
@@ -325,5 +347,71 @@ public class DashboardModelImpl implements DashboardModel {
 			conn.close();
 
 		return notaMediaEquipesDTO;
+	}
+
+	@Override
+	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradorPorGerenteMat(
+			Integer matricula) throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método listarNotaMediaColaboradorPorGerenteMat");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		NotaMediaColaboradorDTO notaMediaColaboradorDTO = null;
+		List<NotaMediaColaboradorDTO> listaNotaMedia = new ArrayList<NotaMediaColaboradorDTO>();
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn
+				.prepareStatement(SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT);
+		pstmt.setInt(1, matricula);
+		rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			notaMediaColaboradorDTO = new NotaMediaColaboradorDTO();
+			notaMediaColaboradorDTO.setNome(rs.getString("nome"));
+			notaMediaColaboradorDTO.setMatricula(rs.getInt("matricula"));
+			listaNotaMedia.add(notaMediaColaboradorDTO);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaNotaMedia;
+	}
+
+	@Override
+	public NotaMediaColaboradorDTO consultarNotaMediaColaborador(
+			NotaMediaColaboradorDTO notaMediaColaboradorDTO)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método consultarNotaMediaColaborador");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_NOTA_MEDIA_COLABORADOR);
+		pstmt.setInt(1, notaMediaColaboradorDTO.getMatricula());
+		rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			notaMediaColaboradorDTO.setQuestoes(rs.getInt("questoes"));
+			notaMediaColaboradorDTO.setAcertos(rs.getInt("acertos"));
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return notaMediaColaboradorDTO;
 	}
 }

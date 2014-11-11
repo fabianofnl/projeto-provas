@@ -42,37 +42,42 @@
 			<fieldset>
 				<legend>Nota Médias por Equipes/Gerentes</legend>
 				<ul style="list-style: none;">
-					<c:forEach items="${listaMediaEquipes}" var="equipe">
-						<c:if test="${equipe.qtdQuestoes ne null}">
-							<li>
-								<div class="grid">
-									<div class="row">
-									
-										<div class="span3">
-											${equipe.nomeGerente}
-										</div>
-										<div class="span3">
-											<table style="width:100%;">
-												<tr height="13px;">
-													<td width='<fmt:formatNumber maxFractionDigits="0" 
-														value="${(equipe.qtdAcertos / equipe.qtdQuestoes) * 100}"/>%'>
-														<div style="border-top: 13px solid #3c78b5; ${(equipe.qtdAcertos / equipe.qtdQuestoes) * 100 lt 1 ? 'width: 1px;' : ''}"></div>
-													</td>
-													<td width='<fmt:formatNumber maxFractionDigits="0" 
-															value="${100 - ((equipe.qtdAcertos / equipe.qtdQuestoes) * 100)}"/>%'>
-														<span style="font-size: 12px; padding: 3px;" >
-															<fmt:formatNumber maxFractionDigits="0" 
-																	value="${(equipe.qtdAcertos / equipe.qtdQuestoes) * 100}"/>
-														</span>
-													</td>
-												</tr>
-											</table>
+					<c:if test="${empty listaMediaEquipes}">
+						<li>Não há registros.</li>
+					</c:if>
+					<c:if test="${not empty listaMediaEquipes}">
+						<c:forEach items="${listaMediaEquipes}" var="equipe">
+							<c:if test="${equipe.qtdQuestoes ne null}">
+								<li>
+									<div class="grid">
+										<div class="row">
+										
+											<div class="span3">
+												${equipe.nomeGerente}
+											</div>
+											<div class="span3">
+												<table style="width:100%;">
+													<tr height="13px;">
+														<td width='<fmt:formatNumber maxFractionDigits="0" 
+															value="${(equipe.qtdAcertos / equipe.qtdQuestoes) * 100}"/>%'>
+															<div style="border-top: 13px solid #3c78b5; ${(equipe.qtdAcertos / equipe.qtdQuestoes) * 100 lt 1 ? 'width: 1px;' : ''}"></div>
+														</td>
+														<td width='<fmt:formatNumber maxFractionDigits="0" 
+																value="${100 - ((equipe.qtdAcertos / equipe.qtdQuestoes) * 100)}"/>%'>
+															<span style="font-size: 12px; padding: 3px;" >
+																<fmt:formatNumber maxFractionDigits="0" 
+																		value="${(equipe.qtdAcertos / equipe.qtdQuestoes) * 100}"/>
+															</span>
+														</td>
+													</tr>
+												</table>
+											</div>
 										</div>
 									</div>
-								</div>
-							</li>
-						</c:if>
-					</c:forEach>
+								</li>
+							</c:if>
+						</c:forEach>
+					</c:if>
 				</ul>
 			</fieldset>
 		</div>
