@@ -226,11 +226,18 @@ FROM funcionario f, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolab
 AND f.matricula != 1001
 
 SELECT 
-(SELECT COUNT(temaId) FROM temas) as qtdTemas, 
-(SELECT COUNT(provaId) FROM provas) as qtdProvas, 
-(SELECT COUNT(questaoId) FROM questoes) as qtdQuestoes, 
-(SELECT COUNT(opcaoId) FROM opcoes) as qtdOpcoes, 
-(SELECT COUNT(apostilaId) FROM apostilas) as qtdApostilas
+(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Ativo') AS qtdFuncionariosAtivos,
+(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Inativo') AS qtdFuncionariosInativos,
+(SELECT COUNT(DISTINCT matgerente) FROM equipes) AS qtdEquipes,
+(SELECT COUNT(agendaId) FROM agenda WHERE flag = false AND dataProva > CURRENT_DATE) AS qtdProvasAgendadas,
+(SELECT COUNT(agendaId) FROM agenda WHERE flag = true) AS qtdProvasRealizadas,
+(SELECT COUNT(agendaId) FROM agenda WHERE flag = false) AS qtdProvasNaoRealizadas,
+(SELECT COUNT(temaId) FROM temas) AS qtdTemas, 
+(SELECT COUNT(provaId) FROM provas) AS qtdProvas, 
+(SELECT COUNT(questaoId) FROM questoes) AS qtdQuestoes, 
+(SELECT COUNT(opcaoId) FROM opcoes) AS qtdOpcoes, 
+(SELECT COUNT(apostilaId) FROM apostilas) AS qtdApostilas
+
 
 SELECT DISTINCT ON (matgerente) e.matgerente, f.nome FROM equipes e, funcionario f WHERE e.matgerente = f.matricula
 
@@ -245,4 +252,8 @@ SELECT pr.*, f.matricula
 FROM funcionario f, equipes e, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId
 AND f.matricula = e.matcolaborador AND e.matgerente = 7777
 
-SELECT * FROM equipes
+SELECT f.matricula, f.nome FROM equipes e, funcionario f WHERE f.matricula = e.matcolaborador AND matgerente = 3333 -- 4444 5555 1001
+SELECT * FROM agenda
+
+SELECT SUM(pr.quantidadeQuestoes) as questoes, SUM(pr.quantidadeAcertos) as acertos FROM provasRealizadas pr, agenda a
+WHERE a.agendaId = pr.agendaId AND a.matcolaborador = 4444
