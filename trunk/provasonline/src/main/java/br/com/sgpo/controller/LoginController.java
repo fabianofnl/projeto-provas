@@ -71,7 +71,7 @@ public class LoginController extends HttpServlet {
 		HttpSession session = req.getSession(true);
 		String contextPath = req.getContextPath();
 
-		if (usuario != null) {
+		if (funcionario != null) {
 			session.setAttribute(SGPOConstants.LOGGED_FUNCIONARIO, funcionario);
 		}else {
 			req.setAttribute(VAR_TITULO_PAGINA, TITULO_PAGINA_LOGIN);

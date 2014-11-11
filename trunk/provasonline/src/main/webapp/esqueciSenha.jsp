@@ -50,6 +50,8 @@
 								<div>
 									<button type="submit" id="btnEsqueciSenha"
 										name="btnEsqueciSenha" class="button bd-green">Enviar</button>
+									<a href="${pageContext.request.contextPath}/logon"
+										style="float:right;">Logon</a>
 								</div>
 							</fieldset>
 						</form>

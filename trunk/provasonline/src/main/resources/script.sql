@@ -257,3 +257,5 @@ SELECT * FROM agenda
 
 SELECT SUM(pr.quantidadeQuestoes) as questoes, SUM(pr.quantidadeAcertos) as acertos FROM provasRealizadas pr, agenda a
 WHERE a.agendaId = pr.agendaId AND a.matcolaborador = 4444
+
+SELECT * FROM usuario u, funcionario f WHERE u.usuario = f.usuario AND u.usuario = 'jsilva' AND f.email = 'fabianofnl2@gmail.com'
