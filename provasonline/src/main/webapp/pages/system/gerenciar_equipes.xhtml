@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/template/system_template.xhtml">
+	<ui:define name="content">
+		<div class="div-content">
+
+			<p:growl autoUpdate="true" showDetail="true" showSummary="true"
+				life="10000" />
+
+			<div align="center" class="header-title-page">
+				Controle de Equipes
+				<p:separator />
+			</div>
+
+			<h:form id="frmRemoteCommand">
+				<p:remoteCommand name="onloadTabela"
+					actionListener="#{equipeManagedBean.carregarTabela}" autoRun="true"
+					update=":frmEquipeDataTable:equipeDataTable" />
+			</h:form>
+
+			<h:form id="frmEquipeDataTable">
+				<p:dataTable id="equipeDataTable"
+					value="#{equipeManagedBean.listaEquipes}" var="equip" rows="3"
+					rowsPerPageTemplate="3,6,9,12" paginator="true"
+					emptyMessage="Não há registros."
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+					<p:column headerText="Gerente" styleClass="table-vertical-align">
+						<h:outputText
+							value="#{equip.gerente.nome} (#{equip.gerente.funcao})" />
+					</p:column>
+
+					<p:column headerText="Colaboradores">
+						<ul style="list-style-type: none;">
+							<ui:repeat var="col" value="#{equip.listaColaboradores}">
+								<li>#{col.nome} (#{col.funcao}) <p:commandButton
+										icon="ui-icon-trash" style="width:22px; height:22px;"
+										oncomplete="dialogRemoverColaborador.show()"
+										update=":idDialogRemoverColaborador"
+										title="Remover colaborador">
+										<f:setPropertyActionListener value="#{col}"
+											target="#{equipeManagedBean.colaboradorSelecionado}" />
+									</p:commandButton></li>
+							</ui:repeat>
+						</ul>
+					</p:column>
+				</p:dataTable>
+
+				<p:commandButton value="Adicionar equipe" style="margin-top: 10px;"
+					actionListener="#{equipeManagedBean.carregarGerentesColaboradores}"
+					oncomplete="dialogAssociarEquipe.show()"
+					update=":idDialogAssociarEquipe" />
+
+			</h:form>
+
+			<ui:include
+				src="/pages/system/dialog/dialog_associar_colab_equipe.xhtml" />
+
+			<ui:include
+				src="/pages/system/dialog/dialog_remover_colab_equipe.xhtml" />
+
+		</div>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -9,8 +9,7 @@ import br.com.sgpo.dto.PerfilDTO;
 
 public interface FuncionarioModel {
 
-	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
-			Integer recordPerPage) throws SQLException, ClassNotFoundException;
+	public List<FuncionarioDTO> listarFuncionarios() throws SQLException, ClassNotFoundException;
 
 	public List<PerfilDTO> listarPerfis() throws SQLException,
 			ClassNotFoundException;
@@ -39,7 +38,7 @@ public interface FuncionarioModel {
 	public void associarEquipes(Integer matGerente, Integer[] matColaborador)
 			throws SQLException, ClassNotFoundException;
 
-	public List<EquipeDTO> listarEquipes(Integer offSet, Integer recordPerPage)
+	public List<EquipeDTO> listarEquipes()
 			throws SQLException, ClassNotFoundException;
 
 	public Integer getTotalRegistrosEquipes() throws SQLException,

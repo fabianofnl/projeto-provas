@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<p:dialog id="idDialogEditProva" header="Editar Prova"
+	widgetVar="dialogEditProva" appendToBody="true" modal="true"
+	dynamic="true" resizable="false" width="500">
+
+	<h:form id="frmDialogEditProva">
+		<p:panelGrid style="width: 100%;">
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Título:" />
+				</p:column>
+				<p:column>
+					<p:inputText required="true"
+						requiredMessage="O campo título é obrigatório."
+						value="#{provaManagedBean.provaSelecionada.titulo}" size="50" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="2">
+					<p:separator />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<div align="right">
+						<p:commandButton value="Cancelar" type="button"
+							onclick="dialogEditProva.hide()" />
+						<p:commandButton value="OK"
+							actionListener="#{provaManagedBean.editarProva}"
+							update="frmDialogEditProva :frmProvaDataTable"
+							oncomplete="if(!args.validationFailed) dialogEditProva.hide(); 
+										else dialogEditProva.show();" />
+					</div>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</p:dialog>
+</html>

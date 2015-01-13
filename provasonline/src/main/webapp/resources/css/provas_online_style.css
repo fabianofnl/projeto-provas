@@ -1,0 +1,57 @@
+@CHARSET "UTF-8";
+
+.provasonline-font-default {
+	font-size: 11px;
+}
+
+.login-identification {
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+
+.login-header {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	font-size: 20px;
+}
+
+.title-header {
+	padding-top: 5px;
+	font-size: 20px;
+}
+
+.header-title-page {
+	padding-top: 10px;
+	padding-bottom: 15px;
+	font-size: 16px;
+}
+
+.centralizar {
+	text-align: center;
+}
+
+.table-vertical-align {
+	vertical-align: top;
+	padding-top: 22px !important;
+	padding-left: 20px !important;
+}
+
+.ui-panelgrid {
+	border-collapse: separate !important;
+}
+
+.ui-panelgrid tr td {
+	border: none;
+}
+
+.div-content {
+	margin: 8px;
+}
+
+.ui-growl-item-container {
+	border: 2px solid #aed0ea !important;
+}
+
+.ui-datatable-odd {
+	background: none repeat scroll 0 0 #F2F5F9 !important;
+}

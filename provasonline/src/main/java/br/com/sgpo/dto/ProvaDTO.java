@@ -16,6 +16,8 @@ public class ProvaDTO implements Serializable {
 	private Integer quantidadeTemas;
 	private Integer quantidadeQuestoes;
 	private List<TemaDTO> listaTemas = new ArrayList<TemaDTO>();
+	private List<QuestaoDTO> listaQuestoes = new ArrayList<QuestaoDTO>();
+	private List<ApostilaDTO> listaApostilas = new ArrayList<ApostilaDTO>();
 
 	public ProvaDTO() {
 	}
@@ -58,6 +60,22 @@ public class ProvaDTO implements Serializable {
 
 	public void setListaTemas(List<TemaDTO> listaTemas) {
 		this.listaTemas = listaTemas;
+	}
+
+	public List<QuestaoDTO> getListaQuestoes() {
+		return listaQuestoes;
+	}
+
+	public void setListaQuestoes(List<QuestaoDTO> listaQuestoes) {
+		this.listaQuestoes = listaQuestoes;
+	}
+
+	public List<ApostilaDTO> getListaApostilas() {
+		return listaApostilas;
+	}
+
+	public void setListaApostilas(List<ApostilaDTO> listaApostilas) {
+		this.listaApostilas = listaApostilas;
 	}
 
 }

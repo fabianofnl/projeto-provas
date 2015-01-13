@@ -18,9 +18,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	private FuncionarioModel funcionarioDao = new FuncionarioModelImpl();
 
 	@Override
-	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
-			Integer recordPerPage) throws SQLException, ClassNotFoundException {
-		return funcionarioDao.listarFuncionarios(offSet, recordPerPage);
+	public List<FuncionarioDTO> listarFuncionarios() throws SQLException, ClassNotFoundException {
+		return funcionarioDao.listarFuncionarios();
 	}
 
 	@Override
@@ -78,10 +77,9 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	}
 
 	@Override
-	public List<EquipeDTO> listarEquipes(Integer offSet, Integer recordPerPage)
+	public List<EquipeDTO> listarEquipes()
 			throws SQLException, ClassNotFoundException {
-		List<EquipeDTO> listaEquipes = funcionarioDao.listarEquipes(offSet,
-				recordPerPage);
+		List<EquipeDTO> listaEquipes = funcionarioDao.listarEquipes();
 
 		// TODO verificar se não é necessario criar outra lista e add as equipes
 

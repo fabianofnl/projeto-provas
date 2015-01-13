@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<p:dialog id="idDialogCadFuncionario" header="Cadastrar Funcionario"
+	widgetVar="dialogCadFuncionario" modal="true" dynamic="true"
+	appendToBody="true" resizable="false">
+
+	<h:form id="frmDialogCadFuncionario">
+		<p:panelGrid>
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Matrícula:" />
+				</p:column>
+				<p:column>
+					<p:inputText required="true" requiredMessage="Campo matrícula é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioNovo.matricula}" />
+				</p:column>
+				<p:column>
+					<h:outputLabel value="Nome:" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{funcionarioManagedBean.funcionarioNovo.nome}" 
+						required="true" requiredMessage="Campo nome é obrigatório."/>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Função:" />
+				</p:column>
+				<p:column>
+					<p:inputText required="true" requiredMessage="Campo função é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioNovo.funcao}" />
+				</p:column>
+				<p:column>
+					<h:outputLabel value="E-mail:" />
+				</p:column>
+				<p:column>
+					<p:inputText required="true" requiredMessage="Campo e-mail é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioNovo.email}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Usuário:" />
+				</p:column>
+				<p:column>
+					<p:inputText required="true" requiredMessage="Campo usuário é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioNovo.usuario}" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel value="Perfil:" />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu id="selectPerfil" effectDuration="100" 
+						required="true" requiredMessage="Campo perfil é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioNovo.perfilId}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{funcionarioManagedBean.listaPerfis}"
+							var="per" itemLabel="#{per.descricao}"
+							itemValue="#{per.perfilId}" />
+					</p:selectOneMenu>
+				</p:column>
+
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Senha:" for="senha1" />
+				</p:column>
+				<p:column>
+					<p:password id="senha1" feedback="true" inline="true"
+						required="true" match="senha2" promptLabel="Insira a senha"
+						weakLabel="Fraco" goodLabel="Médio" strongLabel="Forte"
+						validatorMessage="As senhas não são iguais."
+						requiredMessage="Senha é obrigatório"
+						value="#{funcionarioManagedBean.funcionarioNovo.senha}" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel value="Novamente:" for="senha2" />
+				</p:column>
+				<p:column>
+					<p:password id="senha2" required="true" feedback="false"
+						requiredMessage="Senha é obrigatório"
+						value="#{funcionarioManagedBean.funcionarioNovo.senha}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="4">
+					<p:separator />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="4">
+					<div align="right">
+						<p:commandButton value="Cancelar" type="button"
+							onclick="dialogCadFuncionario.hide()" />
+						<p:commandButton value="OK"
+							actionListener="#{funcionarioManagedBean.cadastrarFuncionario}"
+							update="frmDialogCadFuncionario :frmFuncDataTable"
+							oncomplete="if(!args.validationFailed) dialogCadFuncionario.hide(); 
+										else dialogCadFuncionario.show();"/>
+					</div>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</p:dialog>
+</html>

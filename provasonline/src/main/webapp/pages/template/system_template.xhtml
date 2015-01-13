@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<h:outputStylesheet library="css" name="provas_online_style.css"/>
+	<title>Provas Online</title>
+</h:head>
+<h:body styleClass="provasonline-font-default">
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" size="50">
+			<ui:insert name="header">
+				<ui:include src="/pages/fragments/header.xhtml"></ui:include>
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="200">
+			<ui:insert name="menu">
+				<ui:include src="/pages/fragments/menu.xhtml"></ui:include>
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<ui:insert name="content">
+			</ui:insert>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>
