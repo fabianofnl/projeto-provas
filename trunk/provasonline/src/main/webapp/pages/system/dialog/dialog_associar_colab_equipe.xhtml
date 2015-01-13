@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<p:dialog id="idDialogAssociarEquipe" header="Associar Colaboradores e Equipe"
+	widgetVar="dialogAssociarEquipe" modal="true" dynamic="true"
+	appendToBody="true" resizable="false">
+
+	<h:form id="frmDialogAssociarEquipe">
+		<p:panelGrid>
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Gerente:" />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu id="selectGerente" effectDuration="100"
+						required="true" requiredMessage="Campo gerente é obrigatório."
+						value="#{equipeManagedBean.gerenteSelecionado.matricula}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{equipeManagedBean.listaGerentes}"
+							var="ger" itemLabel="#{ger.nome}"
+							itemValue="#{ger.matricula}" />
+					</p:selectOneMenu>
+				</p:column>
+			
+				<p:column>
+					<h:outputLabel value="Colaboradores:" />
+				</p:column>
+				<p:column>
+					<p:selectManyMenu id="selectColaboradores" effectDuration="100"
+						required="true" requiredMessage="Campo colaboradores é obrigatório."
+						value="#{equipeManagedBean.listaColaboradoresSelecionados}">
+						<f:selectItems value="#{equipeManagedBean.listaColaboradores}"
+							var="colab" itemLabel="#{colab.nome}"
+							itemValue="#{colab.matricula}" />
+					</p:selectManyMenu>
+				</p:column>
+
+			</p:row>
+
+			<p:row>
+				<p:column colspan="4">
+					<p:separator />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="4">
+					<div align="right">
+						<p:commandButton value="Cancelar" type="button"
+							onclick="dialogAssociarEquipe.hide()" />
+						<p:commandButton value="OK"
+							actionListener="#{equipeManagedBean.associarEquipe}"
+							update="frmDialogAssociarEquipe :frmEquipeDataTable"
+							oncomplete="if(!args.validationFailed) dialogAssociarEquipe.hide(); 
+										else dialogAssociarEquipe.show();" />
+					</div>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</p:dialog>
+</html>

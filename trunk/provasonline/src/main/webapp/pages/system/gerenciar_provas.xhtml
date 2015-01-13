@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/template/system_template.xhtml">
+	<ui:define name="content">
+		<div class="div-content">
+
+			<p:growl autoUpdate="true" showDetail="true" showSummary="true"
+				life="10000" />
+
+			<div align="center" class="header-title-page">
+				Gerenciamento de Provas
+				<p:separator />
+			</div>
+
+			<h:form id="frmRemoteCommand">
+				<p:remoteCommand name="onloadTabela"
+					actionListener="#{provaManagedBean.carregarTabela}" autoRun="true"
+					update=":frmProvaDataTable:provaDataTable" />
+			</h:form>
+
+			<h:form id="frmProvaDataTable">
+				<p:dataTable id="provaDataTable"
+					value="#{provaManagedBean.listaProvas}" var="prova" rows="3"
+					rowsPerPageTemplate="3,6,9,12" paginator="true"
+					emptyMessage="Não há registros."
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+					<p:column headerText="Prova" styleClass="table-vertical-align">
+						<h:outputText value="#{prova.titulo}" />
+					</p:column>
+
+					<p:column headerText="Questões">
+						<ul style="list-style-type: none;">
+							<ui:repeat var="questao" value="#{prova.listaQuestoes}">
+								<li>#{questao.titulo}<p:commandButton icon="ui-icon-trash"
+										style="width:22px; height:22px;"
+										oncomplete="dialogRemoverQuestao.show()"
+										update=":idDialogRemoverQuestao" title="Remover questão">
+										<f:setPropertyActionListener value="#{questao}"
+											target="#{provaManagedBean.questaoSelecionada}" />
+									</p:commandButton></li>
+							</ui:repeat>
+						</ul>
+					</p:column>
+
+					<p:column headerText="Apostilas">
+						<ul style="list-style-type: none;">
+							<ui:repeat var="apostila" value="#{prova.listaApostilas}">
+								<li>#{apostila.titulo}<p:commandButton icon="ui-icon-trash"
+										style="width:22px; height:22px;"
+										oncomplete="dialogRemoverApostila.show()"
+										update=":idDialogRemoverApostila" title="Remover apostila">
+										<f:setPropertyActionListener value="#{apostila.titulo}"
+											target="#{provaManagedBean.apostilaSelecionada}" />
+									</p:commandButton></li>
+							</ui:repeat>
+						</ul>
+					</p:column>
+
+					<p:column headerText="Ações" styleClass="centralizar"
+						style="width:15%;">
+						<p:commandButton id="btnEdit" title="Editar Prova"
+							icon="ui-icon-wrench" style="width:22px; height:22px;"
+							oncomplete="dialogEditProva.show()" update=":idDialogEditProva">
+							<f:setPropertyActionListener
+								target="#{provaManagedBean.provaSelecionada}" value="#{prova}" />
+						</p:commandButton>
+
+						<p:commandButton id="btnExc" title="Excluir Prova"
+							icon="ui-icon-trash" style="width:22px; height:22px;"
+							oncomplete="dialogExcluirProva.show()"
+							update=":idDialogExcluirProva">
+							<f:setPropertyActionListener
+								target="#{provaManagedBean.provaSelecionada}" value="#{prova}" />
+						</p:commandButton>
+
+						<p:commandButton id="btnAddQuestao" title="Cadastrar Questao"
+							icon="ui-icon-circle-plus" style="width:22px; height:22px;"
+							oncomplete="dialogCadQuestao.show()" update=":idDialogCadQuestao">
+						</p:commandButton>
+						
+						<p:commandButton id="btnAddApostila" title="Adicionar Apostila"
+							icon="ui-icon-document" style="width:22px; height:22px;"
+							oncomplete="dialogAddApostila.show()" update=":idDialogAddApostila">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:commandButton value="Adicionar prova" style="margin-top: 10px;"
+					actionListener="#{provaManagedBean.carregarTemas}"
+					oncomplete="dialogCadastrarProva.show()"
+					update=":idDialogCadastrarProva" />
+
+			</h:form>
+
+			<ui:include src="/pages/system/dialog/dialog_cadastrar_prova.xhtml" />
+
+			<ui:include src="/pages/system/dialog/dialog_editar_prova.xhtml" />
+
+			<ui:include src="/pages/system/dialog/dialog_excluir_prova.xhtml" />
+
+
+			<ui:include src="/pages/system/dialog/dialog_cadastrar_questao.xhtml" />
+
+			<ui:include src="/pages/system/dialog/dialog_editar_questao.xhtml" />
+
+			<ui:include src="/pages/system/dialog/dialog_excluir_questao.xhtml" />
+
+
+			<ui:include src="/pages/system/dialog/dialog_cadastrar_opcoes.xhtml" />
+
+			<ui:include src="/pages/system/dialog/dialog_editar_opcao.xhtml" />
+
+			<ui:include src="/pages/system/dialog/dialog_excluir_opcao.xhtml" />
+
+
+			<ui:include
+				src="/pages/system/dialog/dialog_adicionar_apostila.xhtml" />
+
+			<ui:include src="/pages/system/dialog/dialog_excluir_apostila.xhtml" />
+
+		</div>
+	</ui:define>
+</ui:composition>
+
+</html>

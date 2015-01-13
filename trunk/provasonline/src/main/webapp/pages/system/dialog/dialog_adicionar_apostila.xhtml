@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<p:dialog id="idDialogAddApostila" header="Adicionar apostila"
+	widgetVar="dialogAddApostila" modal="true" dynamic="true"
+	appendToBody="true" resizable="false" width="500">
+
+	<h:form id="frmDialogAddApostila">
+		<p:panelGrid style="width:100%;">
+			<p:row>
+				<p:column>
+
+					<p:fileUpload
+						fileUploadListener="#{provaManagedBean.apostilaUpload}"
+						mode="advanced" update="frmDialogAddApostila :frmApostilaDataTable"
+						auto="true" sizeLimit="100000"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+						oncomplete="if(!args.validationFailed) dialogAddApostila.hide(); 
+										else dialogAddApostila.show();" />
+
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<p:separator />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<div align="right">
+						<p:commandButton value="Fechar" type="button"
+							onclick="dialogAddApostila.hide()" />
+					</div>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</p:dialog>
+</html>

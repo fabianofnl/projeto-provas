@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:composition template="/pages/template/system_template.xhtml">
+		<ui:define name="content">
+			<div class="div-content">
+				<p:outputPanel id="id-panel-adm" rendered="#{loginManagedBean.funcionario.role eq 'ROLE_ADMIN'}">
+					<ui:include src="/pages/system/dashboard/dashboard_adm.xhtml" />
+				</p:outputPanel>
+	
+				<p:outputPanel id="id-panel-inst" rendered="#{loginManagedBean.funcionario.role eq 'ROLE_INSTRUTOR'}">
+					<ui:include src="/pages/system/dashboard/dashboard_inst.xhtml" />
+				</p:outputPanel>
+	
+				<p:outputPanel id="id-panel-ger" rendered="#{loginManagedBean.funcionario.role eq 'ROLE_GERENTE'}">
+					<ui:include src="/pages/system/dashboard/dashboard_ger.xhtml" />
+				</p:outputPanel>
+	
+				<p:outputPanel id="id-panel-col" rendered="#{loginManagedBean.funcionario.role eq 'ROLE_COLABORADOR'}">
+					<ui:include src="/pages/system/dashboard/dashboard_col.xhtml" />
+				</p:outputPanel>
+			</div>
+		</ui:define>
+	</ui:composition>
+
+</html>

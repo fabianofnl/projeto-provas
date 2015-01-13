@@ -8,9 +8,16 @@
 	<packaging>war</packaging>
 
 	<version>0.0.1-SNAPSHOT</version>
-	<name>provasonline Maven Webapp</name>
+	<name>provasonline</name>
 
-	<url>http://maven.apache.org</url>
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -27,6 +34,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.8</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.2-1004-jdbc41</version>
@@ -37,24 +56,11 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.2</version>
-		</dependency>
+		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>jstl</artifactId> 
+			<version>1.2</version> </dependency> <dependency> <groupId>taglibs</groupId> 
+			<artifactId>standard</artifactId> <version>1.1.2</version> </dependency> 
+			<dependency> <groupId>javax.servlet.jsp</groupId> <artifactId>jsp-api</artifactId> 
+			<version>2.2</version> </dependency> -->
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -85,6 +91,35 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>3.1.1.RELEASE</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>3.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<!-- 
+			<artifactId>overcast</artifactId>
+			<artifactId>smoothness</artifactId>
+			-->
+			<artifactId>pepper-grinder</artifactId>
+			<version>1.0.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.1.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>2.1.6</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

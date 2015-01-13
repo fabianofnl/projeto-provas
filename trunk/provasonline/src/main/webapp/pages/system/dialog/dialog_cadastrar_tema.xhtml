@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<p:dialog id="idDialogCadTema" header="Cadastrar Tema"
+	widgetVar="dialogCadTema" modal="true" dynamic="true"
+	appendToBody="true" resizable="false" width="500">
+
+	<h:form id="frmDialogCadTema">
+		<p:panelGrid style="width:100%;">
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Título:" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{temaManagedBean.temaNovo.titulo}" size="50"
+						required="true" requiredMessage="Campo título é obrigatório." />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Descrição:" />
+				</p:column>
+				<p:column>
+					<p:inputTextarea required="true"
+						requiredMessage="Campo descrição é obrigatório."
+						value="#{temaManagedBean.temaNovo.descricao}" cols="49" rows="8"
+						autoResize="false" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="2">
+					<p:separator />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<div align="right">
+						<p:commandButton value="Cancelar" type="button"
+							onclick="dialogCadTema.hide()" />
+						<p:commandButton value="OK"
+							actionListener="#{temaManagedBean.cadastrarTema}"
+							update="frmDialogCadTema :frmTemaDataTable"
+							oncomplete="if(!args.validationFailed) dialogCadTema.hide(); 
+										else dialogCadTema.show();" />
+					</div>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</p:dialog>
+</html>

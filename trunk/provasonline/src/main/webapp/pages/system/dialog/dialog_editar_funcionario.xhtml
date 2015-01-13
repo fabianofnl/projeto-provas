@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<p:dialog id="idDialogEditFuncionario" header="Editar Funcionario"
+	widgetVar="dialogEditFuncionario" appendToBody="true" modal="true"
+	dynamic="true" resizable="false">
+
+	<h:form id="frmDialogEditFuncionario">
+		<p:panelGrid>
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Matrícula:" />
+				</p:column>
+				<p:column>
+					<p:inputText required="true" requiredMessage="O campo matrícula é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioSelecionado.matricula}" />
+				</p:column>
+				<p:column>
+					<h:outputLabel value="Nome:" />
+				</p:column>
+				<p:column>
+					<p:inputText required="true" requiredMessage="O campo nome é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioSelecionado.nome}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Função:" />
+				</p:column>
+				<p:column>
+					<p:inputText required="true" requiredMessage="O campo função é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioSelecionado.funcao}" />
+				</p:column>
+				<p:column>
+					<h:outputLabel value="E-mail:" />
+				</p:column>
+				<p:column>
+					<p:inputText required="true" requiredMessage="O campo e-mail é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioSelecionado.email}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Perfil:" />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu id="selectPerfil" effectDuration="100" required="true"
+						requiredMessage="O campo perfil é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioSelecionado.perfilId}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{funcionarioManagedBean.listaPerfis}"
+							var="per" itemLabel="#{per.descricao}"
+							itemValue="#{per.perfilId}" />
+					</p:selectOneMenu>
+				</p:column>
+				<p:column>
+					<h:outputLabel value="Status:" />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu id="selectStatus" effectDuration="100"
+						required="true" requiredMessage="O campo status é obrigatório."
+						value="#{funcionarioManagedBean.funcionarioSelecionado.status}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItem itemLabel="Ativo" itemValue="Ativo" />
+						<f:selectItem itemLabel="Inativo" itemValue="Inativo" />
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="4">
+					<p:separator />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="4">
+					<div align="right">
+						<p:commandButton value="Cancelar" type="button"
+							onclick="dialogEditFuncionario.hide()" />
+						<p:commandButton value="OK"
+							actionListener="#{funcionarioManagedBean.editarFuncionario}"
+							update="frmDialogEditFuncionario :frmFuncDataTable"
+							oncomplete="if(!args.validationFailed) dialogEditFuncionario.hide(); 
+										else dialogEditFuncionario.show();" />
+					</div>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</p:dialog>
+</html>

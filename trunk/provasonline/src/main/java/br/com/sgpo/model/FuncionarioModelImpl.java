@@ -24,7 +24,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			.getLogger(FuncionarioModelImpl.class);
 
 	private static final String SELECT_TODOS_FUNCIONARIO = "SELECT * FROM funcionario f, usuario u, perfil p "
-			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id ORDER BY nome LIMIT ? OFFSET ?";
+			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id ORDER BY nome";
 
 	private static final String SELECT_TODOS_PERFIS = "SELECT * FROM perfil";
 
@@ -47,10 +47,10 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			+ "status = ? WHERE matricula = ?";
 
 	private static final String SELECT_GERENTES = "SELECT * FROM funcionario f, usuario u, perfil p "
-			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Gerente'";
+			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Gerente' AND f.status ILIKE 'Ativo'";
 
 	private static final String SELECT_COLABORADORES_SEM_EQUIPES = "SELECT * FROM funcionario f, usuario u, perfil p "
-			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Colaborador' "
+			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Colaborador' AND f.status ILIKE 'Ativo' "
 			+ "AND f.matricula NOT IN (SELECT matcolaborador FROM equipes)";
 
 	private static final String INSERT_EQUIPES = "INSERT INTO equipes (matgerente, matcolaborador) VALUES (?, ?)";
@@ -58,7 +58,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	private static final String SELECT_TODAS_EQUIPES = "SELECT DISTINCT ON (f.nome) f.nome, * "
 			+ "FROM funcionario f, usuario u, perfil p, equipes e "
 			+ "WHERE f.usuario = u.usuario AND u.perfilID = p.id AND f.matricula = e.matgerente "
-			+ "ORDER BY f.nome LIMIT ? OFFSET ?";
+			+ "ORDER BY f.nome";
 
 	private static final String SELECT_TOTAL_REGISTROS_EQUIPES = "SELECT COUNT(DISTINCT(matgerente)) AS total FROM equipes";
 
@@ -71,8 +71,8 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Colaborador' ";
 
 	@Override
-	public List<FuncionarioDTO> listarFuncionarios(Integer offSet,
-			Integer recordPerPage) throws ClassNotFoundException, SQLException {
+	public List<FuncionarioDTO> listarFuncionarios()
+			throws ClassNotFoundException, SQLException {
 
 		LOG.info("Chamando método listarFuncionarios");
 
@@ -83,8 +83,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 		List<FuncionarioDTO> listaFuncionarios = new ArrayList<FuncionarioDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(SELECT_TODOS_FUNCIONARIO);
-		pstmt.setInt(1, recordPerPage);
-		pstmt.setInt(2, offSet);
 		rs = pstmt.executeQuery();
 		FuncionarioDTO func = null;
 
@@ -415,8 +413,8 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	}
 
 	@Override
-	public List<EquipeDTO> listarEquipes(Integer offSet, Integer recordPerPage)
-			throws SQLException, ClassNotFoundException {
+	public List<EquipeDTO> listarEquipes() throws SQLException,
+			ClassNotFoundException {
 
 		LOG.info("Chamando método listarEquipes");
 
@@ -427,8 +425,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 		List<EquipeDTO> listaEquipes = new ArrayList<EquipeDTO>();
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(SELECT_TODAS_EQUIPES);
-		pstmt.setInt(1, recordPerPage);
-		pstmt.setInt(2, offSet);
 		rs = pstmt.executeQuery();
 
 		FuncionarioDTO func = null;

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<p:confirmDialog id="idDialogInativarFuncionario" header="Inativar Funcionario"
+	widgetVar="dialogInativarFuncionario" appendToBody="true"
+	message="#{funcionarioManagedBean.funcionarioSelecionado.nome} será inativado(a). Você tem certeza?"
+	severity="alert">
+	<div align="right">
+		<h:form id="frmDialogInativarFuncionario">
+			<p:commandButton value="Sim"
+				actionListener="#{funcionarioManagedBean.inativarFuncionario}"
+				update=":frmFuncDataTable"
+				oncomplete="if(!args.validationFailed) dialogInativarFuncionario.hide(); 
+							else dialogInativarFuncionario.show();" />
+
+			<p:commandButton value="Não" type="button"
+				onclick="dialogInativarFuncionario.hide()" />
+		</h:form>
+	</div>
+</p:confirmDialog>
+</html>

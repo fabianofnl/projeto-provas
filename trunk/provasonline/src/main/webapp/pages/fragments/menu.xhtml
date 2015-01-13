@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:form id="frmMenu">
+
+	<p:menu style="width:95%;">
+		<p:submenu label="SISTEMA">
+			<p:menuitem value="#{loginManagedBean.funcionario.nome}" disabled="true" style="font-weight: bold;"/>
+			<p:separator/>
+			<p:menuitem value="Sair" action="#{loginManagedBean.logout}"
+				ajax="false" />
+			<p:separator/>
+			<p:separator style="margin-bottom: 5px;"/>
+		</p:submenu>
+		<p:submenu label="HOME">
+			<p:menuitem value="Dashboard" url="/pages/system/dashboard/dashboard.jsf"/>
+		</p:submenu>
+
+		<p:submenu label="FUNCIONÁRIO"
+			rendered="#{loginManagedBean.funcionario.role eq 'ROLE_ADMIN'}">
+			<p:menuitem value="Gerenciar Funcionário" url="/pages/system/gerenciar_funcionario.jsf"/>
+			<p:menuitem value="Gerenciar Equipes" url="/pages/system/gerenciar_equipes.jsf"/>
+		</p:submenu>
+
+		<p:submenu label="PROVAS"
+			rendered="#{loginManagedBean.funcionario.role eq 'ROLE_ADMIN' or loginManagedBean.funcionario.role eq 'ROLE_INSTRUTOR'}">
+			<p:menuitem value="Gerenciar Temas" url="/pages/system/gerenciar_temas.jsf"/>
+			<p:menuitem value="Gerenciar Provas" url="/pages/system/gerenciar_provas.jsf"/>
+		</p:submenu>
+
+		<p:submenu label="AGENDA"
+			rendered="#{loginManagedBean.funcionario.role eq 'ROLE_ADMIN' or loginManagedBean.funcionario.role eq 'ROLE_INSTRUTOR'}">
+			<p:menuitem value="Agendar Provas" />
+		</p:submenu>
+
+
+	</p:menu>
+</h:form>
+
+</html>
