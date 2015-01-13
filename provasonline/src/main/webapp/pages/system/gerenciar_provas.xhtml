@@ -31,7 +31,7 @@
 					emptyMessage="Não há registros."
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
-					<p:column headerText="Prova" styleClass="table-vertical-align">
+					<p:column headerText="Prova">
 						<h:outputText value="#{prova.titulo}" />
 					</p:column>
 
@@ -94,8 +94,8 @@
 
 				<p:commandButton value="Adicionar prova" style="margin-top: 10px;"
 					actionListener="#{provaManagedBean.carregarTemas}"
-					oncomplete="dialogCadastrarProva.show()"
-					update=":idDialogCadastrarProva" />
+					oncomplete="dialogCadProva.show()"
+					update=":idDialogCadProva" />
 
 			</h:form>
 
