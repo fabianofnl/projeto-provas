@@ -31,17 +31,33 @@
 					emptyMessage="Não há registros."
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
-					<p:column headerText="Prova">
+					<p:column headerText="Prova" style="width:22%">
 						<h:outputText value="#{prova.titulo}" />
 					</p:column>
 
-					<p:column headerText="Questões">
+					<p:column headerText="Questões" style="width:40%">
 						<ul style="list-style-type: none;">
 							<ui:repeat var="questao" value="#{prova.listaQuestoes}">
-								<li>#{questao.titulo}<p:commandButton icon="ui-icon-trash"
-										style="width:22px; height:22px;"
-										oncomplete="dialogRemoverQuestao.show()"
-										update=":idDialogRemoverQuestao" title="Remover questão">
+								<li><h:outputText value="#{questao.tituloQuestao}" /> <p:commandButton
+										icon="ui-icon-trash"
+										style="width:20px; height:20px; margin-left:5px;"
+										oncomplete="dialogExcluirQuestao.show()"
+										update=":idDialogExcluirQuestao" title="Excluir questão">
+										<f:setPropertyActionListener value="#{questao}"
+											target="#{provaManagedBean.questaoSelecionada}" />
+									</p:commandButton> 
+									
+									<p:commandButton icon="ui-icon-plus"
+										title="Adicionar opções" style="width:20px; height:20px;"
+										oncomplete="dialogAddOpcao.show()">
+										<f:setPropertyActionListener value="#{questao}"
+											target="#{provaManagedBean.questaoSelecionada}" />
+									</p:commandButton>
+									
+									
+									<p:commandButton id="viewQuestao" icon="ui-icon-search"
+										title="Visualizar questão" style="width:20px; height:20px;"
+										oncomplete="dialogViewQuestao.show()" update=":frmOverlay">
 										<f:setPropertyActionListener value="#{questao}"
 											target="#{provaManagedBean.questaoSelecionada}" />
 									</p:commandButton></li>
@@ -49,14 +65,14 @@
 						</ul>
 					</p:column>
 
-					<p:column headerText="Apostilas">
+					<p:column headerText="Apostilas" style="width:25%">
 						<ul style="list-style-type: none;">
 							<ui:repeat var="apostila" value="#{prova.listaApostilas}">
-								<li>#{apostila.titulo}<p:commandButton icon="ui-icon-trash"
-										style="width:22px; height:22px;"
-										oncomplete="dialogRemoverApostila.show()"
-										update=":idDialogRemoverApostila" title="Remover apostila">
-										<f:setPropertyActionListener value="#{apostila.titulo}"
+								<li>#{apostila.nome}<p:commandButton icon="ui-icon-trash"
+										style="width:20px; height:20px; margin-left:5px;"
+										oncomplete="dialogExcluir.show()"
+										update=":idDialogExcluirApostila" title="Excluir apostila">
+										<f:setPropertyActionListener value="#{apostila}"
 											target="#{provaManagedBean.apostilaSelecionada}" />
 									</p:commandButton></li>
 							</ui:repeat>
@@ -64,38 +80,36 @@
 					</p:column>
 
 					<p:column headerText="Ações" styleClass="centralizar"
-						style="width:15%;">
+						style="width:13%;">
 						<p:commandButton id="btnEdit" title="Editar Prova"
-							icon="ui-icon-wrench" style="width:22px; height:22px;"
-							oncomplete="dialogEditProva.show()" update=":idDialogEditProva">
+							icon="ui-icon-wrench" oncomplete="dialogEditProva.show()"
+							update=":idDialogEditProva">
 							<f:setPropertyActionListener
 								target="#{provaManagedBean.provaSelecionada}" value="#{prova}" />
 						</p:commandButton>
 
 						<p:commandButton id="btnExc" title="Excluir Prova"
-							icon="ui-icon-trash" style="width:22px; height:22px;"
-							oncomplete="dialogExcluirProva.show()"
+							icon="ui-icon-trash" oncomplete="dialogExcluirProva.show()"
 							update=":idDialogExcluirProva">
 							<f:setPropertyActionListener
 								target="#{provaManagedBean.provaSelecionada}" value="#{prova}" />
 						</p:commandButton>
 
 						<p:commandButton id="btnAddQuestao" title="Cadastrar Questao"
-							icon="ui-icon-circle-plus" style="width:22px; height:22px;"
-							oncomplete="dialogCadQuestao.show()" update=":idDialogCadQuestao">
+							icon="ui-icon-circle-plus" oncomplete="dialogCadQuestao.show()"
+							update=":idDialogCadQuestao">
 						</p:commandButton>
-						
+
 						<p:commandButton id="btnAddApostila" title="Adicionar Apostila"
-							icon="ui-icon-document" style="width:22px; height:22px;"
-							oncomplete="dialogAddApostila.show()" update=":idDialogAddApostila">
+							icon="ui-icon-document" oncomplete="dialogAddApostila.show()"
+							update=":idDialogAddApostila">
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 
 				<p:commandButton value="Adicionar prova" style="margin-top: 10px;"
 					actionListener="#{provaManagedBean.carregarTemas}"
-					oncomplete="dialogCadProva.show()"
-					update=":idDialogCadProva" />
+					oncomplete="dialogCadProva.show()" update=":idDialogCadProva" />
 
 			</h:form>
 
@@ -124,6 +138,9 @@
 				src="/pages/system/dialog/dialog_adicionar_apostila.xhtml" />
 
 			<ui:include src="/pages/system/dialog/dialog_excluir_apostila.xhtml" />
+
+
+			<ui:include src="/pages/system/dialog/dialog_view_questao.xhtml" />
 
 		</div>
 	</ui:define>
