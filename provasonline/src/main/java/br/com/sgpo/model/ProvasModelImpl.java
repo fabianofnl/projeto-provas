@@ -108,6 +108,12 @@ public class ProvasModelImpl implements ProvasModel {
 			+ "(SELECT a.agendaId FROM agenda a, funcionario f WHERE f.matricula = a.matcolaborador "
 			+ "AND f.matricula = ? AND a.dataProva = ?)";
 
+	private static final String SELECT_QUESTOES_POR_PROVA = "SELECT q.* FROM questoes q, montarProvas m "
+			+ "WHERE q.questaoId = m.questaoId AND m.provaId = ? ORDER BY q.titulo";
+
+	private static final String SELECT_APOSTILA_POR_PROVA = "SELECT a.* FROM apostilas a, vincularApostilas v "
+			+ "WHERE a.apostilaId = v.apostilaId AND v.provaId = ? ORDER BY a.nome";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -632,6 +638,13 @@ public class ProvasModelImpl implements ProvasModel {
 			listaProvas.add(prova);
 		}
 
+		for (ProvaDTO provaDTO : listaProvas) {
+			provaDTO.setListaQuestoes(listarQuestoesPorProva(rs, pstmt, conn,
+					provaDTO));
+			provaDTO.setListaApostilas(listarApostilasPorProva(rs, pstmt, conn,
+					provaDTO));
+		}
+
 		if (rs != null)
 			rs.close();
 		if (pstmt != null)
@@ -640,6 +653,51 @@ public class ProvasModelImpl implements ProvasModel {
 			conn.close();
 
 		return listaProvas;
+	}
+
+	private List<QuestaoDTO> listarQuestoesPorProva(ResultSet rs,
+			PreparedStatement pstmt, Connection conn, ProvaDTO provaDTO)
+			throws SQLException {
+
+		List<QuestaoDTO> listaQuestoes = new ArrayList<QuestaoDTO>();
+		QuestaoDTO questao = null;
+		pstmt = conn.prepareStatement(SELECT_QUESTOES_POR_PROVA);
+		pstmt.setInt(1, provaDTO.getProvaId());
+		rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			questao = new QuestaoDTO();
+			questao.setQuestaoId(rs.getInt("questaoId"));
+			questao.setTituloQuestao(rs.getString("titulo"));
+			questao.setDescricaoQuestao(rs.getString("descricao"));
+			questao.setTemaId(rs.getInt("temaId"));
+			listaQuestoes.add(questao);
+		}
+
+		return listaQuestoes;
+	}
+
+	private List<ApostilaDTO> listarApostilasPorProva(ResultSet rs,
+			PreparedStatement pstmt, Connection conn, ProvaDTO provaDTO)
+			throws SQLException {
+
+		List<ApostilaDTO> listaApostilas = new ArrayList<ApostilaDTO>();
+		ApostilaDTO apostila = null;
+		pstmt = conn.prepareStatement(SELECT_APOSTILA_POR_PROVA);
+		pstmt.setInt(1, provaDTO.getProvaId());
+		rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			apostila = new ApostilaDTO();
+			apostila.setApostilaId(rs.getInt("apostilaId"));
+			apostila.setNome(rs.getString("nome"));
+			apostila.setHashName(rs.getString("hashname"));
+			apostila.setExtensao(rs.getString("extensao"));
+			apostila.setServerPath(rs.getString("serverpath"));
+			listaApostilas.add(apostila);
+		}
+
+		return listaApostilas;
 	}
 
 	@Override

@@ -2,9 +2,11 @@ package br.com.sgpo.controller;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -20,6 +22,8 @@ import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
+import br.com.sgpo.service.ProvasService;
+import br.com.sgpo.service.ProvasServiceImpl;
 
 /**
  * @author Roseli
@@ -51,7 +55,24 @@ public class ProvaManagedBean implements Serializable {
 	private StreamedContent fileDownload;
 
 	public void carregarTabela(ActionEvent event) {
-
+		
+		try {
+			ProvasService provaService = new ProvasServiceImpl();
+			listaProvas = provaService.listarProvas();
+		} catch (ClassNotFoundException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
+		
 	}
 
 	public void carregarTemas(ActionEvent event) {

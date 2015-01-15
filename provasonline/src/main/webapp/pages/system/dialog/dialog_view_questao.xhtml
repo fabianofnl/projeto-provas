@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<p:dialog widgetVar="dialogViewQuestao" appendToBody="true" header="Descrição da questão"
+	dynamic="true" width="400">
+	<h:form id="frmOverlay">
+		<p:outputPanel autoUpdate="true" >
+			<h:outputText escape="false"
+				value="#{provaManagedBean.questaoSelecionada.descricaoQuestao}"/>
+		</p:outputPanel>
+	</h:form>
+</p:dialog>
+</html>
