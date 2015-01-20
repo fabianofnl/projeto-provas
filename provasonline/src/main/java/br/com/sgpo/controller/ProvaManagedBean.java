@@ -55,7 +55,7 @@ public class ProvaManagedBean implements Serializable {
 	private StreamedContent fileDownload;
 
 	public void carregarTabela(ActionEvent event) {
-		
+
 		try {
 			ProvasService provaService = new ProvasServiceImpl();
 			listaProvas = provaService.listarProvas();
@@ -72,7 +72,7 @@ public class ProvaManagedBean implements Serializable {
 							"Houve um erro na aplicação, tente mais tarde"));
 			LOG.error("Houve um problema na query do banco de dados", e);
 		}
-		
+
 	}
 
 	public void carregarTemas(ActionEvent event) {
@@ -87,10 +87,61 @@ public class ProvaManagedBean implements Serializable {
 
 	public void cadastrarProva(ActionEvent event) {
 
+		try {
+			ProvasService provaService = new ProvasServiceImpl();
+			provaService.gravar(provaNova);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso",
+							provaNova.getTitulo()
+									+ " cadastrado(a) com sucesso."));
+
+			carregarTabela(event);
+			limparSessao();
+
+		} catch (ClassNotFoundException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
+
 	}
 
 	public void editarProva(ActionEvent event) {
 
+		try {
+			ProvasService provaService = new ProvasServiceImpl();
+			provaService.alterarProva(provaSelecionada);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso",
+							provaSelecionada.getTitulo()
+									+ " alterado(a) com sucesso."));
+
+			carregarTabela(event);
+			limparSessao();
+
+		} catch (ClassNotFoundException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
 	}
 
 	public void excluirProva(ActionEvent event) {
@@ -136,6 +187,18 @@ public class ProvaManagedBean implements Serializable {
 	}
 
 	public void excluirApostila(ActionEvent event) {
+
+	}
+
+	private void limparSessao() {
+		provaNova = new ProvaDTO();
+		provaSelecionada = new ProvaDTO();
+		questaoNova = new QuestaoDTO();
+		questaoSelecionada = new QuestaoDTO();
+		opcaoNova = new OpcaoDTO();
+		opcaoSelecionada = new OpcaoDTO();
+		apostilaNova = new ApostilaDTO();
+		apostilaSelecionada = new ApostilaDTO();
 
 	}
 

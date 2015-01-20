@@ -49,7 +49,7 @@
 									
 									<p:commandButton icon="ui-icon-plus"
 										title="Adicionar opções" style="width:20px; height:20px;"
-										oncomplete="dialogAddOpcao.show()">
+										oncomplete="dialogCadOpcoes.show()">
 										<f:setPropertyActionListener value="#{questao}"
 											target="#{provaManagedBean.questaoSelecionada}" />
 									</p:commandButton>
@@ -70,7 +70,7 @@
 							<ui:repeat var="apostila" value="#{prova.listaApostilas}">
 								<li>#{apostila.nome}<p:commandButton icon="ui-icon-trash"
 										style="width:20px; height:20px; margin-left:5px;"
-										oncomplete="dialogExcluir.show()"
+										oncomplete="dialogExcluirApostila.show()"
 										update=":idDialogExcluirApostila" title="Excluir apostila">
 										<f:setPropertyActionListener value="#{apostila}"
 											target="#{provaManagedBean.apostilaSelecionada}" />

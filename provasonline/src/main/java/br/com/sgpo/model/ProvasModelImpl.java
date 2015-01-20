@@ -66,7 +66,7 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String DELETE_APOSTILA_PROVA = "DELETE FROM vincularApostilas WHERE apostilaId = ? AND provaId = ?";
 
-	private static final String SELECT_PROVAS = "SELECT * FROM provas";
+	private static final String SELECT_PROVAS = "SELECT * FROM provas ORDER BY titulo";
 
 	private static final String INSERT_AGENDA = "INSERT INTO agenda (matcolaborador, provaId, dataProva) VALUES (?, ?, ?)";
 
@@ -113,6 +113,8 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String SELECT_APOSTILA_POR_PROVA = "SELECT a.* FROM apostilas a, vincularApostilas v "
 			+ "WHERE a.apostilaId = v.apostilaId AND v.provaId = ? ORDER BY a.nome";
+
+	private static final String PROVA_ALTERAR = "UPDATE provas SET titulo = ? WHERE provaId = ?";
 
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
@@ -1132,5 +1134,25 @@ public class ProvasModelImpl implements ProvasModel {
 			conn.close();
 
 		return exists;
+	}
+
+	@Override
+	public void alterarProva(ProvaDTO provaSelecionada)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método alterar prova");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(PROVA_ALTERAR);
+		pstmt.setString(1, provaSelecionada.getTitulo());
+		pstmt.setInt(2, provaSelecionada.getProvaId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
 	}
 }

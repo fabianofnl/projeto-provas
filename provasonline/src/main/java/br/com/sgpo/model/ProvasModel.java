@@ -107,4 +107,7 @@ public interface ProvasModel {
 
 	public boolean existeProvaAgendadaMesaData(Integer matricula,
 			Date dataAgendada) throws ClassNotFoundException, SQLException;
+
+	public void alterarProva(ProvaDTO provaSelecionada)
+			throws ClassNotFoundException, SQLException;
 }
