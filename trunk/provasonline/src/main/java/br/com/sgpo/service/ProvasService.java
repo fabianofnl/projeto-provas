@@ -100,4 +100,7 @@ public interface ProvasService {
 	public boolean existeProvaAgendadaMesmaData(Integer matricula,
 			Date dataAgendada) throws ClassNotFoundException, SQLException;
 
+	public void alterarProva(ProvaDTO provaSelecionada)
+			throws ClassNotFoundException, SQLException;
+
 }

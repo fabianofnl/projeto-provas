@@ -244,4 +244,11 @@ public class ProvasServiceImpl implements ProvasService {
 			Date dataAgendada) throws ClassNotFoundException, SQLException {
 		return provasModel.existeProvaAgendadaMesaData(matricula, dataAgendada);
 	}
+
+	@Override
+	public void alterarProva(ProvaDTO provaSelecionada)
+			throws ClassNotFoundException, SQLException {
+		provasModel.alterarProva(provaSelecionada);
+
+	}
 }
