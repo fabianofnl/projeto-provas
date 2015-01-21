@@ -39,20 +39,33 @@
 						<ul style="list-style-type: none;">
 							<ui:repeat var="questao" value="#{prova.listaQuestoes}">
 								<li><h:outputText value="#{questao.tituloQuestao}" /> <p:commandButton
-										icon="ui-icon-trash"
+										id="btnEditQuestao" title="Editar questão"
+										icon="ui-icon-wrench" oncomplete="dialogEditQuestao.show()"
+										actionListener="#{provaManagedBean.carregarTemas}"
 										style="width:20px; height:20px; margin-left:5px;"
+										update=":idDialogEditQuestao">
+										<f:setPropertyActionListener
+											target="#{provaManagedBean.questaoSelecionada}"
+											value="#{questao}" />
+										<f:setPropertyActionListener
+											target="#{provaManagedBean.provaSelecionada}"
+											value="#{prova}" />
+									</p:commandButton> <p:commandButton icon="ui-icon-trash"
+										style="width:20px; height:20px;"
 										oncomplete="dialogExcluirQuestao.show()"
 										update=":idDialogExcluirQuestao" title="Excluir questão">
 										<f:setPropertyActionListener value="#{questao}"
 											target="#{provaManagedBean.questaoSelecionada}" />
 									</p:commandButton> <p:commandButton icon="ui-icon-plus" title="Adicionar opções"
 										style="width:20px; height:20px;"
+										action="#{provaManagedBean.carregarOpcoes}"
+										update=":idDialogCadOpcoes"
 										oncomplete="dialogCadOpcoes.show()">
 										<f:setPropertyActionListener value="#{questao}"
 											target="#{provaManagedBean.questaoSelecionada}" />
 									</p:commandButton> <p:commandButton id="viewQuestao" icon="ui-icon-search"
 										title="Visualizar questão" style="width:20px; height:20px;"
-										oncomplete="dialogViewQuestao.show()" update=":frmOverlay">
+										oncomplete="dialogViewQuestao.show()" update=":frmDialogView">
 										<f:setPropertyActionListener value="#{questao}"
 											target="#{provaManagedBean.questaoSelecionada}" />
 									</p:commandButton></li>

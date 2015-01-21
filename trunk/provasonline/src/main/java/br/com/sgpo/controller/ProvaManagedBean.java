@@ -25,6 +25,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
+import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.ProvaDTO;
@@ -46,9 +47,6 @@ public class ProvaManagedBean implements Serializable {
 	private static final long serialVersionUID = 1115044849242787671L;
 	private static final Logger LOG = Logger.getLogger(ProvaManagedBean.class);
 
-	private static final String SERVER_PATH = "D:\\provasonline\\anexos";
-	private static final int BUFFER_SIZE = 8192;
-
 	private ProvaDTO provaSelecionada = new ProvaDTO();
 	private ProvaDTO provaNova = new ProvaDTO();
 
@@ -60,8 +58,6 @@ public class ProvaManagedBean implements Serializable {
 
 	private ApostilaDTO apostilaSelecionada = new ApostilaDTO();
 	private ApostilaDTO apostilaNova = new ApostilaDTO();
-
-	private TemaDTO temaSelecionado = new TemaDTO();
 
 	private List<ProvaDTO> listaProvas = new ArrayList<ProvaDTO>();
 	private List<OpcaoDTO> listaOpcoes = new ArrayList<OpcaoDTO>();
@@ -108,8 +104,18 @@ public class ProvaManagedBean implements Serializable {
 
 	}
 
-	public void carregarOpcoes(ActionEvent event) {
+	public void carregarOpcoes() {
 
+		try {
+			ProvasService provaService = new ProvasServiceImpl();
+			listaOpcoes = provaService
+					.listarOpcoesPorQuestaoId(questaoSelecionada.getQuestaoId());
+			LOG.info("Total de Opcões: " + listaOpcoes.size());
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
 	}
 
 	public void cadastrarProva(ActionEvent event) {
@@ -181,7 +187,6 @@ public class ProvaManagedBean implements Serializable {
 
 			ProvasService provasService = new ProvasServiceImpl();
 			questaoNova.setProvaId(provaSelecionada.getProvaId());
-			questaoNova.setTemaId(temaSelecionado.getTemaId());
 			provasService.gravarQuestao(questaoNova);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -209,6 +214,31 @@ public class ProvaManagedBean implements Serializable {
 
 	public void editarQuestao(ActionEvent event) {
 
+		try {
+			ProvasService provasService = new ProvasServiceImpl();
+			provasService.alterarQuestao(questaoSelecionada);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso",
+							questaoSelecionada.getTituloQuestao()
+									+ " cadastrado(a) com sucesso."));
+
+			carregarTabela(event);
+			limparSessao();
+		} catch (ClassNotFoundException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
+
 	}
 
 	public void excluirQuestao(ActionEvent event) {
@@ -217,14 +247,50 @@ public class ProvaManagedBean implements Serializable {
 
 	public void cadastrarOpcao(ActionEvent event) {
 
+		try {
+			ProvasService provasService = new ProvasServiceImpl();
+			opcaoNova.setQuestaoId(questaoSelecionada.getQuestaoId());
+			provasService.gravarOpcao(opcaoNova);
+
+			carregarOpcoes();
+			opcaoNova = new OpcaoDTO();
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
 	}
 
 	public void editarOpcao(ActionEvent event) {
 
 	}
 
+	public void definirOpcao() {
+
+		try {
+			ProvasService provasService = new ProvasServiceImpl();
+			provasService.definirOpcao(opcaoSelecionada);
+			carregarOpcoes();
+			opcaoSelecionada = new OpcaoDTO();
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
+	}
+
 	public void excluirOpcao(ActionEvent event) {
 
+		try {
+			ProvasService provasService = new ProvasServiceImpl();
+			provasService.excluirOpcao(opcaoSelecionada);
+			carregarOpcoes();
+			opcaoSelecionada = new OpcaoDTO();
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
 	}
 
 	public void apostilaUpload(ActionEvent event) {
@@ -235,7 +301,7 @@ public class ProvaManagedBean implements Serializable {
 
 				LOG.info("Arquivo: " + fileUpload.getFileName());
 				String fileName = fileUpload.getFileName();
-				String fullPath = SERVER_PATH + File.separator;
+				String fullPath = SGPOConstants.SERVER_PATH + File.separator;
 				LOG.info("Diretório: " + fullPath);
 
 				File fileSaveDir = new File(fullPath);
@@ -251,10 +317,11 @@ public class ProvaManagedBean implements Serializable {
 				}
 
 				FileOutputStream fos = new FileOutputStream(new File(
-						SERVER_PATH + File.separator + hash + "_" + fileName));
+						SGPOConstants.SERVER_PATH + File.separator + hash + "_"
+								+ fileName));
 
 				InputStream is = fileUpload.getInputstream();
-				byte[] buffer = new byte[BUFFER_SIZE];
+				byte[] buffer = new byte[SGPOConstants.BUFFER_SIZE];
 
 				int a;
 
@@ -401,14 +468,6 @@ public class ProvaManagedBean implements Serializable {
 
 	public void setProvaSelecionada(ProvaDTO provaSelecionada) {
 		this.provaSelecionada = provaSelecionada;
-	}
-
-	public TemaDTO getTemaSelecionado() {
-		return temaSelecionado;
-	}
-
-	public void setTemaSelecionado(TemaDTO temaSelecionado) {
-		this.temaSelecionado = temaSelecionado;
 	}
 
 	public QuestaoDTO getQuestaoSelecionada() {

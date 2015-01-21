@@ -8,6 +8,7 @@ import java.util.List;
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
@@ -104,6 +105,21 @@ public interface ProvasService {
 			throws ClassNotFoundException, SQLException;
 
 	public void gravarQuestao(QuestaoDTO questaoNova)
+			throws ClassNotFoundException, SQLException;
+
+	public void alterarQuestao(QuestaoDTO questaoSelecionada)
+			throws ClassNotFoundException, SQLException;
+
+	public void gravarOpcao(OpcaoDTO opcaoSelecionada)
+			throws ClassNotFoundException, SQLException;
+
+	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
+			throws ClassNotFoundException, SQLException;
+
+	public void definirOpcao(OpcaoDTO opcaoSelecionada)
+			throws ClassNotFoundException, SQLException;
+
+	public void excluirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException;
 
 }

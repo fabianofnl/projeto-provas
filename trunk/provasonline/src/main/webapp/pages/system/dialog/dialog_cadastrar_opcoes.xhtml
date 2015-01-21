@@ -8,8 +8,74 @@
 
 <p:dialog id="idDialogCadOpcoes" header="Cadastrar opções"
 	widgetVar="dialogCadOpcoes" modal="true" dynamic="true"
-	appendToBody="true" resizable="false" width="600">
+	appendToBody="true" resizable="false" width="500">
 
-	<h:outputText value="Isso é um texto de exemplo apenas"/>
+	<h:form id="frmDialogCadOpcoes">
+
+		<p:panelGrid style="width:100%;">
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText
+						value="Questão: #{provaManagedBean.questaoSelecionada.tituloQuestao}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<p:fieldset rendered="#{!empty provaManagedBean.listaOpcoes}">
+						<ui:repeat var="opcao" value="#{provaManagedBean.listaOpcoes}">
+							<span
+								class="ui-icon #{opcao.flag ? 'ui-icon-check' : 'ui-icon-closethick'}"
+								style="display: inline-block"></span>
+							<h:outputText value="#{opcao.tituloOpcao}" />
+							<p:commandButton id="definirOpcao" icon="ui-icon-check" immediate="true"
+								title="Definir opção" style="width:20px; height:20px; margin-left: 5px;"
+								oncomplete="dialogCadOpcoes.show()" update=":frmDialogCadOpcoes"
+								action="#{provaManagedBean.definirOpcao}">
+								<f:setPropertyActionListener value="#{opcao}"
+									target="#{provaManagedBean.opcaoSelecionada}" />
+							</p:commandButton>
+							<p:commandButton id="excluirOpcao" icon="ui-icon-trash" immediate="true"
+								title="Excluir opção" style="width:20px; height:20px;"
+								oncomplete="dialogExcluirOpcao.show()" update=":idDialogExcluirOpcao">
+								<f:setPropertyActionListener value="#{opcao}"
+									target="#{provaManagedBean.opcaoSelecionada}"/>
+							</p:commandButton>
+							<br />
+						</ui:repeat>
+					</p:fieldset>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Opção:" />
+				</p:column>
+				<p:column>
+					<p:inputText value="#{provaManagedBean.opcaoNova.tituloOpcao}"
+						size="48" required="true"
+						requiredMessage="O campo opção é obrigatório." />
+					<p:commandButton icon="ui-icon-plus" title="Adicionar opção"
+						style="margin-left: 5px;" update=":idDialogCadOpcoes"
+						actionListener="#{provaManagedBean.cadastrarOpcao}"
+						oncomplete="dialogCadOpcoes.show()" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<p:separator />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<div align="right">
+						<p:commandButton value="Fechar" type="button"
+							onclick="dialogCadOpcoes.hide()" />
+
+					</div>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+
+
 </p:dialog>
 </html>

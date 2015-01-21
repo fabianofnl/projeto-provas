@@ -46,6 +46,7 @@ CREATE TABLE temas (
 
 CREATE TABLE questoes (
 	questaoId SERIAL NOT NULL PRIMARY KEY,
+	provaId INTEGER NOT NULL REFERENCES provas(provaId),
 	titulo VARCHAR(255) NOT NULL,
 	descricao TEXT NOT NULL,
 	temaId INTEGER REFERENCES temas(temaId)
@@ -63,15 +64,16 @@ CREATE TABLE provas (
 	titulo VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE montarProvas (
-	provaId INTEGER NOT NULL REFERENCES provas(provaId),
-	questaoId INTEGER NOT NULL REFERENCES questoes(questaoId)
-);
+-- NOTA: Essa tabela não será mais necessário
+-- CREATE TABLE montarProvas (
+--	provaId INTEGER NOT NULL REFERENCES provas(provaId),
+--	questaoId INTEGER NOT NULL REFERENCES questoes(questaoId)
+-- );
 
 CREATE TABLE apostilas (
 	apostilaId SERIAL NOT NULL PRIMARY KEY,
 	provaId INTEGER NOT NULL REFERENCES provas(provaId),
-	nome VARCHAR(150) NOT NULL,
+	nome VARCHAR(255) NOT NULL,
 	extensao VARCHAR(10),
 	hashName VARCHAR(50) NOT NULL,
 	serverPath VARCHAR(255) NOT NULL
@@ -85,7 +87,6 @@ CREATE TABLE apostilas (
 -- serão armazenados para histórico
 
 -- NOTA: Não será mais necessário essa tabela
-
 -- CREATE TABLE vincularApostilas (
 --	apostilaId INTEGER NOT NULL, -- Referencia Apostilas(apostilaId)
 --	provaId INTEGER NOT NULL -- Referencia Provas(provaId)

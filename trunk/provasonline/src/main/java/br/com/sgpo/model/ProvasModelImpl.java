@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
@@ -118,6 +119,17 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String INSERT_QUESTAO = "INSERT INTO questoes (titulo, provaId, descricao, temaId) "
 			+ "VALUES (?, ?, ?, ?)";
+
+	private static final String UPDATE_QUESTAO = "UPDATE questoes SET titulo = ?, descricao = ?, temaId = ? "
+			+ "WHERE questaoId = ?";
+
+	private static final String INSERT_OPCAO = "INSERT INTO opcoes (titulo, questaoId) VALUES (?, ?)";
+
+	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT * FROM opcoes WHERE questaoId = ? ORDER BY titulo";
+
+	private static final String DEFINIR_OPCAO = "UPDATE opcoes SET flag = ? WHERE opcaoId = ?";
+
+	private static final String DELETE_OPCAO = "DELETE FROM opcoes WHERE opcaoId = ?";
 
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
@@ -1176,6 +1188,139 @@ public class ProvasModelImpl implements ProvasModel {
 		pstmt.setInt(2, questaoNova.getProvaId());
 		pstmt.setString(3, questaoNova.getDescricaoQuestao());
 		pstmt.setInt(4, questaoNova.getTemaId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+	}
+
+	@Override
+	public void alterarQuestao(QuestaoDTO questaoSelecionada)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método alterar questão");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(UPDATE_QUESTAO);
+		pstmt.setString(1, questaoSelecionada.getTituloQuestao());
+		pstmt.setString(2, questaoSelecionada.getDescricaoQuestao());
+		pstmt.setInt(3, questaoSelecionada.getTemaId());
+		pstmt.setInt(4, questaoSelecionada.getQuestaoId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+	}
+
+	@Override
+	public void gravarOpcao(OpcaoDTO opcaoNova) throws ClassNotFoundException,
+			SQLException {
+
+		LOG.info("Chamando método gravar Opção");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(INSERT_OPCAO);
+		pstmt.setString(1, opcaoNova.getTituloOpcao());
+		pstmt.setInt(2, opcaoNova.getQuestaoId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+	}
+
+	@Override
+	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
+			throws ClassNotFoundException, SQLException {
+		LOG.info("Chamando método listarOpções");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<OpcaoDTO> listaOpcoes = new ArrayList<OpcaoDTO>();
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_OPCOES_POR_QUESTAO);
+		pstmt.setInt(1, questaoId);
+		rs = pstmt.executeQuery();
+		OpcaoDTO opcao = null;
+
+		while (rs.next()) {
+			opcao = new OpcaoDTO();
+			opcao.setOpcaoId(rs.getInt("opcaoId"));
+			opcao.setTituloOpcao(rs.getString("titulo"));
+			opcao.setQuestaoId(rs.getInt("questaoId"));
+			opcao.setFlag(rs.getBoolean("flag"));
+			listaOpcoes.add(opcao);
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaOpcoes;
+	}
+
+	@Override
+	public void definirOpcao(OpcaoDTO opcaoSelecionada)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método definir Opção");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+
+		List<OpcaoDTO> listaOpcoes = listarOpcoesPorQuestaoId(opcaoSelecionada
+				.getQuestaoId());
+
+		pstmt = conn.prepareStatement(DEFINIR_OPCAO);
+
+		for (OpcaoDTO opcaoDTO : listaOpcoes) {
+			if (opcaoDTO.getOpcaoId().equals(opcaoSelecionada.getOpcaoId())) {
+				opcaoDTO.setFlag(true);
+			} else {
+				opcaoDTO.setFlag(false);
+			}
+			pstmt.setBoolean(1, opcaoDTO.getFlag());
+			pstmt.setInt(2, opcaoDTO.getOpcaoId());
+			pstmt.addBatch();
+		}
+		pstmt.executeBatch();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+	}
+
+	@Override
+	public void excluirOpcao(OpcaoDTO opcaoSelecionada)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método remover Opção");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(DELETE_OPCAO);
+		pstmt.setInt(1, opcaoSelecionada.getOpcaoId());
 		pstmt.execute();
 
 		if (pstmt != null)

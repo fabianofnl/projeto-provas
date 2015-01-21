@@ -14,9 +14,9 @@
 		<h:form id="frmDialogExcluirOpcao">
 			<p:commandButton value="Sim"
 				actionListener="#{provaManagedBean.excluirOpcao}"
-				update=":frmProvaDataTable"
-				oncomplete="if(!args.validationFailed) dialogExcluirOpcao.hide(); 
-							else dialogExcluirOpcao.show();" />
+				update=":idDialogCadOpcoes"
+				oncomplete="if(!args.validationFailed) {dialogExcluirOpcao.hide(); dialogCadOpcoes.show();} 
+							else {dialogExcluirOpcao.show();}" />
 
 			<p:commandButton value="Não" type="button"
 				onclick="dialogExcluirOpcao.hide()" />
