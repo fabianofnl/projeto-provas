@@ -174,6 +174,13 @@ public class ProvaManagedBean implements Serializable {
 
 	public void apostilaUpload(FileUploadEvent event) {
 
+		LOG.info("Carregou " + event.getFile().getFileName());
+
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", event
+						.getFile().getFileName() + " carrregado com sucesso."));
+
 	}
 
 	public void apostilaDownload(ActionEvent event) {
@@ -293,5 +300,4 @@ public class ProvaManagedBean implements Serializable {
 	public StreamedContent getFileDownload() {
 		return fileDownload;
 	}
-
 }

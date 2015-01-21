@@ -70,6 +70,7 @@ CREATE TABLE montarProvas (
 
 CREATE TABLE apostilas (
 	apostilaId SERIAL NOT NULL PRIMARY KEY,
+	provaId INTEGER NOT NULL REFERENCES provas(provaId),
 	nome VARCHAR(150) NOT NULL,
 	extensao VARCHAR(10),
 	hashName VARCHAR(50) NOT NULL,
@@ -82,10 +83,13 @@ CREATE TABLE apostilas (
 
 -- Será permitido exclusão da Prova (demais informações 
 -- serão armazenados para histórico
-CREATE TABLE vincularApostilas (
-	apostilaId INTEGER NOT NULL, -- Referencia Apostilas(apostilaId)
-	provaId INTEGER NOT NULL -- Referencia Provas(provaId)
-);
+
+-- NOTA: Não será mais necessário essa tabela
+
+-- CREATE TABLE vincularApostilas (
+--	apostilaId INTEGER NOT NULL, -- Referencia Apostilas(apostilaId)
+--	provaId INTEGER NOT NULL -- Referencia Provas(provaId)
+-- );
 
 -- Ambos os atributos não serão referenciado pelo banco, 
 -- mas o sistema irá controlar a referencia, para que

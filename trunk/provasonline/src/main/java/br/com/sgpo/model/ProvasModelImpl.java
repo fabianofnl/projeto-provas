@@ -111,8 +111,8 @@ public class ProvasModelImpl implements ProvasModel {
 	private static final String SELECT_QUESTOES_POR_PROVA = "SELECT q.* FROM questoes q, montarProvas m "
 			+ "WHERE q.questaoId = m.questaoId AND m.provaId = ? ORDER BY q.titulo";
 
-	private static final String SELECT_APOSTILA_POR_PROVA = "SELECT a.* FROM apostilas a, vincularApostilas v "
-			+ "WHERE a.apostilaId = v.apostilaId AND v.provaId = ? ORDER BY a.nome";
+	private static final String SELECT_APOSTILA_POR_PROVA = "SELECT * FROM apostilas "
+			+ "WHERE provaId = ? ORDER BY nome";
 
 	private static final String PROVA_ALTERAR = "UPDATE provas SET titulo = ? WHERE provaId = ?";
 
@@ -692,6 +692,7 @@ public class ProvasModelImpl implements ProvasModel {
 		while (rs.next()) {
 			apostila = new ApostilaDTO();
 			apostila.setApostilaId(rs.getInt("apostilaId"));
+			apostila.setProvaId(rs.getInt("provaId"));
 			apostila.setNome(rs.getString("nome"));
 			apostila.setHashName(rs.getString("hashname"));
 			apostila.setExtensao(rs.getString("extensao"));
