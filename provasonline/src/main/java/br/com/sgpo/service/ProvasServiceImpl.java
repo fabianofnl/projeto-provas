@@ -251,4 +251,11 @@ public class ProvasServiceImpl implements ProvasService {
 		provasModel.alterarProva(provaSelecionada);
 
 	}
+
+	@Override
+	public void gravarQuestao(QuestaoDTO questaoNova)
+			throws ClassNotFoundException, SQLException {
+		provasModel.gravarQuestao(questaoNova);
+		
+	}
 }

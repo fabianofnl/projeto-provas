@@ -10,9 +10,10 @@ import java.util.List;
  */
 public class QuestaoDTO extends TemaDTO implements Serializable {
 
-	private static final long serialVersionUID = 1670332519379095776L;
+	private static final long serialVersionUID = 2156652037096892053L;
 
 	private Integer questaoId;
+	private Integer provaId;
 	private String tituloQuestao;
 	private String descricaoQuestao;
 	private Integer quantidadeOpcoes;
@@ -27,6 +28,14 @@ public class QuestaoDTO extends TemaDTO implements Serializable {
 
 	public void setQuestaoId(Integer questaoId) {
 		this.questaoId = questaoId;
+	}
+
+	public Integer getProvaId() {
+		return provaId;
+	}
+
+	public void setProvaId(Integer provaId) {
+		this.provaId = provaId;
 	}
 
 	public String getTituloQuestao() {

@@ -92,7 +92,10 @@
 
 						<p:commandButton id="btnAddQuestao" title="Cadastrar Questao"
 							icon="ui-icon-circle-plus" oncomplete="dialogCadQuestao.show()"
+							actionListener="#{provaManagedBean.carregarTemas}"
 							update=":idDialogCadQuestao">
+							<f:setPropertyActionListener
+								target="#{provaManagedBean.provaSelecionada}" value="#{prova}" />
 						</p:commandButton>
 
 						<p:commandButton id="btnAddApostila" title="Adicionar Apostila"

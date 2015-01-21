@@ -13,6 +13,26 @@
 	<h:form id="frmDialogCadQuestao">
 		<p:panelGrid style="width:100%;">
 			<p:row>
+				<p:column colspan="2">
+					<h:outputText
+						value="Prova: #{provaManagedBean.provaSelecionada.titulo}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Tema:" />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu id="selectTema" effectDuration="100"
+						required="true" requiredMessage="Campo tema é obrigatório."
+						value="#{provaManagedBean.temaSelecionado.temaId}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{provaManagedBean.listaTemas}" var="tema"
+							itemLabel="#{tema.titulo}" itemValue="#{tema.temaId}" />
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
+			<p:row>
 				<p:column>
 					<h:outputLabel value="Título:" />
 				</p:column>
@@ -46,7 +66,7 @@
 						<p:commandButton value="Cancelar" type="button"
 							onclick="dialogCadQuestao.hide()" />
 						<p:commandButton value="OK"
-							actionListener="#{questaoManagedBean.cadastrarQuestao}"
+							actionListener="#{provaManagedBean.cadastrarQuestao}"
 							update="frmDialogCadQuestao :frmProvaDataTable"
 							oncomplete="if(!args.validationFailed) dialogCadQuestao.hide(); 
 										else dialogCadQuestao.show();" />
