@@ -52,8 +52,8 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String SELECT_TOTAL_REGISTROS_APOSTILAS = "SELECT COUNT(apostilaId) AS total FROM apostilas";
 
-	private static final String INSERT_APOSTILA = "INSERT INTO apostilas (nome, extensao, hashName, serverPath) "
-			+ "VALUES (?, ?, ?, ?)";
+	private static final String INSERT_APOSTILA = "INSERT INTO apostilas (nome, provaId, extensao, hashName, serverPath) "
+			+ "VALUES (?, ?, ?, ?, ?)";
 
 	private static final String SELECT_APOSTILA_POR_ID = "SELECT * FROM apostilas WHERE apostilaId = ?";
 
@@ -474,9 +474,10 @@ public class ProvasModelImpl implements ProvasModel {
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(INSERT_APOSTILA);
 		pstmt.setString(1, apostilaDTO.getNome());
-		pstmt.setString(2, apostilaDTO.getExtensao());
-		pstmt.setString(3, apostilaDTO.getHashName());
-		pstmt.setString(4, apostilaDTO.getServerPath());
+		pstmt.setInt(2, apostilaDTO.getProvaId());
+		pstmt.setString(3, apostilaDTO.getExtensao());
+		pstmt.setString(4, apostilaDTO.getHashName());
+		pstmt.setString(5, apostilaDTO.getServerPath());
 		pstmt.execute();
 
 		if (pstmt != null)
