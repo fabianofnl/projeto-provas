@@ -25,7 +25,7 @@
 				<p:column>
 					<p:selectOneMenu id="selectTema" effectDuration="100"
 						required="true" requiredMessage="Campo tema é obrigatório."
-						value="#{provaManagedBean.temaSelecionado.temaId}">
+						value="#{provaManagedBean.questaoNova.temaId}">
 						<f:selectItem itemLabel="Selecione" itemValue="" />
 						<f:selectItems value="#{provaManagedBean.listaTemas}" var="tema"
 							itemLabel="#{tema.titulo}" itemValue="#{tema.temaId}" />

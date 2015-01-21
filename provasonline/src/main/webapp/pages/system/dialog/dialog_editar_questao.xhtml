@@ -6,12 +6,32 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<p:dialog id="idDialogEditQuestao" header="Editar Questao"
-	widgetVar="dialogEditTema" appendToBody="true" modal="true"
+<p:dialog id="idDialogEditQuestao" header="Editar Questão"
+	widgetVar="dialogEditQuestao" appendToBody="true" modal="true"
 	dynamic="true" resizable="false" width="500">
 
 	<h:form id="frmDialogEditQuestao">
 		<p:panelGrid style="width: 100%;">
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText
+						value="Prova: #{provaManagedBean.provaSelecionada.titulo}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Tema:" />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu id="selectTema" effectDuration="100"
+						required="true" requiredMessage="Campo tema é obrigatório."
+						value="#{provaManagedBean.questaoSelecionada.temaId}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{provaManagedBean.listaTemas}" var="tema"
+							itemLabel="#{tema.titulo}" itemValue="#{tema.temaId}" />
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
 			<p:row>
 				<p:column>
 					<h:outputLabel value="Título:" />
@@ -46,7 +66,7 @@
 						<p:commandButton value="Cancelar" type="button"
 							onclick="dialogEditQuestao.hide()" />
 						<p:commandButton value="OK"
-							actionListener="#{questaoManagedBean.editarQuestao}"
+							actionListener="#{provaManagedBean.editarQuestao}"
 							update="frmDialogEditQuestao :frmProvaDataTable"
 							oncomplete="if(!args.validationFailed) dialogEditQuestao.hide(); 
 										else dialogEditQuestao.show();" />

@@ -10,6 +10,7 @@ import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
+import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
@@ -256,6 +257,36 @@ public class ProvasServiceImpl implements ProvasService {
 	public void gravarQuestao(QuestaoDTO questaoNova)
 			throws ClassNotFoundException, SQLException {
 		provasModel.gravarQuestao(questaoNova);
-		
+
+	}
+
+	@Override
+	public void alterarQuestao(QuestaoDTO questaoSelecionada)
+			throws ClassNotFoundException, SQLException {
+		provasModel.alterarQuestao(questaoSelecionada);
+	}
+
+	@Override
+	public void gravarOpcao(OpcaoDTO opcaoNova) throws ClassNotFoundException,
+			SQLException {
+		provasModel.gravarOpcao(opcaoNova);
+	}
+
+	@Override
+	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
+			throws ClassNotFoundException, SQLException {
+		return provasModel.listarOpcoesPorQuestaoId(questaoId);
+	}
+
+	@Override
+	public void definirOpcao(OpcaoDTO opcaoSelecionada)
+			throws ClassNotFoundException, SQLException {
+		provasModel.definirOpcao(opcaoSelecionada);
+	}
+
+	@Override
+	public void excluirOpcao(OpcaoDTO opcaoSelecionada)
+			throws ClassNotFoundException, SQLException {
+		provasModel.excluirOpcao(opcaoSelecionada);
 	}
 }
