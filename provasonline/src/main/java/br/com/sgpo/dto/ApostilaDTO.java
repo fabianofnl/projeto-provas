@@ -10,9 +10,10 @@ import java.util.List;
  */
 public class ApostilaDTO implements Serializable {
 
-	private static final long serialVersionUID = 474045842166882818L;
+	private static final long serialVersionUID = -1580686072531800380L;
 
 	private Integer apostilaId;
+	private Integer provaId;
 	private String nome;
 	private String hashName;
 	private String extensao;
@@ -28,6 +29,14 @@ public class ApostilaDTO implements Serializable {
 
 	public void setApostilaId(Integer apostilaId) {
 		this.apostilaId = apostilaId;
+	}
+
+	public Integer getProvaId() {
+		return provaId;
+	}
+
+	public void setProvaId(Integer provaId) {
+		this.provaId = provaId;
 	}
 
 	public String getNome() {
@@ -72,10 +81,10 @@ public class ApostilaDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ApostilaDTO [apostilaId=" + apostilaId + ", nome=" + nome
-				+ ", hashName=" + hashName + ", extensao=" + extensao
-				+ ", serverPath=" + serverPath + ", listaProvas=" + listaProvas
-				+ "]";
+		return "ApostilaDTO [apostilaId=" + apostilaId + ", provaId=" + provaId
+				+ ", nome=" + nome + ", hashName=" + hashName + ", extensao="
+				+ extensao + ", serverPath=" + serverPath + ", listaProvas="
+				+ listaProvas + "]";
 	}
 
 }
