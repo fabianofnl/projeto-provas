@@ -110,4 +110,7 @@ public interface ProvasModel {
 
 	public void alterarProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException;
+
+	public void gravarQuestao(QuestaoDTO questaoNova)
+			throws ClassNotFoundException, SQLException;
 }

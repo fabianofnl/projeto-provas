@@ -29,8 +29,11 @@ import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
+import br.com.sgpo.dto.TemaDTO;
 import br.com.sgpo.service.ProvasService;
 import br.com.sgpo.service.ProvasServiceImpl;
+import br.com.sgpo.service.TemasService;
+import br.com.sgpo.service.TemasServiceImpl;
 
 /**
  * @author Roseli
@@ -58,9 +61,12 @@ public class ProvaManagedBean implements Serializable {
 	private ApostilaDTO apostilaSelecionada = new ApostilaDTO();
 	private ApostilaDTO apostilaNova = new ApostilaDTO();
 
+	private TemaDTO temaSelecionado = new TemaDTO();
+
 	private List<ProvaDTO> listaProvas = new ArrayList<ProvaDTO>();
 	private List<OpcaoDTO> listaOpcoes = new ArrayList<OpcaoDTO>();
 	private List<ApostilaDTO> listaApostilas = new ArrayList<ApostilaDTO>();
+	private List<TemaDTO> listaTemas = new ArrayList<TemaDTO>();
 
 	private StreamedContent fileDownload;
 	private UploadedFile fileUpload;
@@ -88,7 +94,17 @@ public class ProvaManagedBean implements Serializable {
 
 	public void carregarTemas(ActionEvent event) {
 
-		LOG.info("Total de Temas: ");
+		try {
+
+			TemasService temasService = new TemasServiceImpl();
+			listaTemas = temasService.listarTemas();
+			LOG.info("Total de Temas: " + listaTemas.size());
+
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
 
 	}
 
@@ -161,6 +177,34 @@ public class ProvaManagedBean implements Serializable {
 
 	public void cadastrarQuestao(ActionEvent event) {
 
+		try {
+
+			ProvasService provasService = new ProvasServiceImpl();
+			questaoNova.setProvaId(provaSelecionada.getProvaId());
+			questaoNova.setTemaId(temaSelecionado.getTemaId());
+			provasService.gravarQuestao(questaoNova);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso",
+							questaoNova.getTituloQuestao()
+									+ " cadastrado(a) com sucesso."));
+
+			carregarTabela(event);
+			limparSessao();
+
+		} catch (ClassNotFoundException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
 	}
 
 	public void editarQuestao(ActionEvent event) {
@@ -235,6 +279,8 @@ public class ProvaManagedBean implements Serializable {
 				ProvasService provaService = new ProvasServiceImpl();
 				provaService.gravarApostila(apostila);
 
+				limparSessao();
+
 			} else {
 				LOG.error("Arquivo selecionado para upload está vazio");
 			}
@@ -266,6 +312,36 @@ public class ProvaManagedBean implements Serializable {
 	}
 
 	public void excluirApostila(ActionEvent event) {
+
+		try {
+			ProvasService provaService = new ProvasServiceImpl();
+			provaService.removerApostila(apostilaSelecionada);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso",
+							apostilaSelecionada.getNome()
+									+ " excluído(a) com sucesso."));
+			carregarTabela(event);
+			limparSessao();
+		} catch (ClassNotFoundException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Houve um problema na query do banco de dados", e);
+		} catch (IOException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro",
+							"Houve um erro na aplicação, tente mais tarde"));
+			LOG.error("Erro ao apagar arquivo", e);
+		}
 
 	}
 
@@ -327,6 +403,14 @@ public class ProvaManagedBean implements Serializable {
 		this.provaSelecionada = provaSelecionada;
 	}
 
+	public TemaDTO getTemaSelecionado() {
+		return temaSelecionado;
+	}
+
+	public void setTemaSelecionado(TemaDTO temaSelecionado) {
+		this.temaSelecionado = temaSelecionado;
+	}
+
 	public QuestaoDTO getQuestaoSelecionada() {
 		return questaoSelecionada;
 	}
@@ -373,6 +457,14 @@ public class ProvaManagedBean implements Serializable {
 
 	public void setListaApostilas(List<ApostilaDTO> listaApostilas) {
 		this.listaApostilas = listaApostilas;
+	}
+
+	public List<TemaDTO> getListaTemas() {
+		return listaTemas;
+	}
+
+	public void setListaTemas(List<TemaDTO> listaTemas) {
+		this.listaTemas = listaTemas;
 	}
 
 	public StreamedContent getFileDownload() {
