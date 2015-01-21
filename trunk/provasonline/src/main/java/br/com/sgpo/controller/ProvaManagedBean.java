@@ -1,10 +1,17 @@
 package br.com.sgpo.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -14,9 +21,9 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.OpcaoDTO;
@@ -36,6 +43,9 @@ public class ProvaManagedBean implements Serializable {
 	private static final long serialVersionUID = 1115044849242787671L;
 	private static final Logger LOG = Logger.getLogger(ProvaManagedBean.class);
 
+	private static final String SERVER_PATH = "D:\\provasonline\\anexos";
+	private static final int BUFFER_SIZE = 8192;
+
 	private ProvaDTO provaSelecionada = new ProvaDTO();
 	private ProvaDTO provaNova = new ProvaDTO();
 
@@ -53,6 +63,7 @@ public class ProvaManagedBean implements Serializable {
 	private List<ApostilaDTO> listaApostilas = new ArrayList<ApostilaDTO>();
 
 	private StreamedContent fileDownload;
+	private UploadedFile fileUpload;
 
 	public void carregarTabela(ActionEvent event) {
 
@@ -172,14 +183,75 @@ public class ProvaManagedBean implements Serializable {
 
 	}
 
-	public void apostilaUpload(FileUploadEvent event) {
+	public void apostilaUpload(ActionEvent event) {
 
-		LOG.info("Carregou " + event.getFile().getFileName());
+		try {
 
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", event
-						.getFile().getFileName() + " carrregado com sucesso."));
+			if (fileUpload != null) {
+
+				LOG.info("Arquivo: " + fileUpload.getFileName());
+				String fileName = fileUpload.getFileName();
+				String fullPath = SERVER_PATH + File.separator;
+				LOG.info("Diretório: " + fullPath);
+
+				File fileSaveDir = new File(fullPath);
+				if (!fileSaveDir.exists()) {
+					fileSaveDir.mkdir();
+				}
+				String hash = "a" + gerarHash();
+
+				String[] fileNameSplit = fileName.split("\\.");
+				String extensao = null;
+				if (fileNameSplit.length > 1) {
+					extensao = fileNameSplit[fileNameSplit.length - 1];
+				}
+
+				FileOutputStream fos = new FileOutputStream(new File(
+						SERVER_PATH + File.separator + hash + "_" + fileName));
+
+				InputStream is = fileUpload.getInputstream();
+				byte[] buffer = new byte[BUFFER_SIZE];
+
+				int a;
+
+				while (true) {
+					a = is.read(buffer);
+					if (a < 0)
+						break;
+					fos.write(buffer, 0, a);
+					fos.flush();
+				}
+
+				fos.close();
+				is.close();
+
+				ApostilaDTO apostila = new ApostilaDTO();
+				apostila.setHashName(hash);
+				apostila.setNome(fileName);
+				apostila.setServerPath(fullPath);
+				apostila.setExtensao(extensao);
+				apostila.setProvaId(provaSelecionada.getProvaId());
+
+				ProvasService provaService = new ProvasServiceImpl();
+				provaService.gravarApostila(apostila);
+
+			} else {
+				LOG.error("Arquivo selecionado para upload está vazio");
+			}
+
+		} catch (NoSuchAlgorithmException e) {
+			LOG.error("Erro ao gerar hash", e);
+		} catch (UnsupportedEncodingException e) {
+			LOG.error("Erro ao gerar hash", e);
+		} catch (FileNotFoundException e) {
+			LOG.error("Erro ao processar arquivo para upload", e);
+		} catch (IOException e) {
+			LOG.error("Erro ao processar arquivo para upload", e);
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver do banco de dados não encontrado", e);
+		} catch (SQLException e) {
+			LOG.error("Houve um problema na query do banco de dados", e);
+		}
 
 	}
 
@@ -207,6 +279,12 @@ public class ProvaManagedBean implements Serializable {
 		apostilaNova = new ApostilaDTO();
 		apostilaSelecionada = new ApostilaDTO();
 
+	}
+
+	private String gerarHash() throws NoSuchAlgorithmException,
+			UnsupportedEncodingException {
+		String uuid = UUID.randomUUID().toString();
+		return uuid.substring(0, 13);
 	}
 
 	public ProvaDTO getProvaNova() {
@@ -300,4 +378,15 @@ public class ProvaManagedBean implements Serializable {
 	public StreamedContent getFileDownload() {
 		return fileDownload;
 	}
+
+	public UploadedFile getFileUpload() {
+		LOG.info("getFileUpload");
+		return fileUpload;
+	}
+
+	public void setFileUpload(UploadedFile fileUpload) {
+		LOG.info("setFileUpload");
+		this.fileUpload = fileUpload;
+	}
+
 }

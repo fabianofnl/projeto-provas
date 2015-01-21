@@ -25,6 +25,21 @@
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
 
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+
+	<context-param>
+		<param-name>primefaces.UPLOADER</param-name>
+		<param-value>native</param-value>
+	</context-param>
+
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
@@ -42,16 +57,9 @@
 
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<!-- 
-		<param-value>home</param-value>
-		<param-value>bluesky</param-value> 
-		<param-value>vader</param-value> 
-		<param-value>cupertino</param-value> 
-		<param-value>sam</param-value> 
-		<param-value>start</param-value> 
-		<param-value>overcast</param-value>
-		<param-value>smoothness</param-value>
-		-->
+		<!-- <param-value>home</param-value> <param-value>bluesky</param-value> 
+			<param-value>vader</param-value> <param-value>cupertino</param-value> <param-value>sam</param-value> 
+			<param-value>start</param-value> <param-value>overcast</param-value> <param-value>smoothness</param-value> -->
 		<param-value>pepper-grinder</param-value>
 	</context-param>
 

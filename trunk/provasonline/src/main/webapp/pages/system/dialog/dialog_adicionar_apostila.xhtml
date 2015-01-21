@@ -8,21 +8,23 @@
 
 <p:dialog id="idDialogAddApostila" header="Adicionar apostila"
 	widgetVar="dialogAddApostila" modal="true" dynamic="true"
-	appendToBody="true" resizable="false" width="700" hideEffect="explode">
+	appendToBody="true" resizable="false" width="500" hideEffect="explode">
 
 	<h:form id="frmDialogAddApostila" enctype="multipart/form-data">
 		<p:panelGrid style="width:100%;">
 			<p:row>
 				<p:column>
+					<h:outputText
+						value="Prova: #{provaManagedBean.provaSelecionada.titulo}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
 
-					<p:fileUpload
-						fileUploadListener="#{provaManagedBean.apostilaUpload}"
-						mode="advanced" update="frmDialogAddApostila :frmProvaDataTable :message"
-						auto="true" sizeLimit="1000000"
-						label="Procurar"
-						allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-						oncomplete="if(!args.validationFailed) dialogAddApostila.hide(); 
-										else dialogAddApostila.show();" />
+					<p:fileUpload fileLimitMessage="Arquivo muito grande."
+						update="frmDialogAddApostila :frmProvaDataTable :message"
+						sizeLimit="100000000" mode="simple"
+						value="#{provaManagedBean.fileUpload}" allowTypes="*.*;" />
 
 				</p:column>
 			</p:row>
@@ -36,8 +38,12 @@
 			<p:row>
 				<p:column>
 					<div align="right">
-						<p:commandButton value="Fechar" type="button"
+						<p:commandButton value="Cancelar" type="button"
 							onclick="dialogAddApostila.hide()" />
+						<p:commandButton value="OK" ajax="false"
+							actionListener="#{provaManagedBean.apostilaUpload}"
+							oncomplete="if(!args.validationFailed) dialogAddApostila.hide(); 
+							else dialogAddApostila.show();" />
 					</div>
 				</p:column>
 			</p:row>

@@ -10,8 +10,8 @@
 	<ui:define name="content">
 		<div class="div-content">
 
-			<p:growl id="message" autoUpdate="true" showDetail="true" showSummary="true"
-				life="10000" />
+			<p:growl id="message" autoUpdate="true" showDetail="true"
+				showSummary="true" life="10000" />
 
 			<div align="center" class="header-title-page">
 				Gerenciamento de Provas
@@ -45,17 +45,12 @@
 										update=":idDialogExcluirQuestao" title="Excluir questão">
 										<f:setPropertyActionListener value="#{questao}"
 											target="#{provaManagedBean.questaoSelecionada}" />
-									</p:commandButton> 
-									
-									<p:commandButton icon="ui-icon-plus"
-										title="Adicionar opções" style="width:20px; height:20px;"
+									</p:commandButton> <p:commandButton icon="ui-icon-plus" title="Adicionar opções"
+										style="width:20px; height:20px;"
 										oncomplete="dialogCadOpcoes.show()">
 										<f:setPropertyActionListener value="#{questao}"
 											target="#{provaManagedBean.questaoSelecionada}" />
-									</p:commandButton>
-									
-									
-									<p:commandButton id="viewQuestao" icon="ui-icon-search"
+									</p:commandButton> <p:commandButton id="viewQuestao" icon="ui-icon-search"
 										title="Visualizar questão" style="width:20px; height:20px;"
 										oncomplete="dialogViewQuestao.show()" update=":frmOverlay">
 										<f:setPropertyActionListener value="#{questao}"
@@ -103,7 +98,10 @@
 						<p:commandButton id="btnAddApostila" title="Adicionar Apostila"
 							icon="ui-icon-document" oncomplete="dialogAddApostila.show()"
 							update=":idDialogAddApostila">
+							<f:setPropertyActionListener
+								target="#{provaManagedBean.provaSelecionada}" value="#{prova}" />
 						</p:commandButton>
+
 					</p:column>
 				</p:dataTable>
 
