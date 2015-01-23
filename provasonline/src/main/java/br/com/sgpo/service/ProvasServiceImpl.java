@@ -289,4 +289,25 @@ public class ProvasServiceImpl implements ProvasService {
 			throws ClassNotFoundException, SQLException {
 		provasModel.excluirOpcao(opcaoSelecionada);
 	}
+
+	@Override
+	public void excluirQuestao(QuestaoDTO questaoSelecionada)
+			throws ClassNotFoundException, SQLException {
+		provasModel.excluirQuestao(questaoSelecionada);
+	}
+
+	@Override
+	public void excluirProva(ProvaDTO provaSelecionada)
+			throws ClassNotFoundException, SQLException, IOException {
+
+		List<ApostilaDTO> listaApostilas = provasModel
+				.listarApostilasPorProvaId(provaSelecionada.getProvaId());
+
+		for (ApostilaDTO apostilaDTO : listaApostilas) {
+			removerApostila(apostilaDTO);
+		}
+
+		provasModel.excluirProva(provaSelecionada);
+
+	}
 }

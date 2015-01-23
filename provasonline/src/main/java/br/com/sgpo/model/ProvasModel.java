@@ -129,4 +129,13 @@ public interface ProvasModel {
 
 	public void excluirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException;
+
+	public void excluirQuestao(QuestaoDTO questaoSelecionada)
+			throws ClassNotFoundException, SQLException;
+
+	public List<ApostilaDTO> listarApostilasPorProvaId(Integer provaId)
+			throws ClassNotFoundException, SQLException;
+
+	public void excluirProva(ProvaDTO provaSelecionada)
+			throws ClassNotFoundException, SQLException;
 }

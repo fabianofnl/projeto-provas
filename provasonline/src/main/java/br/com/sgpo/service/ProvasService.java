@@ -122,4 +122,10 @@ public interface ProvasService {
 	public void excluirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException;
 
+	public void excluirQuestao(QuestaoDTO questaoSelecionada)
+			throws ClassNotFoundException, SQLException;
+
+	public void excluirProva(ProvaDTO provaSelecionada)
+			throws ClassNotFoundException, SQLException, IOException;
+
 }

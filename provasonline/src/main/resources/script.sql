@@ -144,6 +144,7 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 --SELECT * FROM vincularApostilas
 --SELECT * FROM agenda
 --SELECT * FROM provasRealizadas
+--SELECT * FROM provas
 
 --delete from provasRealizadas
 
@@ -264,3 +265,24 @@ SELECT SUM(pr.quantidadeQuestoes) as questoes, SUM(pr.quantidadeAcertos) as acer
 WHERE a.agendaId = pr.agendaId AND a.matcolaborador = 4444
 
 SELECT * FROM usuario u, funcionario f WHERE u.usuario = f.usuario AND u.usuario = 'jsilva' AND f.email = 'fabianofnl2@gmail.com'
+
+--Apagar dados de duas tabelas ao mesmo tempo
+BEGIN; 
+	DELETE FROM opcoes WHERE questaoId = ?; 
+	DELETE FROM questoes WHERE questaoId = ?; 
+COMMIT;
+
+INSERT INTO apostilas (provaid, nome, extensao, hashname, serverpath) VALUES (6, 'aaa', 'exe', 'qwe', 'algum lugar'); 
+
+DELETE FROM apostilas WHERE apostilaid = xx RETURNING serverpath || hashname || nome AS fileFullPath
+
+SELECT q.questaoId FROM questoes q WHERE q.provaId = 6
+
+DELETE FROM opcoes o WHERE o.questaoId IN (SELECT q.questaoId FROM questoes q WHERE q.provaId = 10);
+
+BEGIN; 
+	DELETE FROM apostilas WHERE provaId = 10;
+	DELETE FROM opcoes o WHERE o.questaoId IN (SELECT q.questaoId FROM questoes q WHERE q.provaId = 10);
+	DELETE FROM questoes WHERE provaId = 10;
+	DELETE FROM provas WHERE provaId = 10; 
+COMMIT;

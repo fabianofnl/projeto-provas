@@ -131,6 +131,16 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String DELETE_OPCAO = "DELETE FROM opcoes WHERE opcaoId = ?";
 
+	private static final String DELETE_QUESTAO_COM_OPCOES = "BEGIN; DELETE FROM opcoes WHERE questaoId = ?; "
+			+ "DELETE FROM questoes WHERE questaoId = ?; COMMIT;";
+
+	private static final String SELECT_APOSTILA_POR_PROVA_ID = "SELECT * FROM apostilas WHERE provaId = ?";
+
+	private static final String DELETE_PROVA_COM_QUESTOES_E_APOSTILAS = "BEGIN; DELETE FROM apostilas WHERE provaId = ?; "
+			+ "DELETE FROM opcoes o WHERE o.questaoId IN (SELECT q.questaoId FROM questoes q WHERE q.provaId = ?); "
+			+ "DELETE FROM questoes WHERE provaId = ?; "
+			+ "DELETE FROM provas WHERE provaId = ?; COMMIT;";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -1321,6 +1331,81 @@ public class ProvasModelImpl implements ProvasModel {
 		conn = ConexaoBaseDados.getConexaoInstance();
 		pstmt = conn.prepareStatement(DELETE_OPCAO);
 		pstmt.setInt(1, opcaoSelecionada.getOpcaoId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+	}
+
+	@Override
+	public void excluirQuestao(QuestaoDTO questaoSelecionada)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método excluir questao");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(DELETE_QUESTAO_COM_OPCOES);
+		pstmt.setInt(1, questaoSelecionada.getQuestaoId());
+		pstmt.setInt(2, questaoSelecionada.getQuestaoId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+	}
+
+	@Override
+	public List<ApostilaDTO> listarApostilasPorProvaId(Integer provaId)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método listar apostilas");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<ApostilaDTO> listaApostilas = new ArrayList<ApostilaDTO>();
+		ApostilaDTO apostila = null;
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_APOSTILA_POR_PROVA_ID);
+		pstmt.setInt(1, provaId);
+		rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			apostila = new ApostilaDTO();
+			apostila.setApostilaId(rs.getInt("apostilaId"));
+			apostila.setProvaId(rs.getInt("provaId"));
+			apostila.setNome(rs.getString("nome"));
+			apostila.setHashName(rs.getString("hashname"));
+			apostila.setExtensao(rs.getString("extensao"));
+			apostila.setServerPath(rs.getString("serverpath"));
+			listaApostilas.add(apostila);
+		}
+
+		return listaApostilas;
+	}
+
+	@Override
+	public void excluirProva(ProvaDTO provaSelecionada)
+			throws ClassNotFoundException, SQLException {
+		
+		LOG.info("Chamando método excluir prova");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(DELETE_PROVA_COM_QUESTOES_E_APOSTILAS);
+		pstmt.setInt(1, provaSelecionada.getProvaId());
+		pstmt.setInt(2, provaSelecionada.getProvaId());
+		pstmt.setInt(3, provaSelecionada.getProvaId());
+		pstmt.setInt(4, provaSelecionada.getProvaId());
 		pstmt.execute();
 
 		if (pstmt != null)

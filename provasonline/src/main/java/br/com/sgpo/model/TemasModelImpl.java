@@ -33,7 +33,7 @@ public class TemasModelImpl implements TemasModel {
 
 	private static final String DELETE_TEMA = "DELETE FROM temas WHERE temaId = ?";
 
-	private static final String SELECT_TODOS_TEMAS = "SELECT * FROM temas";
+	private static final String SELECT_TODOS_TEMAS = "SELECT * FROM temas ORDER BY titulo";
 
 	@Override
 	public List<TemaDTO> listarTemas(Integer offSet, Integer recordPerPage)
