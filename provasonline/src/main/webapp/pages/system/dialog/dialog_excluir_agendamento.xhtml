@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<p:confirmDialog id="idDialogExcluirAgenda" header="Excluir Tema"
+	widgetVar="dialogExcluirAgenda" appendToBody="true"
+	message="Prova do colaborador 'TAL' será excluído. Você tem certeza?"
+	severity="alert">
+	<div align="right">
+		<h:form id="frmDialogExcluirAgenda">
+			<p:commandButton value="Sim" />
+
+			<p:commandButton value="Não" type="button"
+				onclick="dialogExcluirAgenda.hide()" />
+		</h:form>
+	</div>
+</p:confirmDialog>
+</html>

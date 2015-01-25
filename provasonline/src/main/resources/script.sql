@@ -286,3 +286,9 @@ BEGIN;
 	DELETE FROM questoes WHERE provaId = 10;
 	DELETE FROM provas WHERE provaId = 10; 
 COMMIT;
+
+SELECT * FROM agenda WHERE flag = false AND dataprova >= CURRENT_DATE;
+
+INSERT into agenda (matcolaborador, provaid, dataprova, flag) values (1111, 2, '2015-01-26', false);
+
+SELECT COUNT(provaId) as quantidade FROM agenda WHERE provaId = 2 AND flag = false AND dataprova >= CURRENT_DATE;

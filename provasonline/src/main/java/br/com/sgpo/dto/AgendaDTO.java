@@ -11,7 +11,9 @@ public class AgendaDTO implements Serializable {
 
 	private static final long serialVersionUID = 219758127481788900L;
 	private Integer agendaId;
+	private Integer matColaborador;
 	private FuncionarioDTO funcionario;
+	private Integer provaId;
 	private ProvaDTO prova;
 	private Date provaAgendada;
 	private Boolean flag;
@@ -29,12 +31,28 @@ public class AgendaDTO implements Serializable {
 		this.agendaId = agendaId;
 	}
 
+	public Integer getMatColaborador() {
+		return matColaborador;
+	}
+
+	public void setMatColaborador(Integer matColaborador) {
+		this.matColaborador = matColaborador;
+	}
+
 	public FuncionarioDTO getFuncionario() {
 		return funcionario;
 	}
 
 	public void setFuncionario(FuncionarioDTO funcionario) {
 		this.funcionario = funcionario;
+	}
+
+	public Integer getProvaId() {
+		return provaId;
+	}
+
+	public void setProvaId(Integer provaId) {
+		this.provaId = provaId;
 	}
 
 	public ProvaDTO getProva() {

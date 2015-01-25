@@ -96,7 +96,7 @@
 								target="#{provaManagedBean.provaSelecionada}" value="#{prova}" />
 						</p:commandButton>
 
-						<p:commandButton id="btnExc" title="Excluir Prova"
+						<p:commandButton id="btnExc" title="Excluir Prova" disabled="#{prova.quantidadeAgendada gt 0}"
 							icon="ui-icon-trash" oncomplete="dialogExcluirProva.show()"
 							update=":idDialogExcluirProva">
 							<f:setPropertyActionListener
