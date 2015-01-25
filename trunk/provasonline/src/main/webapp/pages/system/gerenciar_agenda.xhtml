@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/template/system_template.xhtml">
+	<ui:define name="content">
+		<div class="div-content">
+
+			<p:growl autoUpdate="true" showDetail="true" showSummary="true"
+				life="10000" />
+
+			<div align="center" class="header-title-page">
+				Agenda
+				<p:separator />
+			</div>
+
+			<h:form id="frmRemoteCommand">
+				<p:remoteCommand name="onloadTabela"
+					actionListener="#{agendaManagedBean.carregarTabela}" autoRun="true"
+					update=":idTabView:frmAgenda1DataTable:agenda1DataTable :idTabView:frmAgenda2DataTable:agenda2DataTable" />
+			</h:form>
+
+			<p:tabView id="idTabView">
+				<p:tab title="Agendamento">
+					<h:form id="frmAgenda1DataTable">
+						<p:dataTable id="agenda1DataTable" rows="10"
+							rowsPerPageTemplate="10,20,30" paginator="true"
+							emptyMessage="Não há registros."
+							value="#{agendaManagedBean.listaAgendasNaoRealizadas}" var="agenda"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+							<p:column headerText="Prova">
+								<h:outputText value="teste" />
+							</p:column>
+
+							<p:column headerText="Colaborador">
+								<h:outputText value="teste" />
+							</p:column>
+
+							<p:column headerText="Data">
+								<h:outputText value="teste" />
+							</p:column>
+
+							<p:column headerText="Situação">
+								<h:outputText value="teste" />
+							</p:column>
+						</p:dataTable>
+						
+						<p:commandButton value="Agendar" style="margin-top: 10px;"/>
+					</h:form>
+
+				</p:tab>
+				<p:tab title="Agenda Geral">
+					<h:form id="frmAgenda2DataTable">
+						<p:dataTable id="agenda2DataTable" rows="10"
+							rowsPerPageTemplate="10,20,30" paginator="true"
+							emptyMessage="Não há registros."
+							value="#{agendaManagedBean.listaAgendas}"
+							var="agenda1"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+							
+							<p:column headerText="Prova">
+								<h:outputText value="teste" />
+							</p:column>
+							<p:column headerText="Colaborador">
+								<h:outputText value="teste" />
+							</p:column>
+
+							<p:column headerText="Data">
+								<h:outputText value="teste" />
+							</p:column>
+
+							<p:column headerText="Situação">
+								<h:outputText value="teste" />
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</p:tab>
+			</p:tabView>
+
+
+			<ui:include src="/pages/system/dialog/dialog_agendar_prova.xhtml" />
+
+			<ui:include
+				src="/pages/system/dialog/dialog_excluir_agendamento.xhtml" />
+
+		</div>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -141,6 +141,9 @@ public class ProvasModelImpl implements ProvasModel {
 			+ "DELETE FROM questoes WHERE provaId = ?; "
 			+ "DELETE FROM provas WHERE provaId = ?; COMMIT;";
 
+	private static final String SELECT_QUANTIDADE_AGENDA_POR_PROVA = "SELECT COUNT(provaId) as quantidade "
+			+ "FROM agenda WHERE provaId = ? AND flag = false AND dataprova >= CURRENT_DATE";
+
 	@Override
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
@@ -671,6 +674,8 @@ public class ProvasModelImpl implements ProvasModel {
 					provaDTO));
 			provaDTO.setListaApostilas(listarApostilasPorProva(rs, pstmt, conn,
 					provaDTO));
+			provaDTO.setQuantidadeAgendada(quantidadeAgendadaPorProva(rs,
+					pstmt, conn, provaDTO.getProvaId()));
 		}
 
 		if (rs != null)
@@ -1395,7 +1400,7 @@ public class ProvasModelImpl implements ProvasModel {
 	@Override
 	public void excluirProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException {
-		
+
 		LOG.info("Chamando método excluir prova");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1413,5 +1418,23 @@ public class ProvasModelImpl implements ProvasModel {
 		if (conn != null)
 			conn.close();
 
+	}
+
+	public Integer quantidadeAgendadaPorProva(ResultSet rs,
+			PreparedStatement pstmt, Connection conn, Integer provaId)
+			throws ClassNotFoundException, SQLException {
+
+		Integer quantidade = 0;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_QUANTIDADE_AGENDA_POR_PROVA);
+		pstmt.setInt(1, provaId);
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			quantidade = rs.getInt("quantidade");
+		}
+
+		return quantidade;
 	}
 }
