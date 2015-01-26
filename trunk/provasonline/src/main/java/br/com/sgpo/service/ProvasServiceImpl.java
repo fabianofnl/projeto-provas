@@ -6,10 +6,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import br.com.sgpo.constants.SGPOConstants;
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
-import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
@@ -156,18 +154,6 @@ public class ProvasServiceImpl implements ProvasService {
 	}
 
 	@Override
-	public void agendarProva(FuncionarioDTO funcionario, ProvaDTO prova,
-			Date dataAgendada, String contextPath)
-			throws ClassNotFoundException, SQLException {
-
-		provasModel.agendarProva(funcionario, prova, dataAgendada);
-
-		MailServiceImpl mailService = new MailServiceImpl(funcionario, prova,
-				dataAgendada, contextPath, SGPOConstants.Agenda.AGENDAR);
-		mailService.start();
-	}
-
-	@Override
 	public List<AgendaDTO> listarAgenda(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException {
 		return provasModel.listarAgenda(offSet, recordPerPage);
@@ -183,31 +169,6 @@ public class ProvasServiceImpl implements ProvasService {
 	public AgendaDTO buscarAgendaPorId(Integer agendaId)
 			throws ClassNotFoundException, SQLException {
 		return provasModel.buscarAgendaPorId(agendaId);
-	}
-
-	@Override
-	public void removerAgenda(AgendaDTO agendaDTO, String contextPath)
-			throws ClassNotFoundException, SQLException {
-		provasModel.removerAgenda(agendaDTO);
-
-		MailServiceImpl mailService = new MailServiceImpl(
-				agendaDTO.getFuncionario(), agendaDTO.getProva(),
-				agendaDTO.getProvaAgendada(), contextPath,
-				SGPOConstants.Agenda.CANCELAR);
-		mailService.start();
-
-	}
-
-	@Override
-	public void atualizarAgenda(AgendaDTO agendaDTO, String contextPath)
-			throws ClassNotFoundException, SQLException {
-		provasModel.atualizarAgenda(agendaDTO);
-
-		MailServiceImpl mailService = new MailServiceImpl(
-				agendaDTO.getFuncionario(), agendaDTO.getProva(),
-				agendaDTO.getProvaAgendada(), contextPath,
-				SGPOConstants.Agenda.ATUALIZAR);
-		mailService.start();
 	}
 
 	@Override

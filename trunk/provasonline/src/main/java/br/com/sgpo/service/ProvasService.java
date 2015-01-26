@@ -7,7 +7,6 @@ import java.util.List;
 
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
-import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
@@ -64,10 +63,6 @@ public interface ProvasService {
 	public List<ProvaDTO> listarProvas() throws ClassNotFoundException,
 			SQLException;
 
-	public void agendarProva(FuncionarioDTO funcionario, ProvaDTO prova,
-			Date dataAgendada, String contextPath)
-			throws ClassNotFoundException, SQLException;
-
 	public List<AgendaDTO> listarAgenda(Integer offSet, Integer recordPerPage)
 			throws ClassNotFoundException, SQLException;
 
@@ -77,11 +72,6 @@ public interface ProvasService {
 	public AgendaDTO buscarAgendaPorId(Integer agendaId)
 			throws ClassNotFoundException, SQLException;
 
-	public void removerAgenda(AgendaDTO agendaDTO, String contextPath)
-			throws ClassNotFoundException, SQLException;
-
-	public void atualizarAgenda(AgendaDTO agendaDTO, String context)
-			throws ClassNotFoundException, SQLException;
 
 	public ProvaRealizadaDTO buscarProvaRealizadaPorAgendaId(Integer agendaId)
 			throws ClassNotFoundException, SQLException;

@@ -17,4 +17,10 @@ public interface AgendaModel {
 	public List<AgendaDTO> listarAgendasNaoRealizadas()
 			throws ClassNotFoundException, SQLException;
 
+	public void agendarProva(AgendaDTO agendaNova)
+			throws ClassNotFoundException, SQLException;
+
+	public void excluirProva(AgendaDTO agendaSelecionada)
+			throws ClassNotFoundException, SQLException;
+
 }
