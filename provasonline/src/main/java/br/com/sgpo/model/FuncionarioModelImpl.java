@@ -212,6 +212,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	@Override
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
 			throws SQLException, ClassNotFoundException {
+
 		LOG.info("Chamando método buscar Funcionario por matricula");
 		Connection conn = null;
 		PreparedStatement pstmt = null;

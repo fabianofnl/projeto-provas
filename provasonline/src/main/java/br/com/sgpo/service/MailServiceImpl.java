@@ -105,7 +105,7 @@ public class MailServiceImpl extends Thread {
 				sb.append("<br>");
 				sb.append("<br>");
 				sb.append("Acesse esse").append(" ");
-				sb.append("<a href='").append(contextPath + "/logon");
+				sb.append("<a href='").append(contextPath + "/pages/login.jsf");
 				sb.append("'>link</a>");
 				sb.append("<br>");
 				sb.append("<br>");
@@ -132,9 +132,6 @@ public class MailServiceImpl extends Thread {
 				case AGENDAR:
 					sb.append("você possui uma prova agendada para o dia");
 					break;
-				case ATUALIZAR:
-					sb.append("o agendamento da sua prova foi alterada para o dia");
-					break;
 				default:
 					sb.append("sua prova foi cancelada, dia");
 					break;
@@ -151,7 +148,7 @@ public class MailServiceImpl extends Thread {
 				sb.append("<br>");
 				sb.append("Acesse esse").append(" ");
 				sb.append("<a href='")
-						.append(contextPath + "/secure/dashboard");
+						.append(contextPath + "/pages/login.jsf");
 				sb.append("'>link</a>");
 				sb.append("<br>");
 				sb.append("<br>");

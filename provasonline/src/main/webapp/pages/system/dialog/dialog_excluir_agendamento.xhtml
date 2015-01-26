@@ -8,11 +8,15 @@
 
 <p:confirmDialog id="idDialogExcluirAgenda" header="Excluir Tema"
 	widgetVar="dialogExcluirAgenda" appendToBody="true"
-	message="Prova do colaborador 'TAL' será excluído. Você tem certeza?"
+	message="Agendamento do colaborador #{agendaManagedBean.agendaSelecionada.funcionario.nome} será excluído. Você tem certeza?"
 	severity="alert">
 	<div align="right">
 		<h:form id="frmDialogExcluirAgenda">
-			<p:commandButton value="Sim" />
+			<p:commandButton value="Sim"
+				actionListener="#{agendaManagedBean.excluirAgendamento}"
+				oncomplete="if(!args.validationFailed) dialogExcluirAgenda.hide(); 
+										else dialogExcluirAgenda.show();"
+				update=":idTabView:frmAgenda1DataTable:agenda1DataTable :idTabView:frmAgenda2DataTable:agenda2DataTable" />
 
 			<p:commandButton value="Não" type="button"
 				onclick="dialogExcluirAgenda.hide()" />

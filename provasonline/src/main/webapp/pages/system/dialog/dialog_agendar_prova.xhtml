@@ -14,19 +14,44 @@
 		<p:panelGrid style="width:100%;">
 			<p:row>
 				<p:column>
-					<h:outputLabel value="Título:" />
+					<h:outputLabel value="Colaborador:" />
 				</p:column>
 				<p:column>
-					
+					<p:selectOneMenu id="selectColaborador" effectDuration="100"
+						required="true" requiredMessage="Campo colaborador é obrigatório."
+						value="#{agendaManagedBean.agendaNova.matColaborador}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{agendaManagedBean.listaColaboradores}"
+							var="col" itemLabel="#{col.nome}" itemValue="#{col.matricula}" />
+					</p:selectOneMenu>
 				</p:column>
 			</p:row>
 
 			<p:row>
 				<p:column>
-					<h:outputLabel value="Descrição:" />
+					<h:outputLabel value="Prova:" />
 				</p:column>
 				<p:column>
-					
+					<p:selectOneMenu id="selectProva" effectDuration="100"
+						required="true" requiredMessage="Campo prova é obrigatório."
+						value="#{agendaManagedBean.agendaNova.provaId}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{agendaManagedBean.listaProvas}"
+							var="prova" itemLabel="#{prova.titulo}"
+							itemValue="#{prova.provaId}" />
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel value="Data:" />
+				</p:column>
+
+				<p:column>
+					<p:calendar required="true" requiredMessage="O campo data é obrigatório."
+						value="#{agendaManagedBean.agendaNova.provaAgendada}"
+						pattern="dd/MM/yyyy" />
 				</p:column>
 			</p:row>
 
@@ -40,7 +65,11 @@
 					<div align="right">
 						<p:commandButton value="Cancelar" type="button"
 							onclick="dialogCadAgenda.hide()" />
-						<p:commandButton value="OK" />
+						<p:commandButton value="OK"
+							actionListener="#{agendaManagedBean.agendarProva}"
+							oncomplete="if(!args.validationFailed) dialogCadAgenda.hide(); 
+										else dialogCadAgenda.show();"
+							update=":idTabView:frmAgenda1DataTable:agenda1DataTable :idTabView:frmAgenda2DataTable:agenda2DataTable" />
 					</div>
 				</p:column>
 			</p:row>

@@ -25,57 +25,78 @@
 			</h:form>
 
 			<p:tabView id="idTabView">
-				<p:tab title="Agendamento">
+				<p:tab title="Agendamento (novas)">
 					<h:form id="frmAgenda1DataTable">
 						<p:dataTable id="agenda1DataTable" rows="10"
 							rowsPerPageTemplate="10,20,30" paginator="true"
 							emptyMessage="Não há registros."
-							value="#{agendaManagedBean.listaAgendasNaoRealizadas}" var="agenda"
+							value="#{agendaManagedBean.listaAgendasNaoRealizadas}"
+							var="agenda"
 							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
 							<p:column headerText="Prova">
-								<h:outputText value="teste" />
+								<h:outputText value="#{agenda.prova.titulo}" />
 							</p:column>
 
 							<p:column headerText="Colaborador">
-								<h:outputText value="teste" />
+								<h:outputText value="#{agenda.funcionario.nome}" />
 							</p:column>
 
 							<p:column headerText="Data">
-								<h:outputText value="teste" />
+								<h:outputText value="#{agenda.provaAgendada}">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Situação">
-								<h:outputText value="teste" />
+								<h:outputText
+									value="#{prova.flag == true ? 'Realizada' : 'Pendente'}" />
+							</p:column>
+
+							<p:column headerText="Ações" styleClass="centralizar">
+								<p:commandButton title="Excluir agendamento"
+									icon="ui-icon-trash" update=":idDialogExcluirAgenda"
+									oncomplete="dialogExcluirAgenda.show()" >
+									<f:setPropertyActionListener
+										target="#{agendaManagedBean.agendaSelecionada}"
+										value="#{agenda}" />
+								</p:commandButton>
 							</p:column>
 						</p:dataTable>
-						
-						<p:commandButton value="Agendar" style="margin-top: 10px;"/>
+
+						<p:commandButton value="Agendar" style="margin-top: 10px;"
+							oncomplete="dialogCadAgenda.show()" update=":idDialogCadAgenda"
+							actionListener="#{agendaManagedBean.carregarProvasColaboradores}" />
 					</h:form>
 
 				</p:tab>
-				<p:tab title="Agenda Geral">
+				<p:tab title="Agenda (total)">
 					<h:form id="frmAgenda2DataTable">
 						<p:dataTable id="agenda2DataTable" rows="10"
 							rowsPerPageTemplate="10,20,30" paginator="true"
 							emptyMessage="Não há registros."
-							value="#{agendaManagedBean.listaAgendas}"
-							var="agenda1"
+							value="#{agendaManagedBean.listaAgendas}" var="agenda1"
 							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-							
+
 							<p:column headerText="Prova">
-								<h:outputText value="teste" />
+								<h:outputText value="#{agenda1.prova.titulo}" />
 							</p:column>
+
 							<p:column headerText="Colaborador">
-								<h:outputText value="teste" />
+								<h:outputText value="#{agenda1.funcionario.nome}" />
 							</p:column>
 
 							<p:column headerText="Data">
-								<h:outputText value="teste" />
+								<h:outputText value="#{agenda1.provaAgendada}">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
 							</p:column>
 
 							<p:column headerText="Situação">
-								<h:outputText value="teste" />
+								<h:outputText
+									value="#{prova.flag == true ? 'Realizada' : 'Pendente'}" />
 							</p:column>
 						</p:dataTable>
 					</h:form>

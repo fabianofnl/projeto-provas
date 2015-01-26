@@ -18,6 +18,6 @@ public class SGPOConstants {
 	public static final long TEMPO_DE_PROVA = 1000 * 60 * 60 * 2; // padrão será 2 horas
 
 	public enum Agenda {
-		AGENDAR, ATUALIZAR, CANCELAR, NOVASENHA
+		AGENDAR, CANCELAR, NOVASENHA
 	}
 }
