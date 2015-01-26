@@ -6,8 +6,31 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form id="frmDashAdm">
-		Administrador
-		<p:remoteCommand actionListener="#{loginManagedBean.teste}" name="onload" />
+<div class="div-content">
+	<h:form id="frmRemoto">
+		<p:remoteCommand autoRun="true" immediate="true"
+			actionListener="#{dashboardAdminManagedBean.carregarDashboard}"
+			name="onload" update=":frmAdmDash" />
 	</h:form>
+
+	<h:form id="frmAdmDash">
+		<p:panel id="relatorio" header="Relatório">
+			<p:panelGrid columns="2" style="width:100%;" columnClasses="width50">
+
+				<p:barChart id="basic"
+					value="#{dashboardAdminManagedBean.categoryModel}"
+					legendPosition="ne" title="JVM / Memória"
+					style="height:300px; width: 400px;" />
+
+				<p:fieldset>
+					<p:panelGrid columns="2" columnClasses="width50">
+						<h:outputText value="Qtd" />
+						<h:outputText value="8" />
+					</p:panelGrid>
+				</p:fieldset>
+
+			</p:panelGrid>
+		</p:panel>
+	</h:form>
+</div>
 </html>
