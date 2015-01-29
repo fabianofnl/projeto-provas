@@ -12,8 +12,8 @@ public class NotaMediaColaboradorDTO implements Serializable {
 
 	private String nome;
 	private Integer matricula;
-	private Integer questoes;
-	private Integer acertos;
+	private Long questoes;
+	private Long acertos;
 
 	public NotaMediaColaboradorDTO() {
 	}
@@ -34,19 +34,19 @@ public class NotaMediaColaboradorDTO implements Serializable {
 		this.nome = nome;
 	}
 
-	public Integer getQuestoes() {
+	public Long getQuestoes() {
 		return questoes;
 	}
 
-	public void setQuestoes(Integer questoes) {
+	public void setQuestoes(Long questoes) {
 		this.questoes = questoes;
 	}
 
-	public Integer getAcertos() {
+	public Long getAcertos() {
 		return acertos;
 	}
 
-	public void setAcertos(Integer acertos) {
+	public void setAcertos(Long acertos) {
 		this.acertos = acertos;
 	}
 }

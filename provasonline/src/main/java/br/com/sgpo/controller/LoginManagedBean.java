@@ -6,7 +6,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -71,10 +70,6 @@ public class LoginManagedBean implements Serializable {
 				.getSession(false);
 		session.invalidate();
 		return "/pages/login";
-	}
-	
-	public void teste(ActionEvent e){
-		LOG.info("TESTE");
 	}
 
 	public UsuarioDTO getUsuario() {

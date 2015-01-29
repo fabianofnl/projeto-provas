@@ -30,9 +30,8 @@
 	text-align: center;
 }
 
-.centralizarElemento > table > tbody > tr > td{
-	text-align: center !important;
-	align: center !important;
+.width95 {
+	width: 95%;
 }
 
 .width80 {
@@ -59,8 +58,20 @@
 	width: 30%;
 }
 
+.width25 {
+	width: 25%;
+}
+
 .width20 {
 	width: 20%;
+}
+
+.width10 {
+	width: 10%;
+}
+
+.width5 {
+	width: 5%;
 }
 
 .table-vertical-align {
@@ -69,8 +80,8 @@
 	padding-left: 20px !important;
 }
 
-.valignTop > tbody > tr > td{
-	vertical-align: top !important;	
+.valignTop>tbody>tr>td {
+	vertical-align: top !important;
 }
 
 .ui-panelgrid {

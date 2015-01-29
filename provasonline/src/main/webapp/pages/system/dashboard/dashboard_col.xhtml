@@ -15,7 +15,8 @@
 	<h:form id="frmRemotoCol">
 		<p:remoteCommand autoRun="true" immediate="true"
 			actionListener="#{dashboardColManagedBean.carregarDashboard}"
-			name="onload" update=":frmAdmDash :frmDataTable:agendaDataTable" />
+			name="onload"
+			update=":frmAdmDash :frmDataTable:agendaDataTable :frmDataTable:basic" />
 	</h:form>
 
 	<h:form id="frmDataTable">
@@ -38,6 +39,9 @@
 							<f:setPropertyActionListener
 								target="#{dashboardColManagedBean.provaSelecionada}"
 								value="#{agenda.prova}" />
+							<f:setPropertyActionListener
+								target="#{dashboardColManagedBean.provaRealizadaSelecionada.agenda}"
+								value="#{agenda}" />
 						</p:commandButton>
 					</p:column>
 
@@ -67,11 +71,13 @@
 				</p:dataTable>
 
 			</p:panel>
-			<p:panel header="Notas">
+			<p:panel header="Provas">
 				<p:barChart id="basic"
-					rendered="#{dashboardColManagedBean.barChartFlag}"
-					value="#{dashboardColManagedBean.categoryModel}" legendPosition="e"
-					title="JVM / Memória" style="height:250px; width:250px;" />
+					rendered="#{dashboardColManagedBean.barChartFlag}" orientation="horizontal"
+					value="#{dashboardColManagedBean.categoryModel}" legendPosition="e" barMargin="20"
+					barPadding="10"
+					title="Notas" style="height:#{dashboardColManagedBean.height}px; width:390px;" 
+					min="0" max="125" />
 				<h:outputText rendered="#{!dashboardColManagedBean.barChartFlag}"
 					value="Não há provas realizadas." />
 			</p:panel>
