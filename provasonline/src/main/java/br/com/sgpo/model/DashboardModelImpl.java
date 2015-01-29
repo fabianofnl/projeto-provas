@@ -14,8 +14,10 @@ import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.NotaMediaColaboradorDTO;
 import br.com.sgpo.dto.NotaMediaEquipesDTO;
+import br.com.sgpo.dto.OpcaoDTO;
 import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
+import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
@@ -29,8 +31,8 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "a.provaId = p.provaId AND f.matricula = ? AND a.dataProva >= CURRENT_DATE AND a.flag = false";
 
 	private static final String SELECT_APOSTILAS_POR_MATRICULA = "SELECT DISTINCT ON(ap.apostilaId, ap.nome) ap.* "
-			+ "FROM apostilas ap, vincularApostilas vp, provas p, agenda a "
-			+ "WHERE ap.apostilaId = vp.apostilaId AND vp.provaId = p.provaId AND p.provaId = a.provaId "
+			+ "FROM apostilas ap, provas p, agenda a "
+			+ "WHERE p.provaId = a.provaId AND ap.provaId = p.provaId"
 			+ "AND a.flag = false AND a.dataProva > CURRENT_DATE AND a.matcolaborador = ? ORDER BY ap.nome";
 
 	private static final String SELECT_PROVAS_POR_MATRICULA = "SELECT pr.* FROM funcionario f, agenda a, provasRealizadas pr "
@@ -73,6 +75,13 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "FROM provasRealizadas pr, agenda a "
 			+ "WHERE a.agendaId = pr.agendaId AND a.matcolaborador = ?";
 
+	private static final String SELECT_QUESTOES_POR_PROVA = "SELECT q.*, "
+			+ "t.temaId, t.titulo as titulotema, t.descricao as descricaotema "
+			+ "FROM questoes q, temas t "
+			+ "WHERE q.temaId = t.temaId AND q.provaId = ?";
+
+	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT * FROM opcoes WHERE questaoId = ?";
+
 	@Override
 	public List<AgendaDTO> listarAgendas(Integer matricula)
 			throws ClassNotFoundException, SQLException {
@@ -113,6 +122,15 @@ public class DashboardModelImpl implements DashboardModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
+
+		ProvasModel provasModel = new ProvasModelImpl();
+		List<ApostilaDTO> apostilas;
+		for (AgendaDTO agendaDTO : listaAgendas) {
+			apostilas = new ArrayList<ApostilaDTO>();
+			apostilas = provasModel.listarApostilasPorProvaId(agendaDTO
+					.getProva().getProvaId());
+			agendaDTO.setListaApostilas(apostilas);
+		}
 
 		return listaAgendas;
 	}
@@ -259,12 +277,15 @@ public class DashboardModelImpl implements DashboardModel {
 
 		if (rs.next()) {
 			relatorio = new RelatorioDadosGeraisDTO();
-			relatorio.setQtdFuncionariosAtivos(rs.getInt("qtdFuncionariosAtivos"));
-			relatorio.setQtdFuncionariosInativos(rs.getInt("qtdFuncionariosInativos"));
+			relatorio.setQtdFuncionariosAtivos(rs
+					.getInt("qtdFuncionariosAtivos"));
+			relatorio.setQtdFuncionariosInativos(rs
+					.getInt("qtdFuncionariosInativos"));
 			relatorio.setQtdEquipes(rs.getInt("qtdEquipes"));
 			relatorio.setQtdProvasAgendadas(rs.getInt("qtdProvasAgendadas"));
 			relatorio.setQtdProvasRealizadas(rs.getInt("qtdProvasRealizadas"));
-			relatorio.setQtdProvasNaoRealizadas(rs.getInt("qtdProvasNaoRealizadas"));
+			relatorio.setQtdProvasNaoRealizadas(rs
+					.getInt("qtdProvasNaoRealizadas"));
 			relatorio.setQtdTemas(rs.getInt("qtdTemas"));
 			relatorio.setQtdProvas(rs.getInt("qtdProvas"));
 			relatorio.setQtdQuestoes(rs.getInt("qtdQuestoes"));
@@ -413,5 +434,82 @@ public class DashboardModelImpl implements DashboardModel {
 			conn.close();
 
 		return notaMediaColaboradorDTO;
+	}
+
+	@Override
+	public List<QuestaoDTO> listarQuestoesPorProva(ProvaDTO provaSelecionada)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método listarQuestoesPorProva");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_QUESTOES_POR_PROVA);
+		pstmt.setInt(1, provaSelecionada.getProvaId());
+		rs = pstmt.executeQuery();
+		List<QuestaoDTO> listaQuestoes = new ArrayList<QuestaoDTO>();
+		QuestaoDTO questao = null;
+
+		while (rs.next()) {
+			questao = new QuestaoDTO();
+			questao.setQuestaoId(rs.getInt("questaoId"));
+			questao.setTituloQuestao(rs.getString("titulo"));
+			questao.setDescricaoQuestao(rs.getString("descricao"));
+
+			questao.setProvaId(rs.getInt("provaId"));
+
+			questao.setTemaId(rs.getInt("temaId"));
+			questao.setTitulo(rs.getString("titulotema"));
+			questao.setDescricao(rs.getString("descricaotema"));
+			listaQuestoes.add(questao);
+		}
+
+		if (pstmt != null)
+			pstmt.close();
+		if (rs != null)
+			rs.close();
+		if (conn != null)
+			conn.close();
+		return listaQuestoes;
+	}
+
+	@Override
+	public List<OpcaoDTO> listarOpcoesPorQuestao(QuestaoDTO questaoDTO)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método listarOpcoesPorQuestao");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(SELECT_OPCOES_POR_QUESTAO);
+		pstmt.setInt(1, questaoDTO.getQuestaoId());
+		rs = pstmt.executeQuery();
+		List<OpcaoDTO> listaOpcoes = new ArrayList<OpcaoDTO>();
+		OpcaoDTO opcao = new OpcaoDTO();
+
+		while (rs.next()) {
+			opcao = new OpcaoDTO();
+			opcao.setOpcaoId(rs.getInt("opcaoId"));
+			opcao.setTituloOpcao(rs.getString("titulo"));
+			opcao.setFlag(rs.getBoolean("flag"));
+
+			opcao.setQuestaoId(rs.getInt("questaoId"));
+			listaOpcoes.add(opcao);
+		}
+
+		if (pstmt != null)
+			pstmt.close();
+		if (rs != null)
+			rs.close();
+		if (conn != null)
+			conn.close();
+
+		return listaOpcoes;
 	}
 }

@@ -5,8 +5,80 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<div>
-	Colaborador
+
+<div class="div-content">
+	<div align="center" class="header-title-page">
+		Dahsboard Colaborador
+		<p:separator />
+	</div>
+
+	<h:form id="frmRemotoCol">
+		<p:remoteCommand autoRun="true" immediate="true"
+			actionListener="#{dashboardColManagedBean.carregarDashboard}"
+			name="onload" update=":frmAdmDash :frmDataTable:agendaDataTable" />
+	</h:form>
+
+	<h:form id="frmDataTable">
+		<p:panelGrid columns="2" style="width: 100%;"
+			columnClasses="width60, width40" styleClass="valignTop">
+			<p:panel header="Provas agendadas">
+				<p:dataTable id="agendaDataTable"
+					value="#{dashboardColManagedBean.listaAgendas}" var="agenda"
+					rowsPerPageTemplate="5,10,15" paginator="true" rows="5"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					emptyMessage="Não há registros">
+
+					<p:column headerText="Prova">
+						<h:outputText value="#{agenda.prova.titulo}" />
+						<p:commandButton icon="ui-icon-play" title="Realizar prova"
+							style="width:20px; height:20px; margin-left:5px;"
+							oncomplete="dialogConfirmRealizarProva.show()"
+							update=":idDialogConfirmRealizarProva"
+							disabled="#{agenda.hoje eq 0}">
+							<f:setPropertyActionListener
+								target="#{dashboardColManagedBean.provaSelecionada}"
+								value="#{agenda.prova}" />
+						</p:commandButton>
+					</p:column>
+
+					<p:column headerText="Data">
+						<h:outputText value="#{agenda.provaAgendada}">
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Apostilas">
+						<ul>
+							<ui:repeat var="apostila" value="#{agenda.listaApostilas}">
+								<li><h:outputText value="#{apostila.nome}" /> <p:commandButton
+										icon="ui-icon-disk" ajax="false"
+										action="#{dashboardColManagedBean.carregarArquivo}"
+										style="width:20px; height:20px; margin-left:5px;"
+										title="Download">
+										<f:setPropertyActionListener
+											target="#{dashboardColManagedBean.apostilaSelecionada}"
+											value="#{apostila}" />
+									</p:commandButton></li>
+							</ui:repeat>
+						</ul>
+
+					</p:column>
+				</p:dataTable>
+
+			</p:panel>
+			<p:panel header="Notas">
+				<p:barChart id="basic"
+					rendered="#{dashboardColManagedBean.barChartFlag}"
+					value="#{dashboardColManagedBean.categoryModel}" legendPosition="e"
+					title="JVM / Memória" style="height:250px; width:250px;" />
+				<h:outputText rendered="#{!dashboardColManagedBean.barChartFlag}"
+					value="Não há provas realizadas." />
+			</p:panel>
+		</p:panelGrid>
+	</h:form>
+
+	<ui:include src="/pages/system/dialog/dialog_confirmar_prova.xhtml" />
 </div>
 
 </html>

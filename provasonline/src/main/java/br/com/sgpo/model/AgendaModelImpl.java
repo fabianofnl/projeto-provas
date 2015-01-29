@@ -23,11 +23,14 @@ public class AgendaModelImpl implements AgendaModel {
 
 	private static final Logger LOG = Logger.getLogger(AgendaModelImpl.class);
 
-	private static final String SELECT_AGENDA = "SELECT * FROM agenda a, provas p, funcionario f "
+	private static final String SELECT_AGENDA = "SELECT * "
+			+ "FROM agenda a, provas p, funcionario f "
 			+ "WHERE a.provaId = p.provaId AND a.matcolaborador = f.matricula "
 			+ "ORDER BY dataprova DESC";
 
-	private static final String SELECT_AGENDA_NAO_REALIZADA = "SELECT * FROM agenda a, provas p, funcionario f "
+	private static final String SELECT_AGENDA_NAO_REALIZADA = "SELECT *, "
+			+ "(SELECT COUNT(a1.agendaId) FROM agenda a1 WHERE a1.dataProva <= CURRENT_DATE AND a1.agendaId = a.agendaId) as hoje "
+			+ "FROM agenda a, provas p, funcionario f "
 			+ "WHERE a.provaId = p.provaId AND a.matcolaborador = f.matricula "
 			+ "AND flag = false AND dataprova >= CURRENT_DATE ORDER BY a.dataprova DESC";
 
@@ -110,6 +113,7 @@ public class AgendaModelImpl implements AgendaModel {
 			agenda.setMatColaborador(rs.getInt("matcolaborador"));
 			agenda.setProvaAgendada(new Date(rs.getDate("dataprova").getTime()));
 			agenda.setFlag(rs.getBoolean("flag"));
+			agenda.setHoje(rs.getInt("hoje"));
 
 			prova = new ProvaDTO();
 			prova.setProvaId(rs.getInt("provaId"));

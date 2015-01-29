@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/template/system_template.xhtml">
+	<ui:define name="content">
+		<div class="div-content">
+
+			<p:growl autoUpdate="true" showDetail="true" showSummary="true"
+				life="10000" />
+
+			<div align="center" class="header-title-page">
+				Realizar Prova
+				<p:separator />
+			</div>
+
+			<h:form id="frmRemoteCommand">
+				<p:remoteCommand name="onloadTabela"
+					actionListener="#{dashboardColManagedBean.carregarProva}"
+					autoRun="true" update=":frmRealizarProva" />
+			</h:form>
+
+			<h:form id="frmRealizarProva">
+				<p:panelGrid columns="1" style="width: 100%;" styleClass="centralizarElemento">
+					<p:panel header="Prova" style="width: 50%;">
+						<ui:repeat var="questao"
+							value="#{dashboardColManagedBean.listaQuestoes}">
+							
+							Questão:
+							<br />
+							<h:outputText value="#{questao.descricaoQuestao}" />
+							<br />
+							Opções:
+							<br />
+							<ui:repeat var="opcao" value="#{questao.listaOpcoes}">
+								<h:outputText value="#{opcao.tituloOpcao}" />
+								<br/>
+							</ui:repeat>
+							<br />
+							<br />
+						</ui:repeat>
+					</p:panel>
+				</p:panelGrid>
+			</h:form>
+
+		</div>
+	</ui:define>
+</ui:composition>
+
+</html>

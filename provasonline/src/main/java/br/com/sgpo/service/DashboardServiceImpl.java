@@ -1,13 +1,17 @@
 package br.com.sgpo.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sgpo.dto.AgendaDTO;
 import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.NotaMediaColaboradorDTO;
 import br.com.sgpo.dto.NotaMediaEquipesDTO;
+import br.com.sgpo.dto.OpcaoDTO;
+import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.dto.ProvaRealizadaDTO;
+import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
 import br.com.sgpo.model.DashboardModel;
 import br.com.sgpo.model.DashboardModelImpl;
@@ -74,6 +78,23 @@ public class DashboardServiceImpl implements DashboardService {
 		}
 
 		return listaNotaMedia;
+	}
+
+	@Override
+	public List<QuestaoDTO> listarQuestoesPorProva(ProvaDTO provaSelecionada)
+			throws ClassNotFoundException, SQLException {
+
+		List<QuestaoDTO> listaQuestoes = dashboardModel
+				.listarQuestoesPorProva(provaSelecionada);
+		List<OpcaoDTO> listaOpcoes;
+
+		for (QuestaoDTO questaoDTO : listaQuestoes) {
+			listaOpcoes = new ArrayList<OpcaoDTO>();
+			listaOpcoes = dashboardModel.listarOpcoesPorQuestao(questaoDTO);
+			questaoDTO.setListaOpcoes(listaOpcoes);
+		}
+
+		return listaQuestoes;
 	}
 
 }

@@ -18,10 +18,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
@@ -415,16 +413,6 @@ public class ProvaManagedBean implements Serializable {
 		} catch (SQLException e) {
 			LOG.error("Houve um problema na query do banco de dados", e);
 		}
-
-	}
-
-	public void apostilaDownload(ActionEvent event) {
-
-		InputStream stream = ((ServletContext) FacesContext
-				.getCurrentInstance().getExternalContext().getContext())
-				.getResourceAsStream("/resources/demo/images/optimus.jpg");
-		fileDownload = new DefaultStreamedContent(stream, "image/jpg",
-				"downloaded_optimus.jpg");
 
 	}
 

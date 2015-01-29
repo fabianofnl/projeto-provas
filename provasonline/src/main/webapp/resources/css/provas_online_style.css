@@ -30,14 +30,47 @@
 	text-align: center;
 }
 
-.width50{
+.centralizarElemento > table > tbody > tr > td{
+	text-align: center !important;
+	align: center !important;
+}
+
+.width80 {
+	width: 80%;
+}
+
+.width70 {
+	width: 70%;
+}
+
+.width60 {
+	width: 60%;
+}
+
+.width50 {
 	width: 50%;
+}
+
+.width40 {
+	width: 40%;
+}
+
+.width30 {
+	width: 30%;
+}
+
+.width20 {
+	width: 20%;
 }
 
 .table-vertical-align {
 	vertical-align: top;
 	padding-top: 22px !important;
 	padding-left: 20px !important;
+}
+
+.valignTop > tbody > tr > td{
+	vertical-align: top !important;	
 }
 
 .ui-panelgrid {

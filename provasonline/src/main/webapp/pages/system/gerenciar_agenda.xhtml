@@ -55,7 +55,7 @@
 							</p:column>
 
 							<p:column headerText="Ações" styleClass="centralizar">
-								<p:commandButton title="Excluir agendamento"
+								<p:commandButton title="Excluir agendamento" disabled="#{agenda.hoje gt 0}"
 									icon="ui-icon-trash" update=":idDialogExcluirAgenda"
 									oncomplete="dialogExcluirAgenda.show()" >
 									<f:setPropertyActionListener

@@ -1,7 +1,9 @@
 package br.com.sgpo.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Roseli
@@ -19,6 +21,7 @@ public class AgendaDTO implements Serializable {
 	private Boolean flag;
 	private Integer vencido;
 	private Integer hoje;
+	private List<ApostilaDTO> listaApostilas = new ArrayList<ApostilaDTO>();
 
 	public AgendaDTO() {
 	}
@@ -93,5 +96,13 @@ public class AgendaDTO implements Serializable {
 
 	public void setHoje(Integer hoje) {
 		this.hoje = hoje;
+	}
+
+	public List<ApostilaDTO> getListaApostilas() {
+		return listaApostilas;
+	}
+
+	public void setListaApostilas(List<ApostilaDTO> listaApostilas) {
+		this.listaApostilas = listaApostilas;
 	}
 }
