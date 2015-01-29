@@ -18,32 +18,57 @@
 				<p:separator />
 			</div>
 
-			<h:form id="frmRemoteCommand">
-				<p:remoteCommand name="onloadTabela"
-					actionListener="#{dashboardColManagedBean.carregarProva}"
-					autoRun="true" update=":frmRealizarProva" />
-			</h:form>
-
 			<h:form id="frmRealizarProva">
-				<p:panelGrid columns="1" style="width: 100%;" styleClass="centralizarElemento">
-					<p:panel header="Prova" style="width: 50%;">
-						<ui:repeat var="questao"
+				<p:panelGrid columns="3" style="width: 100%;"
+					columnClasses="width20, width60, width20">
+					<h:outputText value=" " />
+					<p:panel style="width: 100%;">
+
+
+						<h:outputText value="Informações:"
+							style="font-size: 14px; text-decoration: underline;" />
+						<br />
+						<br />
+						<h:outputText
+							value="Leia atentamente todas as questões e ao final, assim que escolher as opções, clique em 'Finalizar prova.'" />
+						<br />
+						<h:outputText
+							value="NOTA: Você não poderá sair dessa página, pois o sistema já está contabilizando o tempo da prova." />
+						<br />
+						<br />
+						<h:outputText value="Data/Hora Início: " />
+						<h:outputText value="#{dashboardColManagedBean.provaRealizadaSelecionada.dataHoraInicio}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Sao_Paulo"/>
+						</h:outputText>
+						<h:outputText value=" - Término: "/>
+						<h:outputText value="#{dashboardColManagedBean.provaRealizadaSelecionada.dataHoraFim}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Sao_Paulo"/>
+						</h:outputText>
+						<p:separator />
+						<br/>
+						<br/>
+
+						<ui:repeat var="questao" varStatus="linha"
 							value="#{dashboardColManagedBean.listaQuestoes}">
-							
-							Questão:
+							<p:panelGrid columns="2" style="width: 100%;"
+								columnClasses="width5, width95">
+								<h:outputText value="(#{linha.index + 1}) "
+									style="font-size: 14px; font-weight: bold;" />
+								<h:outputText value="#{questao.descricaoQuestao}" />
+							</p:panelGrid>
+							<p:selectOneRadio value="#{questao.opcaoSelecionada}"
+								layout="pageDirection">
+								<f:selectItems value="#{questao.listaOpcoes}"
+									itemLabel="#{opcao.tituloOpcao}" itemValue="#{opcao.opcaoId}"
+									var="opcao" />
+							</p:selectOneRadio>
 							<br />
-							<h:outputText value="#{questao.descricaoQuestao}" />
-							<br />
-							Opções:
-							<br />
-							<ui:repeat var="opcao" value="#{questao.listaOpcoes}">
-								<h:outputText value="#{opcao.tituloOpcao}" />
-								<br/>
-							</ui:repeat>
-							<br />
-							<br />
+							<div style="border-top: 1px solid #cbc7bd;"></div>
 						</ui:repeat>
+						<p:commandButton value="Finalizar prova" style="margin-top: 15px;"
+							action="#{dashboardColManagedBean.submitProva}" ajax="false" />
 					</p:panel>
+					<h:outputText value=" " />
 				</p:panelGrid>
 			</h:form>
 

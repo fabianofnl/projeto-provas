@@ -5,8 +5,37 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<div>
-	Gerente
+
+<div class="div-content">
+	<div align="center" class="header-title-page">
+		Dahsboard Gerente
+		<p:separator />
+	</div>
+
+	<h:form id="frmRemotoGer">
+		<p:remoteCommand autoRun="true"
+			actionListener="#{dashboardGerManagedBean.carregarDashboard}"
+			name="onload" update=":frmBarChart"/>
+	</h:form>
+	
+	<h:form id="frmBarChart">
+		<p:panelGrid columns="3" columnClasses="width20, width60, width20" style="width:100%;" >
+			<h:outputText value=" "/>
+			<p:panel header="Média da equipe">
+				<p:barChart id="basic"
+					rendered="#{dashboardGerManagedBean.barChartFlag}" orientation="horizontal"
+					value="#{dashboardGerManagedBean.categoryModel}" legendPosition="e" barMargin="20"
+					barPadding="10"
+					title="Notas" style="height:#{dashboardGerManagedBean.height}px; width:590px;" 
+					min="0" max="120" />
+				<h:outputText rendered="#{!dashboardGerManagedBean.barChartFlag}"
+					value="Não há provas realizadas." />
+			</p:panel>
+			<h:outputText value=" "/>
+		</p:panelGrid>
+	
+	</h:form>
+	
 </div>
 
 </html>

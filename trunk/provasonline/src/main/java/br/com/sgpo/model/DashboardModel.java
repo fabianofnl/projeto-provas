@@ -36,10 +36,7 @@ public interface DashboardModel {
 	public NotaMediaEquipesDTO consultarMediaEquipePorGerente(
 			NotaMediaEquipesDTO notaMediaEquipesDTO)
 			throws ClassNotFoundException, SQLException;
-
-	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradorPorGerenteMat(
-			Integer matricula) throws ClassNotFoundException, SQLException;
-
+	
 	public NotaMediaColaboradorDTO consultarNotaMediaColaborador(
 			NotaMediaColaboradorDTO notaMediaColaboradorDTO)
 			throws ClassNotFoundException, SQLException;
@@ -49,5 +46,14 @@ public interface DashboardModel {
 
 	public List<OpcaoDTO> listarOpcoesPorQuestao(QuestaoDTO questaoDTO)
 			throws ClassNotFoundException, SQLException;
+
+	public Integer realizarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
+			throws ClassNotFoundException, SQLException;
+
+	public void entregarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
+			throws ClassNotFoundException, SQLException;
+
+	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradores(
+			Integer matricula) throws ClassNotFoundException, SQLException;
 
 }

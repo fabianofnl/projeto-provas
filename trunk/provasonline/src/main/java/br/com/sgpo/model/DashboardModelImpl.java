@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +49,7 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Ativo') AS qtdFuncionariosAtivos, "
 			+ "(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Inativo') AS qtdFuncionariosInativos, "
 			+ "(SELECT COUNT(DISTINCT matgerente) FROM equipes) AS qtdEquipes, "
-			+ "(SELECT COUNT(agendaId) FROM agenda WHERE flag = false AND dataProva > CURRENT_DATE) AS qtdProvasAgendadas, "
+			+ "(SELECT COUNT(agendaId) FROM agenda WHERE flag = false AND dataProva >= CURRENT_DATE) AS qtdProvasAgendadas, "
 			+ "(SELECT COUNT(agendaId) FROM agenda WHERE flag = true) AS qtdProvasRealizadas, "
 			+ "(SELECT COUNT(agendaId) FROM agenda WHERE flag = false) AS qtdProvasNaoRealizadas, "
 			+ "(SELECT COUNT(temaId) FROM temas) AS qtdTemas, "
@@ -81,6 +82,15 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "WHERE q.temaId = t.temaId AND q.provaId = ?";
 
 	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT * FROM opcoes WHERE questaoId = ?";
+
+	private static final String UPDATE_AGENDA_FLAG = "UPDATE agenda SET flag = true WHERE agendaId = ?";
+
+	private static final String INSERT_DETALHES_PROVA_REALIZADA = "INSERT INTO provasRealizadas "
+			+ "(agendaId, provaId, tituloProva, dataHoraInicio, dataHoraFim, quantidadeQuestoes, quantidadeAcertos) "
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING provaRealizadaId";
+
+	private static final String UPDATE_PROVA_REALIZADA = "UPDATE provasRealizadas SET dataHoraFinalizado = ?, quantidadeAcertos = ? "
+			+ "WHERE provaRealizadaId = ?";
 
 	@Override
 	public List<AgendaDTO> listarAgendas(Integer matricula)
@@ -371,41 +381,6 @@ public class DashboardModelImpl implements DashboardModel {
 	}
 
 	@Override
-	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradorPorGerenteMat(
-			Integer matricula) throws ClassNotFoundException, SQLException {
-
-		LOG.info("Chamando método listarNotaMediaColaboradorPorGerenteMat");
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		NotaMediaColaboradorDTO notaMediaColaboradorDTO = null;
-		List<NotaMediaColaboradorDTO> listaNotaMedia = new ArrayList<NotaMediaColaboradorDTO>();
-
-		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn
-				.prepareStatement(SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT);
-		pstmt.setInt(1, matricula);
-		rs = pstmt.executeQuery();
-
-		while (rs.next()) {
-			notaMediaColaboradorDTO = new NotaMediaColaboradorDTO();
-			notaMediaColaboradorDTO.setNome(rs.getString("nome"));
-			notaMediaColaboradorDTO.setMatricula(rs.getInt("matricula"));
-			listaNotaMedia.add(notaMediaColaboradorDTO);
-		}
-
-		if (rs != null)
-			rs.close();
-		if (pstmt != null)
-			pstmt.close();
-		if (conn != null)
-			conn.close();
-
-		return listaNotaMedia;
-	}
-
-	@Override
 	public NotaMediaColaboradorDTO consultarNotaMediaColaborador(
 			NotaMediaColaboradorDTO notaMediaColaboradorDTO)
 			throws ClassNotFoundException, SQLException {
@@ -422,8 +397,10 @@ public class DashboardModelImpl implements DashboardModel {
 		rs = pstmt.executeQuery();
 
 		while (rs.next()) {
-			notaMediaColaboradorDTO.setQuestoes(rs.getInt("questoes"));
-			notaMediaColaboradorDTO.setAcertos(rs.getInt("acertos"));
+			notaMediaColaboradorDTO.setQuestoes(Long.parseLong(String
+					.valueOf(rs.getInt("questoes"))));
+			notaMediaColaboradorDTO.setAcertos(Long.parseLong(String.valueOf(rs
+					.getInt("acertos"))));
 		}
 
 		if (rs != null)
@@ -511,5 +488,120 @@ public class DashboardModelImpl implements DashboardModel {
 			conn.close();
 
 		return listaOpcoes;
+	}
+
+	@Override
+	public Integer realizarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método realizar prova");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Integer provaRealizadaId = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(UPDATE_AGENDA_FLAG);
+		pstmt.setInt(1, provaRealizadaSelecionada.getAgenda().getAgendaId());
+		pstmt.execute();
+
+		pstmt = conn.prepareStatement(INSERT_DETALHES_PROVA_REALIZADA);
+		pstmt.setInt(1, provaRealizadaSelecionada.getAgenda().getAgendaId());
+		pstmt.setInt(2, provaRealizadaSelecionada.getProvaId());
+		pstmt.setString(3, provaRealizadaSelecionada.getTituloProva());
+		pstmt.setTimestamp(4, new Timestamp(provaRealizadaSelecionada
+				.getDataHoraInicio().getTime()));
+		pstmt.setTimestamp(5, new Timestamp(provaRealizadaSelecionada
+				.getDataHoraFim().getTime()));
+		pstmt.setInt(6, provaRealizadaSelecionada.getQuantidadeQuestoes());
+		pstmt.setInt(7, provaRealizadaSelecionada.getQuantidadeAcertos());
+		rs = pstmt.executeQuery();
+
+		if (rs.next()) {
+			provaRealizadaId = rs.getInt("provaRealizadaId");
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return provaRealizadaId;
+	}
+
+	@Override
+	public void entregarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
+			throws ClassNotFoundException, SQLException {
+
+		LOG.info("Chamando método entregar prova");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn.prepareStatement(UPDATE_PROVA_REALIZADA);
+		pstmt.setTimestamp(1, new java.sql.Timestamp(provaRealizadaSelecionada
+				.getDataHoraFinalizado().getTime()));
+		pstmt.setInt(2, provaRealizadaSelecionada.getQuantidadeAcertos());
+		pstmt.setInt(3, provaRealizadaSelecionada.getProvaRealizadaId());
+		pstmt.execute();
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+	}
+
+	@Override
+	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradores(
+			Integer matricula) throws ClassNotFoundException, SQLException {
+
+		LOG.info("chamando listar nota media colaboradores");
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		NotaMediaColaboradorDTO notaMediaColaborador = null;
+		List<NotaMediaColaboradorDTO> listaNotaMedia = new ArrayList<NotaMediaColaboradorDTO>();
+
+		conn = ConexaoBaseDados.getConexaoInstance();
+		pstmt = conn
+				.prepareStatement(SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT);
+		pstmt.setInt(1, matricula);
+		rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			notaMediaColaborador = new NotaMediaColaboradorDTO();
+			notaMediaColaborador.setNome(rs.getString("nome"));
+			notaMediaColaborador.setMatricula(rs.getInt("matricula"));
+			listaNotaMedia.add(notaMediaColaborador);
+		}
+
+		pstmt = conn.prepareStatement(SELECT_NOTA_MEDIA_COLABORADOR);
+
+		for (NotaMediaColaboradorDTO notaMediaColaboradorDTO : listaNotaMedia) {
+			pstmt.setInt(1, notaMediaColaboradorDTO.getMatricula());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				Object obj = rs.getObject("acertos");
+				notaMediaColaboradorDTO.setAcertos(obj == null ? null
+						: (Long) obj);
+				obj = rs.getObject("questoes");
+				notaMediaColaboradorDTO.setQuestoes(obj == null ? null
+						: (Long) obj);
+			}
+		}
+
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return listaNotaMedia;
 	}
 }

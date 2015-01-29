@@ -66,21 +66,6 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	@Override
-	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradorPorGerenteMat(
-			Integer matricula) throws ClassNotFoundException, SQLException {
-
-		List<NotaMediaColaboradorDTO> listaNotaMedia = dashboardModel
-				.listarNotaMediaColaboradorPorGerenteMat(matricula);
-
-		for (NotaMediaColaboradorDTO notaMediaColaboradorDTO : listaNotaMedia) {
-			notaMediaColaboradorDTO = dashboardModel
-					.consultarNotaMediaColaborador(notaMediaColaboradorDTO);
-		}
-
-		return listaNotaMedia;
-	}
-
-	@Override
 	public List<QuestaoDTO> listarQuestoesPorProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -95,6 +80,24 @@ public class DashboardServiceImpl implements DashboardService {
 		}
 
 		return listaQuestoes;
+	}
+
+	@Override
+	public Integer realizarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
+			throws ClassNotFoundException, SQLException {
+		return dashboardModel.realizarProva(provaRealizadaSelecionada);
+	}
+
+	@Override
+	public void entregarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
+			throws ClassNotFoundException, SQLException {
+		dashboardModel.entregarProva(provaRealizadaSelecionada);
+	}
+
+	@Override
+	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradores(
+			Integer matricula) throws ClassNotFoundException, SQLException {
+		return dashboardModel.listarNotaMediaColaboradores(matricula);
 	}
 
 }

@@ -17,6 +17,7 @@ public class QuestaoDTO extends TemaDTO implements Serializable {
 	private String tituloQuestao;
 	private String descricaoQuestao;
 	private Integer quantidadeOpcoes;
+	private String opcaoSelecionada;
 	private List<OpcaoDTO> listaOpcoes = new ArrayList<OpcaoDTO>();
 
 	public QuestaoDTO() {
@@ -60,6 +61,14 @@ public class QuestaoDTO extends TemaDTO implements Serializable {
 
 	public void setQuantidadeOpcoes(Integer quantidadeOpcoes) {
 		this.quantidadeOpcoes = quantidadeOpcoes;
+	}
+
+	public String getOpcaoSelecionada() {
+		return opcaoSelecionada;
+	}
+
+	public void setOpcaoSelecionada(String opcaoSelecionada) {
+		this.opcaoSelecionada = opcaoSelecionada;
 	}
 
 	public List<OpcaoDTO> getListaOpcoes() {
