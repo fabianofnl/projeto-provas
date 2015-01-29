@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -56,12 +55,12 @@ public class DashboardColManagedBean implements Serializable {
 	private Boolean barChartFlag = false;
 	private int height;
 
-	private CartesianChartModel categoryModel;
+	private CartesianChartModel categoryModel = new CartesianChartModel();
 
-	@PostConstruct
-	public void carregarNotas() {
+	public void carregarDashboard(ActionEvent event) {
 
 		try {
+
 			DashboardService dashboardService = new DashboardServiceImpl();
 
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -96,7 +95,7 @@ public class DashboardColManagedBean implements Serializable {
 					 * um loop
 					 */
 					if (provaRealizadaDTO.getQuantidadeAcertos() == null
-							|| provaRealizadaDTO.getQuantidadeQuestoes() == null){
+							|| provaRealizadaDTO.getQuantidadeQuestoes() == null) {
 						LOG.info("Pulo 1 for");
 						continue;
 					}
@@ -144,24 +143,7 @@ public class DashboardColManagedBean implements Serializable {
 				barChartFlag = true;
 			}
 
-		} catch (ClassNotFoundException e) {
-			LOG.error("Driver do banco de dados não encontrado", e);
-		} catch (SQLException e) {
-			LOG.error("Houve um problema na query do banco de dados", e);
-		}
-	}
-
-	public void carregarDashboard(ActionEvent event) {
-
-		try {
-			FacesContext context = FacesContext.getCurrentInstance();
-			HttpSession session = (HttpSession) context.getExternalContext()
-					.getSession(true);
-			FuncionarioDTO funcionario = (FuncionarioDTO) session
-					.getAttribute("funcionario");
-
-			DashboardService dashboardService = new DashboardServiceImpl();
-			listaAgendas = dashboardService.listarAgendas(funcionario
+			listaAgendas = dashboardService.listarAgendas(colaborador
 					.getMatricula());
 
 		} catch (ClassNotFoundException e) {
@@ -295,7 +277,7 @@ public class DashboardColManagedBean implements Serializable {
 
 			LOG.info("Fim submit prova");
 			limparSessao();
-			carregarNotas();
+			carregarDashboard(null);
 		} catch (ClassNotFoundException e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,

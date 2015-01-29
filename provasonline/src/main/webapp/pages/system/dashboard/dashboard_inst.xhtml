@@ -5,8 +5,82 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<div>
-	Instrutor
+
+<div class="div-content">
+
+	<div align="center" class="header-title-page">
+		Dashboard Instrutor
+		<p:separator />
+	</div>
+
+	<h:form id="frmRemotoGer">
+		<p:remoteCommand autoRun="true"
+			actionListener="#{dashboardGerManagedBean.carregarDashboard}"
+			name="onload" update=":frmGerDash :frmGerDash:basic" />
+	</h:form>
+
+	<h:form id="frmGerDash">
+		<p:panel id="relatorio" header="Relatório">
+			<p:panelGrid columns="2" style="width:100%;"
+				columnClasses="width60, width40">
+
+				<p:barChart id="basic"
+					value="#{dashboardGerManagedBean.categoryModel}"
+					legendPosition="ne" title="Média por Gerente"
+					style="height:300px; width: 600px;" />
+
+				<p:fieldset>
+					<p:panelGrid columns="2" style="width:100%;"
+						columnClasses="width80, width20">
+						<h:outputText value="Quantidade Funcionários Ativos" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdFuncionariosAtivos}" />
+
+						<h:outputText value="Quantidade Funcionários Inativos" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdFuncionariosInativos}" />
+
+						<h:outputText value="Quantidade de Equipes" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdEquipes}" />
+
+						<h:outputText value="Quantidade de Provas Agendadas" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdProvasAgendadas}" />
+
+						<h:outputText value="Quantidade de Provas Realizadas" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdProvasRealizadas}" />
+
+						<h:outputText value="Quantidade de Provas não Realizadas" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdProvasNaoRealizadas}" />
+
+						<h:outputText value="Quantidade de Temas" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdTemas}" />
+
+						<h:outputText value="Quantidade de Provas" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdProvas}" />
+
+						<h:outputText value="Quantidade de Questões" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdQuestoes}" />
+
+						<h:outputText value="Quantidade de Opções (respostas)" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdOpcoes}" />
+
+						<h:outputText value="Quantidade de Apostilas" />
+						<h:outputText
+							value="#{dashboardGerManagedBean.relatorio.qtdApostilas}" />
+					</p:panelGrid>
+				</p:fieldset>
+
+			</p:panelGrid>
+		</p:panel>
+	</h:form>
 </div>
 
 </html>
