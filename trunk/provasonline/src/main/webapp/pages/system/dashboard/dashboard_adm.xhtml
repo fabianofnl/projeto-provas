@@ -7,25 +7,74 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <div class="div-content">
-	<h:form id="frmRemoto">
-		<p:remoteCommand autoRun="true" immediate="true"
+
+	<div align="center" class="header-title-page">
+		Dashboard Administrativo
+		<p:separator />
+	</div>
+
+	<h:form id="frmRemotoAdm">
+		<p:remoteCommand autoRun="true"
 			actionListener="#{dashboardAdminManagedBean.carregarDashboard}"
-			name="onload" update=":frmAdmDash" />
+			name="onload" update=":frmAdmDash :frmAdmDash:basic" />
 	</h:form>
 
 	<h:form id="frmAdmDash">
 		<p:panel id="relatorio" header="Relatório">
-			<p:panelGrid columns="2" style="width:100%;" columnClasses="width50">
+			<p:panelGrid columns="2" style="width:100%;"
+				columnClasses="width60, width40">
 
 				<p:barChart id="basic"
 					value="#{dashboardAdminManagedBean.categoryModel}"
 					legendPosition="ne" title="JVM / Memória"
-					style="height:300px; width: 400px;" />
+					style="height:300px; width: 600px;" />
 
 				<p:fieldset>
-					<p:panelGrid columns="2" columnClasses="width50">
-						<h:outputText value="Qtd" />
-						<h:outputText value="8" />
+					<p:panelGrid columns="2" style="width:100%;"
+						columnClasses="width80, width20">
+						<h:outputText value="Quantidade Funcionários Ativos" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdFuncionariosAtivos}" />
+
+						<h:outputText value="Quantidade Funcionários Inativos" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdFuncionariosInativos}" />
+
+						<h:outputText value="Quantidade de Equipes" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdEquipes}" />
+
+						<h:outputText value="Quantidade de Provas Agendadas" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdProvasAgendadas}" />
+
+						<h:outputText value="Quantidade de Provas Realizadas" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdProvasRealizadas}" />
+
+						<h:outputText value="Quantidade de Provas não Realizadas" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdProvasNaoRealizadas}" />
+
+						<h:outputText value="Quantidade de Temas" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdTemas}" />
+
+						<h:outputText value="Quantidade de Provas" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdProvas}" />
+
+						<h:outputText value="Quantidade de Questões" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdQuestoes}" />
+
+						<h:outputText value="Quantidade de Opções (respostas)" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdOpcoes}" />
+
+						<h:outputText value="Quantidade de Apostilas" />
+						<h:outputText
+							value="#{dashboardAdminManagedBean.relatorio.qtdApostilas}" />
 					</p:panelGrid>
 				</p:fieldset>
 
