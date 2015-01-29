@@ -9,7 +9,6 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.chart.CartesianChartModel;
-import org.primefaces.model.chart.ChartSeries;
 
 import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
 import br.com.sgpo.service.DashboardService;
@@ -21,12 +20,12 @@ import br.com.sgpo.service.DashboardServiceImpl;
  */
 @ManagedBean
 @ViewScoped
-public class DashboardAdminManagedBean implements Serializable {
+public class DashboardInstManagedBean implements Serializable {
 
-	private static final long serialVersionUID = 3771915445327651323L;
+	private static final long serialVersionUID = 4312407946174547134L;
 
 	private static final Logger LOG = Logger
-			.getLogger(DashboardAdminManagedBean.class);
+			.getLogger(DashboardInstManagedBean.class);
 
 	private CartesianChartModel categoryModel = new CartesianChartModel();
 	private RelatorioDadosGeraisDTO relatorio = new RelatorioDadosGeraisDTO();
@@ -34,28 +33,11 @@ public class DashboardAdminManagedBean implements Serializable {
 	public void carregarDashboard(ActionEvent event) {
 
 		try {
-			int mb = 1024 * 1024;
-
-			categoryModel = new CartesianChartModel();
-			ChartSeries memoriaMax = new ChartSeries();
-			memoriaMax.setLabel("Memória máxima");
-			memoriaMax.set("Memória", (Runtime.getRuntime().maxMemory() / mb));
-
-			ChartSeries memoriaTotal = new ChartSeries();
-			memoriaTotal.setLabel("Memória total (pico)");
-			memoriaTotal.set("Memória",
-					(Runtime.getRuntime().totalMemory() / mb));
-
-			ChartSeries memoriaLivre = new ChartSeries();
-			memoriaLivre.setLabel("Memória livre");
-			memoriaLivre.set("Memória",
-					(Runtime.getRuntime().freeMemory() / mb));
-
-			categoryModel.addSeries(memoriaMax);
-			categoryModel.addSeries(memoriaTotal);
-			categoryModel.addSeries(memoriaLivre);
-
 			DashboardService dashboardService = new DashboardServiceImpl();
+			
+			
+			
+			
 			relatorio = dashboardService.consultarRelatorioDadosGerais();
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado", e);
@@ -64,11 +46,16 @@ public class DashboardAdminManagedBean implements Serializable {
 		}
 	}
 
+	public RelatorioDadosGeraisDTO getRelatorio() {
+		return relatorio;
+	}
+
+	public void setRelatorio(RelatorioDadosGeraisDTO relatorio) {
+		this.relatorio = relatorio;
+	}
+
 	public CartesianChartModel getCategoryModel() {
 		return categoryModel;
 	}
 
-	public RelatorioDadosGeraisDTO getRelatorio() {
-		return relatorio;
-	}
 }
