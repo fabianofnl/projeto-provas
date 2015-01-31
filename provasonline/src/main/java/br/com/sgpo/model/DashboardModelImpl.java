@@ -61,11 +61,17 @@ public class DashboardModelImpl implements DashboardModel {
 	private static final String SELECT_GERENTES = "SELECT DISTINCT ON (matgerente) e.matgerente, f.nome "
 			+ "FROM equipes e, funcionario f WHERE e.matgerente = f.matricula";
 
+	// private static final String SELECT_NOTA_MEDIA_POR_GERENTE = "SELECT "
+	// +
+	// "SUM(pr.quantidadeAcertos) AS acertos, SUM(pr.quantidadeQuestoes) AS questoes "
+	// + "FROM funcionario f, equipes e, agenda a, provasRealizadas pr "
+	// + "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
+	// + "AND f.matricula = e.matcolaborador AND e.matgerente = ?";
+
 	private static final String SELECT_NOTA_MEDIA_POR_GERENTE = "SELECT "
-			+ "SUM(pr.quantidadeAcertos) AS acertos, SUM(pr.quantidadeQuestoes) AS questoes "
-			+ "FROM funcionario f, equipes e, agenda a, provasRealizadas pr "
-			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
-			+ "AND f.matricula = e.matcolaborador AND e.matgerente = ?";
+			+ "sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float)/ count(a.agendaId) as media "
+			+ "FROM provasRealizadas pr, agenda a, funcionario f, equipes e "
+			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId AND f.matricula = e.matcolaborador AND e.matgerente = ?";
 
 	private static final String SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT = "SELECT f.matricula, f.nome "
 			+ "FROM equipes e, funcionario f "
@@ -363,11 +369,7 @@ public class DashboardModelImpl implements DashboardModel {
 		rs = pstmt.executeQuery();
 
 		if (rs.next()) {
-			notaMediaEquipesDTO.setQtdQuestoes(rs.getInt("questoes"));
-			notaMediaEquipesDTO.setQtdAcertos(rs.getInt("acertos"));
-		} else {
-			notaMediaEquipesDTO.setQtdQuestoes(null);
-			notaMediaEquipesDTO.setQtdAcertos(null);
+			notaMediaEquipesDTO.setMedia(rs.getDouble("media"));
 		}
 
 		if (rs != null)

@@ -14,6 +14,7 @@ public class NotaMediaEquipesDTO implements Serializable {
 	private String nomeGerente;
 	private Integer qtdAcertos;
 	private Integer qtdQuestoes;
+	private Double media;
 
 	public NotaMediaEquipesDTO() {
 	}
@@ -48,6 +49,14 @@ public class NotaMediaEquipesDTO implements Serializable {
 
 	public void setQtdQuestoes(Integer qtdQuestoes) {
 		this.qtdQuestoes = qtdQuestoes;
+	}
+
+	public Double getMedia() {
+		return media;
+	}
+
+	public void setMedia(Double media) {
+		this.media = media;
 	}
 
 }
