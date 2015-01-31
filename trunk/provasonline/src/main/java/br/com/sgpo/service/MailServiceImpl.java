@@ -31,7 +31,8 @@ public class MailServiceImpl extends Thread {
 
 	}
 
-	public MailServiceImpl(FuncionarioDTO funcionario, Agenda agenda, String contextPath) {
+	public MailServiceImpl(FuncionarioDTO funcionario, Agenda agenda,
+			String contextPath) {
 		this.funcionario = funcionario;
 		this.agenda = agenda;
 		this.contextPath = contextPath;
@@ -81,82 +82,42 @@ public class MailServiceImpl extends Thread {
 
 			helper.setSentDate(new Date());
 
+			helper.setSubject("SGPO - Agendamento de Prova");
+
+			sb.append("<html>");
+			sb.append("<body style='font-family: Verdana; color:#6E6E6E;'>");
+
+			sb.append("<h3>Sistema de Gerenciamento de Provas Online</h3>");
+
+			sb.append("<br>");
+			sb.append("Olá").append(" ").append(funcionario.getNome());
+			sb.append(",").append(" ");
+			sb.append("<br>");
+
 			switch (agenda) {
-			case NOVASENHA:
-
-				helper.setSubject("SGPO - Senha alterada");
-
-				sb.append("<html>");
-				sb.append("<body style='font-family: Verdana; color:#6E6E6E;'>");
-
-				sb.append("<h3>Sistema de Gerenciamento de Provas Online</h3>");
-
-				sb.append("<br>");
-				sb.append("Olá").append(" ").append(funcionario.getNome());
-				sb.append(",").append(" ");
-				sb.append("<br>");
-				sb.append("você alterou sua senha.");
-				sb.append("<br>");
-				sb.append("<br>");
-				sb.append("Sua nova senha é ");
-				sb.append("<strong>");
-				sb.append(funcionario.getSenha());
-				sb.append("</strong>");
-				sb.append("<br>");
-				sb.append("<br>");
-				sb.append("Acesse esse").append(" ");
-				sb.append("<a href='").append(contextPath + "/pages/login.jsf");
-				sb.append("'>link</a>");
-				sb.append("<br>");
-				sb.append("<br>");
-				sb.append("</body>");
-				sb.append("</html>");
-
+			case AGENDAR:
+				sb.append("você possui uma prova agendada para o dia");
 				break;
-
 			default:
-
-				helper.setSubject("SGPO - Agendamento de Prova");
-
-				sb.append("<html>");
-				sb.append("<body style='font-family: Verdana; color:#6E6E6E;'>");
-
-				sb.append("<h3>Sistema de Gerenciamento de Provas Online</h3>");
-
-				sb.append("<br>");
-				sb.append("Olá").append(" ").append(funcionario.getNome());
-				sb.append(",").append(" ");
-				sb.append("<br>");
-
-				switch (agenda) {
-				case AGENDAR:
-					sb.append("você possui uma prova agendada para o dia");
-					break;
-				default:
-					sb.append("sua prova foi cancelada, dia");
-					break;
-				}
-
-				sb.append(" ");
-				sb.append(new SimpleDateFormat("dd/MM/yyyy")
-						.format(provaAgendada));
-				sb.append(".");
-				sb.append("<br>");
-				sb.append("<br>");
-				sb.append(prova.getTitulo());
-				sb.append("<br>");
-				sb.append("<br>");
-				sb.append("Acesse esse").append(" ");
-				sb.append("<a href='")
-						.append(contextPath + "/pages/login.jsf");
-				sb.append("'>link</a>");
-				sb.append("<br>");
-				sb.append("<br>");
-				sb.append("</body>");
-				sb.append("</html>");
-
+				sb.append("sua prova foi cancelada, dia");
 				break;
 			}
+
+			sb.append(" ");
+			sb.append(new SimpleDateFormat("dd/MM/yyyy").format(provaAgendada));
+			sb.append(".");
+			sb.append("<br>");
+			sb.append("<br>");
+			sb.append(prova.getTitulo());
+			sb.append("<br>");
+			sb.append("<br>");
+			sb.append("Acesse esse").append(" ");
+			sb.append("<a href='").append(contextPath + "/pages/login.jsf");
+			sb.append("'>link</a>");
+			sb.append("<br>");
+			sb.append("<br>");
+			sb.append("</body>");
+			sb.append("</html>");
 
 			helper.setText(sb.toString(), true);
 			// sender.send(message);
