@@ -3,6 +3,7 @@ package br.com.sgpo.controller;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -102,6 +103,8 @@ public class DashboardInstManagedBean implements Serializable {
 
 				barChartFlag = true;
 			}
+
+			Collections.reverse(mediaGerenteChart.getSeries());
 
 			relatorio = dashboardService.consultarRelatorioDadosGerais();
 		} catch (ClassNotFoundException e) {

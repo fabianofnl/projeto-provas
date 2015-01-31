@@ -36,9 +36,10 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "WHERE p.provaId = a.provaId AND ap.provaId = p.provaId"
 			+ "AND a.flag = false AND a.dataProva > CURRENT_DATE AND a.matcolaborador = ? ORDER BY ap.nome";
 
-	private static final String SELECT_PROVAS_POR_MATRICULA = "SELECT pr.* FROM funcionario f, agenda a, provasRealizadas pr "
-			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
-			+ "AND f.matricula = ?";
+	// private static final String SELECT_PROVAS_POR_MATRICULA =
+	// "SELECT pr.* FROM funcionario f, agenda a, provasRealizadas pr "
+	// + "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
+	// + "AND f.matricula = ?";
 
 	private static final String SELECT_NOTA_MEDIA_EQUIPE = "SELECT "
 			+ "SUM(pr.quantidadeAcertos) AS quantidadeAcertos, SUM(pr.quantidadeQuestoes) AS quantidadeQuestoes "
@@ -73,9 +74,22 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "FROM provasRealizadas pr, agenda a, funcionario f, equipes e "
 			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId AND f.matricula = e.matcolaborador AND e.matgerente = ?";
 
-	private static final String SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT = "SELECT f.matricula, f.nome "
-			+ "FROM equipes e, funcionario f "
-			+ "WHERE f.matricula = e.matcolaborador AND matgerente = ?";
+	// private static final String SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT
+	// = "SELECT f.matricula, f.nome "
+	// + "FROM equipes e, funcionario f "
+	// + "WHERE f.matricula = e.matcolaborador AND matgerente = ?";
+
+	private static final String SELECT_PROVAS_POR_MATRICULA = "SELECT pr.*, "
+			+ "sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float) as media "
+			+ "FROM funcionario f, agenda a, provasRealizadas pr "
+			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
+			+ "AND f.matricula = ? " + "GROUP BY pr.provarealizadaid";
+
+	private static final String SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT = "SELECT f.matricula, f.nome,  "
+			+ "sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float)/ count(a.agendaId) as media "
+			+ "FROM provasRealizadas pr, agenda a, equipes e, funcionario f "
+			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId AND f.matricula = e.matcolaborador AND e.matgerente = ? "
+			+ "GROUP BY f.matricula, f.nome";
 
 	private static final String SELECT_NOTA_MEDIA_COLABORADOR = "SELECT "
 			+ "SUM(pr.quantidadeQuestoes) AS questoes, SUM(pr.quantidadeAcertos) AS acertos "
@@ -226,6 +240,8 @@ public class DashboardModelImpl implements DashboardModel {
 			obj = rs.getObject("dataHoraFinalizado");
 			prova.setDataHoraFinalizado(obj == null ? null : new Date(
 					((java.sql.Timestamp) obj).getTime()));
+
+			prova.setMedia(rs.getDouble("media"));
 
 			prova.setQuantidadeQuestoes(rs.getInt("quantidadeQuestoes"));
 			prova.setQuantidadeAcertos(rs.getInt("quantidadeAcertos"));
@@ -579,22 +595,8 @@ public class DashboardModelImpl implements DashboardModel {
 			notaMediaColaborador = new NotaMediaColaboradorDTO();
 			notaMediaColaborador.setNome(rs.getString("nome"));
 			notaMediaColaborador.setMatricula(rs.getInt("matricula"));
+			notaMediaColaborador.setMedia(rs.getDouble("media"));
 			listaNotaMedia.add(notaMediaColaborador);
-		}
-
-		pstmt = conn.prepareStatement(SELECT_NOTA_MEDIA_COLABORADOR);
-
-		for (NotaMediaColaboradorDTO notaMediaColaboradorDTO : listaNotaMedia) {
-			pstmt.setInt(1, notaMediaColaboradorDTO.getMatricula());
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				Object obj = rs.getObject("acertos");
-				notaMediaColaboradorDTO.setAcertos(obj == null ? null
-						: (Long) obj);
-				obj = rs.getObject("questoes");
-				notaMediaColaboradorDTO.setQuestoes(obj == null ? null
-						: (Long) obj);
-			}
 		}
 
 		if (rs != null)
