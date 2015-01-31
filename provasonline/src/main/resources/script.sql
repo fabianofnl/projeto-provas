@@ -1,11 +1,11 @@
 DROP TABLE IF EXISTS provasRealizadas;
 DROP TABLE IF EXISTS agenda;
-DROP TABLE IF EXISTS vincularApostilas;
+--DROP TABLE IF EXISTS vincularApostilas;
 DROP TABLE IF EXISTS apostilas;
-DROP TABLE IF EXISTS montarProvas;
-DROP TABLE IF EXISTS provas;
+--DROP TABLE IF EXISTS montarProvas;
 DROP TABLE IF EXISTS opcoes;
 DROP TABLE IF EXISTS questoes;
+DROP TABLE IF EXISTS provas;
 DROP TABLE IF EXISTS temas;
 DROP TABLE IF EXISTS equipes;
 DROP TABLE IF EXISTS funcionario;
@@ -44,6 +44,11 @@ CREATE TABLE temas (
 	descricao TEXT
 );
 
+CREATE TABLE provas (
+	provaId SERIAL NOT NULL PRIMARY KEY,
+	titulo VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE questoes (
 	questaoId SERIAL NOT NULL PRIMARY KEY,
 	provaId INTEGER NOT NULL REFERENCES provas(provaId),
@@ -57,11 +62,6 @@ CREATE TABLE opcoes (
 	titulo VARCHAR(255),
 	flag BOOLEAN DEFAULT FALSE, -- Indica se é a opção correta ou não. False = Incorreta, True = Correta
 	questaoId INTEGER REFERENCES questoes(questaoId)
-);
-
-CREATE TABLE provas (
-	provaId SERIAL NOT NULL PRIMARY KEY,
-	titulo VARCHAR(255) NOT NULL
 );
 
 -- NOTA: Essa tabela não será mais necessário
@@ -147,7 +147,7 @@ INSERT INTO funcionario (matricula, nome, funcao, email, usuario) VALUES (4444,'
 --SELECT * FROM provas
 
 --delete from provasRealizadas
-
+--delete from agenda
 --update agenda set flag = false where agendaid in (12,26)
 
 
@@ -292,3 +292,48 @@ SELECT * FROM agenda WHERE flag = false AND dataprova >= CURRENT_DATE;
 INSERT into agenda (matcolaborador, provaid, dataprova, flag) values (1111, 2, '2015-01-26', false);
 
 SELECT COUNT(provaId) as quantidade FROM agenda WHERE provaId = 2 AND flag = false AND dataprova >= CURRENT_DATE;
+
+SELECT *,
+(SELECT COUNT(a1.agendaId) FROM agenda a1 WHERE a1.dataProva = CURRENT_DATE AND a1.agendaId = a.agendaId) as hoje
+FROM agenda a, provas p, funcionario f
+WHERE a.provaId = p.provaId AND a.matcolaborador = f.matricula
+ORDER BY dataprova DESC
+
+SELECT f.matricula, f.nome
+FROM equipes e, funcionario f
+WHERE f.matricula = e.matcolaborador AND matgerente = 3333
+
+SELECT
+SUM(pr.quantidadeQuestoes) AS questoes, SUM(pr.quantidadeAcertos) AS acertos
+FROM provasRealizadas pr, agenda a 
+WHERE a.agendaId = pr.agendaId AND a.matcolaborador = 4444
+
+SELECT * FROM provasRealizadas pr, agenda a, funcionario
+WHERE a.agendaId = pr.agendaId AND a.matcolaborador = 4444
+
+SELECT sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float)/ count(a.agendaId) as media 
+FROM provasRealizadas pr, agenda a
+WHERE a.agendaId = pr.agendaId AND a.matcolaborador = 4444
+
+SELECT sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float)/ count(a.agendaId) as media 
+FROM provasRealizadas pr, agenda a, funcionario f, equipes e 
+WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId AND f.matricula = e.matcolaborador AND e.matgerente = 3333
+
+SELECT * FROM provasRealizadas pr, agenda a WHERE a.agendaId = pr.agendaId AND a.matcolaborador in (4444, 1001)
+
+SELECT f.matricula, f.nome,  sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float)/ count(a.agendaId) as media
+FROM provasRealizadas pr, agenda a, equipes e, funcionario f
+WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId AND f.matricula = e.matcolaborador AND e.matgerente = 3333
+GROUP BY f.matricula, f.nome
+
+SELECT pr.*, sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float) as media 
+FROM funcionario f, agenda a, provasRealizadas pr
+WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId
+AND f.matricula = 4444
+GROUP BY pr.provarealizadaid
+
+UPDATE usuario SET senha = MD5('123') FROM funcionario
+WHERE usuario.usuario = 'apaula' AND funcionario.email = '123' 
+RETURNING usuario.usuario
+
+SELECT * FROM usuario
