@@ -32,7 +32,7 @@ public class DashboardGerManagedBean implements Serializable {
 	private static final Logger LOG = Logger
 			.getLogger(DashboardGerManagedBean.class);
 
-	private CartesianChartModel categoryModel = new CartesianChartModel();
+	private CartesianChartModel mediaEquipeChart = new CartesianChartModel();
 
 	private Boolean barChartFlag = false;
 	private int height;
@@ -62,7 +62,7 @@ public class DashboardGerManagedBean implements Serializable {
 					"Quantidade de notas medias de colaboradores [%d]",
 					listaNotaMediaColaboradores.size()));
 
-			categoryModel = new CartesianChartModel();
+			mediaEquipeChart = new CartesianChartModel();
 
 			ChartSeries series;
 			Integer qtdAcertos = 0;
@@ -95,7 +95,7 @@ public class DashboardGerManagedBean implements Serializable {
 					value = value / factor;
 
 					series.set("Nota Média", value);
-					categoryModel.addSeries(series);
+					mediaEquipeChart.addSeries(series);
 
 					/**
 					 * Soma o total de acertos e questões dos colaboradores para
@@ -121,7 +121,7 @@ public class DashboardGerManagedBean implements Serializable {
 				value = value / factor;
 
 				series.set("Nota", value);
-				categoryModel.addSeries(series);
+				mediaEquipeChart.addSeries(series);
 
 				barChartFlag = true;
 			}
@@ -149,7 +149,7 @@ public class DashboardGerManagedBean implements Serializable {
 		this.barChartFlag = barChartFlag;
 	}
 
-	public CartesianChartModel getCategoryModel() {
-		return categoryModel;
+	public CartesianChartModel getMediaEquipeChart() {
+		return mediaEquipeChart;
 	}
 }

@@ -16,7 +16,7 @@
 		<p:remoteCommand autoRun="true"
 			actionListener="#{dashboardColManagedBean.carregarDashboard}"
 			name="onload"
-			update=":frmAdmDash :frmDataTable:agendaDataTable :frmDataTable:basic" />
+			update=":frmDataTable :frmDataTable:agendaDataTable :frmDataTable:basic" />
 	</h:form>
 
 	<h:form id="frmDataTable">
@@ -74,7 +74,7 @@
 			<p:panel header="Provas">
 				<p:barChart id="basic"
 					rendered="#{dashboardColManagedBean.barChartFlag}" orientation="horizontal"
-					value="#{dashboardColManagedBean.categoryModel}" legendPosition="e" barMargin="20"
+					value="#{dashboardColManagedBean.provasColChart}" legendPosition="e" barMargin="20"
 					barPadding="10"
 					title="Notas" style="height:#{dashboardColManagedBean.height}px; width:390px;" 
 					min="0" max="125" />

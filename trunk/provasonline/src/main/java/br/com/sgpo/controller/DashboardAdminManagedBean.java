@@ -28,15 +28,17 @@ public class DashboardAdminManagedBean implements Serializable {
 	private static final Logger LOG = Logger
 			.getLogger(DashboardAdminManagedBean.class);
 
-	private CartesianChartModel categoryModel = new CartesianChartModel();
+	private CartesianChartModel memoryChart = new CartesianChartModel();
 	private RelatorioDadosGeraisDTO relatorio = new RelatorioDadosGeraisDTO();
+
+	private Boolean barChartFlag = false;
 
 	public void carregarDashboard(ActionEvent event) {
 
 		try {
 			int mb = 1024 * 1024;
 
-			categoryModel = new CartesianChartModel();
+			memoryChart = new CartesianChartModel();
 			ChartSeries memoriaMax = new ChartSeries();
 			memoriaMax.setLabel("Memória máxima");
 			memoriaMax.set("Memória", (Runtime.getRuntime().maxMemory() / mb));
@@ -51,9 +53,15 @@ public class DashboardAdminManagedBean implements Serializable {
 			memoriaLivre.set("Memória",
 					(Runtime.getRuntime().freeMemory() / mb));
 
-			categoryModel.addSeries(memoriaMax);
-			categoryModel.addSeries(memoriaTotal);
-			categoryModel.addSeries(memoriaLivre);
+			LOG.info("memorias:" + memoriaMax + ", " + memoriaTotal + ", "
+					+ memoriaLivre);
+
+			memoryChart.addSeries(memoriaMax);
+			memoryChart.addSeries(memoriaTotal);
+			memoryChart.addSeries(memoriaLivre);
+			barChartFlag = true;
+
+			LOG.info("GET MEMORY LOGs");
 
 			DashboardService dashboardService = new DashboardServiceImpl();
 			relatorio = dashboardService.consultarRelatorioDadosGerais();
@@ -64,11 +72,20 @@ public class DashboardAdminManagedBean implements Serializable {
 		}
 	}
 
-	public CartesianChartModel getCategoryModel() {
-		return categoryModel;
+	public CartesianChartModel getMemoryChart() {
+		LOG.info("CATEGORY MODEL");
+		return memoryChart;
 	}
 
 	public RelatorioDadosGeraisDTO getRelatorio() {
 		return relatorio;
+	}
+
+	public Boolean getBarChartFlag() {
+		return barChartFlag;
+	}
+
+	public void setBarChartFlag(Boolean barChartFlag) {
+		this.barChartFlag = barChartFlag;
 	}
 }

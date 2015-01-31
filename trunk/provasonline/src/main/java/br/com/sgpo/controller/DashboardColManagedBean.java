@@ -55,7 +55,7 @@ public class DashboardColManagedBean implements Serializable {
 	private Boolean barChartFlag = false;
 	private int height;
 
-	private CartesianChartModel categoryModel = new CartesianChartModel();
+	private CartesianChartModel provasColChart = new CartesianChartModel();
 
 	public void carregarDashboard(ActionEvent event) {
 
@@ -80,7 +80,7 @@ public class DashboardColManagedBean implements Serializable {
 			LOG.info(String.format("Quantidade de provas realizadas [%d]",
 					listaProvasRealizadas.size()));
 
-			categoryModel = new CartesianChartModel();
+			provasColChart = new CartesianChartModel();
 
 			ChartSeries series;
 			Integer qtdAcertos = 0;
@@ -113,7 +113,7 @@ public class DashboardColManagedBean implements Serializable {
 					value = value / factor;
 
 					series.set("Nota", value);
-					categoryModel.addSeries(series);
+					provasColChart.addSeries(series);
 
 					/**
 					 * Soma o total de acertos e questões das provas para
@@ -138,7 +138,7 @@ public class DashboardColManagedBean implements Serializable {
 				value = value / factor;
 
 				series.set("Nota", value);
-				categoryModel.addSeries(series);
+				provasColChart.addSeries(series);
 
 				barChartFlag = true;
 			}
@@ -341,9 +341,9 @@ public class DashboardColManagedBean implements Serializable {
 		this.listaQuestoes = listaQuestoes;
 	}
 
-	public CartesianChartModel getCategoryModel() {
+	public CartesianChartModel getProvasColChart() {
 		LOG.info("CHAMANDO CATEGORYMODEL");
-		return categoryModel;
+		return provasColChart;
 	}
 
 	public Boolean getBarChartFlag() {

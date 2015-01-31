@@ -15,7 +15,7 @@
 	<h:form id="frmRemotoGer">
 		<p:remoteCommand autoRun="true"
 			actionListener="#{dashboardGerManagedBean.carregarDashboard}"
-			name="onload" update=":frmBarChart"/>
+			name="onload" update=":frmBarChart :frmBarChart:basic"/>
 	</h:form>
 	
 	<h:form id="frmBarChart">
@@ -24,7 +24,7 @@
 			<p:panel header="Média da equipe">
 				<p:barChart id="basic"
 					rendered="#{dashboardGerManagedBean.barChartFlag}" orientation="horizontal"
-					value="#{dashboardGerManagedBean.categoryModel}" legendPosition="e" barMargin="20"
+					value="#{dashboardGerManagedBean.mediaEquipeChart}" legendPosition="e" barMargin="20"
 					barPadding="10"
 					title="Notas" style="height:#{dashboardGerManagedBean.height}px; width:590px;" 
 					min="0" max="120" />

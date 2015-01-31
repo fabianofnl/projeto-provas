@@ -13,68 +13,74 @@
 		<p:separator />
 	</div>
 
-	<h:form id="frmRemotoGer">
+	<h:form id="frmRemotoInst">
 		<p:remoteCommand autoRun="true"
-			actionListener="#{dashboardGerManagedBean.carregarDashboard}"
-			name="onload" update=":frmGerDash :frmGerDash:basic" />
+			actionListener="#{dashboardInstManagedBean.carregarDashboard}"
+			name="onload" update=":frmInstDash :frmInstDash:basic" />
 	</h:form>
 
-	<h:form id="frmGerDash">
+	<h:form id="frmInstDash">
 		<p:panel id="relatorio" header="Relatório">
 			<p:panelGrid columns="2" style="width:100%;"
-				columnClasses="width60, width40">
+				columnClasses="width70, width30">
 
 				<p:barChart id="basic"
-					value="#{dashboardGerManagedBean.categoryModel}"
-					legendPosition="ne" title="Média por Gerente"
-					style="height:300px; width: 600px;" />
+					rendered="#{dashboardInstManagedBean.barChartFlag}"
+					orientation="horizontal"
+					value="#{dashboardInstManagedBean.mediaGerenteChart}"
+					legendPosition="e" barMargin="20" barPadding="10"
+					title="Notas Equipes"
+					style="height:#{dashboardInstManagedBean.height}px; width:390px;"
+					min="0" max="125" />
+				<h:outputText rendered="#{!dashboardInstManagedBean.barChartFlag}"
+					value="Não há provas realizadas." />
 
 				<p:fieldset>
 					<p:panelGrid columns="2" style="width:100%;"
 						columnClasses="width80, width20">
 						<h:outputText value="Quantidade Funcionários Ativos" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdFuncionariosAtivos}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdFuncionariosAtivos}" />
 
 						<h:outputText value="Quantidade Funcionários Inativos" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdFuncionariosInativos}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdFuncionariosInativos}" />
 
 						<h:outputText value="Quantidade de Equipes" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdEquipes}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdEquipes}" />
 
 						<h:outputText value="Quantidade de Provas Agendadas" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdProvasAgendadas}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdProvasAgendadas}" />
 
 						<h:outputText value="Quantidade de Provas Realizadas" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdProvasRealizadas}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdProvasRealizadas}" />
 
 						<h:outputText value="Quantidade de Provas não Realizadas" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdProvasNaoRealizadas}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdProvasNaoRealizadas}" />
 
 						<h:outputText value="Quantidade de Temas" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdTemas}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdTemas}" />
 
 						<h:outputText value="Quantidade de Provas" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdProvas}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdProvas}" />
 
 						<h:outputText value="Quantidade de Questões" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdQuestoes}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdQuestoes}" />
 
 						<h:outputText value="Quantidade de Opções (respostas)" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdOpcoes}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdOpcoes}" />
 
 						<h:outputText value="Quantidade de Apostilas" />
 						<h:outputText
-							value="#{dashboardGerManagedBean.relatorio.qtdApostilas}" />
+							value="#{dashboardInstManagedBean.relatorio.qtdApostilas}" />
 					</p:panelGrid>
 				</p:fieldset>
 
