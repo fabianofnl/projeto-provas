@@ -1,11 +1,13 @@
 package br.com.sgpo.controller;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -38,14 +40,19 @@ public class LoginManagedBean implements Serializable {
 	 * @return String
 	 */
 	public String logar() {
-		
-		LoginService loginService = new LoginServiceImpl();
 
-		LOG.info("Executando processo de autenticação no sistema");
-		LOG.info(usuario.getUsuario());
+		try {
+			LoginService loginService = new LoginServiceImpl();
 
-		funcionario = loginService.logar(usuario.getUsuario(),
-				usuario.getSenha());
+			LOG.info("Executando processo de autenticação no sistema");
+			LOG.info(usuario.getUsuario());
+			funcionario = loginService.logar(usuario.getUsuario(),
+					usuario.getSenha());
+		} catch (SQLException e) {
+			LOG.error("Erro na execução da query.", e);
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver JDBC não encontrado.", e);
+		}
 
 		LOG.info("Resultado da autenticação: " + funcionario);
 
@@ -58,8 +65,9 @@ public class LoginManagedBean implements Serializable {
 		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Erro", "Usuário ou senha inválidos"));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
+							"Usuário ou senha inválidos"));
+			limparSessao();
 			return "/pages/login";
 		}
 	}
@@ -69,7 +77,41 @@ public class LoginManagedBean implements Serializable {
 		HttpSession session = (HttpSession) context.getExternalContext()
 				.getSession(false);
 		session.invalidate();
+		limparSessao();
 		return "/pages/login";
+	}
+
+	public void alterarSenha(ActionEvent event) {
+
+		try {
+			LoginService loginService = new LoginServiceImpl();
+			String username = loginService.alterarSenha(funcionario);
+
+			LOG.info("username:" + username);
+
+			if (username != null) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso",
+								"Senha alterada com sucesso."));
+				limparSessao();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
+								"Usuário ou senha inválidos"));
+			}
+
+		} catch (SQLException e) {
+			LOG.error("Erro na execução da query.", e);
+		} catch (ClassNotFoundException e) {
+			LOG.error("Driver JDBC não encontrado.", e);
+		}
+	}
+
+	public void limparSessao() {
+		usuario = new UsuarioDTO();
+		funcionario = new FuncionarioDTO();
 	}
 
 	public UsuarioDTO getUsuario() {

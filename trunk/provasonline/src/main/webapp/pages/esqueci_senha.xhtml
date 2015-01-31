@@ -19,7 +19,7 @@
 				GERENCIAMENTO DE PROVAS ONLINE</div>
 			<h:form id="frmLogin">
 				<div align="center">
-					<p:panel style="width:390px; margin-top:40px; margin-bottom:40px;">
+					<p:panel style="width:490px; margin-top:40px; margin-bottom:40px;">
 						<p:messages id="messages" showSummary="true" showDetail="true"
 							autoUpdate="true" />
 
@@ -29,23 +29,36 @@
 							<h:outputText value="Usuário:" style="font-weight:bold;" />
 							<p:inputText id="username" autocomplete="off" required="true"
 								requiredMessage="O campo usuário é obrigatório."
-								value="#{loginManagedBean.usuario.usuario}" />
+								value="#{loginManagedBean.funcionario.usuario}" />
+
+							<h:outputText value="E-mail:" style="font-weight:bold;" />
+							<p:inputText id="email" autocomplete="off" required="true"
+								requiredMessage="O campo e-mail é obrigatório."
+								value="#{loginManagedBean.funcionario.email}" />
 
 							<h:outputText value="Senha:" style="font-weight:bold;" />
-							<p:password feedback="false" rendered="true"
+							<p:password id="senha1" feedback="true" required="true"
+								match="senha2" promptLabel="Insira a senha" weakLabel="Fraco"
+								goodLabel="Médio" strongLabel="Forte" inline="true"
+								validatorMessage="As senhas não são iguais."
 								requiredMessage="O campo senha é obrigatório"
-								value="#{loginManagedBean.usuario.senha}" id="passwd" />
-								
+								value="#{loginManagedBean.funcionario.senha}" />
+
+							<h:outputText value="Re-senha" style="font-weight:bold;" />
+							<p:password id="senha2" required="true" feedback="false"
+								requiredMessage="O campo re-senha é obrigatório."
+								value="#{loginManagedBean.funcionario.senha}" />
+
 						</p:panelGrid>
 
 						<f:facet name="footer">
 							<div align="right">
-								<h:outputLink value="esqueci_senha.jsf" 
-									style="text-decoration: none; margin-right: 5px; font-size: 11px;">
-									Esqueci a senha
+								<h:outputLink value="login.jsf" 
+									style="text-decoration: none; margin-right: 5px;">
+									Voltar
 								</h:outputLink>
-								<p:commandButton type="submit" value="Acessar"
-									action="#{loginManagedBean.logar}" ajax="false" />
+								<p:commandButton type="submit" value="Acessar" update="frmLogin"
+									actionListener="#{loginManagedBean.alterarSenha}" ajax="false" />
 							</div>
 						</f:facet>
 					</p:panel>
@@ -54,8 +67,5 @@
 		</p:layoutUnit>
 
 	</p:layout>
-
-
-
 </h:body>
 </html>
