@@ -1,5 +1,7 @@
 package br.com.sgpo.service;
 
+import java.sql.SQLException;
+
 import br.com.sgpo.dto.FuncionarioDTO;
 
 /**
@@ -17,6 +19,9 @@ public interface LoginService {
 	 * @param senha
 	 * @return usuario
 	 */
-	public FuncionarioDTO logar(String nomeUsuario, String senha);
+	public FuncionarioDTO logar(String nomeUsuario, String senha)
+			throws ClassNotFoundException, SQLException;
+
+	public String alterarSenha(FuncionarioDTO funcionario)throws ClassNotFoundException, SQLException;
 
 }
