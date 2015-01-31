@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -72,6 +73,7 @@ public class DashboardColManagedBean implements Serializable {
 			List<ProvaRealizadaDTO> listaProvasRealizadas = dashboardService
 					.listarProvasRealizadasPorMatricula(colaborador
 							.getMatricula());
+
 			height = 250;
 			if (listaProvasRealizadas.size() > 3) {
 				height += ((listaProvasRealizadas.size() - 2) * 60);
@@ -83,29 +85,16 @@ public class DashboardColManagedBean implements Serializable {
 			provasColChart = new CartesianChartModel();
 
 			ChartSeries series;
-			Integer qtdAcertos = 0;
-			Integer qtdQuestoes = 0;
+			Double media = 0.0;
 
 			barChartFlag = false;
 			if (listaProvasRealizadas.size() != 0) {
 				for (ProvaRealizadaDTO provaRealizadaDTO : listaProvasRealizadas) {
 
-					/**
-					 * Indica que o colaborador não fez prova então vai pular a
-					 * um loop
-					 */
-					if (provaRealizadaDTO.getQuantidadeAcertos() == null
-							|| provaRealizadaDTO.getQuantidadeQuestoes() == null) {
-						LOG.info("Pulo 1 for");
-						continue;
-					}
-
 					series = new ChartSeries();
 					series.setLabel(provaRealizadaDTO.getTituloProva());
 
-					double value = ((provaRealizadaDTO.getQuantidadeAcertos()
-							.doubleValue() / provaRealizadaDTO
-							.getQuantidadeQuestoes().doubleValue()) * 100.0);
+					double value = provaRealizadaDTO.getMedia();
 
 					long factor = (long) Math.pow(10, 2);
 					value = value * factor;
@@ -119,8 +108,7 @@ public class DashboardColManagedBean implements Serializable {
 					 * Soma o total de acertos e questões das provas para
 					 * cálculo da média
 					 */
-					qtdAcertos += provaRealizadaDTO.getQuantidadeAcertos();
-					qtdQuestoes += provaRealizadaDTO.getQuantidadeQuestoes();
+					media += provaRealizadaDTO.getMedia();
 				}
 
 				/**
@@ -129,19 +117,24 @@ public class DashboardColManagedBean implements Serializable {
 				series = new ChartSeries();
 				series.setLabel("Média");
 
-				double value = ((qtdAcertos.doubleValue() / qtdQuestoes
-						.doubleValue()) * 100.0);
+				double value = media.doubleValue();
 
 				long factor = (long) Math.pow(10, 2);
 				value = value * factor;
 				value = Math.round(value);
 				value = value / factor;
 
-				series.set("Nota", value);
+				series.set(
+						"Nota",
+						value
+								/ Double.parseDouble(String
+										.valueOf(listaProvasRealizadas.size())));
 				provasColChart.addSeries(series);
 
 				barChartFlag = true;
 			}
+
+			Collections.reverse(provasColChart.getSeries());
 
 			listaAgendas = dashboardService.listarAgendas(colaborador
 					.getMatricula());

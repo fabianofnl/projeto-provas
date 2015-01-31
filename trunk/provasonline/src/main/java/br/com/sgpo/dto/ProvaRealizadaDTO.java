@@ -3,10 +3,9 @@ package br.com.sgpo.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-
 /**
  * @author Roseli
- *
+ * 
  */
 public class ProvaRealizadaDTO implements Serializable {
 
@@ -21,6 +20,7 @@ public class ProvaRealizadaDTO implements Serializable {
 	private Date dataHoraFinalizado;
 	private Integer quantidadeQuestoes;
 	private Integer quantidadeAcertos;
+	private Double media;
 
 	public ProvaRealizadaDTO() {
 	}
@@ -95,5 +95,13 @@ public class ProvaRealizadaDTO implements Serializable {
 
 	public void setQuantidadeAcertos(Integer quantidadeAcertos) {
 		this.quantidadeAcertos = quantidadeAcertos;
+	}
+
+	public Double getMedia() {
+		return media;
+	}
+
+	public void setMedia(Double media) {
+		this.media = media;
 	}
 }

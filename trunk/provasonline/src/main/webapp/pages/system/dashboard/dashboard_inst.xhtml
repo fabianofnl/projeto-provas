@@ -20,10 +20,9 @@
 	</h:form>
 
 	<h:form id="frmInstDash">
-		<p:panel id="relatorio" header="Relatório">
-			<p:panelGrid columns="2" style="width:100%;"
-				columnClasses="width70, width30">
-
+		<p:panelGrid columns="2" style="width:100%;" styleClass="valignTop"
+			columnClasses="width60, width40">
+			<p:panel id="panelChart" header="Média equipes">
 				<p:barChart id="basic"
 					rendered="#{dashboardInstManagedBean.barChartFlag}"
 					orientation="horizontal"
@@ -34,58 +33,57 @@
 					min="0" max="125" />
 				<h:outputText rendered="#{!dashboardInstManagedBean.barChartFlag}"
 					value="Não há provas realizadas." />
+			</p:panel>
 
-				<p:fieldset>
-					<p:panelGrid columns="2" style="width:100%;"
-						columnClasses="width80, width20">
-						<h:outputText value="Quantidade Funcionários Ativos" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdFuncionariosAtivos}" />
+			<p:panel id="panelGeneral" header="Dados gerais">
+				<p:panelGrid columns="2" style="width:100%;"
+					columnClasses="width70, width30">
+					<h:outputText value="Quantidade Funcionários Ativos" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdFuncionariosAtivos}" />
 
-						<h:outputText value="Quantidade Funcionários Inativos" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdFuncionariosInativos}" />
+					<h:outputText value="Quantidade Funcionários Inativos" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdFuncionariosInativos}" />
 
-						<h:outputText value="Quantidade de Equipes" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdEquipes}" />
+					<h:outputText value="Quantidade de Equipes" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdEquipes}" />
 
-						<h:outputText value="Quantidade de Provas Agendadas" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdProvasAgendadas}" />
+					<h:outputText value="Quantidade de Provas Agendadas" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdProvasAgendadas}" />
 
-						<h:outputText value="Quantidade de Provas Realizadas" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdProvasRealizadas}" />
+					<h:outputText value="Quantidade de Provas Realizadas" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdProvasRealizadas}" />
 
-						<h:outputText value="Quantidade de Provas não Realizadas" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdProvasNaoRealizadas}" />
+					<h:outputText value="Quantidade de Provas não Realizadas" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdProvasNaoRealizadas}" />
 
-						<h:outputText value="Quantidade de Temas" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdTemas}" />
+					<h:outputText value="Quantidade de Temas" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdTemas}" />
 
-						<h:outputText value="Quantidade de Provas" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdProvas}" />
+					<h:outputText value="Quantidade de Provas" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdProvas}" />
 
-						<h:outputText value="Quantidade de Questões" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdQuestoes}" />
+					<h:outputText value="Quantidade de Questões" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdQuestoes}" />
 
-						<h:outputText value="Quantidade de Opções (respostas)" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdOpcoes}" />
+					<h:outputText value="Quantidade de Opções (respostas)" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdOpcoes}" />
 
-						<h:outputText value="Quantidade de Apostilas" />
-						<h:outputText
-							value="#{dashboardInstManagedBean.relatorio.qtdApostilas}" />
-					</p:panelGrid>
-				</p:fieldset>
-
-			</p:panelGrid>
-		</p:panel>
+					<h:outputText value="Quantidade de Apostilas" />
+					<h:outputText
+						value="#{dashboardInstManagedBean.relatorio.qtdApostilas}" />
+				</p:panelGrid>
+			</p:panel>
+		</p:panelGrid>
 	</h:form>
 </div>
 

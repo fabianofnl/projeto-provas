@@ -2,6 +2,7 @@ package br.com.sgpo.controller;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -65,29 +66,16 @@ public class DashboardGerManagedBean implements Serializable {
 			mediaEquipeChart = new CartesianChartModel();
 
 			ChartSeries series;
-			Integer qtdAcertos = 0;
-			Integer qtdQuestoes = 0;
+			Double media = 0.0;
 
 			barChartFlag = false;
 			if (listaNotaMediaColaboradores.size() != 0) {
 				for (NotaMediaColaboradorDTO notaMediaColaborador : listaNotaMediaColaboradores) {
 
-					/**
-					 * Indica que o colaborador não fez prova então vai pular a
-					 * um loop
-					 */
-					if (notaMediaColaborador.getAcertos() == null
-							|| notaMediaColaborador.getQuestoes() == null) {
-						LOG.info("Pulo 1 for");
-						continue;
-					}
-
 					series = new ChartSeries();
 					series.setLabel(notaMediaColaborador.getNome());
 
-					double value = ((notaMediaColaborador.getAcertos()
-							.doubleValue() / notaMediaColaborador.getQuestoes()
-							.doubleValue()) * 100.0);
+					double value = notaMediaColaborador.getMedia();
 
 					long factor = (long) Math.pow(10, 2);
 					value = value * factor;
@@ -101,9 +89,7 @@ public class DashboardGerManagedBean implements Serializable {
 					 * Soma o total de acertos e questões dos colaboradores para
 					 * cálculo da média
 					 */
-					qtdAcertos += notaMediaColaborador.getAcertos().intValue();
-					qtdQuestoes += notaMediaColaborador.getQuestoes()
-							.intValue();
+					media += notaMediaColaborador.getMedia();
 				}
 
 				/**
@@ -112,19 +98,25 @@ public class DashboardGerManagedBean implements Serializable {
 				series = new ChartSeries();
 				series.setLabel("Média Equipe");
 
-				double value = ((qtdAcertos.doubleValue() / qtdQuestoes
-						.doubleValue()) * 100.0);
+				double value = media.doubleValue();
 
 				long factor = (long) Math.pow(10, 2);
 				value = value * factor;
 				value = Math.round(value);
 				value = value / factor;
 
-				series.set("Nota", value);
+				series.set(
+						"Nota",
+						value
+								/ Double.parseDouble(String
+										.valueOf(listaNotaMediaColaboradores
+												.size())));
 				mediaEquipeChart.addSeries(series);
 
 				barChartFlag = true;
 			}
+
+			Collections.reverse(mediaEquipeChart.getSeries());
 
 		} catch (ClassNotFoundException e) {
 			LOG.error("Driver do banco de dados não encontrado", e);
