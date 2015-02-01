@@ -37,6 +37,15 @@ public interface DashboardModel {
 	public List<ApostilaDTO> listarApostilas(Integer matricula)
 			throws ClassNotFoundException, SQLException;
 
+	/**
+	 * Método que consulta a lista de provas realizadas pelo colaborador
+	 * 
+	 * @param matricula
+	 * @return List<ProvaRealizadaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<ProvaRealizadaDTO> listarProvasRealizadasPorMatricula(
 			Integer matricula) throws ClassNotFoundException, SQLException;
 
