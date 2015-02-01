@@ -16,6 +16,8 @@ import br.com.sgpo.dto.ProvaDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
 /**
+ * Classe implementa funções que gerenciam os dados referente ao Tema
+ * 
  * @author Roseli
  * 
  */
