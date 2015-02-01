@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.sgpo.dto.AgendaDTO;
-import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.NotaMediaColaboradorDTO;
 import br.com.sgpo.dto.NotaMediaEquipesDTO;
 import br.com.sgpo.dto.OpcaoDTO;
@@ -34,9 +33,6 @@ public interface DashboardModel {
 	public List<AgendaDTO> listarAgendas(Integer matricula)
 			throws ClassNotFoundException, SQLException;
 
-	public List<ApostilaDTO> listarApostilas(Integer matricula)
-			throws ClassNotFoundException, SQLException;
-
 	/**
 	 * Método que consulta a lista de provas realizadas pelo colaborador
 	 * 
@@ -48,9 +44,6 @@ public interface DashboardModel {
 	// TODO utilizado
 	public List<ProvaRealizadaDTO> listarProvasRealizadasPorMatricula(
 			Integer matricula) throws ClassNotFoundException, SQLException;
-
-	public ProvaRealizadaDTO consultarMediaEquipe(Integer matricula)
-			throws ClassNotFoundException, SQLException;
 
 	/**
 	 * Método que consulta dados gerais do sistema, como a quantidade de
@@ -86,10 +79,6 @@ public interface DashboardModel {
 	// TODO utilizado
 	public NotaMediaEquipesDTO consultarMediaEquipePorGerente(
 			NotaMediaEquipesDTO notaMediaEquipesDTO)
-			throws ClassNotFoundException, SQLException;
-
-	public NotaMediaColaboradorDTO consultarNotaMediaColaborador(
-			NotaMediaColaboradorDTO notaMediaColaboradorDTO)
 			throws ClassNotFoundException, SQLException;
 
 	/**

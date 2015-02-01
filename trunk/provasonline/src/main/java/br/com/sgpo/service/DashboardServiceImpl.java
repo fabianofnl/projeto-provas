@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sgpo.dto.AgendaDTO;
-import br.com.sgpo.dto.ApostilaDTO;
 import br.com.sgpo.dto.NotaMediaColaboradorDTO;
 import br.com.sgpo.dto.NotaMediaEquipesDTO;
 import br.com.sgpo.dto.OpcaoDTO;
@@ -41,12 +40,6 @@ public class DashboardServiceImpl implements DashboardService {
 		return dashboardModel.listarAgendas(matricula);
 	}
 
-	@Override
-	public List<ApostilaDTO> listarApostilas(Integer matricula)
-			throws ClassNotFoundException, SQLException {
-		return dashboardModel.listarApostilas(matricula);
-	}
-
 	/**
 	 * Método que consulta a lista de provas realizadas pelo colaborador
 	 * 
@@ -59,12 +52,6 @@ public class DashboardServiceImpl implements DashboardService {
 	public List<ProvaRealizadaDTO> listarProvasRealizadasPorMatricula(
 			Integer matricula) throws ClassNotFoundException, SQLException {
 		return dashboardModel.listarProvasRealizadasPorMatricula(matricula);
-	}
-
-	@Override
-	public ProvaRealizadaDTO consultarMediaEquipe(Integer matricula)
-			throws ClassNotFoundException, SQLException {
-		return dashboardModel.consultarMediaEquipe(matricula);
 	}
 
 	/**
