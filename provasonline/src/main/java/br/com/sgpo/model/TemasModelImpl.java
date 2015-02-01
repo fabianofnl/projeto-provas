@@ -37,7 +37,9 @@ public class TemasModelImpl implements TemasModel {
 	private static final String DELETE_TEMA = "DELETE FROM temas WHERE temaId = ?";
 
 	// TODO utilizado
-	private static final String SELECT_TODOS_TEMAS = "SELECT * FROM temas ORDER BY titulo";
+	private static final String SELECT_TODOS_TEMAS = "SELECT t.*, "
+			+ "(SELECT COUNT(questaoId) FROM questoes q WHERE q.temaId = t.temaId) AS qtdQuestoes "
+			+ "FROM temas t ORDER BY t.titulo";
 
 	@Override
 	public List<TemaDTO> listarTemas(Integer offSet, Integer recordPerPage)
@@ -245,6 +247,7 @@ public class TemasModelImpl implements TemasModel {
 			temas.setTemaId(rs.getInt("temaId"));
 			temas.setTitulo(rs.getString("titulo"));
 			temas.setDescricao(rs.getString("descricao"));
+			temas.setQuantidadeQuestoes(rs.getInt("qtdQuestoes"));
 			listaTemas.add(temas);
 		}
 

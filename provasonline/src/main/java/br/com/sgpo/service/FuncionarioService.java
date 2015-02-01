@@ -49,6 +49,15 @@ public interface FuncionarioService {
 	public Integer getTotalRegistrosFuncionarios() throws SQLException,
 			ClassNotFoundException;
 
+	/**
+	 * Método que consulta dados do funcionario por matrícula
+	 * 
+	 * @param matricula
+	 * @return FuncionarioDTO
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
 			throws SQLException, ClassNotFoundException;
 

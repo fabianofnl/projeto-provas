@@ -53,12 +53,16 @@ public class AgendaServiceImpl implements AgendaService {
 	// TODO utilizado
 	public void agendarProva(AgendaDTO agendaNova, String contextPath)
 			throws ClassNotFoundException, SQLException {
+
+		FuncionarioService funcionarioService = new FuncionarioServiceImpl();
+		ProvasService provasService = new ProvasServiceImpl();
+
 		agendaModel.agendarProva(agendaNova);
 
-		agendaNova.setFuncionario(new FuncionarioServiceImpl()
+		agendaNova.setFuncionario(funcionarioService
 				.buscarFuncionarioPorMatricula(agendaNova.getMatColaborador()));
 
-		agendaNova.setProva(new ProvasServiceImpl().buscarProvaPorId(agendaNova
+		agendaNova.setProva(provasService.buscarProvaPorId(agendaNova
 				.getProvaId()));
 
 		MailServiceImpl mailService = new MailServiceImpl(
@@ -79,13 +83,17 @@ public class AgendaServiceImpl implements AgendaService {
 	// TODO utilizado
 	public void excluirAgenda(AgendaDTO agendaSelecionada, String contextPath)
 			throws ClassNotFoundException, SQLException {
+
+		FuncionarioService funcionarioService = new FuncionarioServiceImpl();
+		ProvasService provasService = new ProvasServiceImpl();
+
 		agendaModel.excluirProva(agendaSelecionada);
 
-		agendaSelecionada.setFuncionario(new FuncionarioServiceImpl()
+		agendaSelecionada.setFuncionario(funcionarioService
 				.buscarFuncionarioPorMatricula(agendaSelecionada
 						.getMatColaborador()));
 
-		agendaSelecionada.setProva(new ProvasServiceImpl()
+		agendaSelecionada.setProva(provasService
 				.buscarProvaPorId(agendaSelecionada.getProvaId()));
 
 		MailServiceImpl mailService = new MailServiceImpl(

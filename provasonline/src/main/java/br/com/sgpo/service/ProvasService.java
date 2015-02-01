@@ -31,6 +31,15 @@ public interface ProvasService {
 	public Integer getTotalRegistrosProvas() throws ClassNotFoundException,
 			SQLException;
 
+	/**
+	 * Método que consulta dados da prova por provaId
+	 * 
+	 * @param provaId
+	 * @return ProvaDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public ProvaDTO buscarProvaPorId(Integer provaId)
 			throws ClassNotFoundException, SQLException;
 
