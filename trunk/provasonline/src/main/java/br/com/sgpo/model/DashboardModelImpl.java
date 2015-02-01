@@ -118,8 +118,10 @@ public class DashboardModelImpl implements DashboardModel {
 	// TODO utilizada
 	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT * FROM opcoes WHERE questaoId = ?";
 
+	// TODO utilizado
 	private static final String UPDATE_AGENDA_FLAG = "UPDATE agenda SET flag = true WHERE agendaId = ?";
 
+	// TODO utilizado
 	private static final String INSERT_DETALHES_PROVA_REALIZADA = "INSERT INTO provasRealizadas "
 			+ "(agendaId, provaId, tituloProva, dataHoraInicio, dataHoraFim, quantidadeQuestoes, quantidadeAcertos) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING provaRealizadaId";
@@ -581,7 +583,16 @@ public class DashboardModelImpl implements DashboardModel {
 		return listaOpcoes;
 	}
 
-	@Override
+	/**
+	 * Método que inicia a realização da prova, processo quando confirma o
+	 * preenchimento da prova
+	 * 
+	 * @param provaRealizadaSelecionada
+	 * @return Integer
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public Integer realizarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
 			throws ClassNotFoundException, SQLException {
 

@@ -87,6 +87,16 @@ public interface DashboardService {
 	public List<QuestaoDTO> listarQuestoesPorProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException;
 
+	/**
+	 * Método que inicia a realização da prova, processo quando confirma o
+	 * preenchimento da prova
+	 * 
+	 * @param provaRealizadaSelecionada
+	 * @return Integer
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public Integer realizarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
 			throws ClassNotFoundException, SQLException;
 
