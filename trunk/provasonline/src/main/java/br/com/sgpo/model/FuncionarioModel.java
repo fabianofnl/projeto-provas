@@ -9,7 +9,8 @@ import br.com.sgpo.dto.PerfilDTO;
 
 public interface FuncionarioModel {
 
-	public List<FuncionarioDTO> listarFuncionarios() throws SQLException, ClassNotFoundException;
+	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
+			ClassNotFoundException;
 
 	public List<PerfilDTO> listarPerfis() throws SQLException,
 			ClassNotFoundException;
@@ -20,6 +21,15 @@ public interface FuncionarioModel {
 	public Integer getTotalRegistrosFuncionarios() throws SQLException,
 			ClassNotFoundException;
 
+	/**
+	 * Método que consulta dados do funcionario por matrícula
+	 * 
+	 * @param matricula
+	 * @return FuncionarioDTO
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
 			throws SQLException, ClassNotFoundException;
 
@@ -38,8 +48,8 @@ public interface FuncionarioModel {
 	public void associarEquipes(Integer matGerente, Integer[] matColaborador)
 			throws SQLException, ClassNotFoundException;
 
-	public List<EquipeDTO> listarEquipes()
-			throws SQLException, ClassNotFoundException;
+	public List<EquipeDTO> listarEquipes() throws SQLException,
+			ClassNotFoundException;
 
 	public Integer getTotalRegistrosEquipes() throws SQLException,
 			ClassNotFoundException;
@@ -50,6 +60,15 @@ public interface FuncionarioModel {
 	public void removerColaborador(Integer matricula) throws SQLException,
 			ClassNotFoundException;
 
+	/**
+	 * Método que consulta a lista de colaboradores cadastrados no sistema
+	 * (perfil colaborador)
+	 * 
+	 * @return List<FuncionarioDTO>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
 			ClassNotFoundException;
 

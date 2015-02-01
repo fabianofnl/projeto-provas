@@ -16,17 +16,41 @@ public class AgendaServiceImpl implements AgendaService {
 
 	private AgendaModel agendaModel = new AgendaModelImpl();
 
+	/**
+	 * Método que busca pela lista de agendamento realizado
+	 * 
+	 * @return List<AgendaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<AgendaDTO> listarAgendas() throws ClassNotFoundException,
 			SQLException {
 		return agendaModel.listarAgendas();
 	}
 
+	/**
+	 * Método que busca pela lista de agendamento atual (as não realizadas)
+	 * 
+	 * @return List<AgendaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<AgendaDTO> listarAgendasNaoRealizadas()
 			throws ClassNotFoundException, SQLException {
 		return agendaModel.listarAgendasNaoRealizadas();
 	}
 
-	@Override
+	/**
+	 * Método que efetiva o agendamento da prova
+	 * 
+	 * @param agendaNova
+	 * @param contextPath
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void agendarProva(AgendaDTO agendaNova, String contextPath)
 			throws ClassNotFoundException, SQLException {
 		agendaModel.agendarProva(agendaNova);
@@ -44,7 +68,15 @@ public class AgendaServiceImpl implements AgendaService {
 
 	}
 
-	@Override
+	/**
+	 * Método que excluir um agendamento
+	 * 
+	 * @param agendaSelecionada
+	 * @param contextPath
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void excluirAgenda(AgendaDTO agendaSelecionada, String contextPath)
 			throws ClassNotFoundException, SQLException {
 		agendaModel.excluirProva(agendaSelecionada);
@@ -63,5 +95,4 @@ public class AgendaServiceImpl implements AgendaService {
 				Agenda.CANCELAR);
 		mailService.start();
 	}
-
 }

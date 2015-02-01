@@ -60,6 +60,14 @@ public interface ProvasService {
 	public void removerApostilaProva(ApostilaDTO apostilaDTO, ProvaDTO provaDTO)
 			throws ClassNotFoundException, SQLException;
 
+	/**
+	 * Método que consulta a lista de provas criadas no sistema
+	 * 
+	 * @return List<ProvaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<ProvaDTO> listarProvas() throws ClassNotFoundException,
 			SQLException;
 
@@ -71,7 +79,6 @@ public interface ProvasService {
 
 	public AgendaDTO buscarAgendaPorId(Integer agendaId)
 			throws ClassNotFoundException, SQLException;
-
 
 	public ProvaRealizadaDTO buscarProvaRealizadaPorAgendaId(Integer agendaId)
 			throws ClassNotFoundException, SQLException;

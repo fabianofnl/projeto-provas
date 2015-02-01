@@ -47,6 +47,11 @@ public class MailServiceImpl extends Thread {
 		this.agenda = agenda;
 	}
 
+	/**
+	 * Método implementado devido a herança a classe Thread (extends Thread).
+	 * Este é executando quando esta classe instanciada executar o método
+	 * <b>start()</b>
+	 */
 	@Override
 	public void run() {
 

@@ -36,6 +36,9 @@ import br.com.sgpo.service.DashboardService;
 import br.com.sgpo.service.DashboardServiceImpl;
 
 /**
+ * Classe responsável pelo gerenciamento de dados e realização das provas do
+ * colaborador.
+ * 
  * @author Roseli
  * 
  */
@@ -43,7 +46,7 @@ import br.com.sgpo.service.DashboardServiceImpl;
 @SessionScoped
 public class DashboardColManagedBean implements Serializable {
 
-	private static final long serialVersionUID = -8521165965503236100L;
+	private static final long serialVersionUID = 5015750232842455304L;
 
 	private static final Logger LOG = Logger
 			.getLogger(DashboardColManagedBean.class);
@@ -58,6 +61,11 @@ public class DashboardColManagedBean implements Serializable {
 
 	private CartesianChartModel provasColChart = new CartesianChartModel();
 
+	/**
+	 * Método que consulta dados gerais das informações do colaborador
+	 * 
+	 * @param event
+	 */
 	public void carregarDashboard(ActionEvent event) {
 
 		try {
@@ -146,6 +154,9 @@ public class DashboardColManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que fornece o recuros de download de arquivos do sistema.
+	 */
 	@SuppressWarnings("unused")
 	public void carregarArquivo() {
 
@@ -195,6 +206,12 @@ public class DashboardColManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que consulta dados especificos de uma prova para o colaborador
+	 * realizar.
+	 * 
+	 * @return String
+	 */
 	public String carregarProva() {
 
 		try {
@@ -224,6 +241,11 @@ public class DashboardColManagedBean implements Serializable {
 		return "/pages/system/realizar_prova";
 	}
 
+	/**
+	 * Método que efetiva o envio da prova realizada pelo colaborador
+	 * 
+	 * @return String
+	 */
 	public String submitProva() {
 
 		try {
@@ -288,6 +310,10 @@ public class DashboardColManagedBean implements Serializable {
 		return "/pages/system/dashboard/dashboard";
 	}
 
+	/**
+	 * Método qeu limpa a sessão após o envio da prova preenchida pelo
+	 * colaborador
+	 */
 	private void limparSessao() {
 		provaRealizadaSelecionada = new ProvaRealizadaDTO();
 		provaSelecionada = new ProvaDTO();
