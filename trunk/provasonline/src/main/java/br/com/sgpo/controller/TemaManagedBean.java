@@ -18,6 +18,8 @@ import br.com.sgpo.service.TemasService;
 import br.com.sgpo.service.TemasServiceImpl;
 
 /**
+ * Classe responsável pelo controle e gerenciamento dos Temas do sistema
+ * 
  * @author Roseli
  * 
  */

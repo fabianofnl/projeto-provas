@@ -8,6 +8,8 @@ import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.PerfilDTO;
 
 /**
+ * Interface que possui os métodos que gerenciam os Funcionários
+ * 
  * @author Roseli
  * 
  */

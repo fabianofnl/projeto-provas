@@ -3,8 +3,9 @@ package br.com.sgpo.dto;
 import java.io.Serializable;
 
 /**
- * Classe de categorização/perfil de cada usuário, fornece o nível de
- * autorização do sistema.
+ * Classe POJO/BEAN/DTO que representa a Agenda do sistema.
+ * Categorização/perfil
+ * de cada usuário, fornece o nível de autorização do sistema.
  * 
  * @author Roseli
  * 

@@ -16,6 +16,12 @@ import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
 import br.com.sgpo.model.DashboardModel;
 import br.com.sgpo.model.DashboardModelImpl;
 
+/**
+ * Classe que implementa os métodos de gerenciamento dos Dashboards
+ * 
+ * @author Roseli
+ * 
+ */
 public class DashboardServiceImpl implements DashboardService {
 
 	private DashboardModel dashboardModel = new DashboardModelImpl();

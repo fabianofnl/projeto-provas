@@ -7,6 +7,12 @@ import br.com.sgpo.dto.EquipeDTO;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.PerfilDTO;
 
+/**
+ * Interface que possui os métodos de gerenciamento dos funcionários
+ * 
+ * @author Roseli
+ * 
+ */
 public interface FuncionarioModel {
 
 	/**

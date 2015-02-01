@@ -13,6 +13,12 @@ import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
 
+/**
+ * Interface com métodos de gerenciamento dos Dashboards
+ * 
+ * @author Roseli
+ * 
+ */
 public interface DashboardModel {
 
 	/**

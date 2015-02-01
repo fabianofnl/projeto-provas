@@ -3,7 +3,8 @@ package br.com.sgpo.dto;
 import java.io.Serializable;
 
 /**
- * Classe para realização da autenticação do sistema.
+ * Classe POJO/BEAN/DTO que representa o Usuário para realização da
+ * autenticação do sistema.
  * 
  * @author Roseli
  * 

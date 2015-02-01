@@ -3,6 +3,8 @@ package br.com.sgpo.dto;
 import java.io.Serializable;
 
 /**
+ * Classe POJO/BEAN/DTO que representa a Opção (resposta) do sistema
+ * 
  * @author Roseli
  * 
  */
