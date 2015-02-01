@@ -16,6 +16,9 @@ import br.com.sgpo.service.DashboardService;
 import br.com.sgpo.service.DashboardServiceImpl;
 
 /**
+ * Método responsável pelo gerenciamento de dados do painel (dashboard) do
+ * administrador do sistema
+ * 
  * @author Roseli
  * 
  */
@@ -23,7 +26,7 @@ import br.com.sgpo.service.DashboardServiceImpl;
 @ViewScoped
 public class DashboardAdminManagedBean implements Serializable {
 
-	private static final long serialVersionUID = 3771915445327651323L;
+	private static final long serialVersionUID = 7932051773473893255L;
 
 	private static final Logger LOG = Logger
 			.getLogger(DashboardAdminManagedBean.class);
@@ -33,6 +36,12 @@ public class DashboardAdminManagedBean implements Serializable {
 
 	private Boolean barChartFlag = false;
 
+	/**
+	 * Método que consulta dados para carregar o dashboard, este extrai dados da
+	 * memória utilizada pela aplicação e retorna demais dados do uso do sistema
+	 * 
+	 * @param event
+	 */
 	public void carregarDashboard(ActionEvent event) {
 
 		try {

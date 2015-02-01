@@ -30,6 +30,15 @@ public interface ProvasModel {
 	public Integer getTotalRegistrosProvas() throws ClassNotFoundException,
 			SQLException;
 
+	/**
+	 * Método que consulta dados da prova por provaId
+	 * 
+	 * @param provaId
+	 * @return ProvaDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public ProvaDTO buscarProvaPorId(Integer provaId)
 			throws ClassNotFoundException, SQLException;
 
@@ -70,6 +79,14 @@ public interface ProvasModel {
 	public void removerApostilaProva(ApostilaDTO apostilaDTO, ProvaDTO provaDTO)
 			throws ClassNotFoundException, SQLException;
 
+	/**
+	 * Método que consulta a lista de provas criadas no sistema
+	 * 
+	 * @return List<ProvaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<ProvaDTO> listarProvas() throws ClassNotFoundException,
 			SQLException;
 
@@ -133,6 +150,15 @@ public interface ProvasModel {
 	public void excluirQuestao(QuestaoDTO questaoSelecionada)
 			throws ClassNotFoundException, SQLException;
 
+	/**
+	 * Método que consulta a lista de apostilas anexadas por provaId
+	 * 
+	 * @param provaId
+	 * @return List<ApostilaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<ApostilaDTO> listarApostilasPorProvaId(Integer provaId)
 			throws ClassNotFoundException, SQLException;
 

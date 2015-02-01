@@ -18,7 +18,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	private FuncionarioModel funcionarioDao = new FuncionarioModelImpl();
 
 	@Override
-	public List<FuncionarioDTO> listarFuncionarios() throws SQLException, ClassNotFoundException {
+	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
+			ClassNotFoundException {
 		return funcionarioDao.listarFuncionarios();
 	}
 
@@ -40,7 +41,15 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return funcionarioDao.getTotalRegistrosFuncionarios();
 	}
 
-	@Override
+	/**
+	 * Método que consulta dados do funcionario por matrícula
+	 * 
+	 * @param matricula
+	 * @return FuncionarioDTO
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
 			throws SQLException, ClassNotFoundException {
 		return funcionarioDao.buscarFuncionarioPorMatricula(matricula);
@@ -65,8 +74,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	}
 
 	@Override
-	public List<FuncionarioDTO> listarColaboradoresSemEquipes() throws SQLException,
-			ClassNotFoundException {
+	public List<FuncionarioDTO> listarColaboradoresSemEquipes()
+			throws SQLException, ClassNotFoundException {
 		return funcionarioDao.listarColaboradoresSemEquipes();
 	}
 
@@ -77,8 +86,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	}
 
 	@Override
-	public List<EquipeDTO> listarEquipes()
-			throws SQLException, ClassNotFoundException {
+	public List<EquipeDTO> listarEquipes() throws SQLException,
+			ClassNotFoundException {
 		List<EquipeDTO> listaEquipes = funcionarioDao.listarEquipes();
 
 		// TODO verificar se não é necessario criar outra lista e add as equipes
@@ -106,7 +115,15 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		funcionarioDao.removerColaborador(matricula);
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de colaboradores cadastrados no sistema
+	 * (perfil colaborador)
+	 * 
+	 * @return List<FuncionarioDTO>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
 			ClassNotFoundException {
 		return funcionarioDao.listarColaboradores();

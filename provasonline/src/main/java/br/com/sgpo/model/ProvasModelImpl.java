@@ -67,6 +67,7 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String DELETE_APOSTILA_PROVA = "DELETE FROM vincularApostilas WHERE apostilaId = ? AND provaId = ?";
 
+	// TODO utilizado
 	private static final String SELECT_PROVAS = "SELECT * FROM provas ORDER BY titulo";
 
 	private static final String INSERT_AGENDA = "INSERT INTO agenda (matcolaborador, provaId, dataProva) VALUES (?, ?, ?)";
@@ -134,6 +135,7 @@ public class ProvasModelImpl implements ProvasModel {
 	private static final String DELETE_QUESTAO_COM_OPCOES = "BEGIN; DELETE FROM opcoes WHERE questaoId = ?; "
 			+ "DELETE FROM questoes WHERE questaoId = ?; COMMIT;";
 
+	// TODO utilizado
 	private static final String SELECT_APOSTILA_POR_PROVA_ID = "SELECT * FROM apostilas WHERE provaId = ?";
 
 	private static final String DELETE_PROVA_COM_QUESTOES_E_APOSTILAS = "BEGIN; DELETE FROM apostilas WHERE provaId = ?; "
@@ -294,7 +296,15 @@ public class ProvasModelImpl implements ProvasModel {
 		return totalRegistros;
 	}
 
-	@Override
+	/**
+	 * Método que consulta dados da prova por provaId
+	 * 
+	 * @param provaId
+	 * @return ProvaDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public ProvaDTO buscarProvaPorId(Integer provaId)
 			throws ClassNotFoundException, SQLException {
 
@@ -646,7 +656,14 @@ public class ProvasModelImpl implements ProvasModel {
 			conn.close();
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de provas criadas no sistema
+	 * 
+	 * @return List<ProvaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<ProvaDTO> listarProvas() throws ClassNotFoundException,
 			SQLException {
 
@@ -1366,7 +1383,15 @@ public class ProvasModelImpl implements ProvasModel {
 
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de apostilas anexadas por provaId
+	 * 
+	 * @param provaId
+	 * @return List<ApostilaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<ApostilaDTO> listarApostilasPorProvaId(Integer provaId)
 			throws ClassNotFoundException, SQLException {
 

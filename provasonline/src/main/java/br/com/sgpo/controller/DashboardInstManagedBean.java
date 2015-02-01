@@ -20,6 +20,10 @@ import br.com.sgpo.service.DashboardService;
 import br.com.sgpo.service.DashboardServiceImpl;
 
 /**
+ * Classe responsável pelo gerenciamento de dados referente ao instrutor.
+ * Consulta informações gerais de cada gerente, com média de cada equipe e com a
+ * média final entre todas as equipes
+ * 
  * @author Roseli
  * 
  */
@@ -27,7 +31,7 @@ import br.com.sgpo.service.DashboardServiceImpl;
 @ViewScoped
 public class DashboardInstManagedBean implements Serializable {
 
-	private static final long serialVersionUID = 4312407946174547134L;
+	private static final long serialVersionUID = 8603837670106079514L;
 
 	private static final Logger LOG = Logger
 			.getLogger(DashboardInstManagedBean.class);
@@ -40,6 +44,13 @@ public class DashboardInstManagedBean implements Serializable {
 	private int height = 0;
 	private Boolean barChartFlag = false;
 
+	/**
+	 * Método que consulta dados gerais de utilização do sistema, como total de
+	 * provas, questões, apostilas entre outros e consulta a nota média de cada
+	 * equipe.
+	 * 
+	 * @param event
+	 */
 	public void carregarDashboard(ActionEvent event) {
 
 		try {

@@ -56,7 +56,15 @@ public class ProvasServiceImpl implements ProvasService {
 		return provasModel.getTotalRegistrosProvas();
 	}
 
-	@Override
+	/**
+	 * Método que consulta dados da prova por provaId
+	 * 
+	 * @param provaId
+	 * @return ProvaDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public ProvaDTO buscarProvaPorId(Integer provaId)
 			throws ClassNotFoundException, SQLException {
 		return provasModel.buscarProvaPorId(provaId);
@@ -147,7 +155,14 @@ public class ProvasServiceImpl implements ProvasService {
 		provasModel.removerApostilaProva(apostilaDTO, provaDTO);
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de provas criadas no sistema
+	 * 
+	 * @return List<ProvaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<ProvaDTO> listarProvas() throws ClassNotFoundException,
 			SQLException {
 		return provasModel.listarProvas();

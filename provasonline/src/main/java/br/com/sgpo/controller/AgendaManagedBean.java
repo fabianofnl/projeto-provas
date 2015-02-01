@@ -25,6 +25,9 @@ import br.com.sgpo.service.ProvasService;
 import br.com.sgpo.service.ProvasServiceImpl;
 
 /**
+ * Classe com a responsabilidade de gerenciar o agendamento de provas do
+ * sistema.
+ * 
  * @author Roseli
  * 
  */
@@ -32,7 +35,7 @@ import br.com.sgpo.service.ProvasServiceImpl;
 @ViewScoped
 public class AgendaManagedBean implements Serializable {
 
-	private static final long serialVersionUID = -8143523018817793378L;
+	private static final long serialVersionUID = 2912376945350346068L;
 
 	private static final Logger LOG = Logger.getLogger(AgendaManagedBean.class);
 
@@ -71,6 +74,12 @@ public class AgendaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que popula dois campos de seleção (select) para que possa agendar
+	 * a prova
+	 * 
+	 * @param event
+	 */
 	public void carregarProvasColaboradores(ActionEvent event) {
 
 		try {
@@ -88,6 +97,11 @@ public class AgendaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que efetiva o agendamento da prova
+	 * 
+	 * @param event
+	 */
 	public void agendarProva(ActionEvent event) {
 
 		try {
@@ -127,6 +141,11 @@ public class AgendaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que excluir um agendamento
+	 * 
+	 * @param event
+	 */
 	public void excluirAgendamento(ActionEvent event) {
 
 		try {
@@ -166,6 +185,9 @@ public class AgendaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Métodos que limpa a sessão após o agendamento.
+	 */
 	public void limparSessao() {
 		agendaNova = new AgendaDTO();
 		agendaSelecionada = new AgendaDTO();

@@ -21,6 +21,8 @@ import br.com.sgpo.service.DashboardService;
 import br.com.sgpo.service.DashboardServiceImpl;
 
 /**
+ * Classe responsável pelo gerenciamento de dados do gerente
+ * 
  * @author Roseli
  * 
  */
@@ -28,7 +30,7 @@ import br.com.sgpo.service.DashboardServiceImpl;
 @ViewScoped
 public class DashboardGerManagedBean implements Serializable {
 
-	private static final long serialVersionUID = 2825442688669164686L;
+	private static final long serialVersionUID = -1800186620641296524L;
 
 	private static final Logger LOG = Logger
 			.getLogger(DashboardGerManagedBean.class);
@@ -38,6 +40,12 @@ public class DashboardGerManagedBean implements Serializable {
 	private Boolean barChartFlag = false;
 	private int height;
 
+	/**
+	 * Método que consulta dados referente ao gerente (a equipe), retornado a
+	 * média de cada colaborador com a média geral da equipe
+	 * 
+	 * @param event
+	 */
 	public void carregarDashboard(ActionEvent event) {
 
 		LOG.info("chamando carregar dashboard GER");

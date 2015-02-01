@@ -23,22 +23,34 @@ public class AgendaModelImpl implements AgendaModel {
 
 	private static final Logger LOG = Logger.getLogger(AgendaModelImpl.class);
 
+	// TODO Utilizado
 	private static final String SELECT_AGENDA = "SELECT * "
 			+ "FROM agenda a, provas p, funcionario f "
 			+ "WHERE a.provaId = p.provaId AND a.matcolaborador = f.matricula "
 			+ "ORDER BY dataprova DESC";
 
+	// TODO utilizado
 	private static final String SELECT_AGENDA_NAO_REALIZADA = "SELECT *, "
 			+ "(SELECT COUNT(a1.agendaId) FROM agenda a1 WHERE a1.dataProva <= CURRENT_DATE AND a1.agendaId = a.agendaId) as hoje "
 			+ "FROM agenda a, provas p, funcionario f "
 			+ "WHERE a.provaId = p.provaId AND a.matcolaborador = f.matricula "
 			+ "AND flag = false AND dataprova >= CURRENT_DATE ORDER BY a.dataprova DESC";
 
+	// TODO utilizado
 	private static final String INSERT_AGENDA = "INSERT INTO agenda (matcolaborador, provaId, dataprova) "
 			+ "VALUES (?, ?, ?)";
 
+	// TODO utilizado
 	private static final String DELETE_AGENDA = "DELETE FROM agenda WHERE agendaId = ?";
 
+	/**
+	 * Método que busca pela lista de agendamento realizado
+	 * 
+	 * @return List<AgendaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<AgendaDTO> listarAgendas() throws ClassNotFoundException,
 			SQLException {
 		LOG.info("Chamando método listar agenda completa");
@@ -89,6 +101,14 @@ public class AgendaModelImpl implements AgendaModel {
 		return listaAgendas;
 	}
 
+	/**
+	 * Método que busca pela lista de agendamento atual (as não realizadas)
+	 * 
+	 * @return List<AgendaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<AgendaDTO> listarAgendasNaoRealizadas()
 			throws ClassNotFoundException, SQLException {
 
@@ -141,7 +161,15 @@ public class AgendaModelImpl implements AgendaModel {
 		return listaAgendas;
 	}
 
-	@Override
+	/**
+	 * Método que efetiva o agendamento da prova
+	 * 
+	 * @param agendaNova
+	 * @param contextPath
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void agendarProva(AgendaDTO agendaNova)
 			throws ClassNotFoundException, SQLException {
 
@@ -160,10 +188,17 @@ public class AgendaModelImpl implements AgendaModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
-
 	}
 
-	@Override
+	/**
+	 * Método que excluir um agendamento
+	 * 
+	 * @param agendaSelecionada
+	 * @param contextPath
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void excluirProva(AgendaDTO agendaSelecionada)
 			throws ClassNotFoundException, SQLException {
 

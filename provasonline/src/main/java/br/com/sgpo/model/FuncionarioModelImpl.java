@@ -36,6 +36,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 
 	private static final String SELECT_TOTAL_REGISTROS_FUNCIONARIOS = "SELECT COUNT(matricula) AS total FROM funcionario";
 
+	// TODO utilizado
 	private static final String SELECT_FUNCIONARIO_POR_MATRICULA = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND f.matricula = ?";
 
@@ -67,6 +68,7 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 
 	private static final String REMOVER_COLABORADOR_POR_MATRICULA = "DELETE FROM equipes WHERE matcolaborador = ?";
 
+	// TODO utilizado
 	private static final String SELECT_COLABORADORES = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Colaborador' ";
 
@@ -209,7 +211,15 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 		return totalRegistros;
 	}
 
-	@Override
+	/**
+	 * Método que consulta dados do funcionario por matrícula
+	 * 
+	 * @param matricula
+	 * @return FuncionarioDTO
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
 			throws SQLException, ClassNotFoundException {
 
@@ -545,7 +555,15 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			conn.close();
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de colaboradores cadastrados no sistema
+	 * (perfil colaborador)
+	 * 
+	 * @return List<FuncionarioDTO>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
 			ClassNotFoundException {
 
