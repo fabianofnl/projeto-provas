@@ -21,7 +21,14 @@ public class TemasServiceImpl implements TemasService {
 		return temasModel.listarTemas(offSet, recordPerPage);
 	}
 
-	@Override
+	/**
+	 * Método que cadastra os tema no sistema
+	 * 
+	 * @param temasDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void gravar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 		temasModel.gravar(temasDTO);
@@ -39,19 +46,40 @@ public class TemasServiceImpl implements TemasService {
 		return temasModel.buscarTemaporId(temaId);
 	}
 
-	@Override
+	/**
+	 * Método que altera um tema selecionado
+	 * 
+	 * @param temasDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void alterar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 		temasModel.alterar(temasDTO);
 	}
 
-	@Override
+	/**
+	 * Método que exclui um tema selecionado
+	 * 
+	 * @param temasDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void remover(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 		temasModel.remover(temasDTO);
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de temas cadastradas no sistema
+	 * 
+	 * @return List<TemaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<TemaDTO> listarTemas() throws ClassNotFoundException,
 			SQLException {
 		return temasModel.listarTemas();

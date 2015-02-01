@@ -14,16 +14,27 @@ import br.com.sgpo.dto.FuncionarioDTO;
 public interface LoginModel {
 
 	/**
-	 * Método realiza conexão com a base de dados e retorna objeto
-	 * <b>funcionario</b> para realizar a autenticação.
+	 * Método retorna objeto <b>funcionario</b> para realizar a autenticação.
 	 * 
 	 * @param nomeUsuario
 	 * @param senha
-	 * @return funcionario
+	 * @return FuncionarioDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
 	 */
+	// TODO utilizado
 	public FuncionarioDTO logar(String nomeUsuario, String senha)
 			throws ClassNotFoundException, SQLException;
 
+	/**
+	 * Método que altera a senha do usuário do sistema
+	 * 
+	 * @param funcionario
+	 * @return String
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public String alterarSenha(FuncionarioDTO funcionario)
 			throws ClassNotFoundException, SQLException;
 

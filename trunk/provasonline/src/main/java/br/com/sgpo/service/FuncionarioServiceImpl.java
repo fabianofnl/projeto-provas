@@ -17,19 +17,40 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
 	private FuncionarioModel funcionarioDao = new FuncionarioModelImpl();
 
-	@Override
+	/**
+	 * Método que consulta a lista de todos os funcionário do sistema
+	 * 
+	 * @return List<FuncionarioDTO>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
 			ClassNotFoundException {
 		return funcionarioDao.listarFuncionarios();
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de perfis do sistema
+	 * 
+	 * @return List<PerfilDTO>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public List<PerfilDTO> listarPerfis() throws SQLException,
 			ClassNotFoundException {
 		return funcionarioDao.listarPerfis();
 	}
 
-	@Override
+	/**
+	 * Método que cadastra um funcionário no sistema
+	 * 
+	 * @param funcionario
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public void gravar(FuncionarioDTO funcionario) throws SQLException,
 			ClassNotFoundException {
 		funcionarioDao.gravar(funcionario);
@@ -55,51 +76,89 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return funcionarioDao.buscarFuncionarioPorMatricula(matricula);
 	}
 
-	@Override
+	/**
+	 * Método que inativa um funcionário
+	 * 
+	 * @param matricula
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public void inativar(Integer matricula) throws SQLException,
 			ClassNotFoundException {
 		funcionarioDao.inativar(matricula);
 	}
 
-	@Override
+	/**
+	 * Método que altera os dados de um funcionário
+	 * 
+	 * @param funcionario
+	 * @param matriculaAntiga
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public void alterar(FuncionarioDTO funcionario, Integer matriculaAntiga)
 			throws SQLException, ClassNotFoundException {
 		funcionarioDao.alterar(funcionario, matriculaAntiga);
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de gerente (apenas o perfil de gerentes)
+	 * 
+	 * @return List<FuncionadioDTO>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public List<FuncionarioDTO> listarGerentes() throws SQLException,
 			ClassNotFoundException {
 		return funcionarioDao.listarGerentes();
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de colaboradores sem equipes associadas
+	 * 
+	 * @return List<FuncionarioDTO>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradoresSemEquipes()
 			throws SQLException, ClassNotFoundException {
 		return funcionarioDao.listarColaboradoresSemEquipes();
 	}
 
-	@Override
+	/**
+	 * Método que associa os colaboradores ao gerente, formando assim a equipe
+	 * 
+	 * @param matGerente
+	 * @param matColaborador
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public void associarEquipes(Integer matGerente, Integer[] matColaborador)
 			throws SQLException, ClassNotFoundException {
 		funcionarioDao.associarEquipes(matGerente, matColaborador);
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de equipes associadas
+	 * 
+	 * @return List<EquipeDTO>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public List<EquipeDTO> listarEquipes() throws SQLException,
 			ClassNotFoundException {
 		List<EquipeDTO> listaEquipes = funcionarioDao.listarEquipes();
-
-		// TODO verificar se não é necessario criar outra lista e add as equipes
-
 		for (EquipeDTO equipeDTO : listaEquipes) {
-
 			equipeDTO.setListaColaboradores(funcionarioDao
 					.listarColaboradorPorGerente(equipeDTO.getGerente()
 							.getMatricula()));
-
 		}
-
 		return listaEquipes;
 	}
 
@@ -109,7 +168,14 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return funcionarioDao.getTotalRegistrosEquipes();
 	}
 
-	@Override
+	/**
+	 * Método que remover o colaborador da equipe
+	 * 
+	 * @param matricula
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	// TODO utilizado
 	public void removerColaborador(Integer matricula) throws SQLException,
 			ClassNotFoundException {
 		funcionarioDao.removerColaborador(matricula);

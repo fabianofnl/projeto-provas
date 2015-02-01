@@ -98,7 +98,7 @@ public class FuncionarioManagedBean implements Serializable {
 							"Houve um erro na aplicação, tente mais tarde"));
 			LOG.error("Driver do banco de dados não encontrado", e);
 		} catch (SQLException e) {
-			
+
 			/**
 			 * Linha abaixo força um erro de conversão ou validação Devido ao
 			 * uso do componente Dialog, foi necessário utilizar para que o
@@ -222,6 +222,10 @@ public class FuncionarioManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que limpa os dados da sessão após o cadastro, edição ou inativação
+	 * de um funcionario
+	 */
 	private void limparSessao() {
 		funcionarioNovo = new FuncionarioDTO();
 		funcionarioSelecionado = new FuncionarioDTO();

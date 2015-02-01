@@ -21,21 +21,29 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	/**
-	 * Método retorna objeto <b>Funcionario</b> para realizar a autenticação.
+	 * Método retorna objeto <b>funcionario</b> para realizar a autenticação.
 	 * 
-	 * @throws SQLException
+	 * @param nomeUsuario
+	 * @param senha
+	 * @return FuncionarioDTO
 	 * @throws ClassNotFoundException
+	 * @throws SQLException
 	 */
-	@Override
+	// TODO utilizado
 	public FuncionarioDTO logar(String nomeUsuario, String senha)
 			throws ClassNotFoundException, SQLException {
-
-		FuncionarioDTO funcionario = loginDao.logar(nomeUsuario, senha);
-
-		return funcionario;
+		return loginDao.logar(nomeUsuario, senha);
 	}
 
-	@Override
+	/**
+	 * Método que altera a senha do usuário do sistema
+	 * 
+	 * @param funcionario
+	 * @return String
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public String alterarSenha(FuncionarioDTO funcionario)
 			throws ClassNotFoundException, SQLException {
 		return loginDao.alterarSenha(funcionario);

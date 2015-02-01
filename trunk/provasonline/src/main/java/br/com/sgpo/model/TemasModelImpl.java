@@ -25,14 +25,18 @@ public class TemasModelImpl implements TemasModel {
 
 	private static final String SELECT_TOTAL_REGISTROS_TEMAS = "SELECT COUNT(titulo) AS total FROM temas";
 
+	// TODO utilizado
 	private static final String INSERT_TEMA = "INSERT INTO temas (titulo, descricao) VALUES (?, ?)";
 
 	private static final String SELECT_TEMA_POR_ID = "SELECT * FROM temas WHERE temaId = ?";
 
+	// TODO utilizado
 	private static final String UPDATE_TEMA = "UPDATE temas SET titulo = ?, descricao = ? WHERE temaId = ?";
 
+	// TODO utilizado
 	private static final String DELETE_TEMA = "DELETE FROM temas WHERE temaId = ?";
 
+	// TODO utilizado
 	private static final String SELECT_TODOS_TEMAS = "SELECT * FROM temas ORDER BY titulo";
 
 	@Override
@@ -72,7 +76,14 @@ public class TemasModelImpl implements TemasModel {
 		return listaTemas;
 	}
 
-	@Override
+	/**
+	 * Método que cadastra os tema no sistema
+	 * 
+	 * @param temasDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void gravar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 
@@ -152,7 +163,14 @@ public class TemasModelImpl implements TemasModel {
 		return tema;
 	}
 
-	@Override
+	/**
+	 * Método que altera um tema selecionado
+	 * 
+	 * @param temasDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void alterar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 
@@ -173,7 +191,14 @@ public class TemasModelImpl implements TemasModel {
 			conn.close();
 	}
 
-	@Override
+	/**
+	 * Método que exclui um tema selecionado
+	 * 
+	 * @param temasDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void remover(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 
@@ -193,7 +218,14 @@ public class TemasModelImpl implements TemasModel {
 
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de temas cadastradas no sistema
+	 * 
+	 * @return List<TemaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<TemaDTO> listarTemas() throws ClassNotFoundException,
 			SQLException {
 		LOG.info("Chamando método listarTemas");

@@ -1,5 +1,6 @@
 package br.com.sgpo.model;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,6 +37,7 @@ public class ProvasModelImpl implements ProvasModel {
 	private static final String SELECT_QUESTOES_POR_TEMA = "SELECT q.* FROM temas t, questoes q, montarProvas mp "
 			+ "WHERE t.temaId = q.temaId AND q.questaoId = mp.questaoId AND mp.provaId = ? AND t.temaId = ?";
 
+	// TODO utilizado
 	private static final String INSERT_PROVA = "INSERT INTO provas (titulo) VALUES (?)";
 
 	private static final String SELECT_PROVA_POR_ID = "SELECT * FROM provas WHERE provaId = ?";
@@ -53,11 +55,13 @@ public class ProvasModelImpl implements ProvasModel {
 
 	private static final String SELECT_TOTAL_REGISTROS_APOSTILAS = "SELECT COUNT(apostilaId) AS total FROM apostilas";
 
+	// TODO utilizado
 	private static final String INSERT_APOSTILA = "INSERT INTO apostilas (nome, provaId, extensao, hashName, serverPath) "
 			+ "VALUES (?, ?, ?, ?, ?)";
 
 	private static final String SELECT_APOSTILA_POR_ID = "SELECT * FROM apostilas WHERE apostilaId = ?";
 
+	// TODO utilizado
 	private static final String DELETE_APOSTILA = "DELETE FROM apostilas WHERE apostilaId = ?";
 
 	private static final String INSERT_APOSTILAS_PROVAS = "INSERT INTO vincularApostilas (apostilaId, provaId) VALUES (?, ?)";
@@ -116,28 +120,37 @@ public class ProvasModelImpl implements ProvasModel {
 	private static final String SELECT_APOSTILA_POR_PROVA = "SELECT * FROM apostilas "
 			+ "WHERE provaId = ? ORDER BY nome";
 
+	// TODO utilizado
 	private static final String PROVA_ALTERAR = "UPDATE provas SET titulo = ? WHERE provaId = ?";
 
+	// TODO utilizado
 	private static final String INSERT_QUESTAO = "INSERT INTO questoes (titulo, provaId, descricao, temaId) "
 			+ "VALUES (?, ?, ?, ?)";
 
+	// TODO utilizado
 	private static final String UPDATE_QUESTAO = "UPDATE questoes SET titulo = ?, descricao = ?, temaId = ? "
 			+ "WHERE questaoId = ?";
 
+	// TODO utilizado
 	private static final String INSERT_OPCAO = "INSERT INTO opcoes (titulo, questaoId) VALUES (?, ?)";
 
+	// TODO utilizado
 	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT * FROM opcoes WHERE questaoId = ? ORDER BY titulo";
 
+	// TODO utilizado
 	private static final String DEFINIR_OPCAO = "UPDATE opcoes SET flag = ? WHERE opcaoId = ?";
 
+	// TODO utilizado
 	private static final String DELETE_OPCAO = "DELETE FROM opcoes WHERE opcaoId = ?";
 
+	// TODO utilizado
 	private static final String DELETE_QUESTAO_COM_OPCOES = "BEGIN; DELETE FROM opcoes WHERE questaoId = ?; "
 			+ "DELETE FROM questoes WHERE questaoId = ?; COMMIT;";
 
 	// TODO utilizado
 	private static final String SELECT_APOSTILA_POR_PROVA_ID = "SELECT * FROM apostilas WHERE provaId = ?";
 
+	// TODO utilizado
 	private static final String DELETE_PROVA_COM_QUESTOES_E_APOSTILAS = "BEGIN; DELETE FROM apostilas WHERE provaId = ?; "
 			+ "DELETE FROM opcoes o WHERE o.questaoId IN (SELECT q.questaoId FROM questoes q WHERE q.provaId = ?); "
 			+ "DELETE FROM questoes WHERE provaId = ?; "
@@ -249,7 +262,14 @@ public class ProvasModelImpl implements ProvasModel {
 		return listaQuestoes;
 	}
 
-	@Override
+	/**
+	 * Método que cadastra a prova no sistema
+	 * 
+	 * @param provaDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void gravar(ProvaDTO provaDTO) throws ClassNotFoundException,
 			SQLException {
 
@@ -501,7 +521,14 @@ public class ProvasModelImpl implements ProvasModel {
 		return totalRegistros;
 	}
 
-	@Override
+	/**
+	 * Método responsável pelo upload dos arquivos (apostilas)
+	 * 
+	 * @param apostilaDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void gravaApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException {
 
@@ -556,7 +583,15 @@ public class ProvasModelImpl implements ProvasModel {
 		return apostilaDTO;
 	}
 
-	@Override
+	/**
+	 * Método que remove a apostila
+	 * 
+	 * @param apostilaDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws IOException
+	 */
+	// TODO utilizado
 	public void removerApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException {
 
@@ -1186,7 +1221,14 @@ public class ProvasModelImpl implements ProvasModel {
 		return exists;
 	}
 
-	@Override
+	/**
+	 * Método que altera a prova
+	 * 
+	 * @param provaSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void alterarProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -1206,7 +1248,14 @@ public class ProvasModelImpl implements ProvasModel {
 			conn.close();
 	}
 
-	@Override
+	/**
+	 * Método que cadastra um questão conforme prova selecionada
+	 * 
+	 * @param questaoNova
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void gravarQuestao(QuestaoDTO questaoNova)
 			throws ClassNotFoundException, SQLException {
 
@@ -1229,7 +1278,14 @@ public class ProvasModelImpl implements ProvasModel {
 
 	}
 
-	@Override
+	/**
+	 * Método que edita a questão selecionada
+	 * 
+	 * @param questaoSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void alterarQuestao(QuestaoDTO questaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -1252,7 +1308,14 @@ public class ProvasModelImpl implements ProvasModel {
 
 	}
 
-	@Override
+	/**
+	 * Método que cadastra uma opção a questão selecionada
+	 * 
+	 * @param opcaoSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void gravarOpcao(OpcaoDTO opcaoNova) throws ClassNotFoundException,
 			SQLException {
 
@@ -1273,7 +1336,15 @@ public class ProvasModelImpl implements ProvasModel {
 
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de opções (respostas) por questaoId
+	 * 
+	 * @param questaoId
+	 * @return List<OpcaoDAO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
 			throws ClassNotFoundException, SQLException {
 		LOG.info("Chamando método listarOpções");
@@ -1308,7 +1379,14 @@ public class ProvasModelImpl implements ProvasModel {
 		return listaOpcoes;
 	}
 
-	@Override
+	/**
+	 * Método que define a opção correta (qual é a resposta correta)
+	 * 
+	 * @param opcaoSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void definirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -1342,7 +1420,14 @@ public class ProvasModelImpl implements ProvasModel {
 
 	}
 
-	@Override
+	/**
+	 * Método que excluir uma opção (resposta)
+	 * 
+	 * @param opcaoSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void excluirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -1362,7 +1447,15 @@ public class ProvasModelImpl implements ProvasModel {
 
 	}
 
-	@Override
+	/**
+	 * Método que exclui uma questão, essa questão é excluida juntamento com as
+	 * opções
+	 * 
+	 * @param questaoSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void excluirQuestao(QuestaoDTO questaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -1422,7 +1515,16 @@ public class ProvasModelImpl implements ProvasModel {
 		return listaApostilas;
 	}
 
-	@Override
+	/**
+	 * Método que exclui a prova, essa exclusão é em cascata. Remove a prova, as
+	 * apostilas associadas, as questões e as opções
+	 * 
+	 * @param provaSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws IOException
+	 */
+	// TODO utilizado
 	public void excluirProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException {
 

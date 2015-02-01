@@ -33,6 +33,11 @@ public class TemaManagedBean implements Serializable {
 
 	private List<TemaDTO> listaTemas = new ArrayList<TemaDTO>();
 
+	/**
+	 * Método que consulta os dados para popular o datatable, lista dos temas
+	 * 
+	 * @param event
+	 */
 	public void carregarTabela(ActionEvent event) {
 
 		try {
@@ -56,6 +61,11 @@ public class TemaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que cadastra os temas
+	 * 
+	 * @param event
+	 */
 	public void cadastrarTema(ActionEvent event) {
 
 		try {
@@ -85,6 +95,11 @@ public class TemaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que edita o tema selecionado
+	 * 
+	 * @param event
+	 */
 	public void editarTema(ActionEvent event) {
 
 		try {
@@ -115,6 +130,11 @@ public class TemaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que exclui um tema selecionado
+	 * 
+	 * @param event
+	 */
 	public void excluirTema(ActionEvent event) {
 
 		try {
@@ -145,6 +165,10 @@ public class TemaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que limpa os dados da sessão após cadastrar, editar ou excluir um
+	 * tema
+	 */
 	private void limparSessao() {
 		temaNovo = new TemaDTO();
 		temaSelecionado = new TemaDTO();
