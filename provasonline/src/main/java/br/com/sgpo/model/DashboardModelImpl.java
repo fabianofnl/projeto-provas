@@ -39,21 +39,6 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "FROM agenda a, funcionario f, provas p WHERE f.matricula = a.matcolaborador AND "
 			+ "a.provaId = p.provaId AND f.matricula = ? AND a.dataProva >= CURRENT_DATE AND a.flag = false";
 
-	private static final String SELECT_APOSTILAS_POR_MATRICULA = "SELECT DISTINCT ON(ap.apostilaId, ap.nome) ap.* "
-			+ "FROM apostilas ap, provas p, agenda a "
-			+ "WHERE p.provaId = a.provaId AND ap.provaId = p.provaId"
-			+ "AND a.flag = false AND a.dataProva > CURRENT_DATE AND a.matcolaborador = ? ORDER BY ap.nome";
-
-	// private static final String SELECT_PROVAS_POR_MATRICULA =
-	// "SELECT pr.* FROM funcionario f, agenda a, provasRealizadas pr "
-	// + "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
-	// + "AND f.matricula = ?";
-
-	private static final String SELECT_NOTA_MEDIA_EQUIPE = "SELECT "
-			+ "SUM(pr.quantidadeAcertos) AS quantidadeAcertos, SUM(pr.quantidadeQuestoes) AS quantidadeQuestoes "
-			+ "FROM funcionario f, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
-			+ "AND f.matricula != ?";
-
 	// TODO utilizado
 	private static final String SELECT_RELATORIO_DADOS_GERAIS = "SELECT "
 			+ "(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Ativo') AS qtdFuncionariosAtivos, "
@@ -72,23 +57,11 @@ public class DashboardModelImpl implements DashboardModel {
 	private static final String SELECT_GERENTES = "SELECT DISTINCT ON (matgerente) e.matgerente, f.nome "
 			+ "FROM equipes e, funcionario f WHERE e.matgerente = f.matricula";
 
-	// private static final String SELECT_NOTA_MEDIA_POR_GERENTE = "SELECT "
-	// +
-	// "SUM(pr.quantidadeAcertos) AS acertos, SUM(pr.quantidadeQuestoes) AS questoes "
-	// + "FROM funcionario f, equipes e, agenda a, provasRealizadas pr "
-	// + "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
-	// + "AND f.matricula = e.matcolaborador AND e.matgerente = ?";
-
 	// TODO utilizado
 	private static final String SELECT_NOTA_MEDIA_POR_GERENTE = "SELECT "
 			+ "sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float)/ count(a.agendaId) as media "
 			+ "FROM provasRealizadas pr, agenda a, funcionario f, equipes e "
 			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId AND f.matricula = e.matcolaborador AND e.matgerente = ?";
-
-	// private static final String SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT
-	// = "SELECT f.matricula, f.nome "
-	// + "FROM equipes e, funcionario f "
-	// + "WHERE f.matricula = e.matcolaborador AND matgerente = ?";
 
 	// TODO utilizado
 	private static final String SELECT_PROVAS_POR_MATRICULA = "SELECT pr.*, "
@@ -103,11 +76,6 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "FROM provasRealizadas pr, agenda a, equipes e, funcionario f "
 			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId AND f.matricula = e.matcolaborador AND e.matgerente = ? "
 			+ "GROUP BY f.matricula, f.nome";
-
-	private static final String SELECT_NOTA_MEDIA_COLABORADOR = "SELECT "
-			+ "SUM(pr.quantidadeQuestoes) AS questoes, SUM(pr.quantidadeAcertos) AS acertos "
-			+ "FROM provasRealizadas pr, agenda a "
-			+ "WHERE a.agendaId = pr.agendaId AND a.matcolaborador = ?";
 
 	// TODO utilizado
 	private static final String SELECT_QUESTOES_POR_PROVA = "SELECT q.*, "
@@ -192,43 +160,6 @@ public class DashboardModelImpl implements DashboardModel {
 		return listaAgendas;
 	}
 
-	@Override
-	public List<ApostilaDTO> listarApostilas(Integer matricula)
-			throws ClassNotFoundException, SQLException {
-
-		LOG.info("Chamando método listarApostilas");
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		List<ApostilaDTO> listaApostilas = new ArrayList<ApostilaDTO>();
-		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_APOSTILAS_POR_MATRICULA);
-		pstmt.setInt(1, matricula);
-		rs = pstmt.executeQuery();
-		ApostilaDTO apostila = null;
-
-		while (rs.next()) {
-			apostila = new ApostilaDTO();
-			apostila.setApostilaId(rs.getInt("apostilaId"));
-			apostila.setNome(rs.getString("nome"));
-			apostila.setExtensao(rs.getString("extensao"));
-			apostila.setHashName(rs.getString("hashName"));
-			apostila.setServerPath(rs.getString("serverPath"));
-			listaApostilas.add(apostila);
-		}
-
-		if (rs != null)
-			rs.close();
-		if (pstmt != null)
-			pstmt.close();
-		if (conn != null)
-			conn.close();
-
-		return listaApostilas;
-	}
-
 	/**
 	 * Método que consulta a lista de provas realizadas pelo colaborador
 	 * 
@@ -292,39 +223,6 @@ public class DashboardModelImpl implements DashboardModel {
 			conn.close();
 
 		return listaProvas;
-	}
-
-	@Override
-	public ProvaRealizadaDTO consultarMediaEquipe(Integer matricula)
-			throws ClassNotFoundException, SQLException {
-
-		LOG.info("Chamando método consultaMediaEquipe");
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_NOTA_MEDIA_EQUIPE);
-		pstmt.setInt(1, matricula);
-		rs = pstmt.executeQuery();
-		ProvaRealizadaDTO mediaEquipe = null;
-
-		if (rs.next()) {
-			mediaEquipe = new ProvaRealizadaDTO();
-			mediaEquipe.setTituloProva("Média Equipe");
-			mediaEquipe.setQuantidadeQuestoes(rs.getInt("quantidadeQuestoes"));
-			mediaEquipe.setQuantidadeAcertos(rs.getInt("quantidadeAcertos"));
-		}
-
-		if (rs != null)
-			rs.close();
-		if (pstmt != null)
-			pstmt.close();
-		if (conn != null)
-			conn.close();
-
-		return mediaEquipe;
 	}
 
 	/**
@@ -454,39 +352,6 @@ public class DashboardModelImpl implements DashboardModel {
 			conn.close();
 
 		return notaMediaEquipesDTO;
-	}
-
-	@Override
-	public NotaMediaColaboradorDTO consultarNotaMediaColaborador(
-			NotaMediaColaboradorDTO notaMediaColaboradorDTO)
-			throws ClassNotFoundException, SQLException {
-
-		LOG.info("Chamando método consultarNotaMediaColaborador");
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_NOTA_MEDIA_COLABORADOR);
-		pstmt.setInt(1, notaMediaColaboradorDTO.getMatricula());
-		rs = pstmt.executeQuery();
-
-		while (rs.next()) {
-			notaMediaColaboradorDTO.setQuestoes(Long.parseLong(String
-					.valueOf(rs.getInt("questoes"))));
-			notaMediaColaboradorDTO.setAcertos(Long.parseLong(String.valueOf(rs
-					.getInt("acertos"))));
-		}
-
-		if (rs != null)
-			rs.close();
-		if (pstmt != null)
-			pstmt.close();
-		if (conn != null)
-			conn.close();
-
-		return notaMediaColaboradorDTO;
 	}
 
 	/**
