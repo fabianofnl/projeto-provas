@@ -6,6 +6,8 @@ import java.util.List;
 import br.com.sgpo.dto.AgendaDTO;
 
 /**
+ * Inteface que possui os métodos de gerencimento do Tema
+ * 
  * @author Roseli
  * 
  */
