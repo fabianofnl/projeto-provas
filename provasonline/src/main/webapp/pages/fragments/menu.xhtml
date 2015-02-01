@@ -10,32 +10,40 @@
 
 	<p:menu style="width:95%;">
 		<p:submenu label="SISTEMA">
-			<p:menuitem value="#{loginManagedBean.funcionario.nome}" disabled="true" style="font-weight: bold;"/>
-			<p:separator/>
+			<p:menuitem value="#{loginManagedBean.funcionario.nome}"
+				disabled="true" style="font-weight: bold;" />
+			<p:separator />
 			<p:menuitem value="Sair" action="#{loginManagedBean.logout}"
 				ajax="false" />
-			<p:separator/>
-			<p:separator style="margin-bottom: 5px;"/>
+			<p:separator />
+			<p:separator style="margin-bottom: 5px;" />
 		</p:submenu>
 		<p:submenu label="HOME">
-			<p:menuitem value="Dashboard" url="/pages/system/dashboard/dashboard.jsf"/>
+			<p:menuitem value="Dashboard"
+				url="/pages/system/dashboard/dashboard.jsf" />
 		</p:submenu>
 
-		<p:submenu label="FUNCIONÁRIO"
-			rendered="#{loginManagedBean.funcionario.role eq 'ROLE_ADMIN'}">
-			<p:menuitem value="Gerenciar Funcionário" url="/pages/system/gerenciar_funcionario.jsf"/>
-			<p:menuitem value="Gerenciar Equipes" url="/pages/system/gerenciar_equipes.jsf"/>
+		<p:submenu label="FUNCIONÁRIO">
+			<p:menuitem value="Gerenciar Funcionário"
+				url="/pages/system/gerenciar_funcionario.jsf"
+				rendered="#{loginManagedBean.funcionario.role eq 'ROLE_ADMIN'}" />
+			<p:menuitem value="Gerenciar Equipes"
+				url="/pages/system/gerenciar_equipes.jsf"
+				rendered="#{loginManagedBean.funcionario.role eq 'ROLE_ADMIN' or loginManagedBean.funcionario.role eq 'ROLE_INSTRUTOR'}" />
 		</p:submenu>
 
 		<p:submenu label="PROVAS"
 			rendered="#{loginManagedBean.funcionario.role eq 'ROLE_ADMIN' or loginManagedBean.funcionario.role eq 'ROLE_INSTRUTOR'}">
-			<p:menuitem value="Gerenciar Temas" url="/pages/system/gerenciar_temas.jsf"/>
-			<p:menuitem value="Gerenciar Provas" url="/pages/system/gerenciar_provas.jsf"/>
+			<p:menuitem value="Gerenciar Temas"
+				url="/pages/system/gerenciar_temas.jsf" />
+			<p:menuitem value="Gerenciar Provas"
+				url="/pages/system/gerenciar_provas.jsf" />
 		</p:submenu>
 
 		<p:submenu label="AGENDA"
 			rendered="#{loginManagedBean.funcionario.role eq 'ROLE_ADMIN' or loginManagedBean.funcionario.role eq 'ROLE_INSTRUTOR'}">
-			<p:menuitem value="Agendar Provas" url="/pages/system/gerenciar_agenda.jsf" />
+			<p:menuitem value="Agendar Provas"
+				url="/pages/system/gerenciar_agenda.jsf" />
 		</p:submenu>
 
 

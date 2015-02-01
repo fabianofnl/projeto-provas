@@ -21,7 +21,7 @@
 
 	<h:form id="frmInstDash">
 		<p:panelGrid columns="2" style="width:100%;" styleClass="valignTop"
-			columnClasses="width60, width40">
+			columnClasses="width50, width50">
 			<p:panel id="panelChart" header="Média equipes">
 				<p:barChart id="basic"
 					rendered="#{dashboardInstManagedBean.barChartFlag}"
@@ -29,8 +29,8 @@
 					value="#{dashboardInstManagedBean.mediaGerenteChart}"
 					legendPosition="e" barMargin="20" barPadding="10"
 					title="Notas Equipes"
-					style="height:#{dashboardInstManagedBean.height}px; width:390px;"
-					min="0" max="125" />
+					style="height:#{dashboardInstManagedBean.height}px; width:500px;"
+					min="0" max="175" />
 				<h:outputText rendered="#{!dashboardInstManagedBean.barChartFlag}"
 					value="Não há provas realizadas." />
 			</p:panel>
