@@ -53,10 +53,10 @@
 
 						<f:facet name="footer">
 							<div align="right">
-								<h:outputLink value="login.jsf" 
+								<p:commandLink action="/pages/login" immediate="true" ajax="false" 
 									style="text-decoration: none; margin-right: 5px;">
 									Voltar
-								</h:outputLink>
+								</p:commandLink>
 								<p:commandButton type="submit" value="Acessar" update="frmLogin"
 									actionListener="#{loginManagedBean.alterarSenha}" ajax="false" />
 							</div>

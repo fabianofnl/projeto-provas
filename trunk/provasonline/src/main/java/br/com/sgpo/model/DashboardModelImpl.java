@@ -351,7 +351,7 @@ public class DashboardModelImpl implements DashboardModel {
 		pstmt = conn.prepareStatement(SELECT_GERENTES);
 		rs = pstmt.executeQuery();
 
-		if (rs.next()) {
+		while (rs.next()) {
 			notaMedia = new NotaMediaEquipesDTO();
 			notaMedia.setMatriculaGerente(rs.getInt("matgerente"));
 			notaMedia.setNomeGerente(rs.getString("nome"));
