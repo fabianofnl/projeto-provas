@@ -18,11 +18,13 @@ public class ConexaoBaseDados {
 
 	/**
 	 * Método retorna objeto <b>connection</b> de conexão com a base de dados.
-	 * @return connection
+	 * 
+	 * @return Connection
 	 * @throws SQLException
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException
 	 */
-	public static Connection getConexaoInstance() throws SQLException, ClassNotFoundException {
+	public static Connection getConexaoInstance() throws SQLException,
+			ClassNotFoundException {
 		Class.forName("org.postgresql.Driver");
 		Connection conn = DriverManager.getConnection(DATA_BASE_URL,
 				DATA_BASE_USER, DATA_BASE_PASSWORD);

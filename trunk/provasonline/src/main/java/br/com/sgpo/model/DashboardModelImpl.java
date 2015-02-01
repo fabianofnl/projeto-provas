@@ -26,6 +26,8 @@ public class DashboardModelImpl implements DashboardModel {
 
 	private static final Logger LOG = Logger
 			.getLogger(DashboardModelImpl.class);
+
+	// TODO utilizado
 	private static final String SELECT_AGENDAS_POR_MATRICULA = "SELECT p.*, a.*, "
 			+ "(SELECT COUNT(a1.agendaId) FROM agenda a1 WHERE a1.dataProva = CURRENT_DATE AND a1.agendaId = a.agendaId) as hoje "
 			+ "FROM agenda a, funcionario f, provas p WHERE f.matricula = a.matcolaborador AND "
@@ -46,6 +48,7 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "FROM funcionario f, agenda a, provasRealizadas pr WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
 			+ "AND f.matricula != ?";
 
+	// TODO utilizado
 	private static final String SELECT_RELATORIO_DADOS_GERAIS = "SELECT "
 			+ "(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Ativo') AS qtdFuncionariosAtivos, "
 			+ "(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Inativo') AS qtdFuncionariosInativos, "
@@ -59,6 +62,7 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "(SELECT COUNT(opcaoId) FROM opcoes) AS qtdOpcoes, "
 			+ "(SELECT COUNT(apostilaId) FROM apostilas) AS qtdApostilas";
 
+	// TODO utilizado
 	private static final String SELECT_GERENTES = "SELECT DISTINCT ON (matgerente) e.matgerente, f.nome "
 			+ "FROM equipes e, funcionario f WHERE e.matgerente = f.matricula";
 
@@ -69,6 +73,7 @@ public class DashboardModelImpl implements DashboardModel {
 	// + "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
 	// + "AND f.matricula = e.matcolaborador AND e.matgerente = ?";
 
+	// TODO utilizado
 	private static final String SELECT_NOTA_MEDIA_POR_GERENTE = "SELECT "
 			+ "sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float)/ count(a.agendaId) as media "
 			+ "FROM provasRealizadas pr, agenda a, funcionario f, equipes e "
@@ -85,6 +90,7 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
 			+ "AND f.matricula = ? " + "GROUP BY pr.provarealizadaid";
 
+	// TODO utilizado
 	private static final String SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT = "SELECT f.matricula, f.nome,  "
 			+ "sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float)/ count(a.agendaId) as media "
 			+ "FROM provasRealizadas pr, agenda a, equipes e, funcionario f "
@@ -96,11 +102,13 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "FROM provasRealizadas pr, agenda a "
 			+ "WHERE a.agendaId = pr.agendaId AND a.matcolaborador = ?";
 
+	// TODO utilizado
 	private static final String SELECT_QUESTOES_POR_PROVA = "SELECT q.*, "
 			+ "t.temaId, t.titulo as titulotema, t.descricao as descricaotema "
 			+ "FROM questoes q, temas t "
 			+ "WHERE q.temaId = t.temaId AND q.provaId = ?";
 
+	// TODO utilizada
 	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT * FROM opcoes WHERE questaoId = ?";
 
 	private static final String UPDATE_AGENDA_FLAG = "UPDATE agenda SET flag = true WHERE agendaId = ?";
@@ -109,10 +117,20 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "(agendaId, provaId, tituloProva, dataHoraInicio, dataHoraFim, quantidadeQuestoes, quantidadeAcertos) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING provaRealizadaId";
 
+	// TODO utilizado
 	private static final String UPDATE_PROVA_REALIZADA = "UPDATE provasRealizadas SET dataHoraFinalizado = ?, quantidadeAcertos = ? "
 			+ "WHERE provaRealizadaId = ?";
 
-	@Override
+	/**
+	 * Método que consulta a lista de provas agendadas para o colaborador
+	 * visualizar
+	 * 
+	 * @param matricula
+	 * @return List<AgendaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<AgendaDTO> listarAgendas(Integer matricula)
 			throws ClassNotFoundException, SQLException {
 
@@ -292,7 +310,15 @@ public class DashboardModelImpl implements DashboardModel {
 		return mediaEquipe;
 	}
 
-	@Override
+	/**
+	 * Método que consulta dados gerais do sistema, como a quantidade de
+	 * funcionarios cadastrados, provas criadas e demais informações.
+	 * 
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public RelatorioDadosGeraisDTO consultarRelatorioDadosGerais()
 			throws ClassNotFoundException, SQLException {
 
@@ -335,7 +361,14 @@ public class DashboardModelImpl implements DashboardModel {
 		return relatorio;
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de gerentes (perfil de gerente)
+	 * 
+	 * @return List<NotaMediaEquipesDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<NotaMediaEquipesDTO> listarGerentes()
 			throws ClassNotFoundException, SQLException {
 
@@ -368,7 +401,15 @@ public class DashboardModelImpl implements DashboardModel {
 		return listaGerentes;
 	}
 
-	@Override
+	/**
+	 * Método que consulta a nota média da equipe
+	 * 
+	 * @param notaMediaEquipesDTO
+	 * @return NotaMediaEquipesDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public NotaMediaEquipesDTO consultarMediaEquipePorGerente(
 			NotaMediaEquipesDTO notaMediaEquipesDTO)
 			throws ClassNotFoundException, SQLException {
@@ -431,7 +472,16 @@ public class DashboardModelImpl implements DashboardModel {
 		return notaMediaColaboradorDTO;
 	}
 
-	@Override
+	/**
+	 * Método que consulta as questões da prova selecionada para a realização da
+	 * mesma
+	 * 
+	 * @param provaSelecionada
+	 * @return List<QuestaoDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<QuestaoDTO> listarQuestoesPorProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -471,7 +521,15 @@ public class DashboardModelImpl implements DashboardModel {
 		return listaQuestoes;
 	}
 
-	@Override
+	/**
+	 * Método que consulta as opções da questão selecionada
+	 * 
+	 * @param provaSelecionada
+	 * @return List<QuestaoDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<OpcaoDTO> listarOpcoesPorQuestao(QuestaoDTO questaoDTO)
 			throws ClassNotFoundException, SQLException {
 
@@ -550,7 +608,14 @@ public class DashboardModelImpl implements DashboardModel {
 		return provaRealizadaId;
 	}
 
-	@Override
+	/**
+	 * Método que processa o término da prova
+	 * 
+	 * @param provaRealizadaSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void entregarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -573,7 +638,15 @@ public class DashboardModelImpl implements DashboardModel {
 
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de notas médias dos colaboradores
+	 * 
+	 * @param matricula
+	 * @return List<NotaMediaColaboradorDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradores(
 			Integer matricula) throws ClassNotFoundException, SQLException {
 

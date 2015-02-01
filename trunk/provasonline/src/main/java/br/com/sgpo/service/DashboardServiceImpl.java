@@ -20,7 +20,16 @@ public class DashboardServiceImpl implements DashboardService {
 
 	private DashboardModel dashboardModel = new DashboardModelImpl();
 
-	@Override
+	/**
+	 * Método que consulta a lista de provas agendadas para o colaborador
+	 * visualizar
+	 * 
+	 * @param matricula
+	 * @return List<AgendaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<AgendaDTO> listarAgendas(Integer matricula)
 			throws ClassNotFoundException, SQLException {
 		return dashboardModel.listarAgendas(matricula);
@@ -44,13 +53,28 @@ public class DashboardServiceImpl implements DashboardService {
 		return dashboardModel.consultarMediaEquipe(matricula);
 	}
 
-	@Override
+	/**
+	 * Método que consulta dados gerais do sistema, como a quantidade de
+	 * funcionarios cadastrados, provas criadas e demais informações.
+	 * 
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public RelatorioDadosGeraisDTO consultarRelatorioDadosGerais()
 			throws ClassNotFoundException, SQLException {
 		return dashboardModel.consultarRelatorioDadosGerais();
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de notas médias das equipes
+	 * 
+	 * @return List<NotaMediaEquipesDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<NotaMediaEquipesDTO> listarNotaMediaEquipes()
 			throws ClassNotFoundException, SQLException {
 
@@ -65,7 +89,16 @@ public class DashboardServiceImpl implements DashboardService {
 		return listaMediaEquipes;
 	}
 
-	@Override
+	/**
+	 * Método que consulta as questões da prova selecionada para a realização da
+	 * mesma
+	 * 
+	 * @param provaSelecionada
+	 * @return List<QuestaoDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<QuestaoDTO> listarQuestoesPorProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -88,13 +121,28 @@ public class DashboardServiceImpl implements DashboardService {
 		return dashboardModel.realizarProva(provaRealizadaSelecionada);
 	}
 
-	@Override
+	/**
+	 * Método que processa o término da prova
+	 * 
+	 * @param provaRealizadaSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void entregarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
 			throws ClassNotFoundException, SQLException {
 		dashboardModel.entregarProva(provaRealizadaSelecionada);
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de notas médias dos colaboradores
+	 * 
+	 * @param matricula
+	 * @return List<NotaMediaColaboradorDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradores(
 			Integer matricula) throws ClassNotFoundException, SQLException {
 		return dashboardModel.listarNotaMediaColaboradores(matricula);
