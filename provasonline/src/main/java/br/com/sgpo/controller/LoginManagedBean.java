@@ -72,6 +72,12 @@ public class LoginManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que remove toda a sessão do usuário invalidando o mesmo, este é
+	 * método que serve para sair do sistema
+	 * 
+	 * @return String
+	 */
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) context.getExternalContext()
@@ -81,6 +87,12 @@ public class LoginManagedBean implements Serializable {
 		return "/pages/login";
 	}
 
+	/**
+	 * Método que altera a senha do usuário do sistema, recurso aplicado na tela
+	 * de "Esqueci a senha"
+	 * 
+	 * @param event
+	 */
 	public void alterarSenha(ActionEvent event) {
 
 		try {
@@ -109,6 +121,10 @@ public class LoginManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que limpa a sessão do usuário após trocar a senha na tela
+	 * "Esqueci a senha"
+	 */
 	public void limparSessao() {
 		usuario = new UsuarioDTO();
 		funcionario = new FuncionarioDTO();

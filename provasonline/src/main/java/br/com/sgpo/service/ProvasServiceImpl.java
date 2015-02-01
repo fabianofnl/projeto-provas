@@ -44,7 +44,14 @@ public class ProvasServiceImpl implements ProvasService {
 		return listaProvas;
 	}
 
-	@Override
+	/**
+	 * Método que cadastra a prova no sistema
+	 * 
+	 * @param provaDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void gravar(ProvaDTO provaDTO) throws ClassNotFoundException,
 			SQLException {
 		provasModel.gravar(provaDTO);
@@ -108,7 +115,14 @@ public class ProvasServiceImpl implements ProvasService {
 		return provasModel.getTotalRegistrosApostilas();
 	}
 
-	@Override
+	/**
+	 * Método responsável pelo upload dos arquivos (apostilas)
+	 * 
+	 * @param apostilaDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void gravarApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException {
 		provasModel.gravaApostila(apostilaDTO);
@@ -120,7 +134,15 @@ public class ProvasServiceImpl implements ProvasService {
 		return provasModel.buscarApostilaPorId(apostilaId);
 	}
 
-	@Override
+	/**
+	 * Método que remove a apostila
+	 * 
+	 * @param apostilaDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws IOException
+	 */
+	// TODO utilizado
 	public void removerApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException, IOException {
 
@@ -222,57 +244,124 @@ public class ProvasServiceImpl implements ProvasService {
 		return provasModel.existeProvaAgendadaMesaData(matricula, dataAgendada);
 	}
 
-	@Override
+	/**
+	 * Método que altera a prova
+	 * 
+	 * @param provaSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void alterarProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException {
 		provasModel.alterarProva(provaSelecionada);
 
 	}
 
-	@Override
+	/**
+	 * Método que cadastra um questão conforme prova selecionada
+	 * 
+	 * @param questaoNova
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void gravarQuestao(QuestaoDTO questaoNova)
 			throws ClassNotFoundException, SQLException {
 		provasModel.gravarQuestao(questaoNova);
 
 	}
 
-	@Override
+	/**
+	 * Método que edita a questão selecionada
+	 * 
+	 * @param questaoSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void alterarQuestao(QuestaoDTO questaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 		provasModel.alterarQuestao(questaoSelecionada);
 	}
 
-	@Override
+	/**
+	 * Método que cadastra uma opção a questão selecionada
+	 * 
+	 * @param opcaoSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void gravarOpcao(OpcaoDTO opcaoNova) throws ClassNotFoundException,
 			SQLException {
 		provasModel.gravarOpcao(opcaoNova);
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de opções (respostas) por questaoId
+	 * 
+	 * @param questaoId
+	 * @return List<OpcaoDAO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
 			throws ClassNotFoundException, SQLException {
 		return provasModel.listarOpcoesPorQuestaoId(questaoId);
 	}
 
-	@Override
+	/**
+	 * Método que define a opção correta (qual é a resposta correta)
+	 * 
+	 * @param opcaoSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void definirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 		provasModel.definirOpcao(opcaoSelecionada);
 	}
 
-	@Override
+	/**
+	 * Método que excluir uma opção (resposta)
+	 * 
+	 * @param opcaoSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void excluirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 		provasModel.excluirOpcao(opcaoSelecionada);
 	}
 
-	@Override
+	/**
+	 * Método que exclui uma questão, essa questão é excluida juntamento com as
+	 * opções
+	 * 
+	 * @param questaoSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public void excluirQuestao(QuestaoDTO questaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 		provasModel.excluirQuestao(questaoSelecionada);
 	}
 
-	@Override
+	/**
+	 * Método que exclui a prova, essa exclusão é em cascata. Remove a prova, as
+	 * apostilas associadas, as questões e as opções
+	 * 
+	 * @param provaSelecionada
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws IOException
+	 */
+	// TODO utilizado
 	public void excluirProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException, IOException {
 

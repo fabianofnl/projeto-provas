@@ -21,10 +21,12 @@ public class LoginModelImpl implements LoginModel {
 
 	private static final Logger LOG = Logger.getLogger(LoginModelImpl.class);
 
+	// TODO utilizado
 	private static final String SELECT_FUNCIONARIO_LOGIN = "SELECT * FROM perfil p, usuario u, funcionario f "
 			+ "WHERE f.status != 'Inativo' AND p.id = u.perfilId AND u.usuario = f.usuario AND "
 			+ "u.usuario = ? AND u.senha = MD5(?)";
 
+	// TODO utilizado
 	private static final String UPDATE_SENHA_USUARIO = "UPDATE usuario SET senha = MD5(?) "
 			+ "FROM funcionario "
 			+ "WHERE usuario.usuario = ? AND funcionario.email = ? "
@@ -34,13 +36,15 @@ public class LoginModelImpl implements LoginModel {
 	}
 
 	/**
-	 * Método realiza conexão com a base de dados e retorna objeto
-	 * <b>usuario</b> para realizar a autenticação.
+	 * Método retorna objeto <b>funcionario</b> para realizar a autenticação.
 	 * 
-	 * @throws SQLException
+	 * @param nomeUsuario
+	 * @param senha
+	 * @return FuncionarioDTO
 	 * @throws ClassNotFoundException
+	 * @throws SQLException
 	 */
-	@Override
+	// TODO utilizado
 	public FuncionarioDTO logar(String nomeUsuario, String senha)
 			throws ClassNotFoundException, SQLException {
 
@@ -80,7 +84,15 @@ public class LoginModelImpl implements LoginModel {
 		return funcionario;
 	}
 
-	@Override
+	/**
+	 * Método que altera a senha do usuário do sistema
+	 * 
+	 * @param funcionario
+	 * @return String
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public String alterarSenha(FuncionarioDTO funcionario)
 			throws ClassNotFoundException, SQLException {
 

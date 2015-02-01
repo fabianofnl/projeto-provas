@@ -182,6 +182,9 @@ public class EquipeManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que limpa dados da sessão após a criação da equipe
+	 */
 	private void limparSessao() {
 		colaboradorSelecionado = new FuncionarioDTO();
 		gerenteSelecionado = new FuncionarioDTO();

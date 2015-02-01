@@ -17,11 +17,24 @@ public interface LoginService {
 	 * 
 	 * @param nomeUsuario
 	 * @param senha
-	 * @return usuario
+	 * @return FuncionarioDTO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
 	 */
+	// TODO utilizado
 	public FuncionarioDTO logar(String nomeUsuario, String senha)
 			throws ClassNotFoundException, SQLException;
 
-	public String alterarSenha(FuncionarioDTO funcionario)throws ClassNotFoundException, SQLException;
+	/**
+	 * Método que altera a senha do usuário do sistema
+	 * 
+	 * @param funcionario
+	 * @return String
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
+	public String alterarSenha(FuncionarioDTO funcionario)
+			throws ClassNotFoundException, SQLException;
 
 }

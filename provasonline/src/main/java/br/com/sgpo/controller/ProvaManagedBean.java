@@ -65,6 +65,11 @@ public class ProvaManagedBean implements Serializable {
 	private StreamedContent fileDownload;
 	private UploadedFile fileUpload;
 
+	/**
+	 * Método que consulta os dados da prova para popular um datatable
+	 * 
+	 * @param event
+	 */
 	public void carregarTabela(ActionEvent event) {
 
 		try {
@@ -86,6 +91,12 @@ public class ProvaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que consulta a lista de temas para utilização do cadastro de
+	 * provas
+	 * 
+	 * @param event
+	 */
 	public void carregarTemas(ActionEvent event) {
 
 		try {
@@ -102,6 +113,9 @@ public class ProvaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que consulta a lista de opções (respostas) por questaoId
+	 */
 	public void carregarOpcoes() {
 
 		try {
@@ -116,6 +130,11 @@ public class ProvaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que cadastra a prova no sistema
+	 * 
+	 * @param event
+	 */
 	public void cadastrarProva(ActionEvent event) {
 
 		try {
@@ -146,6 +165,11 @@ public class ProvaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que permite a edição da prova
+	 * 
+	 * @param event
+	 */
 	public void editarProva(ActionEvent event) {
 
 		try {
@@ -175,6 +199,12 @@ public class ProvaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que exclui a prova, essa exclusão é em cascata. Remove a prova, as
+	 * apostilas associadas, as questões e as opções
+	 * 
+	 * @param event
+	 */
 	public void excluirProva(ActionEvent event) {
 		try {
 			ProvasService provasService = new ProvasServiceImpl();
@@ -208,6 +238,11 @@ public class ProvaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que cadastra uma questão a prova
+	 * 
+	 * @param event
+	 */
 	public void cadastrarQuestao(ActionEvent event) {
 
 		try {
@@ -239,6 +274,11 @@ public class ProvaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que edita a questão
+	 * 
+	 * @param event
+	 */
 	public void editarQuestao(ActionEvent event) {
 
 		try {
@@ -268,6 +308,12 @@ public class ProvaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que exclui uma questão, essa questão é excluida juntamento com as
+	 * opções
+	 * 
+	 * @param event
+	 */
 	public void excluirQuestao(ActionEvent event) {
 
 		try {
@@ -297,6 +343,11 @@ public class ProvaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que cadastra uma opção a questão selecionada
+	 * 
+	 * @param event
+	 */
 	public void cadastrarOpcao(ActionEvent event) {
 
 		try {
@@ -313,6 +364,9 @@ public class ProvaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que define a opção correta (qual é a resposta correta)
+	 */
 	public void definirOpcao() {
 
 		try {
@@ -327,6 +381,11 @@ public class ProvaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que excluir uma opção (resposta)
+	 * 
+	 * @param event
+	 */
 	public void excluirOpcao(ActionEvent event) {
 
 		try {
@@ -341,6 +400,11 @@ public class ProvaManagedBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Método responsável pelo upload dos arquivos (apostilas)
+	 * 
+	 * @param event
+	 */
 	public void apostilaUpload(ActionEvent event) {
 
 		try {
@@ -416,6 +480,11 @@ public class ProvaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que excluir uma apostila selecionada
+	 * 
+	 * @param event
+	 */
 	public void excluirApostila(ActionEvent event) {
 
 		try {
@@ -450,6 +519,10 @@ public class ProvaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que limpa sessão após cadastrar, edita, excluir uma prova,
+	 * questão, apostila
+	 */
 	private void limparSessao() {
 		provaNova = new ProvaDTO();
 		provaSelecionada = new ProvaDTO();
@@ -462,6 +535,15 @@ public class ProvaManagedBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que gera um código hash para identificação das apostila anexadas
+	 * no sistema ** Forma mais pratica para o momento, pois o correto seria
+	 * outra forma, como um hash de bytes
+	 * 
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
+	 */
 	private String gerarHash() throws NoSuchAlgorithmException,
 			UnsupportedEncodingException {
 		String uuid = UUID.randomUUID().toString();
