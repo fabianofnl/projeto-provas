@@ -90,6 +90,7 @@ public class DashboardModelImpl implements DashboardModel {
 	// + "FROM equipes e, funcionario f "
 	// + "WHERE f.matricula = e.matcolaborador AND matgerente = ?";
 
+	// TODO utilizado
 	private static final String SELECT_PROVAS_POR_MATRICULA = "SELECT pr.*, "
 			+ "sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float) as media "
 			+ "FROM funcionario f, agenda a, provasRealizadas pr "
@@ -226,7 +227,15 @@ public class DashboardModelImpl implements DashboardModel {
 		return listaApostilas;
 	}
 
-	@Override
+	/**
+	 * Método que consulta a lista de provas realizadas pelo colaborador
+	 * 
+	 * @param matricula
+	 * @return List<ProvaRealizadaDTO>
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	// TODO utilizado
 	public List<ProvaRealizadaDTO> listarProvasRealizadasPorMatricula(
 			Integer matricula) throws ClassNotFoundException, SQLException {
 		LOG.info("Chamando método listarApostilas");
