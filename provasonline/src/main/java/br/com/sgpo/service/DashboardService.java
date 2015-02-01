@@ -12,6 +12,12 @@ import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
 
+/**
+ * Interface que possui os métodos que gerenciam os Dashboards
+ * 
+ * @author Roseli
+ * 
+ */
 public interface DashboardService {
 
 	/**

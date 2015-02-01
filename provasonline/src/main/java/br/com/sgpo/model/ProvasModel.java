@@ -14,6 +14,12 @@ import br.com.sgpo.dto.ProvaRealizadaDTO;
 import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
 
+/**
+ * Interface que possui os métodos de gerenciamento das provas
+ * 
+ * @author Roseli
+ * 
+ */
 public interface ProvasModel {
 
 	public List<ProvaDTO> listarProvas(Integer offSet, Integer recordPerPage)

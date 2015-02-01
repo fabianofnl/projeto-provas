@@ -19,6 +19,8 @@ import br.com.sgpo.service.FuncionarioService;
 import br.com.sgpo.service.FuncionarioServiceImpl;
 
 /**
+ * Classe responsável pelo controle e associação das equipes no sistema
+ * 
  * @author Roseli
  * 
  */

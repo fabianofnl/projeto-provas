@@ -2,6 +2,12 @@ package br.com.sgpo.dto;
 
 import java.io.Serializable;
 
+/**
+ * Classe POJO/BEAN/DTO que representa o Funcionario do sistema
+ * 
+ * @author Roseli
+ * 
+ */
 public class FuncionarioDTO extends UsuarioDTO implements Serializable {
 
 	private static final long serialVersionUID = 3576824392171045517L;

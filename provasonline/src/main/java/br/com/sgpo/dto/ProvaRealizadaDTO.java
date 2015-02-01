@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * Classe POJO/BEAN/DTO que representa a ProvaRealizada do sistema
+ * 
  * @author Roseli
  * 
  */

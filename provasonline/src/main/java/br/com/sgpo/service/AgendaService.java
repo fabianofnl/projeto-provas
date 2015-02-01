@@ -6,6 +6,8 @@ import java.util.List;
 import br.com.sgpo.dto.AgendaDTO;
 
 /**
+ * Interface que possui os métodos que gerenciam a Agenda
+ * 
  * @author Roseli
  * 
  */

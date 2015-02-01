@@ -10,6 +10,8 @@ import br.com.sgpo.model.FuncionarioModel;
 import br.com.sgpo.model.FuncionarioModelImpl;
 
 /**
+ * Classe que implementa os métodos de gerenciamento de Funcionários
+ * 
  * @author Roseli
  * 
  */

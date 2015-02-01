@@ -15,6 +15,8 @@ import br.com.sgpo.dto.PerfilDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
 /**
+ * Classe que implementa os métodos de gerenciamento dos funcionários
+ * 
  * @author Roseli
  * 
  */

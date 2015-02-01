@@ -8,6 +8,8 @@ import br.com.sgpo.model.TemasModel;
 import br.com.sgpo.model.TemasModelImpl;
 
 /**
+ * Classe que implementa os métodos de gerenciamento dos Temas
+ * 
  * @author Roseli
  * 
  */

@@ -22,6 +22,12 @@ import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.TemaDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
+/**
+ * Classe que implementa os métodos de gerenciamento das provas
+ * 
+ * @author Roseli
+ * 
+ */
 public class ProvasModelImpl implements ProvasModel {
 
 	private static final Logger LOG = Logger.getLogger(ProvasModelImpl.class);

@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Classe POJO/BEAN/DTO que representa a Agenda do sistema
+ * 
  * @author Roseli
  * 
  */

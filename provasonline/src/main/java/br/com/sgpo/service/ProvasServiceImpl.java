@@ -16,6 +16,12 @@ import br.com.sgpo.dto.TemaDTO;
 import br.com.sgpo.model.ProvasModel;
 import br.com.sgpo.model.ProvasModelImpl;
 
+/**
+ * Classe que implementa os métodos de gerenciamento de provas do sistema
+ * 
+ * @author Roseli
+ * 
+ */
 public class ProvasServiceImpl implements ProvasService {
 
 	private ProvasModel provasModel = new ProvasModelImpl();

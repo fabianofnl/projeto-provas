@@ -13,6 +13,8 @@ import br.com.sgpo.dto.TemaDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
 /**
+ * Classe que implementa os métodos de gerenciamento dos Temas
+ * 
  * @author Roseli
  * 
  */

@@ -22,6 +22,12 @@ import br.com.sgpo.dto.QuestaoDTO;
 import br.com.sgpo.dto.RelatorioDadosGeraisDTO;
 import br.com.sgpo.util.ConexaoBaseDados;
 
+/**
+ * Classe com a implementação dos métodos que gerenciam os Dahsboard
+ * 
+ * @author Roseli
+ * 
+ */
 public class DashboardModelImpl implements DashboardModel {
 
 	private static final Logger LOG = Logger

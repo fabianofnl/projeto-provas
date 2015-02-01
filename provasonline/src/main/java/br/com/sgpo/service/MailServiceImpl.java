@@ -17,6 +17,12 @@ import br.com.sgpo.constants.SGPOConstants.Agenda;
 import br.com.sgpo.dto.FuncionarioDTO;
 import br.com.sgpo.dto.ProvaDTO;
 
+/**
+ * Classe que implementa Thread para disparo de emails do sistema
+ * 
+ * @author Roseli
+ * 
+ */
 public class MailServiceImpl extends Thread {
 
 	private static final Logger LOG = Logger.getLogger(MailServiceImpl.class);

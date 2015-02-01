@@ -6,6 +6,8 @@ import java.util.List;
 import br.com.sgpo.dto.TemaDTO;
 
 /**
+ * Interface que possui os método que gerenciam os Temas
+ * 
  * @author Roseli
  * 
  */

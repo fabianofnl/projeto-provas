@@ -35,6 +35,8 @@ import br.com.sgpo.service.TemasService;
 import br.com.sgpo.service.TemasServiceImpl;
 
 /**
+ * Classe responsável pelo controle e gerenciamento das provas do sistema
+ * 
  * @author Roseli
  * 
  */

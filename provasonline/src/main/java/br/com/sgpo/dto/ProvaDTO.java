@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Classe POJO/BEAN/DTO que representa a Prova do sistema
+ * 
  * @author Roseli
  * 
  */

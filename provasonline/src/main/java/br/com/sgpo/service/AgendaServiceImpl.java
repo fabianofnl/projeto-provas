@@ -9,6 +9,8 @@ import br.com.sgpo.model.AgendaModel;
 import br.com.sgpo.model.AgendaModelImpl;
 
 /**
+ * Classe que implementa os método de gerenciamento da Agenda
+ * 
  * @author Roseli
  * 
  */

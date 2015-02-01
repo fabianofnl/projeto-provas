@@ -3,6 +3,8 @@ package br.com.sgpo.dto;
 import java.io.Serializable;
 
 /**
+ * Classe POJO/BEAN/DTO que representa o RelatorioDadosGerais do sistema
+ * 
  * @author Roseli
  * 
  */

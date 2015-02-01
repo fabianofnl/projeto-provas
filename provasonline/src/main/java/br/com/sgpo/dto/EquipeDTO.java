@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
+ * Classe POJO/BEAN/DTO que representa a Equipe do sistema
+ * 
  * @author Roseli
- *
+ * 
  */
 public class EquipeDTO implements Serializable {
 
