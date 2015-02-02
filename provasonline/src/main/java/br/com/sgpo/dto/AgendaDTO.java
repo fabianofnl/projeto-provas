@@ -21,7 +21,6 @@ public class AgendaDTO implements Serializable {
 	private ProvaDTO prova;
 	private Date provaAgendada;
 	private Boolean flag;
-	private Integer vencido;
 	private Integer hoje;
 	private List<ApostilaDTO> listaApostilas = new ArrayList<ApostilaDTO>();
 
@@ -82,14 +81,6 @@ public class AgendaDTO implements Serializable {
 
 	public void setFlag(Boolean flag) {
 		this.flag = flag;
-	}
-
-	public Integer getVencido() {
-		return vencido;
-	}
-
-	public void setVencido(Integer vencido) {
-		this.vencido = vencido;
 	}
 
 	public Integer getHoje() {

@@ -48,9 +48,6 @@ public interface FuncionarioModel {
 	public void gravar(FuncionarioDTO funcionario) throws SQLException,
 			ClassNotFoundException;
 
-	public Integer getTotalRegistrosFuncionarios() throws SQLException,
-			ClassNotFoundException;
-
 	/**
 	 * Método que consulta dados do funcionario por matrícula
 	 * 
@@ -130,9 +127,6 @@ public interface FuncionarioModel {
 	 */
 	// TODO utilizado
 	public List<EquipeDTO> listarEquipes() throws SQLException,
-			ClassNotFoundException;
-
-	public Integer getTotalRegistrosEquipes() throws SQLException,
 			ClassNotFoundException;
 
 	/**

@@ -22,15 +22,8 @@ public class TemasModelImpl implements TemasModel {
 
 	private static final Logger LOG = Logger.getLogger(TemasModelImpl.class);
 
-	private static final String SELECT_TEMAS_PAGINADO = "SELECT *, (SELECT COUNT(q.questaoId) FROM questoes q "
-			+ "WHERE t.temaId = q.temaId) as quantidade FROM temas t ORDER BY t.titulo LIMIT ? OFFSET ?";
-
-	private static final String SELECT_TOTAL_REGISTROS_TEMAS = "SELECT COUNT(titulo) AS total FROM temas";
-
 	// TODO utilizado
 	private static final String INSERT_TEMA = "INSERT INTO temas (titulo, descricao) VALUES (?, ?)";
-
-	private static final String SELECT_TEMA_POR_ID = "SELECT * FROM temas WHERE temaId = ?";
 
 	// TODO utilizado
 	private static final String UPDATE_TEMA = "UPDATE temas SET titulo = ?, descricao = ? WHERE temaId = ?";
@@ -42,43 +35,6 @@ public class TemasModelImpl implements TemasModel {
 	private static final String SELECT_TODOS_TEMAS = "SELECT t.*, "
 			+ "(SELECT COUNT(questaoId) FROM questoes q WHERE q.temaId = t.temaId) AS qtdQuestoes "
 			+ "FROM temas t ORDER BY t.titulo";
-
-	@Override
-	public List<TemaDTO> listarTemas(Integer offSet, Integer recordPerPage)
-			throws ClassNotFoundException, SQLException {
-
-		LOG.info("Chamando método listarTemas paginados");
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		List<TemaDTO> listaTemas = new ArrayList<TemaDTO>();
-		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_TEMAS_PAGINADO);
-		pstmt.setInt(1, recordPerPage);
-		pstmt.setInt(2, offSet);
-		rs = pstmt.executeQuery();
-		TemaDTO temas = null;
-
-		while (rs.next()) {
-			temas = new TemaDTO();
-			temas.setTemaId(rs.getInt("temaId"));
-			temas.setTitulo(rs.getString("titulo"));
-			temas.setDescricao(rs.getString("descricao"));
-			temas.setQuantidadeQuestoes(rs.getInt("quantidade"));
-			listaTemas.add(temas);
-		}
-
-		if (rs != null)
-			rs.close();
-		if (pstmt != null)
-			pstmt.close();
-		if (conn != null)
-			conn.close();
-
-		return listaTemas;
-	}
 
 	/**
 	 * Método que cadastra os tema no sistema
@@ -105,66 +61,6 @@ public class TemasModelImpl implements TemasModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
-	}
-
-	@Override
-	public Integer getTotalRegistrosTemas() throws ClassNotFoundException,
-			SQLException {
-
-		LOG.info("Chamando método get Total Temas");
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Integer totalRegistros = 0;
-
-		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_TOTAL_REGISTROS_TEMAS);
-		rs = pstmt.executeQuery();
-
-		if (rs.next()) {
-			totalRegistros = rs.getInt("total");
-		}
-
-		if (rs != null)
-			rs.close();
-		if (pstmt != null)
-			pstmt.close();
-		if (conn != null)
-			conn.close();
-
-		return totalRegistros;
-	}
-
-	@Override
-	public TemaDTO buscarTemaporId(Integer temaId)
-			throws ClassNotFoundException, SQLException {
-
-		LOG.info("Chamando método buscar Tema por id");
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		TemaDTO tema = null;
-
-		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_TEMA_POR_ID);
-		pstmt.setInt(1, temaId);
-		rs = pstmt.executeQuery();
-
-		if (rs.next()) {
-			tema = new TemaDTO();
-			tema.setTemaId(rs.getInt("temaId"));
-			tema.setTitulo(rs.getString("titulo"));
-			tema.setDescricao(rs.getString("descricao"));
-		}
-
-		if (rs != null)
-			rs.close();
-		if (pstmt != null)
-			pstmt.close();
-		if (conn != null)
-			conn.close();
-
-		return tema;
 	}
 
 	/**
