@@ -58,12 +58,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		funcionarioDao.gravar(funcionario);
 	}
 
-	@Override
-	public Integer getTotalRegistrosFuncionarios() throws SQLException,
-			ClassNotFoundException {
-		return funcionarioDao.getTotalRegistrosFuncionarios();
-	}
-
 	/**
 	 * Método que consulta dados do funcionario por matrícula
 	 * 
@@ -162,12 +156,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 							.getMatricula()));
 		}
 		return listaEquipes;
-	}
-
-	@Override
-	public Integer getTotalRegistrosEquipes() throws SQLException,
-			ClassNotFoundException {
-		return funcionarioDao.getTotalRegistrosEquipes();
 	}
 
 	/**

@@ -17,12 +17,6 @@ public class TemasServiceImpl implements TemasService {
 
 	TemasModel temasModel = new TemasModelImpl();
 
-	@Override
-	public List<TemaDTO> listarTemas(Integer offSet, Integer recordPerPage)
-			throws ClassNotFoundException, SQLException {
-		return temasModel.listarTemas(offSet, recordPerPage);
-	}
-
 	/**
 	 * Método que cadastra os tema no sistema
 	 * 
@@ -34,18 +28,6 @@ public class TemasServiceImpl implements TemasService {
 	public void gravar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 		temasModel.gravar(temasDTO);
-	}
-
-	@Override
-	public Integer getTotalRegistrosTemas() throws ClassNotFoundException,
-			SQLException {
-		return temasModel.getTotalRegistrosTemas();
-	}
-
-	@Override
-	public TemaDTO buscarTemaPorId(Integer temaId)
-			throws ClassNotFoundException, SQLException {
-		return temasModel.buscarTemaporId(temaId);
 	}
 
 	/**
