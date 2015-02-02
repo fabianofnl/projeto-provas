@@ -40,8 +40,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	private static final String INSERT_FUNCIONARIO = "INSERT INTO funcionario (matricula, nome, funcao, email, usuario) "
 			+ "VALUES (?, ?, ?, ?, ?)";
 
-	private static final String SELECT_TOTAL_REGISTROS_FUNCIONARIOS = "SELECT COUNT(matricula) AS total FROM funcionario";
-
 	// TODO utilizado
 	private static final String SELECT_FUNCIONARIO_POR_MATRICULA = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND f.matricula = ?";
@@ -73,8 +71,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			+ "FROM funcionario f, usuario u, perfil p, equipes e "
 			+ "WHERE f.usuario = u.usuario AND u.perfilID = p.id AND f.matricula = e.matgerente "
 			+ "ORDER BY f.nome";
-
-	private static final String SELECT_TOTAL_REGISTROS_EQUIPES = "SELECT COUNT(DISTINCT(matgerente)) AS total FROM equipes";
 
 	// TODO utilizado
 	private static final String SELECT_COLABORADORES_POR_GERENTE = "SELECT * FROM funcionario f, usuario u, perfil p, equipes e "
@@ -217,34 +213,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
-	}
-
-	@Override
-	public Integer getTotalRegistrosFuncionarios() throws SQLException,
-			ClassNotFoundException {
-
-		LOG.info("Chamando método get Total Funcionarios");
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Integer totalRegistros = 0;
-
-		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_TOTAL_REGISTROS_FUNCIONARIOS);
-		rs = pstmt.executeQuery();
-
-		if (rs.next()) {
-			totalRegistros = rs.getInt("total");
-		}
-
-		if (rs != null)
-			rs.close();
-		if (pstmt != null)
-			pstmt.close();
-		if (conn != null)
-			conn.close();
-
-		return totalRegistros;
 	}
 
 	/**
@@ -548,34 +516,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 			conn.close();
 
 		return listaEquipes;
-	}
-
-	@Override
-	public Integer getTotalRegistrosEquipes() throws SQLException,
-			ClassNotFoundException {
-
-		LOG.info("Chamando método get Total Equipes");
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Integer totalRegistros = 0;
-
-		conn = ConexaoBaseDados.getConexaoInstance();
-		pstmt = conn.prepareStatement(SELECT_TOTAL_REGISTROS_EQUIPES);
-		rs = pstmt.executeQuery();
-
-		if (rs.next()) {
-			totalRegistros = rs.getInt("total");
-		}
-
-		if (rs != null)
-			rs.close();
-		if (pstmt != null)
-			pstmt.close();
-		if (conn != null)
-			conn.close();
-
-		return totalRegistros;
 	}
 
 	/**
