@@ -33,13 +33,11 @@ public class DashboardModelImpl implements DashboardModel {
 	private static final Logger LOG = Logger
 			.getLogger(DashboardModelImpl.class);
 
-	// TODO utilizado
 	private static final String SELECT_AGENDAS_POR_MATRICULA = "SELECT p.*, a.*, "
 			+ "(SELECT COUNT(a1.agendaId) FROM agenda a1 WHERE a1.dataProva = CURRENT_DATE AND a1.agendaId = a.agendaId) as hoje "
 			+ "FROM agenda a, funcionario f, provas p WHERE f.matricula = a.matcolaborador AND "
 			+ "a.provaId = p.provaId AND f.matricula = ? AND a.dataProva >= CURRENT_DATE AND a.flag = false";
 
-	// TODO utilizado
 	private static final String SELECT_RELATORIO_DADOS_GERAIS = "SELECT "
 			+ "(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Ativo') AS qtdFuncionariosAtivos, "
 			+ "(SELECT COUNT(matricula) FROM funcionario WHERE status = 'Inativo') AS qtdFuncionariosInativos, "
@@ -53,48 +51,39 @@ public class DashboardModelImpl implements DashboardModel {
 			+ "(SELECT COUNT(opcaoId) FROM opcoes) AS qtdOpcoes, "
 			+ "(SELECT COUNT(apostilaId) FROM apostilas) AS qtdApostilas";
 
-	// TODO utilizado
 	private static final String SELECT_GERENTES = "SELECT DISTINCT ON (matgerente) e.matgerente, f.nome "
 			+ "FROM equipes e, funcionario f WHERE e.matgerente = f.matricula";
 
-	// TODO utilizado
 	private static final String SELECT_NOTA_MEDIA_POR_GERENTE = "SELECT "
 			+ "sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float)/ count(a.agendaId) as media "
 			+ "FROM provasRealizadas pr, agenda a, funcionario f, equipes e "
 			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId AND f.matricula = e.matcolaborador AND e.matgerente = ?";
 
-	// TODO utilizado
 	private static final String SELECT_PROVAS_POR_MATRICULA = "SELECT pr.*, "
 			+ "sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float) as media "
 			+ "FROM funcionario f, agenda a, provasRealizadas pr "
 			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId "
 			+ "AND f.matricula = ? " + "GROUP BY pr.provarealizadaid";
 
-	// TODO utilizado
 	private static final String SELECT_NOTA_MEDIA_COLABORADOR_POR_GERENTE_MAT = "SELECT f.matricula, f.nome,  "
 			+ "sum(((pr.quantidadeAcertos :: float / pr.quantidadeQuestoes :: float)*100):: float)/ count(a.agendaId) as media "
 			+ "FROM provasRealizadas pr, agenda a, equipes e, funcionario f "
 			+ "WHERE f.matricula = a.matcolaborador AND a.agendaId = pr.agendaId AND f.matricula = e.matcolaborador AND e.matgerente = ? "
 			+ "GROUP BY f.matricula, f.nome";
 
-	// TODO utilizado
 	private static final String SELECT_QUESTOES_POR_PROVA = "SELECT q.*, "
 			+ "t.temaId, t.titulo as titulotema, t.descricao as descricaotema "
 			+ "FROM questoes q, temas t "
 			+ "WHERE q.temaId = t.temaId AND q.provaId = ?";
 
-	// TODO utilizada
 	private static final String SELECT_OPCOES_POR_QUESTAO = "SELECT * FROM opcoes WHERE questaoId = ?";
 
-	// TODO utilizado
 	private static final String UPDATE_AGENDA_FLAG = "UPDATE agenda SET flag = true WHERE agendaId = ?";
 
-	// TODO utilizado
 	private static final String INSERT_DETALHES_PROVA_REALIZADA = "INSERT INTO provasRealizadas "
 			+ "(agendaId, provaId, tituloProva, dataHoraInicio, dataHoraFim, quantidadeQuestoes, quantidadeAcertos) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING provaRealizadaId";
 
-	// TODO utilizado
 	private static final String UPDATE_PROVA_REALIZADA = "UPDATE provasRealizadas SET dataHoraFinalizado = ?, quantidadeAcertos = ? "
 			+ "WHERE provaRealizadaId = ?";
 
@@ -107,7 +96,6 @@ public class DashboardModelImpl implements DashboardModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<AgendaDTO> listarAgendas(Integer matricula)
 			throws ClassNotFoundException, SQLException {
 
@@ -168,7 +156,6 @@ public class DashboardModelImpl implements DashboardModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<ProvaRealizadaDTO> listarProvasRealizadasPorMatricula(
 			Integer matricula) throws ClassNotFoundException, SQLException {
 		LOG.info("Chamando método listarApostilas");
@@ -233,7 +220,6 @@ public class DashboardModelImpl implements DashboardModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public RelatorioDadosGeraisDTO consultarRelatorioDadosGerais()
 			throws ClassNotFoundException, SQLException {
 
@@ -283,7 +269,6 @@ public class DashboardModelImpl implements DashboardModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<NotaMediaEquipesDTO> listarGerentes()
 			throws ClassNotFoundException, SQLException {
 
@@ -324,7 +309,6 @@ public class DashboardModelImpl implements DashboardModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public NotaMediaEquipesDTO consultarMediaEquipePorGerente(
 			NotaMediaEquipesDTO notaMediaEquipesDTO)
 			throws ClassNotFoundException, SQLException {
@@ -363,7 +347,6 @@ public class DashboardModelImpl implements DashboardModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<QuestaoDTO> listarQuestoesPorProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -411,7 +394,6 @@ public class DashboardModelImpl implements DashboardModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<OpcaoDTO> listarOpcoesPorQuestao(QuestaoDTO questaoDTO)
 			throws ClassNotFoundException, SQLException {
 
@@ -457,7 +439,6 @@ public class DashboardModelImpl implements DashboardModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public Integer realizarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -506,7 +487,6 @@ public class DashboardModelImpl implements DashboardModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void entregarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -537,7 +517,6 @@ public class DashboardModelImpl implements DashboardModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradores(
 			Integer matricula) throws ClassNotFoundException, SQLException {
 

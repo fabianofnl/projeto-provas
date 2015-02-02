@@ -20,7 +20,6 @@ public interface TemasModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException;
 
@@ -31,7 +30,6 @@ public interface TemasModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void alterar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException;
 
@@ -42,7 +40,6 @@ public interface TemasModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void remover(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException;
 
@@ -53,7 +50,6 @@ public interface TemasModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<TemaDTO> listarTemas() throws ClassNotFoundException,
 			SQLException;
 

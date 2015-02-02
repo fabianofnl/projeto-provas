@@ -24,7 +24,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravar(ProvaDTO provaDTO) throws ClassNotFoundException,
 			SQLException;
 
@@ -36,7 +35,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public ProvaDTO buscarProvaPorId(Integer provaId)
 			throws ClassNotFoundException, SQLException;
 
@@ -47,7 +45,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravarApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException;
 
@@ -59,7 +56,6 @@ public interface ProvasService {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	// TODO utilizado
 	public void removerApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException, IOException;
 
@@ -70,7 +66,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<ProvaDTO> listarProvas() throws ClassNotFoundException,
 			SQLException;
 
@@ -81,7 +76,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void alterarProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException;
 
@@ -92,7 +86,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravarQuestao(QuestaoDTO questaoNova)
 			throws ClassNotFoundException, SQLException;
 
@@ -103,7 +96,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void alterarQuestao(QuestaoDTO questaoSelecionada)
 			throws ClassNotFoundException, SQLException;
 
@@ -114,7 +106,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravarOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException;
 
@@ -126,7 +117,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
 			throws ClassNotFoundException, SQLException;
 
@@ -137,7 +127,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void definirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException;
 
@@ -148,7 +137,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void excluirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException;
 
@@ -160,7 +148,6 @@ public interface ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void excluirQuestao(QuestaoDTO questaoSelecionada)
 			throws ClassNotFoundException, SQLException;
 
@@ -173,8 +160,6 @@ public interface ProvasService {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	// TODO utilizado
 	public void excluirProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException, IOException;
-
 }

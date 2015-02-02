@@ -22,7 +22,6 @@ public interface LoginModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public FuncionarioDTO logar(String nomeUsuario, String senha)
 			throws ClassNotFoundException, SQLException;
 
@@ -34,7 +33,6 @@ public interface LoginModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public String alterarSenha(FuncionarioDTO funcionario)
 			throws ClassNotFoundException, SQLException;
 

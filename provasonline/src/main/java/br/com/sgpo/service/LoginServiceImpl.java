@@ -29,7 +29,6 @@ public class LoginServiceImpl implements LoginService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public FuncionarioDTO logar(String nomeUsuario, String senha)
 			throws ClassNotFoundException, SQLException {
 		return loginDao.logar(nomeUsuario, senha);
@@ -43,10 +42,8 @@ public class LoginServiceImpl implements LoginService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public String alterarSenha(FuncionarioDTO funcionario)
 			throws ClassNotFoundException, SQLException {
 		return loginDao.alterarSenha(funcionario);
 	}
-
 }

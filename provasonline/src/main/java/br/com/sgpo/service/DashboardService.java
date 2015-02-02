@@ -28,7 +28,6 @@ public interface DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<AgendaDTO> listarAgendas(Integer matricula)
 			throws ClassNotFoundException, SQLException;
 
@@ -40,7 +39,6 @@ public interface DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<ProvaRealizadaDTO> listarProvasRealizadasPorMatricula(
 			Integer matricula) throws ClassNotFoundException, SQLException;
 
@@ -52,7 +50,6 @@ public interface DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public RelatorioDadosGeraisDTO consultarRelatorioDadosGerais()
 			throws ClassNotFoundException, SQLException;
 
@@ -63,7 +60,6 @@ public interface DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<NotaMediaEquipesDTO> listarNotaMediaEquipes()
 			throws ClassNotFoundException, SQLException;
 
@@ -76,7 +72,6 @@ public interface DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<QuestaoDTO> listarQuestoesPorProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException;
 
@@ -89,7 +84,6 @@ public interface DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public Integer realizarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
 			throws ClassNotFoundException, SQLException;
 
@@ -100,7 +94,6 @@ public interface DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void entregarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
 			throws ClassNotFoundException, SQLException;
 
@@ -112,8 +105,6 @@ public interface DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradores(
 			Integer matricula) throws ClassNotFoundException, SQLException;
-
 }

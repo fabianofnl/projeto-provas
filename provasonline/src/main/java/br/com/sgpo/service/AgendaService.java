@@ -20,7 +20,6 @@ public interface AgendaService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<AgendaDTO> listarAgendas() throws ClassNotFoundException,
 			SQLException;
 
@@ -31,7 +30,6 @@ public interface AgendaService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<AgendaDTO> listarAgendasNaoRealizadas()
 			throws ClassNotFoundException, SQLException;
 
@@ -43,7 +41,6 @@ public interface AgendaService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void agendarProva(AgendaDTO agendaNova, String contextPath)
 			throws ClassNotFoundException, SQLException;
 
@@ -55,7 +52,6 @@ public interface AgendaService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void excluirAgenda(AgendaDTO agendaSelecionada, String contextPath)
 			throws ClassNotFoundException, SQLException;
 }
