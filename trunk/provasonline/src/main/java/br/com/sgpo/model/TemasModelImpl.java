@@ -22,16 +22,12 @@ public class TemasModelImpl implements TemasModel {
 
 	private static final Logger LOG = Logger.getLogger(TemasModelImpl.class);
 
-	// TODO utilizado
 	private static final String INSERT_TEMA = "INSERT INTO temas (titulo, descricao) VALUES (?, ?)";
 
-	// TODO utilizado
 	private static final String UPDATE_TEMA = "UPDATE temas SET titulo = ?, descricao = ? WHERE temaId = ?";
 
-	// TODO utilizado
 	private static final String DELETE_TEMA = "DELETE FROM temas WHERE temaId = ?";
 
-	// TODO utilizado
 	private static final String SELECT_TODOS_TEMAS = "SELECT t.*, "
 			+ "(SELECT COUNT(questaoId) FROM questoes q WHERE q.temaId = t.temaId) AS qtdQuestoes "
 			+ "FROM temas t ORDER BY t.titulo";
@@ -43,7 +39,6 @@ public class TemasModelImpl implements TemasModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 
@@ -70,7 +65,6 @@ public class TemasModelImpl implements TemasModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void alterar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 
@@ -98,7 +92,6 @@ public class TemasModelImpl implements TemasModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void remover(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 
@@ -125,7 +118,6 @@ public class TemasModelImpl implements TemasModel {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<TemaDTO> listarTemas() throws ClassNotFoundException,
 			SQLException {
 		LOG.info("Chamando método listarTemas");

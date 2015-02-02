@@ -26,7 +26,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
 			ClassNotFoundException {
 		return funcionarioDao.listarFuncionarios();
@@ -39,7 +38,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<PerfilDTO> listarPerfis() throws SQLException,
 			ClassNotFoundException {
 		return funcionarioDao.listarPerfis();
@@ -52,7 +50,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void gravar(FuncionarioDTO funcionario) throws SQLException,
 			ClassNotFoundException {
 		funcionarioDao.gravar(funcionario);
@@ -66,7 +63,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
 			throws SQLException, ClassNotFoundException {
 		return funcionarioDao.buscarFuncionarioPorMatricula(matricula);
@@ -79,7 +75,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void inativar(Integer matricula) throws SQLException,
 			ClassNotFoundException {
 		funcionarioDao.inativar(matricula);
@@ -93,7 +88,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void alterar(FuncionarioDTO funcionario, Integer matriculaAntiga)
 			throws SQLException, ClassNotFoundException {
 		funcionarioDao.alterar(funcionario, matriculaAntiga);
@@ -106,7 +100,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarGerentes() throws SQLException,
 			ClassNotFoundException {
 		return funcionarioDao.listarGerentes();
@@ -119,7 +112,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradoresSemEquipes()
 			throws SQLException, ClassNotFoundException {
 		return funcionarioDao.listarColaboradoresSemEquipes();
@@ -133,7 +125,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void associarEquipes(Integer matGerente, Integer[] matColaborador)
 			throws SQLException, ClassNotFoundException {
 		funcionarioDao.associarEquipes(matGerente, matColaborador);
@@ -146,7 +137,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<EquipeDTO> listarEquipes() throws SQLException,
 			ClassNotFoundException {
 		List<EquipeDTO> listaEquipes = funcionarioDao.listarEquipes();
@@ -165,7 +155,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void removerColaborador(Integer matricula) throws SQLException,
 			ClassNotFoundException {
 		funcionarioDao.removerColaborador(matricula);
@@ -179,7 +168,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
 			ClassNotFoundException {
 		return funcionarioDao.listarColaboradores();

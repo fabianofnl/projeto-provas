@@ -29,7 +29,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravar(ProvaDTO provaDTO) throws ClassNotFoundException,
 			SQLException {
 		provasModel.gravar(provaDTO);
@@ -43,7 +42,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public ProvaDTO buscarProvaPorId(Integer provaId)
 			throws ClassNotFoundException, SQLException {
 		return provasModel.buscarProvaPorId(provaId);
@@ -56,7 +54,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravarApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException {
 		provasModel.gravaApostila(apostilaDTO);
@@ -70,7 +67,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	// TODO utilizado
 	public void removerApostila(ApostilaDTO apostilaDTO)
 			throws ClassNotFoundException, SQLException, IOException {
 
@@ -92,7 +88,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<ProvaDTO> listarProvas() throws ClassNotFoundException,
 			SQLException {
 		return provasModel.listarProvas();
@@ -105,7 +100,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void alterarProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException {
 		provasModel.alterarProva(provaSelecionada);
@@ -119,7 +113,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravarQuestao(QuestaoDTO questaoNova)
 			throws ClassNotFoundException, SQLException {
 		provasModel.gravarQuestao(questaoNova);
@@ -133,7 +126,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void alterarQuestao(QuestaoDTO questaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 		provasModel.alterarQuestao(questaoSelecionada);
@@ -146,7 +138,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravarOpcao(OpcaoDTO opcaoNova) throws ClassNotFoundException,
 			SQLException {
 		provasModel.gravarOpcao(opcaoNova);
@@ -160,7 +151,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<OpcaoDTO> listarOpcoesPorQuestaoId(Integer questaoId)
 			throws ClassNotFoundException, SQLException {
 		return provasModel.listarOpcoesPorQuestaoId(questaoId);
@@ -173,7 +163,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void definirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 		provasModel.definirOpcao(opcaoSelecionada);
@@ -186,7 +175,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void excluirOpcao(OpcaoDTO opcaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 		provasModel.excluirOpcao(opcaoSelecionada);
@@ -200,7 +188,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void excluirQuestao(QuestaoDTO questaoSelecionada)
 			throws ClassNotFoundException, SQLException {
 		provasModel.excluirQuestao(questaoSelecionada);
@@ -215,7 +202,6 @@ public class ProvasServiceImpl implements ProvasService {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	// TODO utilizado
 	public void excluirProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException, IOException {
 

@@ -24,7 +24,6 @@ public class TemasServiceImpl implements TemasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void gravar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 		temasModel.gravar(temasDTO);
@@ -37,7 +36,6 @@ public class TemasServiceImpl implements TemasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void alterar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 		temasModel.alterar(temasDTO);
@@ -50,7 +48,6 @@ public class TemasServiceImpl implements TemasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void remover(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException {
 		temasModel.remover(temasDTO);
@@ -63,10 +60,8 @@ public class TemasServiceImpl implements TemasService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<TemaDTO> listarTemas() throws ClassNotFoundException,
 			SQLException {
 		return temasModel.listarTemas();
 	}
-
 }

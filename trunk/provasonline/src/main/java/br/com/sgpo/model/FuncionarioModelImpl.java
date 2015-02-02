@@ -25,61 +25,46 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	private static final Logger LOG = Logger
 			.getLogger(FuncionarioModelImpl.class);
 
-	// TODO utilizado
 	private static final String SELECT_TODOS_FUNCIONARIO = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id ORDER BY nome";
 
-	// TODO utilizado
 	private static final String SELECT_TODOS_PERFIS = "SELECT * FROM perfil";
 
-	// TODO utilizado
 	private static final String INSERT_USUARIO_FUNCIONARIO = "INSERT INTO usuario (usuario, senha, perfilId) "
 			+ "VALUES (?, MD5(?), ?)";
 
-	// TODO utilizado
 	private static final String INSERT_FUNCIONARIO = "INSERT INTO funcionario (matricula, nome, funcao, email, usuario) "
 			+ "VALUES (?, ?, ?, ?, ?)";
 
-	// TODO utilizado
 	private static final String SELECT_FUNCIONARIO_POR_MATRICULA = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND f.matricula = ?";
 
-	// TODO utilizado
 	private static final String INATIVAR_FUNCIONARIO_POR_MATRICULA = "UPDATE funcionario SET status = 'Inativo' WHERE matricula = ?";
 
-	// TODO utilizado
 	private static final String UPDATE_USUARIO_FUNCIONARIO = "UPDATE usuario SET perfilid = ? WHERE usuario = ?";
 
-	// TODO utilizado
 	private static final String UPDATE_FUNCIONARIO = "UPDATE funcionario SET matricula = ?, nome = ?, funcao = ?, email = ?, "
 			+ "status = ? WHERE matricula = ?";
 
-	// TODO utilizado
 	private static final String SELECT_GERENTES = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Gerente' AND f.status ILIKE 'Ativo'";
 
-	// TODO utilizado
 	private static final String SELECT_COLABORADORES_SEM_EQUIPES = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Colaborador' AND f.status ILIKE 'Ativo' "
 			+ "AND f.matricula NOT IN (SELECT matcolaborador FROM equipes)";
 
-	// TODO utilizado
 	private static final String INSERT_EQUIPES = "INSERT INTO equipes (matgerente, matcolaborador) VALUES (?, ?)";
 
-	// TODO utilizado
 	private static final String SELECT_TODAS_EQUIPES = "SELECT DISTINCT ON (f.nome) f.nome, * "
 			+ "FROM funcionario f, usuario u, perfil p, equipes e "
 			+ "WHERE f.usuario = u.usuario AND u.perfilID = p.id AND f.matricula = e.matgerente "
 			+ "ORDER BY f.nome";
 
-	// TODO utilizado
 	private static final String SELECT_COLABORADORES_POR_GERENTE = "SELECT * FROM funcionario f, usuario u, perfil p, equipes e "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND f.matricula = e.matcolaborador AND e.matgerente = ?";
 
-	// TODO utilizado
 	private static final String REMOVER_COLABORADOR_POR_MATRICULA = "DELETE FROM equipes WHERE matcolaborador = ?";
 
-	// TODO utilizado
 	private static final String SELECT_COLABORADORES = "SELECT * FROM funcionario f, usuario u, perfil p "
 			+ "WHERE f.usuario = u.usuario AND u.perfilId = p.id AND p.descricao ILIKE 'Colaborador' ";
 
@@ -90,7 +75,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarFuncionarios()
 			throws ClassNotFoundException, SQLException {
 
@@ -139,7 +123,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<PerfilDTO> listarPerfis() throws SQLException,
 			ClassNotFoundException {
 
@@ -179,7 +162,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void gravar(FuncionarioDTO funcionario) throws SQLException,
 			ClassNotFoundException {
 
@@ -223,7 +205,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
 			throws SQLException, ClassNotFoundException {
 
@@ -270,7 +251,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void inativar(Integer matricula) throws SQLException,
 			ClassNotFoundException {
 
@@ -297,7 +277,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void alterar(FuncionarioDTO funcionario, Integer matriculaAntiga)
 			throws SQLException, ClassNotFoundException {
 
@@ -340,7 +319,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarGerentes() throws SQLException,
 			ClassNotFoundException {
 		LOG.info("Chamando método listarGerentes");
@@ -388,7 +366,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradoresSemEquipes()
 			throws SQLException, ClassNotFoundException {
 		LOG.info("Chamando método listarColaboradoresSemEquipes");
@@ -437,7 +414,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void associarEquipes(Integer matGerente, Integer[] matColaborador)
 			throws SQLException, ClassNotFoundException {
 
@@ -471,7 +447,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<EquipeDTO> listarEquipes() throws SQLException,
 			ClassNotFoundException {
 
@@ -527,7 +502,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradorPorGerente(Integer matricula)
 			throws SQLException, ClassNotFoundException {
 
@@ -572,7 +546,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void removerColaborador(Integer matricula) throws SQLException,
 			ClassNotFoundException {
 
@@ -599,7 +572,6 @@ public class FuncionarioModelImpl implements FuncionarioModel {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
 			ClassNotFoundException {
 

@@ -34,7 +34,6 @@ public class DashboardServiceImpl implements DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<AgendaDTO> listarAgendas(Integer matricula)
 			throws ClassNotFoundException, SQLException {
 		return dashboardModel.listarAgendas(matricula);
@@ -48,7 +47,6 @@ public class DashboardServiceImpl implements DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<ProvaRealizadaDTO> listarProvasRealizadasPorMatricula(
 			Integer matricula) throws ClassNotFoundException, SQLException {
 		return dashboardModel.listarProvasRealizadasPorMatricula(matricula);
@@ -62,7 +60,6 @@ public class DashboardServiceImpl implements DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public RelatorioDadosGeraisDTO consultarRelatorioDadosGerais()
 			throws ClassNotFoundException, SQLException {
 		return dashboardModel.consultarRelatorioDadosGerais();
@@ -75,7 +72,6 @@ public class DashboardServiceImpl implements DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<NotaMediaEquipesDTO> listarNotaMediaEquipes()
 			throws ClassNotFoundException, SQLException {
 
@@ -99,7 +95,6 @@ public class DashboardServiceImpl implements DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<QuestaoDTO> listarQuestoesPorProva(ProvaDTO provaSelecionada)
 			throws ClassNotFoundException, SQLException {
 
@@ -125,7 +120,6 @@ public class DashboardServiceImpl implements DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public Integer realizarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
 			throws ClassNotFoundException, SQLException {
 		return dashboardModel.realizarProva(provaRealizadaSelecionada);
@@ -138,7 +132,6 @@ public class DashboardServiceImpl implements DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public void entregarProva(ProvaRealizadaDTO provaRealizadaSelecionada)
 			throws ClassNotFoundException, SQLException {
 		dashboardModel.entregarProva(provaRealizadaSelecionada);
@@ -152,10 +145,8 @@ public class DashboardServiceImpl implements DashboardService {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO utilizado
 	public List<NotaMediaColaboradorDTO> listarNotaMediaColaboradores(
 			Integer matricula) throws ClassNotFoundException, SQLException {
 		return dashboardModel.listarNotaMediaColaboradores(matricula);
 	}
-
 }

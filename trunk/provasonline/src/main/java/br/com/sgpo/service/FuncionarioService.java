@@ -22,7 +22,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarFuncionarios() throws SQLException,
 			ClassNotFoundException;
 
@@ -33,7 +32,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<PerfilDTO> listarPerfis() throws SQLException,
 			ClassNotFoundException;
 
@@ -44,7 +42,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void gravar(FuncionarioDTO funcionario) throws SQLException,
 			ClassNotFoundException;
 
@@ -56,7 +53,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public FuncionarioDTO buscarFuncionarioPorMatricula(Integer matricula)
 			throws SQLException, ClassNotFoundException;
 
@@ -67,7 +63,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void inativar(Integer matricula) throws SQLException,
 			ClassNotFoundException;
 
@@ -79,7 +74,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void alterar(FuncionarioDTO funcionario, Integer matriculaAntiga)
 			throws SQLException, ClassNotFoundException;
 
@@ -90,7 +84,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarGerentes() throws SQLException,
 			ClassNotFoundException;
 
@@ -101,7 +94,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradoresSemEquipes()
 			throws SQLException, ClassNotFoundException;
 
@@ -113,7 +105,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void associarEquipes(Integer matGerente, Integer[] matColaborador)
 			throws SQLException, ClassNotFoundException;
 
@@ -124,7 +115,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<EquipeDTO> listarEquipes() throws SQLException,
 			ClassNotFoundException;
 
@@ -135,7 +125,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public void removerColaborador(Integer matricula) throws SQLException,
 			ClassNotFoundException;
 
@@ -147,8 +136,6 @@ public interface FuncionarioService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO utilizado
 	public List<FuncionarioDTO> listarColaboradores() throws SQLException,
 			ClassNotFoundException;
-
 }
