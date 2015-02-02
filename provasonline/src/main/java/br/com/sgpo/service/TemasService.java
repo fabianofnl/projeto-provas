@@ -13,9 +13,6 @@ import br.com.sgpo.dto.TemaDTO;
  */
 public interface TemasService {
 
-	public List<TemaDTO> listarTemas(Integer offSet, Integer recordPerPage)
-			throws ClassNotFoundException, SQLException;
-
 	/**
 	 * Método que cadastra os tema no sistema
 	 * 
@@ -26,12 +23,6 @@ public interface TemasService {
 	// TODO utilizado
 	public void gravar(TemaDTO temasDTO) throws ClassNotFoundException,
 			SQLException;
-
-	public Integer getTotalRegistrosTemas() throws ClassNotFoundException,
-			SQLException;
-
-	public TemaDTO buscarTemaPorId(Integer temaId)
-			throws ClassNotFoundException, SQLException;
 
 	/**
 	 * Método que altera um tema selecionado

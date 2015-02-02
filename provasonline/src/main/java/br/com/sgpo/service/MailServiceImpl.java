@@ -37,13 +37,15 @@ public class MailServiceImpl extends Thread {
 
 	}
 
-	public MailServiceImpl(FuncionarioDTO funcionario, Agenda agenda,
-			String contextPath) {
-		this.funcionario = funcionario;
-		this.agenda = agenda;
-		this.contextPath = contextPath;
-	}
-
+	/**
+	 * Construtor que instancia objeto de Email com a inicialização de variáveis
+	 * 
+	 * @param funcionario
+	 * @param prova
+	 * @param provaAgendada
+	 * @param contextPath
+	 * @param agenda
+	 */
 	public MailServiceImpl(FuncionarioDTO funcionario, ProvaDTO prova,
 			Date provaAgendada, String contextPath, Agenda agenda) {
 		this.funcionario = funcionario;
