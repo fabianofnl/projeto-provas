@@ -57,16 +57,20 @@ public class DashboardAdminManagedBean implements Serializable {
 			memoriaTotal.set("Memória",
 					(Runtime.getRuntime().totalMemory() / mb));
 
+			ChartSeries memoriaUsada = new ChartSeries();
+			memoriaUsada.setLabel("Memória usada");
+			memoriaUsada.set("Memória",
+					((Runtime.getRuntime().totalMemory() - Runtime.getRuntime()
+							.freeMemory()) / mb));
+
 			ChartSeries memoriaLivre = new ChartSeries();
 			memoriaLivre.setLabel("Memória livre");
 			memoriaLivre.set("Memória",
 					(Runtime.getRuntime().freeMemory() / mb));
 
-			LOG.info("memorias:" + memoriaMax + ", " + memoriaTotal + ", "
-					+ memoriaLivre);
-
 			memoryChart.addSeries(memoriaMax);
 			memoryChart.addSeries(memoriaTotal);
+			memoryChart.addSeries(memoriaUsada);
 			memoryChart.addSeries(memoriaLivre);
 			barChartFlag = true;
 
